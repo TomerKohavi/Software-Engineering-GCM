@@ -62,7 +62,7 @@ public class LoginController {
     	user = Username.getText();
     	pass = Password.getText();
     	if (user.equals(pass))
-    		loadPage("SearchMapScene.fxml");
+    		loadPage("SearchScene.fxml");
     	else
     	{
     		Username.setText("");

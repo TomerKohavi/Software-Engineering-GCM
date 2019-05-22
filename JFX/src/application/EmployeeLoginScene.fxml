@@ -21,7 +21,7 @@
          <children>
             <ImageView fitHeight="265.0" fitWidth="338.0" layoutX="-51.0" layoutY="535.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../Desktop/GCM%20Logo_WB.png" />
+                  <Image url="@../../Pics/GCM%20Logo_WB.png" />
                </image>
             </ImageView>
          </children></Pane>
