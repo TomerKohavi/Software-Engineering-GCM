@@ -5,160 +5,129 @@ public class City
     int id;
     String cityName;
     String cityDescription;
-    ArrayList<CityDataVersion> unpublishedVersions;
-    CityDataVersion publishedVersion;
+    //list of cityDataVersion
+    int publishedVersionId;
 
     public City(String cityName,String cityDescription)
     {
         this.id=Database.generateIdCity();
         this.cityName = cityName;
-        this.unpublishedVersions=new ArrayList<CityDataVersion>();
-        this.publishedVersion=null;
         this.cityDescription=cityDescription;
+        this.publishedVersionId=-1;
     }
 
-    public City(String cityName, String cityDescription,CityDataVersion cityDataVersion, boolean isVersionPublished) {
-        this.id=Database.generateIdCity();
-        this.cityName = cityName;
-        this.unpublishedVersions=new ArrayList<CityDataVersion>();
-        this.publishedVersion=null;
-        if(isVersionPublished)
-            publishedVersion=cityDataVersion;
-        else
-            unpublishedVersions.add(cityDataVersion);
-        this.cityDescription=cityDescription;
+    public ArrayList<CityDataVersion> getAllCityDataVersions() {
+        int[] ids= Database.searchCityDataVersion(this.id);
+        ArrayList<CityDataVersion> arrList=new ArrayList<CityDataVersion>();
+        for(int id : ids)
+        {
+            CityDataVersion o=Database.getCityDataVersionById(id);
+            if(o!=null)
+                arrList.add(o);
+        }
+        return arrList;
     }
 
-    public City(String cityName, ArrayList<CityDataVersion> unpublishedVersions, CityDataVersion publishedVersion) {
-        this.id=Database.generateIdCity();
-        this.cityName = cityName;
-        this.unpublishedVersions = unpublishedVersions;
-        this.publishedVersion = publishedVersion;
+    public ArrayList<CityDataVersion> getAllUnpublishedCityDataVersions() {
+        int[] ids= Database.searchCityDataVersion(this.id);
+        ArrayList<CityDataVersion> arrList=new ArrayList<CityDataVersion>();
+        for(int id : ids)
+        {
+            CityDataVersion o=Database.getCityDataVersionById(id);
+            if(o!=null && id!=this.publishedVersionId)
+            arrList.add(o);
+        }
+        return arrList;
     }
 
-    public int numUnpulished(){
-        return unpublishedVersions.size();
+    public int getNumCityDataVersions(){
+        return getAllCityDataVersions().size();
     }
 
-    public boolean isPublished(){
-        return publishedVersion==null;
+    public CityDataVersion getCityDataVersionById(int cdvId)
+    {
+        CityDataVersion cdv=Database.getCityDataVersionById(cdvId);
+        if(cdv==null || cdv.getCityId()!=this.id)
+            return null;
+        return cdv;
     }
 
-    public String getCityName() {
-        return cityName;
+    public CityDataVersion addUnpublishedCityDataVersion(String versionName, double priceOneTime, double pricePeriod)
+    {
+        CityDataVersion cdv=new CityDataVersion(versionName,priceOneTime,pricePeriod,this.id);
+        Database.saveCityDataVersion(cdv);
+        return cdv;
     }
 
-    public ArrayList<CityDataVersion> getUnpublishedVersions() {
-        return unpublishedVersions;
+    public CityDataVersion addPublishedCityDataVersion(String versionName, double priceOneTime, double pricePeriod)
+    {
+        CityDataVersion cdv=new CityDataVersion(versionName,priceOneTime,pricePeriod,this.id);
+        this.publishedVersionId=cdv.getId();
+        Database.saveCityDataVersion(cdv);
+        return cdv;
     }
 
-    public CityDataVersion getPublishedVersion() {
-        return publishedVersion;
+    public boolean setPublishedVersionId(int cdvId)
+    {
+        CityDataVersion cdv=Database.getCityDataVersionById(cdvId);
+        if(cdv==null || cdv.getCityId()!=this.id)
+            return false;
+        this.publishedVersionId=cdvId;
+        return true;
+    }
+
+    public CityDataVersion getPublishedVersion()
+    {
+        CityDataVersion cdv=null;
+        if(this.publishedVersionId>0)
+            cdv=Database.getCityDataVersionById(this.publishedVersionId);
+        if(cdv==null || cdv.getCityId()!=this.id)
+        {
+            this.publishedVersionId=-1;
+            return null;
+        }
+        return cdv;
+    }
+
+    public int getPublishedVersionId()
+    {
+        CityDataVersion cdv=getPublishedVersion();
+        if(cdv==null)
+            return -1;
+        return cdv.getId();
+    }
+
+    public boolean isTherePublishedVersion()
+    {
+        return getPublishedVersion()!=null;
+    }
+
+    public CityDataVersion removeCityDataVersionById(int cdvId)
+    {
+        CityDataVersion cdv=getCityDataVersionById(cdvId);
+        if(cdv==null || cdv.getCityId()!=this.id)
+            return null;
+        Database.deleteCityDataVersion(cdv.getId());
+        return cdv;
     }
 
     public int getId() {
         return id;
     }
 
+    public String getCityName() {
+        return cityName;
+    }
+
+    public String getCityDescription() {
+        return cityDescription;
+    }
+
     public void setCityName(String cityName) {
         this.cityName = cityName;
     }
 
-    public void setUnpublishedVersions(ArrayList<CityDataVersion> unpublishedVersions) {
-        this.unpublishedVersions = unpublishedVersions;
-    }
-
-    public void setPublishedVersion(CityDataVersion publishedVersion) {
-        this.publishedVersion = publishedVersion;
-    }
-
-    public boolean publishVersion(int cityDataVersionId)
-    {
-        for (int i=0;i<unpublishedVersions.size();i++)
-        {
-            if(unpublishedVersions.get(i).getId()==cityDataVersionId)
-            {
-                CityDataVersion temp=publishedVersion;
-                publishedVersion=unpublishedVersions.remove(i);
-                unpublishedVersions.add(temp);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean unpublish()
-    {
-        if(publishedVersion==null)
-            return false;
-        else
-        {
-            unpublishedVersions.add(publishedVersion);
-            publishedVersion=null;
-            return true;
-        }
-    }
-
-    public boolean addUnpublishedVersion(CityDataVersion newVersion)
-    {
-        int newVersionId=newVersion.getId();
-        for (CityDataVersion cVersion:unpublishedVersions)
-        {
-            if(cVersion.getId()==newVersionId)
-                return false;
-        }
-        if(isPublished() && newVersionId== publishedVersion.getId())
-            return false;
-        unpublishedVersions.add(newVersion);
-        return true;
-    }
-
-    public boolean addPublishedVersion(CityDataVersion newVersion)
-    {
-        int newVersionId=newVersion.getId();
-        for (CityDataVersion cVersion:unpublishedVersions)
-        {
-            if(cVersion.getId()==newVersionId)
-                return false;
-        }
-        boolean isP=isPublished();
-        if(isP && newVersionId== publishedVersion.getId())
-            return false;
-        if(isP)
-            unpublishedVersions.add(publishedVersion);
-        publishedVersion=newVersion;
-        return true;
-    }
-
-    public CityDataVersion getVersionById(int versionId)
-    {
-        for (CityDataVersion cVersion:unpublishedVersions)
-        {
-            if(cVersion.getId()==versionId)
-                return cVersion;
-        }
-        if(isPublished() && versionId == publishedVersion.getId())
-            return publishedVersion;
-        return null;
-    }
-
-    public boolean removeUnpublishedVersion(int versionId)
-    {
-        for (int i=0;i<unpublishedVersions.size();i++)
-        {
-            if(unpublishedVersions.get(i).getId()==versionId)
-            {
-                unpublishedVersions.remove(i);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public CityDataVersion removePublishedVersion()
-    {
-        CityDataVersion temp=publishedVersion;
-        publishedVersion=null;
-        return temp;
+    public void setCityDescription(String cityDescription) {
+        this.cityDescription = cityDescription;
     }
 }

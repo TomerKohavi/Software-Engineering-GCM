@@ -1,42 +1,106 @@
+import javax.xml.crypto.Data;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Route
 {
     private int id;
     private String info;
-    private ArrayList<Pair<Integer, Time>> placesIdAndTime;
     private boolean acceptabilityToDisabled;
-    private int cityId;
+    private int numStops;
+    //list of RouteStop
 
-    public Route(String info, ArrayList<Pair<Integer, Time>> placesIdAndTime, boolean acceptabilityToDisabled,int cityId)
+    public Route(String info, boolean acceptabilityToDisabled)
     {
         this.id=Database.generateIdRoute();
         this.info = info;
-        this.placesIdAndTime = placesIdAndTime;
         this.acceptabilityToDisabled = acceptabilityToDisabled;
-        this.cityId=cityId;
+        numStops=0;
     }
 
-    public Route(String info, boolean acceptabilityToDisabled,int cityId)
+    public ArrayList<RouteStop> getAllRouteStops() {
+        int[] routeStopsIds= Database.searchRouteStop(this.id,-1,-1);
+        ArrayList<RouteStop> arrList=new ArrayList<RouteStop>();
+        for(int rdId : routeStopsIds)
+            arrList.add(Database.getRouteStopById(rdId));
+        Collections.sort(arrList);
+        return arrList;
+    }
+
+    public RouteStop getRouteStopByPlaceId(int placeId)
     {
-        this.id=Database.generateIdRoute();
+        int[] rsIds= Database.searchRouteStop(this.id,placeId,-1);
+        if(rsIds.length!=1)
+            return null;
+        return Database.getRouteStopById(rsIds[0]);
+    }
+
+    public RouteStop getRouteStopAtNum(int num)
+    {
+        int[] rsIds= Database.searchRouteStop(this.id,-1,num);
+        if(rsIds.length!=1)
+            return null;
+        return Database.getRouteStopById(rsIds[0]);
+    }
+
+    public RouteStop getRouteStopById(int rsId)
+    {
+        RouteStop rs=Database.getRouteStopById(rsId);
+        if(rs==null || rs.getRouteId()!=this.id)
+            return null;
+        return rs;
+    }
+
+    public RouteStop addRouteStop(int placeId,Time recommendedTime)
+    {
+        int index=this.numStops;
+        this.numStops++;
+        RouteStop rs=new RouteStop(placeId,index,recommendedTime);
+        Database.saveRouteStop(rs);
+        return rs;
+    }
+
+    public RouteStop addRouteStop(int placeId,Time recommendedTime,int index)
+    {
+        if(index>this.numStops)
+            return null;
+        RouteStop rs=new RouteStop(placeId,index,recommendedTime);
+        ArrayList<RouteStop> listRs=getAllRouteStops();
+        for(int i=index;i<listRs.size();i++)
+        {
+            RouteStop temp=listRs.get(i);
+            temp.setNumStop(i+1);
+            Database.saveRouteStop(temp);
+        }
+        Database.saveRouteStop(rs);
+        this.numStops++;
+        return rs;
+    }
+
+    public RouteStop removeRouteStopAtIndex(int index)
+    {
+        if(index>=this.numStops)
+            return null;
+        ArrayList<RouteStop> listRs=getAllRouteStops();
+        RouteStop rs=listRs.get(index);
+        for(int i=index+1;i<listRs.size();i++)
+        {
+            RouteStop temp=listRs.get(i);
+            temp.setNumStop(i-1);
+            Database.saveRouteStop(temp);
+        }
+        Database.deleteRouteStop(rs.getId());
+        this.numStops--;
+        return rs;
+    }
+
+    public void setInfo(String info) {
         this.info = info;
-        this.placesIdAndTime = new ArrayList<Pair<Integer, Time>>();
+    }
+
+    public void setAcceptabilityToDisabled(boolean acceptabilityToDisabled) {
         this.acceptabilityToDisabled = acceptabilityToDisabled;
-        this.cityId=cityId;
-    }
-
-    public int getCityId() {
-        return cityId;
-    }
-
-    public ArrayList<Pair<Integer, Time>> getPlacesIdAndTime() {
-        return placesIdAndTime;
-    }
-
-    public void setPlacesIdAndTime(ArrayList<Pair<Integer, Time>> placesIdAndTime) {
-        this.placesIdAndTime = placesIdAndTime;
     }
 
     public int getId() {
@@ -51,69 +115,7 @@ public class Route
         return acceptabilityToDisabled;
     }
 
-    public int getNumPlaces()
-    {
-        return placesIdAndTime.size();
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
-    public void setAcceptabilityToDisabled(boolean acceptabilityToDisabled) {
-        this.acceptabilityToDisabled = acceptabilityToDisabled;
-    }
-
-    public Pair<PlaceOfInterest,Time> getPlaceAndTime(int placeId)
-    {
-        for(Pair<Integer,Time> p:placesIdAndTime)
-        {
-            if(p.a == placeId)
-                return new Pair(Database.getPlaceOfInterestById(p.a),p.b);
-        }
-        return null;
-    }
-
-    public boolean addPlaceAndTime(PlaceOfInterest newPlace,Time recommendedTime)
-    {
-        int newPlaceId=newPlace.getId();
-        Pair<Integer,Time> newP=new Pair<>(newPlaceId,recommendedTime);
-        for(Pair<Integer,Time> p:placesIdAndTime)
-        {
-            if(p.a == newPlaceId)
-                return false;
-        }
-        Database.savePlaceOfInterest(newPlace);
-        placesIdAndTime.add(newP);
-        return true;
-    }
-
-    public boolean addPlaceAndTime(PlaceOfInterest newPlace,Time recommendedTime,int index)
-    {
-        if(index<0 || index>placesIdAndTime.size())
-            return false;
-        int newPlaceId=newPlace.getId();
-        Pair<Integer,Time> newP=new Pair<>(newPlaceId,recommendedTime);
-        for(Pair<Integer,Time> p:placesIdAndTime)
-        {
-            if(p.a == newPlaceId)
-                return false;
-        }
-        Database.savePlaceOfInterest(newPlace);
-        placesIdAndTime.add(index,newP);
-        return true;
-    }
-
-    public boolean removeLPlace(int placeId)
-    {
-        for(int i=0;i<placesIdAndTime.size();i++)
-        {
-            if(placesIdAndTime.get(i).a == placeId)
-            {
-                placesIdAndTime.remove(i);
-                return true;
-            }
-        }
-        return false;
+    public int getNumStops() {
+        return numStops;
     }
 }

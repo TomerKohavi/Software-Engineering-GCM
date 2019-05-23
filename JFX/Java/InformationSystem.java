@@ -4,28 +4,20 @@ import java.util.Date;
 
 public class InformationSystem
 {
-    ArrayList<StatisticOfDate> StatisticOfDates;
-
-    public InformationSystem()
-    {
-        this.StatisticOfDates=new ArrayList<StatisticOfDate>();
-    }
-
-    public InformationSystem(ArrayList<StatisticOfDate> statisticOfDates) {
-        StatisticOfDates = statisticOfDates;
-    }
-
-    private StatisticOfDate findDate(Date d){
-        for(StatisticOfDate sD: StatisticOfDates)
-            if(sD.getDate().equals(d))
-                return sD;
-        StatisticOfDate sD=new StatisticOfDate(d);
-        StatisticOfDates.add(sD);
-        return sD;
-    }
-
-    private void sortStatisticOfDates() {
-        Collections.sort(StatisticOfDates,Collections.reverseOrder());
+    //list of Statistic
+    public static Statistic getStatistic(int cityId, Date d){
+        int[] ids=Database.searchStatistic(cityId,d);
+        if(ids.length!=1)
+            return null;
+        Statistic s=Database.getStatisticById(ids[0]);
+        if(s==null)
+            return null;
+        if(Database.getCityById(s.getCityId())==null)
+        {
+            Database.deleteStatistic(s.getId());
+            return null;
+        }
+        return s;
     }
 
     public void addOneTimePurchase(int cityId) {
@@ -33,8 +25,11 @@ public class InformationSystem
     }
 
     public void addOneTimePurchase(int cityId,Date d) {
-        StatisticOfDate sD=findDate(d);
-        sD.addOneTimePurchase(cityId);
+        Statistic s=getStatistic(cityId,d);
+        if(s==null)
+            s=new Statistic(cityId,d);
+        s.addOneTimePurchase();
+        Database.saveStatistic(s);
     }
 
     public void addSubscription(int cityId) {
@@ -42,8 +37,11 @@ public class InformationSystem
     }
 
     public void addSubscription(int cityId,Date d) {
-        StatisticOfDate sD=findDate(d);
-        sD.addSubscription(cityId);
+        Statistic s=getStatistic(cityId,d);
+        if(s==null)
+            s=new Statistic(cityId,d);
+        s.addSubscription();
+        Database.saveStatistic(s);
     }
 
     public void addSubscriptionRenewal(int cityId) {
@@ -51,15 +49,27 @@ public class InformationSystem
     }
 
     public void addSubscriptionRenewal(int cityId,Date d) {
-        StatisticOfDate sD=findDate(d);
-        sD.addOneTimePurchase(cityId);
+        Statistic s=getStatistic(cityId,d);
+        if(s==null)
+            s=new Statistic(cityId,d);
+        s.addSubscriptionRenewal();
+        Database.saveStatistic(s);
     }
 
-    public ArrayList<StatisticOfDate> getStatisticOfDates() {
-        return StatisticOfDates;
-    }
-
-    public void setStatisticOfDates(ArrayList<StatisticOfDate> statisticOfDates) {
-        StatisticOfDates = statisticOfDates;
+    public ArrayList<Statistic> getAllStatistics() {
+        int[] ids= Database.searchMapSight(-1,-1);
+        ArrayList<Statistic> arrList=new ArrayList<Statistic>();
+        for(int id : ids)
+        {
+            Statistic o=Database.getStatisticById(id);
+            if(o==null)
+                continue;
+            if(Database.getCityById(o.getCityId())==null)
+                Database.deleteStatistic(id);
+            else
+                arrList.add(o);
+        }
+        Collections.sort(arrList,Collections.reverseOrder());
+        return arrList;
     }
 }

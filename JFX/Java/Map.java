@@ -5,7 +5,7 @@ public class Map {
     private int id;
     private String name;
     private String info;
-    private ArrayList<Integer> locationsId;
+    //list of locations
     private BufferedImage mapPicture;
 
     public Map(String name,String info,BufferedImage mapPicture)
@@ -13,53 +13,76 @@ public class Map {
         this.id=Database.generateIdMap();
         this.name=name;
         this.info=info;
-        this.locationsId=new ArrayList<Integer>();
         this.mapPicture=mapPicture;
     }
 
-    public Map(String name,String info,BufferedImage mapPicture,ArrayList<Integer> locationsId)
-    {
-        this.id=Database.generateIdMap();
-        this.name=name;
-        this.info=info;
-        this.locationsId=locationsId;
-        this.mapPicture=mapPicture;
+    public ArrayList<Location> getAllLocations() {
+        int[] ids= Database.searchLocation(this.id,-1);
+        ArrayList<Location> arrList=new ArrayList<Location>();
+        for(int id : ids)
+        {
+            Location o=Database.getLocationById(id);
+            if(o==null)
+                continue;
+            if(Database.getPlaceOfInterestById(o.getPlaceOfInterestId())==null)
+                Database.deleteLocation(id);
+            else
+                arrList.add(o);
+        }
+        return arrList;
     }
 
-    public Location getLocation(int newLocationId)
-    {
-        for(int locationId:locationsId)
-        {
-            if(locationId == newLocationId)
-                return Database.getLocationById(newLocationId);
-        }
-        return null;
+    public int getNumLocations(){
+        return getAllLocations().size();
     }
 
-    public boolean addLocation(Location newLocation)
+    public Location getLocationByPlaceOfInterestId(int placeOfInterestId)
     {
-        int newLocationId=newLocation.getId();
-        for(int locationId:locationsId)
+        int[] locId= Database.searchLocation(this.id,placeOfInterestId);
+        if(locId.length!=1)
+            return null;
+        Location o=Database.getLocationById(locId[0]);
+        if(Database.getPlaceOfInterestById(o.getPlaceOfInterestId())==null)
         {
-            if(locationId == newLocationId)
-                return false;
+            Database.deleteLocation(o.getId());
+            return null;
         }
-        Database.saveLocation(newLocation);
-        locationsId.add(newLocationId);
-        return true;
+        return o;
     }
 
-    public boolean removeLocation(int locationId)
+    public Location getLocationById(int locId)
     {
-        for(int i=0;i<locationsId.size();i++)
+        Location loc=Database.getLocationById(locId);
+        if(loc==null || loc.getMapId()!=this.id)
+            return null;
+        if(Database.getPlaceOfInterestById(loc.getPlaceOfInterestId())==null)
         {
-            if(locationsId.get(i)== locationId)
-            {
-                locationsId.remove(i);
-                return true;
-            }
+            Database.deleteLocation(loc.getId());
+            return null;
         }
-        return false;
+        return loc;
+    }
+
+    public Location addLocation(int placeOfInterestId,double[] coordinates)
+    {
+        if(Database.getPlaceOfInterestById(placeOfInterestId)==null)
+            return null;
+        Location loc=new Location(this.id,placeOfInterestId,coordinates);
+        Database.saveLocation(loc);
+        return loc;
+    }
+
+    public Location removeLocationById(int locId)
+    {
+        Location loc=getLocationById(locId);
+        if(loc==null || loc.getMapId()!=this.id)
+            return null;
+        Database.deleteLocation(loc.getId());
+        return loc;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -74,8 +97,8 @@ public class Map {
         return mapPicture;
     }
 
-    public int getNumLocations() {
-        return locationsId.size();
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setInfo(String info) {
@@ -84,21 +107,5 @@ public class Map {
 
     public void setMapPicture(BufferedImage mapPicture) {
         this.mapPicture = mapPicture;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public ArrayList<Integer> getLocationsId() {
-        return locationsId;
-    }
-
-    public void setLocationsId(ArrayList<Integer> locationsId) {
-        this.locationsId = locationsId;
     }
 }
