@@ -2,8 +2,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
-public abstract class InformationSystem
+public final class InformationSystem
 {
+    private InformationSystem(){}
+
     //list of Statistic
     public static Statistic getStatistic(int cityId, Date d){
         int[] ids=Database.searchStatistic(cityId,d);

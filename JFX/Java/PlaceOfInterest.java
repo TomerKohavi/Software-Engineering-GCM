@@ -15,26 +15,29 @@ public class PlaceOfInterest
     }
 
     private int id;
+    private int cityId;
     private String name;
     private PlaceType type;
     private String placeDescription;
     private boolean accessibilityToDisabled;
 
-    private PlaceOfInterest(int id, String name, PlaceType type, String placeDescription, boolean accessibilityToDisabled) {
+    private PlaceOfInterest(int id,int cityId, String name, PlaceType type, String placeDescription, boolean accessibilityToDisabled) {
         this.id = id;
+        this.cityId=cityId;
         this.name = name;
         this.type = type;
         this.placeDescription = placeDescription;
         this.accessibilityToDisabled = accessibilityToDisabled;
     }
 
-    public static PlaceOfInterest _createPlaceOfInterest(int id, String name, PlaceType type, String placeDescription, boolean accessibilityToDisabled){ //friend to Database
-        return new PlaceOfInterest( id,  name,  type,  placeDescription,  accessibilityToDisabled);
+    public static PlaceOfInterest _createPlaceOfInterest(int id,int cityId, String name, PlaceType type, String placeDescription, boolean accessibilityToDisabled){ //friend to Database
+        return new PlaceOfInterest( id, cityId,  name,  type,  placeDescription,  accessibilityToDisabled);
     }
 
-    public PlaceOfInterest(String name, PlaceType type, String info, boolean accessibilityToDisabled, int cityId)
+    public PlaceOfInterest(int cityId,String name, PlaceType type, String info, boolean accessibilityToDisabled)
     {
         this.id=Database.generateIdPlaceOfInterest();
+        this.cityId=cityId;
         this.name = name;
         this.type = type;
         this.placeDescription = info;
@@ -83,5 +86,9 @@ public class PlaceOfInterest
 
     public void setAccessibilityToDisabled(boolean accessibilityToDisabled) {
         this.accessibilityToDisabled = accessibilityToDisabled;
+    }
+
+    public int getCityId() {
+        return cityId;
     }
 }

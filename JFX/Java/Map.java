@@ -6,25 +6,25 @@ public class Map {
     private String name;
     private String info;
     //list of locations
-    private BufferedImage mapPicture;
+    private String imgURL;
 
-    private Map(int id, String name, String info, BufferedImage mapPicture) {
+    private Map(int id, String name, String info, String imgURL) {
         this.id = id;
         this.name = name;
         this.info = info;
-        this.mapPicture = mapPicture;
+        this.imgURL = imgURL;
     }
 
-    public static Map _createMap(int id, String name, String info, BufferedImage mapPicture){ //friend to Database
-        return new Map( id,  name,  info,  mapPicture);
+    public static Map _createMap(int id, String name, String info, String imgURL){ //friend to Database
+        return new Map( id,  name,  info,  imgURL);
     }
 
-    public Map(String name, String info, BufferedImage mapPicture)
+    public Map(String name, String info, String imgURL)
     {
         this.id=Database.generateIdMap();
         this.name=name;
         this.info=info;
-        this.mapPicture=mapPicture;
+        this.imgURL=imgURL;
     }
 
     public ArrayList<Location> getAllLocations() {
@@ -104,10 +104,6 @@ public class Map {
         return info;
     }
 
-    public BufferedImage getMapPicture() {
-        return mapPicture;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -116,7 +112,11 @@ public class Map {
         this.info = info;
     }
 
-    public void setMapPicture(BufferedImage mapPicture) {
-        this.mapPicture = mapPicture;
+    public String getImgURL() {
+        return imgURL;
+    }
+
+    public void setImgURL(String imgURL) {
+        this.imgURL = imgURL;
     }
 }

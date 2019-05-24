@@ -1,11 +1,13 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class Database
 {
     /*
     Things to save in Tables:
-    * All non abstract classes
+    * All non abstract/final classes
     */
 
     //generate id
@@ -114,4 +116,12 @@ public class Database
                 .filter(x -> Arrays.stream(b).anyMatch(y -> y == x))
                 .toArray();
     }*/
+
+    public static<T> ArrayList<T> intersection(ArrayList<T> list1, ArrayList<T> list2) {
+        ArrayList<T> list = new ArrayList<T>();
+        for (T t : list1)
+            if(list2.contains(t))
+                list.add(t);
+        return list;
+    }
 }
