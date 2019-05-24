@@ -8,7 +8,18 @@ public class Map {
     //list of locations
     private BufferedImage mapPicture;
 
-    public Map(String name,String info,BufferedImage mapPicture)
+    private Map(int id, String name, String info, BufferedImage mapPicture) {
+        this.id = id;
+        this.name = name;
+        this.info = info;
+        this.mapPicture = mapPicture;
+    }
+
+    public static Map _createMap(int id, String name, String info, BufferedImage mapPicture){ //friend to Database
+        return new Map( id,  name,  info,  mapPicture);
+    }
+
+    public Map(String name, String info, BufferedImage mapPicture)
     {
         this.id=Database.generateIdMap();
         this.name=name;
@@ -21,11 +32,11 @@ public class Map {
         ArrayList<Location> arrList=new ArrayList<Location>();
         for(int id : ids)
         {
-            Location o=Database.getLocationById(id);
+            Location o=Database._getLocationById(id);
             if(o==null)
                 continue;
             if(Database.getPlaceOfInterestById(o.getPlaceOfInterestId())==null)
-                Database.deleteLocation(id);
+                Database._deleteLocation(id);
             else
                 arrList.add(o);
         }
@@ -41,10 +52,10 @@ public class Map {
         int[] locId= Database.searchLocation(this.id,placeOfInterestId);
         if(locId.length!=1)
             return null;
-        Location o=Database.getLocationById(locId[0]);
+        Location o=Database._getLocationById(locId[0]);
         if(Database.getPlaceOfInterestById(o.getPlaceOfInterestId())==null)
         {
-            Database.deleteLocation(o.getId());
+            Database._deleteLocation(o.getId());
             return null;
         }
         return o;
@@ -52,12 +63,12 @@ public class Map {
 
     public Location getLocationById(int locId)
     {
-        Location loc=Database.getLocationById(locId);
+        Location loc=Database._getLocationById(locId);
         if(loc==null || loc.getMapId()!=this.id)
             return null;
         if(Database.getPlaceOfInterestById(loc.getPlaceOfInterestId())==null)
         {
-            Database.deleteLocation(loc.getId());
+            Database._deleteLocation(loc.getId());
             return null;
         }
         return loc;
@@ -68,7 +79,7 @@ public class Map {
         if(Database.getPlaceOfInterestById(placeOfInterestId)==null)
             return null;
         Location loc=new Location(this.id,placeOfInterestId,coordinates);
-        Database.saveLocation(loc);
+        Database._saveLocation(loc);
         return loc;
     }
 
@@ -77,7 +88,7 @@ public class Map {
         Location loc=getLocationById(locId);
         if(loc==null || loc.getMapId()!=this.id)
             return null;
-        Database.deleteLocation(loc.getId());
+        Database._deleteLocation(loc.getId());
         return loc;
     }
 

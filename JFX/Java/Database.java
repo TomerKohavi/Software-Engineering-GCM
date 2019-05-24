@@ -5,7 +5,7 @@ public class Database
 {
     /*
     Things to save in Tables:
-    * All classes that have at list one nonstatic function (for now all classes except InformationSystem)
+    * All non abstract classes
     */
 
     //generate id
@@ -25,13 +25,9 @@ public class Database
 
 
     //simple get/save by id
-    public static Location getLocationById(int LocationId){ return null;}
-    public static boolean saveLocation(Location l){return true;}//return if it's already in the database
-    public static boolean deleteLocation(int LocationId) {return true;}//return true if it was deleted (false if it weren't in the database)
-
-    public static PlaceOfInterest getPlaceOfInterestById(int placeId){ return null;}
-    public static boolean savePlaceOfInterest(PlaceOfInterest p){return true;}
-    public static boolean deletePlaceOfInterest(int placeId) {return true;}
+    public static PlaceOfInterest getPlaceOfInterestById(int placeId){ return null;} // use PlaceOfInterest._createPlaceOfInterest() function
+    public static boolean savePlaceOfInterest(PlaceOfInterest p){return true;}//return if it's already in the database
+    public static boolean deletePlaceOfInterest(int placeId) {return true;}//return true if it was deleted (false if it weren't in the database)
 
     public static Map getMapById(int mapId){ return null;}
     public static boolean saveMap(Map m){return true;}
@@ -49,38 +45,41 @@ public class Database
     public static boolean saveUser(User u){return true;}
     public static boolean deleteUser(int userId) {return true;}
 
-    public static RouteStop getRouteStopById(int routeStopId){ return null;}
-    public static boolean saveRouteStop(RouteStop rs){return true;}
+    public static Location _getLocationById(int LocationId){ return null;} //friend to Map
+    public static boolean _saveLocation(Location l){return true;} //friend to Map
+    public static boolean _deleteLocation(int LocationId) {return true;} //friend to Map
 
-    public static boolean deleteRouteStop(int routeStopId) {return true;}
+    public static RouteStop _getRouteStopById(int routeStopId){ return null;} //friend to Route
+    public static boolean _saveRouteStop(RouteStop rs){return true;} //friend to Route
+    public static boolean _deleteRouteStop(int routeStopId) {return true;} //friend to Route
 
-    public static MapSight getMapSightById(int mapSightId){ return null;}
-    public static boolean saveMapSight(MapSight ms){return true;}
-    public static boolean deleteMapSight(int mapSightId) {return true;}
+    public static MapSight _getMapSightById(int mapSightId){ return null;} //friend to CityDataVersion
+    public static boolean _saveMapSight(MapSight ms){return true;} //friend to CityDataVersion
+    public static boolean _deleteMapSight(int mapSightId) {return true;} //friend to CityDataVersion
 
-    public static PlaceOfInterestSight getPlaceOfInterestSightById(int placeOfInterestSightId){ return null;}
-    public static boolean savePlaceOfInterestSight(PlaceOfInterestSight pois){return true;}
-    public static boolean deletePlaceOfInterestSight(int placeOfInterestSightId) {return true;}
+    public static PlaceOfInterestSight _getPlaceOfInterestSightById(int placeOfInterestSightId){ return null;} //friend to CityDataVersion
+    public static boolean _savePlaceOfInterestSight(PlaceOfInterestSight pois){return true;} //friend to CityDataVersion
+    public static boolean _deletePlaceOfInterestSight(int placeOfInterestSightId) {return true;} //friend to CityDataVersion
 
-    public static RouteSight getRouteSightById(int routeSightId){ return null;}
-    public static boolean saveRouteSight(RouteSight rs){return true;}
-    public static boolean deleteRouteSight(int routeSightId) {return true;}
+    public static RouteSight _getRouteSightById(int routeSightId){ return null;} //friend to CityDataVersion
+    public static boolean _saveRouteSight(RouteSight rs){return true;} //friend to CityDataVersion
+    public static boolean _deleteRouteSight(int routeSightId) {return true;} //friend to CityDataVersion
 
-    public static CityDataVersion getCityDataVersionById(int cityDataVersionId){ return null;}
-    public static boolean saveCityDataVersion(CityDataVersion cdv){return true;}
-    public static boolean deleteCityDataVersion(int cityDataVersionId) {return true;}
+    public static CityDataVersion _getCityDataVersionById(int cityDataVersionId){ return null;} //friend to City
+    public static boolean _saveCityDataVersion(CityDataVersion cdv){return true;} //friend to City
+    public static boolean _deleteCityDataVersion(int cityDataVersionId) {return true;} //friend to City
 
-    public static Statistic getStatisticById(int statisticId){ return null;}
-    public static boolean saveStatistic(Statistic s){return true;}
-    public static boolean deleteStatistic(int statisticId) {return true;}
+    public static Statistic _getStatisticById(int statisticId){ return null;} //friend to InformationSystem
+    public static boolean _saveStatistic(Statistic s){return true;} //friend to InformationSystem
+    public static boolean _deleteStatistic(int statisticId) {return true;} //friend to InformationSystem
 
-    public static Subscription getSubscriptionById(int subscriptionId){ return null;}
-    public static boolean saveSubscription(Subscription s){return true;}
-    public static boolean deleteSubscription(int subscriptionId) {return true;}
+    public static Subscription _getSubscriptionById(int subscriptionId){ return null;} //friend to Customer
+    public static boolean _saveSubscription(Subscription s){return true;} //friend to Customer
+    public static boolean _deleteSubscription(int subscriptionId) {return true;} //friend to Customer
 
-    public static OneTimePurchase getOneTimePurchaseById(int oneTimePurchaseId){ return null;}
-    public static boolean saveOneTimePurchase(OneTimePurchase otp){return true;}
-    public static boolean deleteOneTimePurchase(int oneTimePurchaseId) {return true;}
+    public static OneTimePurchase _getOneTimePurchaseById(int oneTimePurchaseId){ return null;} //friend to Customer
+    public static boolean _saveOneTimePurchase(OneTimePurchase otp){return true;} //friend to Customer
+    public static boolean _deleteOneTimePurchase(int oneTimePurchaseId) {return true;} //friend to Customer
 
 
     //other types of search

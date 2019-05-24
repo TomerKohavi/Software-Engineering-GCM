@@ -8,7 +8,18 @@ public class City
     //list of cityDataVersion
     Integer publishedVersionId;
 
-    public City(String cityName,String cityDescription)
+    private City(int id, String cityName, String cityDescription, Integer publishedVersionId) {
+        this.id = id;
+        this.cityName = cityName;
+        this.cityDescription = cityDescription;
+        this.publishedVersionId = publishedVersionId;
+    }
+
+    public static City _createCity(int id, String cityName, String cityDescription, Integer publishedVersionId){ //friend to Database
+        return new City(id,cityName,cityDescription,publishedVersionId);
+    }
+
+    public City(String cityName, String cityDescription)
     {
         this.id=Database.generateIdCity();
         this.cityName = cityName;
@@ -21,7 +32,7 @@ public class City
         ArrayList<CityDataVersion> arrList=new ArrayList<CityDataVersion>();
         for(int id : ids)
         {
-            CityDataVersion o=Database.getCityDataVersionById(id);
+            CityDataVersion o=Database._getCityDataVersionById(id);
             if(o!=null)
                 arrList.add(o);
         }
@@ -33,7 +44,7 @@ public class City
         ArrayList<CityDataVersion> arrList=new ArrayList<CityDataVersion>();
         for(int id : ids)
         {
-            CityDataVersion o=Database.getCityDataVersionById(id);
+            CityDataVersion o=Database._getCityDataVersionById(id);
             if(o!=null && id!=this.publishedVersionId)
             arrList.add(o);
         }
@@ -46,7 +57,7 @@ public class City
 
     public CityDataVersion getCityDataVersionById(int cdvId)
     {
-        CityDataVersion cdv=Database.getCityDataVersionById(cdvId);
+        CityDataVersion cdv=Database._getCityDataVersionById(cdvId);
         if(cdv==null || cdv.getCityId()!=this.id)
             return null;
         return cdv;
@@ -55,7 +66,7 @@ public class City
     public CityDataVersion addUnpublishedCityDataVersion(String versionName, double priceOneTime, double pricePeriod)
     {
         CityDataVersion cdv=new CityDataVersion(versionName,priceOneTime,pricePeriod,this.id);
-        Database.saveCityDataVersion(cdv);
+        Database._saveCityDataVersion(cdv);
         return cdv;
     }
 
@@ -63,13 +74,13 @@ public class City
     {
         CityDataVersion cdv=new CityDataVersion(versionName,priceOneTime,pricePeriod,this.id);
         this.publishedVersionId=cdv.getId();
-        Database.saveCityDataVersion(cdv);
+        Database._saveCityDataVersion(cdv);
         return cdv;
     }
 
     public boolean setPublishedVersionId(int cdvId)
     {
-        CityDataVersion cdv=Database.getCityDataVersionById(cdvId);
+        CityDataVersion cdv=Database._getCityDataVersionById(cdvId);
         if(cdv==null || cdv.getCityId()!=this.id)
             return false;
         this.publishedVersionId=cdvId;
@@ -80,7 +91,7 @@ public class City
     {
         CityDataVersion cdv=null;
         if(this.publishedVersionId!=null)
-            cdv=Database.getCityDataVersionById(this.publishedVersionId);
+            cdv=Database._getCityDataVersionById(this.publishedVersionId);
         if(cdv==null || cdv.getCityId()!=this.id)
         {
             this.publishedVersionId=null;
@@ -107,7 +118,7 @@ public class City
         CityDataVersion cdv=getCityDataVersionById(cdvId);
         if(cdv==null || cdv.getCityId()!=this.id)
             return null;
-        Database.deleteCityDataVersion(cdv.getId());
+        Database._deleteCityDataVersion(cdv.getId());
         return cdv;
     }
 

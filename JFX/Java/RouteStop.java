@@ -7,7 +7,20 @@ public class RouteStop implements Comparable<RouteStop>
     int placeId;
     int numStop;
     Time recommendedTime;
-    public RouteStop( int placeId, int numStop, Time recommendedTime) {
+
+    private RouteStop(int id, int routeId, int placeId, int numStop, Time recommendedTime) {
+        this.id = id;
+        this.routeId = routeId;
+        this.placeId = placeId;
+        this.numStop = numStop;
+        this.recommendedTime = recommendedTime;
+    }
+
+    public static RouteStop _createRouteStop(int id, int routeId, int placeId, int numStop, Time recommendedTime){ //friend to Database
+        return new RouteStop( id,  routeId,  placeId,  numStop,  recommendedTime);
+    }
+
+    public RouteStop(int placeId, int numStop, Time recommendedTime) {
         this.id=Database.generateIdRouteStop();
         this.routeId = Database.generateIdRouteStop();
         this.placeId = placeId;

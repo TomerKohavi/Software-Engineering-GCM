@@ -8,6 +8,16 @@ public abstract  class User {
     private String lastName;
     private String phoneNumber;
 
+    protected User(int id, String userName, String password, String email, String firstName, String lastName, String phoneNumber) {
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+    }
+
     public User(String userName, String password, String email, String firstName, String lastName, String phoneNumber) {
         this.id = Database.generateIdUser();
         this.userName = userName;

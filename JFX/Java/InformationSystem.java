@@ -2,19 +2,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
-public class InformationSystem
+public abstract class InformationSystem
 {
     //list of Statistic
     public static Statistic getStatistic(int cityId, Date d){
         int[] ids=Database.searchStatistic(cityId,d);
         if(ids.length!=1)
             return null;
-        Statistic s=Database.getStatisticById(ids[0]);
+        Statistic s=Database._getStatisticById(ids[0]);
         if(s==null)
             return null;
         if(Database.getCityById(s.getCityId())==null)
         {
-            Database.deleteStatistic(s.getId());
+            Database._deleteStatistic(s.getId());
             return null;
         }
         return s;
@@ -29,7 +29,7 @@ public class InformationSystem
         if(s==null)
             s=new Statistic(cityId,d);
         s.addOneTimePurchase();
-        Database.saveStatistic(s);
+        Database._saveStatistic(s);
     }
 
     public void addSubscription(int cityId) {
@@ -41,7 +41,7 @@ public class InformationSystem
         if(s==null)
             s=new Statistic(cityId,d);
         s.addSubscription();
-        Database.saveStatistic(s);
+        Database._saveStatistic(s);
     }
 
     public void addSubscriptionRenewal(int cityId) {
@@ -53,7 +53,7 @@ public class InformationSystem
         if(s==null)
             s=new Statistic(cityId,d);
         s.addSubscriptionRenewal();
-        Database.saveStatistic(s);
+        Database._saveStatistic(s);
     }
 
     public ArrayList<Statistic> getAllStatistics() {
@@ -61,11 +61,11 @@ public class InformationSystem
         ArrayList<Statistic> arrList=new ArrayList<Statistic>();
         for(int id : ids)
         {
-            Statistic o=Database.getStatisticById(id);
+            Statistic o=Database._getStatisticById(id);
             if(o==null)
                 continue;
             if(Database.getCityById(o.getCityId())==null)
-                Database.deleteStatistic(id);
+                Database._deleteStatistic(id);
             else
                 arrList.add(o);
         }

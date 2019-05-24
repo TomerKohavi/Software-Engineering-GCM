@@ -1,12 +1,20 @@
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 
 public class Customer extends User{
     private String personalDetails;
     // list of subscription
     //list of one time purchase
+
+
+    public Customer(int id, String userName, String password, String email, String firstName, String lastName, String phoneNumber, String personalDetails) {
+        super(id, userName, password, email, firstName, lastName, phoneNumber);
+        this.personalDetails = personalDetails;
+    }
+
+    public static Customer _createCustomer(int id, String userName, String password, String email, String firstName, String lastName, String phoneNumber, String personalDetails){ //friend to Database
+        return new Customer(id,userName, password, email, firstName,  lastName,  phoneNumber,  personalDetails);
+    }
 
     public Customer(String userName, String password, String email, String firstName, String lastName, String phoneNumber, String personalDetails) {
         super(userName, password, email, firstName, lastName, phoneNumber);
@@ -19,7 +27,7 @@ public class Customer extends User{
         if(ids.length>1)
             for (int id: ids)
             {
-                Subscription s=Database.getSubscriptionById(id);
+                Subscription s=Database._getSubscriptionById(id);
                 if(s!=null)
                     return s;
             }
@@ -36,11 +44,11 @@ public class Customer extends User{
         ArrayList<Subscription> arrList=new ArrayList<Subscription>();
         for(int id : ids)
         {
-            Subscription o=Database.getSubscriptionById(id);
+            Subscription o=Database._getSubscriptionById(id);
             if(o==null)
                 continue;
             if(Database.getCityById(o.getCityId())==null)
-                Database.deleteSubscription(id);
+                Database._deleteSubscription(id);
             else
                 arrList.add(o);
         }
@@ -68,12 +76,12 @@ public class Customer extends User{
 
     public Subscription getSubscriptionById(int subId)
     {
-        Subscription sub=Database.getSubscriptionById(subId);
+        Subscription sub=Database._getSubscriptionById(subId);
         if(sub==null || sub.getUserId()!=super.getId())
             return null;
         if(Database.getCityById(sub.getCityId())==null)
         {
-            Database.deleteSubscription(sub.getId());
+            Database._deleteSubscription(sub.getId());
             return null;
         }
         return sub;
@@ -84,7 +92,7 @@ public class Customer extends User{
         if(Database.getCityById(cityId)==null)
             return null;
         Subscription sub=new Subscription(super.getId(),cityId,purchaseDate,fullPrice,pricePayed,expirationDate);
-        Database.saveSubscription(sub);
+        Database._saveSubscription(sub);
         return sub;
     }
 
@@ -93,7 +101,7 @@ public class Customer extends User{
         Subscription sub=getSubscriptionById(subId);
         if(sub==null || sub.getUserId()!=super.getId())
             return null;
-        Database.deleteSubscription(sub.getId());
+        Database._deleteSubscription(sub.getId());
         return sub;
     }
 
@@ -104,7 +112,7 @@ public class Customer extends User{
         if(ids.length>1)
             for (int id: ids)
             {
-                OneTimePurchase s=Database.getOneTimePurchaseById(id);
+                OneTimePurchase s=Database._getOneTimePurchaseById(id);
                 if(s!=null)
                     return s;
             }
@@ -127,11 +135,11 @@ public class Customer extends User{
         ArrayList<OneTimePurchase> arrList=new ArrayList<OneTimePurchase>();
         for(int id : ids)
         {
-            OneTimePurchase o=Database.getOneTimePurchaseById(id);
+            OneTimePurchase o=Database._getOneTimePurchaseById(id);
             if(o==null)
                 continue;
             if(Database.getCityById(o.getCityId())==null)
-                Database.deleteOneTimePurchase(id);
+                Database._deleteOneTimePurchase(id);
             else
                 arrList.add(o);
         }
@@ -159,12 +167,12 @@ public class Customer extends User{
 
     public OneTimePurchase getOneTimePurchaseById(int subId)
     {
-        OneTimePurchase otp=Database.getOneTimePurchaseById(subId);
+        OneTimePurchase otp=Database._getOneTimePurchaseById(subId);
         if(otp==null || otp.getUserId()!=super.getId())
             return null;
         if(Database.getCityById(otp.getCityId())==null)
         {
-            Database.deleteOneTimePurchase(otp.getId());
+            Database._deleteOneTimePurchase(otp.getId());
             return null;
         }
         return otp;
@@ -175,7 +183,7 @@ public class Customer extends User{
         if(Database.getCityById(cityId)==null)
             return null;
         OneTimePurchase otp=new OneTimePurchase(super.getId(),cityId,purchaseDate,fullPrice,pricePayed);
-        Database.saveOneTimePurchase(otp);
+        Database._saveOneTimePurchase(otp);
         return otp;
     }
 
@@ -184,7 +192,7 @@ public class Customer extends User{
         OneTimePurchase otp=getOneTimePurchaseById(otpId);
         if(otp==null || otp.getUserId()!=super.getId())
             return null;
-        Database.deleteOneTimePurchase(otp.getId());
+        Database._deleteOneTimePurchase(otp.getId());
         return otp;
     }
 

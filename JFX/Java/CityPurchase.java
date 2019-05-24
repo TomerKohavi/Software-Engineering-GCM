@@ -7,7 +7,16 @@ public abstract class CityPurchase implements Comparable<CityPurchase>{
     private double fullPrice;
     private double pricePayed;
 
-    public CityPurchase(int userId,int cityId, Date purchaseDate, double fullPrice, double pricePayed) {
+    protected CityPurchase(int id, int cityId, int userId, Date purchaseDate, double fullPrice, double pricePayed) {
+        this.id = id;
+        this.cityId = cityId;
+        this.userId = userId;
+        this.purchaseDate = purchaseDate;
+        this.fullPrice = fullPrice;
+        this.pricePayed = pricePayed;
+    }
+
+    public CityPurchase(int userId, int cityId, Date purchaseDate, double fullPrice, double pricePayed) {
         this.id = Database.generateIdCityPurchase();
         this.cityId = cityId;
         this.userId = userId;

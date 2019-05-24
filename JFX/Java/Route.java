@@ -1,4 +1,3 @@
-import javax.xml.crypto.Data;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,6 +9,18 @@ public class Route
     private boolean acceptabilityToDisabled;
     private int numStops;
     //list of RouteStop
+
+
+    private Route(int id, String info, boolean acceptabilityToDisabled, int numStops) {
+        this.id = id;
+        this.info = info;
+        this.acceptabilityToDisabled = acceptabilityToDisabled;
+        this.numStops = numStops;
+    }
+
+    public static Route _createRoute(int id, String info, boolean acceptabilityToDisabled, int numStops){ //friend to Database
+        return new Route( id,  info,  acceptabilityToDisabled,  numStops);
+    }
 
     public Route(String info, boolean acceptabilityToDisabled)
     {
@@ -23,7 +34,7 @@ public class Route
         int[] routeStopsIds= Database.searchRouteStop(this.id,null,null);
         ArrayList<RouteStop> arrList=new ArrayList<RouteStop>();
         for(int rdId : routeStopsIds)
-            arrList.add(Database.getRouteStopById(rdId));
+            arrList.add(Database._getRouteStopById(rdId));
         Collections.sort(arrList);
         return arrList;
     }
@@ -33,7 +44,7 @@ public class Route
         int[] rsIds= Database.searchRouteStop(this.id,placeId,null);
         if(rsIds.length!=1)
             return null;
-        return Database.getRouteStopById(rsIds[0]);
+        return Database._getRouteStopById(rsIds[0]);
     }
 
     public RouteStop getRouteStopAtNum(int num)
@@ -41,12 +52,12 @@ public class Route
         int[] rsIds= Database.searchRouteStop(this.id,null,num);
         if(rsIds.length!=1)
             return null;
-        return Database.getRouteStopById(rsIds[0]);
+        return Database._getRouteStopById(rsIds[0]);
     }
 
     public RouteStop getRouteStopById(int rsId)
     {
-        RouteStop rs=Database.getRouteStopById(rsId);
+        RouteStop rs=Database._getRouteStopById(rsId);
         if(rs==null || rs.getRouteId()!=this.id)
             return null;
         return rs;
@@ -57,7 +68,7 @@ public class Route
         int index=this.numStops;
         this.numStops++;
         RouteStop rs=new RouteStop(placeId,index,recommendedTime);
-        Database.saveRouteStop(rs);
+        Database._saveRouteStop(rs);
         return rs;
     }
 
@@ -71,9 +82,9 @@ public class Route
         {
             RouteStop temp=listRs.get(i);
             temp.setNumStop(i+1);
-            Database.saveRouteStop(temp);
+            Database._saveRouteStop(temp);
         }
-        Database.saveRouteStop(rs);
+        Database._saveRouteStop(rs);
         this.numStops++;
         return rs;
     }
@@ -88,9 +99,9 @@ public class Route
         {
             RouteStop temp=listRs.get(i);
             temp.setNumStop(i-1);
-            Database.saveRouteStop(temp);
+            Database._saveRouteStop(temp);
         }
-        Database.deleteRouteStop(rs.getId());
+        Database._deleteRouteStop(rs.getId());
         this.numStops--;
         return rs;
     }

@@ -11,7 +11,19 @@ public class CityDataVersion
     private double priceOneTime;
     private double pricePeriod;
 
-    public CityDataVersion(String versionName, double priceOneTime, double pricePeriod,int cityId) {
+    private CityDataVersion(int id, int cityId, String versionName, double priceOneTime, double pricePeriod) {
+        this.id = id;
+        this.cityId = cityId;
+        this.versionName = versionName;
+        this.priceOneTime = priceOneTime;
+        this.pricePeriod = pricePeriod;
+    }
+
+    public static CityDataVersion _createCityDataVersion(int id, int cityId, String versionName, double priceOneTime, double pricePeriod){ //friend Database
+        return new CityDataVersion(id,cityId,versionName,priceOneTime,pricePeriod);
+    }
+
+    public CityDataVersion(String versionName, double priceOneTime, double pricePeriod, int cityId) {
         this.id=Database.generateIdCityDataVersion();
         this.versionName = versionName;
         this.priceOneTime = priceOneTime;
@@ -24,11 +36,11 @@ public class CityDataVersion
         ArrayList<MapSight> arrList=new ArrayList<MapSight>();
         for(int id : ids)
         {
-            MapSight o=Database.getMapSightById(id);
+            MapSight o=Database._getMapSightById(id);
             if(o==null)
                 continue;
             if(Database.getMapById(o.getMapId())==null)
-                Database.deleteMapSight(id);
+                Database._deleteMapSight(id);
             else
                 arrList.add(o);
         }
@@ -44,10 +56,10 @@ public class CityDataVersion
         int[] msId= Database.searchMapSight(this.id,mapId);
         if(msId.length!=1)
             return null;
-        MapSight o=Database.getMapSightById(msId[0]);
+        MapSight o=Database._getMapSightById(msId[0]);
         if(Database.getMapById(o.getMapId())==null)
         {
-            Database.deleteMapSight(o.getId());
+            Database._deleteMapSight(o.getId());
             return null;
         }
         return o;
@@ -55,12 +67,12 @@ public class CityDataVersion
 
     public MapSight getMapSightById(int msId)
     {
-        MapSight ms=Database.getMapSightById(msId);
+        MapSight ms=Database._getMapSightById(msId);
         if(ms==null || ms.getCityDataVersionId()!=this.id)
             return null;
         if(Database.getMapById(ms.getMapId())==null)
         {
-            Database.deleteMapSight(ms.getId());
+            Database._deleteMapSight(ms.getId());
             return null;
         }
         return ms;
@@ -71,7 +83,7 @@ public class CityDataVersion
         if(Database.getMapById(mapId)==null)
             return null;
         MapSight ms=new MapSight(this.id,mapId);
-        Database.saveMapSight(ms);
+        Database._saveMapSight(ms);
         return ms;
     }
 
@@ -80,7 +92,7 @@ public class CityDataVersion
         MapSight ms=getMapSightById(msId);
         if(ms==null || ms.getCityDataVersionId()!=this.id)
             return null;
-        Database.deleteMapSight(ms.getId());
+        Database._deleteMapSight(ms.getId());
         return ms;
     }
 
@@ -89,11 +101,11 @@ public class CityDataVersion
         ArrayList<PlaceOfInterestSight> arrList=new ArrayList<PlaceOfInterestSight>();
         for(int id : ids)
         {
-            PlaceOfInterestSight o=Database.getPlaceOfInterestSightById(id);
+            PlaceOfInterestSight o=Database._getPlaceOfInterestSightById(id);
             if(o==null)
                 continue;
             if(Database.getPlaceOfInterestById(o.getPlaceOfInterestId())==null)
-                Database.deletePlaceOfInterestSight(id);
+                Database._deletePlaceOfInterestSight(id);
             else
                 arrList.add(o);
         }
@@ -109,7 +121,7 @@ public class CityDataVersion
         int[] ids= Database.searchPlaceOfInterestSight(this.id,placeId);
         if(ids.length!=1)
             return null;
-        PlaceOfInterestSight o=Database.getPlaceOfInterestSightById(ids[0]);
+        PlaceOfInterestSight o=Database._getPlaceOfInterestSightById(ids[0]);
         if(Database.getPlaceOfInterestById(o.getPlaceOfInterestId())==null)
         {
             Database.deletePlaceOfInterest(o.getId());
@@ -120,7 +132,7 @@ public class CityDataVersion
 
     public PlaceOfInterestSight getPlaceOfInterestSightById(int psId)
     {
-        PlaceOfInterestSight ps=Database.getPlaceOfInterestSightById(psId);
+        PlaceOfInterestSight ps=Database._getPlaceOfInterestSightById(psId);
         if(ps==null || ps.getCityDataVersionId()!=this.id)
             return null;
         if(Database.getPlaceOfInterestById(ps.getPlaceOfInterestId())==null)
@@ -136,7 +148,7 @@ public class CityDataVersion
         if(Database.getPlaceOfInterestById(placeId)==null)
             return null;
         PlaceOfInterestSight ps=new PlaceOfInterestSight(this.id,placeId);
-        Database.savePlaceOfInterestSight(ps);
+        Database._savePlaceOfInterestSight(ps);
         return ps;
     }
 
@@ -145,7 +157,7 @@ public class CityDataVersion
         PlaceOfInterestSight ps=getPlaceOfInterestSightById(psId);
         if(ps==null || ps.getCityDataVersionId()!=this.id)
             return null;
-        Database.deletePlaceOfInterestSight(ps.getId());
+        Database._deletePlaceOfInterestSight(ps.getId());
         return ps;
     }
 
@@ -154,11 +166,11 @@ public class CityDataVersion
         ArrayList<RouteSight> arrList=new ArrayList<RouteSight>();
         for(int id : ids)
         {
-            RouteSight o=Database.getRouteSightById(id);
+            RouteSight o=Database._getRouteSightById(id);
             if(o==null)
                 continue;
             if(Database.getRouteById(o.getRouteId())==null)
-                Database.deleteRouteSight(id);
+                Database._deleteRouteSight(id);
             else
                 arrList.add(o);
         }
@@ -173,10 +185,10 @@ public class CityDataVersion
         int[] ids = Database.searchRouteSight(this.id, routeId);
         if (ids.length != 1)
             return null;
-        RouteSight o = Database.getRouteSightById(ids[0]);
+        RouteSight o = Database._getRouteSightById(ids[0]);
         if (Database.getRouteById(o.getRouteId()) == null)
         {
-            Database.deleteRouteSight(o.getId());
+            Database._deleteRouteSight(o.getId());
             return null;
         }
         return o;
@@ -184,12 +196,12 @@ public class CityDataVersion
 
     public RouteSight getRouteSightById(int rsId)
     {
-        RouteSight rs=Database.getRouteSightById(rsId);
+        RouteSight rs=Database._getRouteSightById(rsId);
         if(rs==null || rs.getCityDataVersionId()!=this.id)
             return null;
         if (Database.getRouteById(rs.getRouteId()) == null)
         {
-            Database.deleteRouteSight(rs.getId());
+            Database._deleteRouteSight(rs.getId());
             return null;
         }
         return rs;
@@ -200,7 +212,7 @@ public class CityDataVersion
         if (Database.getRouteById(routeId) == null)
             return null;
         RouteSight rs=new RouteSight(this.id,routeId);
-        Database.saveRouteSight(rs);
+        Database._saveRouteSight(rs);
         return rs;
     }
 
@@ -209,7 +221,7 @@ public class CityDataVersion
         RouteSight rs=getRouteSightById(rsId);
         if(rs==null || rs.getCityDataVersionId()!=this.id)
             return null;
-        Database.deleteRouteSight(rs.getId());
+        Database._deleteRouteSight(rs.getId());
         return rs;
     }
 

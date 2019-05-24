@@ -9,6 +9,19 @@ public class Statistic implements Comparable<Statistic>
     int numSubscriptions;
     int numSubscriptionsRenewal;
 
+    private Statistic(int id, int cityId, Date date, int numOneTimePurchases, int numSubscriptions, int numSubscriptionsRenewal) {
+        this.id = id;
+        this.cityId = cityId;
+        this.date = date;
+        this.numOneTimePurchases = numOneTimePurchases;
+        this.numSubscriptions = numSubscriptions;
+        this.numSubscriptionsRenewal = numSubscriptionsRenewal;
+    }
+
+    public static Statistic _createStatistic(int id, int cityId, Date date, int numOneTimePurchases, int numSubscriptions, int numSubscriptionsRenewal){ //friend to Database
+        return new Statistic( id,  cityId,  date,  numOneTimePurchases,  numSubscriptions,  numSubscriptionsRenewal);
+    }
+
     public Statistic(int cityId, Date date) {
         this.id=Database.generateIdStatistic();
         this.cityId = cityId;

@@ -1,6 +1,4 @@
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class PlaceOfInterest
 {
@@ -22,7 +20,19 @@ public class PlaceOfInterest
     private String placeDescription;
     private boolean accessibilityToDisabled;
 
-    public PlaceOfInterest(String name, PlaceType type, String info, boolean accessibilityToDisabled,int cityId)
+    private PlaceOfInterest(int id, String name, PlaceType type, String placeDescription, boolean accessibilityToDisabled) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.placeDescription = placeDescription;
+        this.accessibilityToDisabled = accessibilityToDisabled;
+    }
+
+    public static PlaceOfInterest _createPlaceOfInterest(int id, String name, PlaceType type, String placeDescription, boolean accessibilityToDisabled){ //friend to Database
+        return new PlaceOfInterest( id,  name,  type,  placeDescription,  accessibilityToDisabled);
+    }
+
+    public PlaceOfInterest(String name, PlaceType type, String info, boolean accessibilityToDisabled, int cityId)
     {
         this.id=Database.generateIdPlaceOfInterest();
         this.name = name;
@@ -35,7 +45,7 @@ public class PlaceOfInterest
         int[] routeStopsIds= Database.searchLocation(null,this.id);
         ArrayList<Location> arrList=new ArrayList<Location>();
         for(int lId : routeStopsIds)
-            arrList.add(Database.getLocationById(lId));
+            arrList.add(Database._getLocationById(lId));
         return arrList;
     }
 
