@@ -5,8 +5,8 @@ public class Subscription extends CityPurchase {
     private static final Time closeTime=new Time(3*24,0,0);
     private Date expirationDate;
 
-    public Subscription(int cityPurchasedId, double fullPrice, double pricePayed, Date expirationDate) {
-        super(cityPurchasedId, fullPrice, pricePayed);
+    public Subscription(int userId, int cityId, Date purchaseDate, double fullPrice, double pricePayed, Date expirationDate) {
+        super(userId, cityId, purchaseDate, fullPrice, pricePayed);
         this.expirationDate = expirationDate;
     }
 

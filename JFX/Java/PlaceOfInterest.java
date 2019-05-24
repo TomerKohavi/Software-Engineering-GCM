@@ -32,7 +32,7 @@ public class PlaceOfInterest
     }
 
     public ArrayList<Location> getAllLocations() {
-        int[] routeStopsIds= Database.searchLocation(-1,this.id);
+        int[] routeStopsIds= Database.searchLocation(null,this.id);
         ArrayList<Location> arrList=new ArrayList<Location>();
         for(int lId : routeStopsIds)
             arrList.add(Database.getLocationById(lId));

@@ -20,7 +20,7 @@ public class CityDataVersion
     }
 
     public ArrayList<MapSight> getAllMapSights() {
-        int[] ids= Database.searchMapSight(this.id,-1);
+        int[] ids= Database.searchMapSight(this.id,null);
         ArrayList<MapSight> arrList=new ArrayList<MapSight>();
         for(int id : ids)
         {
@@ -85,7 +85,7 @@ public class CityDataVersion
     }
 
     public ArrayList<PlaceOfInterestSight> getAllPlaceOfInterestSights() {
-        int[] ids= Database.searchPlaceOfInterestSight(this.id,-1);
+        int[] ids= Database.searchPlaceOfInterestSight(this.id,null);
         ArrayList<PlaceOfInterestSight> arrList=new ArrayList<PlaceOfInterestSight>();
         for(int id : ids)
         {
@@ -150,7 +150,7 @@ public class CityDataVersion
     }
 
     public ArrayList<RouteSight> getAllRouteSights() {
-        int[] ids= Database.searchRouteSight(this.id,-1);
+        int[] ids= Database.searchRouteSight(this.id,null);
         ArrayList<RouteSight> arrList=new ArrayList<RouteSight>();
         for(int id : ids)
         {

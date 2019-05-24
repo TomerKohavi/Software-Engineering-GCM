@@ -5,16 +5,7 @@ public class Database
 {
     /*
     Things to save in Tables:
-    * Location- id
-    * PlaceOfInterest - id, name, description
-    * Map- id
-    * Route- id
-    * City- id, name, description
-	* User- id, username, password
-    
-	Things to save (single object):
-	* all the ids counter for each class below
-	
+    * All classes that have at list one nonstatic function (for now all classes except InformationSystem)
     */
 
     //generate id
@@ -83,33 +74,45 @@ public class Database
     public static boolean saveStatistic(Statistic s){return true;}
     public static boolean deleteStatistic(int statisticId) {return true;}
 
+    public static Subscription getSubscriptionById(int subscriptionId){ return null;}
+    public static boolean saveSubscription(Subscription s){return true;}
+    public static boolean deleteSubscription(int subscriptionId) {return true;}
+
+    public static OneTimePurchase getOneTimePurchaseById(int oneTimePurchaseId){ return null;}
+    public static boolean saveOneTimePurchase(OneTimePurchase otp){return true;}
+    public static boolean deleteOneTimePurchase(int oneTimePurchaseId) {return true;}
+
 
     //other types of search
-    // id=-1 or String="" means don't search according to it!
+    // something=null means don't search according to it!
     public static int[] searchCity(String cityName,String cityDescription){return null;}
 
 	public static int[] searchUser(String username, String password){return null;}
 
 	public static int[] searchPlaceOfInterest(String placeName,String placeDescription){return null;}
 
-    public static int[] searchRouteStop(int routeId,int placeId,int numStop){return null;}
+    public static int[] searchRouteStop(Integer routeId,Integer placeId,Integer numStop){return null;}
 
-    public static int[] searchLocation(int mapId,int placeId){return null;}
+    public static int[] searchLocation(Integer mapId,Integer placeId){return null;}
 
-    public static int[] searchMapSight(int cityDataVersionId,int mapId){return null;}
+    public static int[] searchMapSight(Integer cityDataVersionId,Integer mapId){return null;}
 
-    public static int[] searchPlaceOfInterestSight(int cityDataVersionId,int placeId){return null;}
+    public static int[] searchPlaceOfInterestSight(Integer cityDataVersionId,Integer placeId){return null;}
 
-    public static int[] searchRouteSight(int cityDataVersionId,int routeId){return null;}
+    public static int[] searchRouteSight(Integer cityDataVersionId,Integer routeId){return null;}
 
-    public static int[] searchCityDataVersion(int cityId){return null;}
+    public static int[] searchCityDataVersion(Integer cityId){return null;}
 
-    public static int[] searchStatistic(int cityId, Date date){return null;}
+    public static int[] searchStatistic(Integer cityId, Date date){return null;}
 
-    public static int[] intersection(int[] a, int[] b) {
+    public static int[] searchSubscription(Integer userId,Integer cityId, Date purchaseDate,Date expirationDateAfterThis){return null;}// note: check the expirationDate is bigger than expirationDateAfterThis (not equal)
+
+    public static int[] searchOneTimePurchase(Integer userId,Integer cityId, Date purchaseDate,Boolean wasDownload){return null;}
+
+    /*public static int[] intersection(int[] a, int[] b) {
         return Arrays.stream(a)
                 .distinct()
                 .filter(x -> Arrays.stream(b).anyMatch(y -> y == x))
                 .toArray();
-    }
+    }*/
 }

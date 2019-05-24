@@ -20,7 +20,7 @@ public class Route
     }
 
     public ArrayList<RouteStop> getAllRouteStops() {
-        int[] routeStopsIds= Database.searchRouteStop(this.id,-1,-1);
+        int[] routeStopsIds= Database.searchRouteStop(this.id,null,null);
         ArrayList<RouteStop> arrList=new ArrayList<RouteStop>();
         for(int rdId : routeStopsIds)
             arrList.add(Database.getRouteStopById(rdId));
@@ -30,7 +30,7 @@ public class Route
 
     public RouteStop getRouteStopByPlaceId(int placeId)
     {
-        int[] rsIds= Database.searchRouteStop(this.id,placeId,-1);
+        int[] rsIds= Database.searchRouteStop(this.id,placeId,null);
         if(rsIds.length!=1)
             return null;
         return Database.getRouteStopById(rsIds[0]);
@@ -38,7 +38,7 @@ public class Route
 
     public RouteStop getRouteStopAtNum(int num)
     {
-        int[] rsIds= Database.searchRouteStop(this.id,-1,num);
+        int[] rsIds= Database.searchRouteStop(this.id,null,num);
         if(rsIds.length!=1)
             return null;
         return Database.getRouteStopById(rsIds[0]);

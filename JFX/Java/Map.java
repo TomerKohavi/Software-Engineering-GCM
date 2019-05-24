@@ -17,7 +17,7 @@ public class Map {
     }
 
     public ArrayList<Location> getAllLocations() {
-        int[] ids= Database.searchLocation(this.id,-1);
+        int[] ids= Database.searchLocation(this.id,null);
         ArrayList<Location> arrList=new ArrayList<Location>();
         for(int id : ids)
         {

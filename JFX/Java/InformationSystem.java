@@ -57,7 +57,7 @@ public class InformationSystem
     }
 
     public ArrayList<Statistic> getAllStatistics() {
-        int[] ids= Database.searchMapSight(-1,-1);
+        int[] ids= Database.searchMapSight(null,null);
         ArrayList<Statistic> arrList=new ArrayList<Statistic>();
         for(int id : ids)
         {

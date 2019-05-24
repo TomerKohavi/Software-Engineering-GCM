@@ -6,14 +6,14 @@ public class City
     String cityName;
     String cityDescription;
     //list of cityDataVersion
-    int publishedVersionId;
+    Integer publishedVersionId;
 
     public City(String cityName,String cityDescription)
     {
         this.id=Database.generateIdCity();
         this.cityName = cityName;
         this.cityDescription=cityDescription;
-        this.publishedVersionId=-1;
+        this.publishedVersionId=null;
     }
 
     public ArrayList<CityDataVersion> getAllCityDataVersions() {
@@ -79,22 +79,22 @@ public class City
     public CityDataVersion getPublishedVersion()
     {
         CityDataVersion cdv=null;
-        if(this.publishedVersionId>0)
+        if(this.publishedVersionId!=null)
             cdv=Database.getCityDataVersionById(this.publishedVersionId);
         if(cdv==null || cdv.getCityId()!=this.id)
         {
-            this.publishedVersionId=-1;
+            this.publishedVersionId=null;
             return null;
         }
         return cdv;
     }
 
-    public int getPublishedVersionId()
+    public Integer getPublishedVersionId()
     {
         CityDataVersion cdv=getPublishedVersion();
         if(cdv==null)
-            return -1;
-        return cdv.getId();
+            this.publishedVersionId=null;
+        return this.publishedVersionId;
     }
 
     public boolean isTherePublishedVersion()

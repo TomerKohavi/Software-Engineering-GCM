@@ -1,22 +1,19 @@
-public class oneTimePurchase extends CityPurchase
+import java.util.Date;
+
+public class OneTimePurchase extends CityPurchase
 {
     boolean wasDownload;
 
-    public oneTimePurchase(int cityPurchasedId, double fullPrice, double pricePayed) {
-        super(cityPurchasedId, fullPrice, pricePayed);
-        this.wasDownload=false;
+    public OneTimePurchase(int userId, int cityId, Date purchaseDate, double fullPrice, double pricePayed) {
+        super(userId, cityId, purchaseDate, fullPrice, pricePayed);
+        this.wasDownload = false;
     }
 
-    public oneTimePurchase(int cityPurchasedId, double fullPrice, double pricePayed, boolean wasDownload) {
-        super(cityPurchasedId, fullPrice, pricePayed);
-        this.wasDownload = wasDownload;
-    }
-
-    public boolean isWasDownload() {
+    public boolean getWasDownload() {
         return wasDownload;
     }
 
-    public void setWasDownload(boolean wasDownload) {
-        this.wasDownload = wasDownload;
+    public void updateToWasDownload() {
+        this.wasDownload = true;
     }
 }

@@ -1,5 +1,3 @@
-import jdk.dynalink.beans.StaticClass;
-
 import java.util.Date;
 
 public class Statistic implements Comparable<Statistic>

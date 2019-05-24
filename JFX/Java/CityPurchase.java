@@ -1,25 +1,31 @@
 import java.util.Date;
 public abstract class CityPurchase implements Comparable<CityPurchase>{
     private int  id;
-    private int cityPurchasedId;
+    private int cityId;
+    private int userId;
     private Date purchaseDate;
     private double fullPrice;
     private double pricePayed;
 
-    public CityPurchase(int cityPurchasedId, double fullPrice, double pricePayed) {
-        this.id=Database.generateIdCityPurchase();
-        this.cityPurchasedId = cityPurchasedId;
+    public CityPurchase(int userId,int cityId, Date purchaseDate, double fullPrice, double pricePayed) {
+        this.id = Database.generateIdCityPurchase();
+        this.cityId = cityId;
+        this.userId = userId;
+        this.purchaseDate = purchaseDate;
         this.fullPrice = fullPrice;
         this.pricePayed = pricePayed;
-        this.purchaseDate=new Date();
+    }
+
+    public int getUserId() {
+        return userId;
     }
 
     public int getId() {
         return id;
     }
 
-    public int getCityPurchasedId() {
-        return cityPurchasedId;
+    public int getCityId() {
+        return cityId;
     }
 
     public double getFullPrice() {
@@ -31,7 +37,7 @@ public abstract class CityPurchase implements Comparable<CityPurchase>{
     }
 
     public void setCityPurchasedId(int cityPurchasedId) {
-        this.cityPurchasedId = cityPurchasedId;
+        this.cityId = cityPurchasedId;
     }
 
     public void setFullPrice(double fullPrice) {
