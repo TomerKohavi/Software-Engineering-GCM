@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
@@ -36,6 +37,9 @@ public class LoginController {
 
     @FXML // fx:id="IncorrectText"
     private Text IncorrectText; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="RegisterHL"
+    private Hyperlink RegisterHL; // Value injected by FXMLLoader
 
     void loadPage(String FXMLpage) throws IOException {
         AnchorPane pane = (AnchorPane)FXMLLoader.load((URL)this.getClass().getResource(FXMLpage));
@@ -70,6 +74,12 @@ public class LoginController {
     		IncorrectText.setOpacity(1);
     		
     	}
+    }
+    
+
+    @FXML
+    void register(ActionEvent event) throws IOException {
+    	loadPage("RegisterScene.fxml");
     }
 
 }

@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -38,5 +39,7 @@
          </font>
       </JFXButton>
       <Text fx:id="IncorrectText" fill="RED" layoutX="648.0" layoutY="585.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect Username or Password" />
+      <Hyperlink fx:id="RegisterHL" layoutX="678.0" layoutY="565.0" onAction="#register" text="Click here" />
+      <Text layoutX="738.0" layoutY="581.0" strokeType="OUTSIDE" strokeWidth="0.0" text="to register" />
    </children>
 </AnchorPane>
