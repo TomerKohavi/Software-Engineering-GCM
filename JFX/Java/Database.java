@@ -86,11 +86,12 @@ public class Database
 
     //other types of search
     // something=null means don't search according to it!
+    // if all is null return empty array (size =0)
     public static int[] searchCity(String cityName,String cityDescription){return null;}
 
 	public static int[] searchUser(String username, String password){return null;}
 
-	public static int[] searchPlaceOfInterest(String placeName,String placeDescription){return null;}
+	public static int[] searchPlaceOfInterest(String placeName,String placeDescription,Integer cityId){return null;}
 
     public static int[] searchRouteStop(Integer routeId,Integer placeId,Integer numStop){return null;}
 
