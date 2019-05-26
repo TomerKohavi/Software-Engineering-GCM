@@ -8,7 +8,7 @@ public class Database
     /*
     Things to save in Tables:
     * All non abstract/final classes
-    */
+    */z
 
     //generate id
     public static int generateIdUser() {return 0;}
@@ -28,7 +28,7 @@ public class Database
 
     //simple get/save by id
     public static PlaceOfInterest getPlaceOfInterestById(int placeId){ return null;} // use PlaceOfInterest._createPlaceOfInterest() function
-    public static boolean savePlaceOfInterest(PlaceOfInterest p){return true;}//return if it's already in the database
+    public static boolean savePlaceOfInterest(PlaceOfInterest p){return true;}//return false if it's already in the database
     public static boolean deletePlaceOfInterest(int placeId) {return true;}//return true if it was deleted (false if it weren't in the database)
 
     public static Map getMapById(int mapId){ return null;}
