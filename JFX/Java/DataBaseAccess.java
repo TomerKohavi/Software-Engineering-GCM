@@ -1,13 +1,13 @@
-package db;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.net.ssl.SSLException;
+
 
 public class DataBaseAccess {
 	static private final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
@@ -19,10 +19,10 @@ public class DataBaseAccess {
 	static private final String DB_URL = "jdbc:mysql://remotemysql.com/"+ DB + "?useSSL=false";
 	static private final String USER = "PrtTXnuWoq";
 	static private final String PASS = "KOzAI33szl";
-	Connection conn = null;
-	Connection conn2 = null;
+	static Connection conn = null;
+	static Connection conn2 = null;
 
-	Statement stmt = null;
+	static Statement stmt = null;
 	
 	public DataBaseAccess()
 	{
@@ -55,24 +55,24 @@ public class DataBaseAccess {
     public static boolean savePlaceOfInterest(PlaceOfInterest p)//return if it's already in the database
 	{
 		try {
-			PreparedStatement check = this.conn2.prepareStatement("SELECT from POIs WHERE CityID=?, Name=?,"
+			PreparedStatement check = conn2.prepareStatement("SELECT from POIs WHERE CityID=?, Name=?,"
 					+ " Type=?, Description=?, ATD=?");
-			check.setInt(1, p.cityId);
-			check.setString(2, p.name);
-			check.setInt(3, p.type);
-			check.setString(4,  p.placeDescription);
-			check.setBoolean(5, p.accessibilityToDisabled);
-			check.executeUpdate();
-			if(!check.next())
+			check.setInt(1, p.getId());
+			check.setString(2, p.getName());
+			check.setInt(3, p.getType().getValue());
+			check.setString(4,  p.getPlaceDescription());
+			check.setBoolean(5, p.isAccessibilityToDisabled());
+			ResultSet x = check.executeQuery();
+			if(!x.next())
 				return false;
 			
-			PreparedStatement su = this.conn2.prepareStatement("INSERT INTO POIs (CityID, Name, Type, Description, ATD) VALUES "
+			PreparedStatement su = conn2.prepareStatement("INSERT INTO POIs (CityID, Name, Type, Description, ATD) VALUES "
 					+ "(?, ?, ?, ?, ?)");
-			su.setInt(1, p.cityId);
-			su.setString(2, p.name);
-			su.setInt(3, p.type);
-			su.setString(4,  p.placeDescription);
-			su.setBoolean(5, p.accessibilityToDisabled);
+			su.setInt(1, p.getId());
+			su.setString(2, p.getName());
+			su.setInt(3, p.getType().getValue());
+			su.setString(4,  p.getPlaceDescription());
+			su.setBoolean(5, p.isAccessibilityToDisabled());
 			su.executeUpdate();
 			} 
 		catch (Exception e)
@@ -82,31 +82,77 @@ public class DataBaseAccess {
 		return true;
 	}
 
-		
-	public void close()
+    public static ArrayList<Integer> searchPlaceOfInterest(String placeName,String placeDescription,Integer cityId)
 	{
 		try {
-			this.conn.close();
-			this.conn2.close();
-			this.stmt.close();
+			PreparedStatement gt = conn2.prepareStatement("SELECT ID FROM `POIs` WHERE Name=? "
+					+ "AND Description=? AND CityID=?");
+			gt.setString(1, placeName);
+			gt.setString(2, placeDescription);
+			gt.setInt(3, cityId);
+			ResultSet res = gt.executeQuery();
+			ArrayList<Integer> IDs = new ArrayList<>();
+			while(res.next())
+			{
+				int id=res.getInt("ID");
+				IDs.add(id);
+			}
+			return IDs;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+    
+    public static boolean deletePlaceOfInterest(int placeId) 
+	{
+		try {
+			PreparedStatement gt = conn2.prepareStatement("DELETE FROM `POIs` WHERE ID=?");
+			gt.setInt(1, placeId);
+			gt.executeQuery();
+			int count = gt.executeUpdate();
+			return count!=0;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} 
+	}
+    
+    public static PlaceOfInterest getPlaceOfInterestById(int placeId)
+	{
+		try {
+			PreparedStatement gt = conn2.prepareStatement("SELECT * FROM `POIs` WHERE ID=?");
+			gt.setInt(1, placeId);
+			ResultSet res = gt.executeQuery();
+			res.last();
+			//int id,int cityId, String name, PlaceType type, String placeDescription, boolean accessibilityToDisabled
+			int id=res.getInt("ID");
+			int cityId=res.getInt("CityID");
+			String name=res.getString("Name");
+			int int_type=res.getInt("Type");
+			PlaceOfInterest.PlaceType type=PlaceOfInterest.PlaceType.values()[int_type];
+			String placeDescription=res.getString("Description");
+			boolean accessibilityToDisabled=res.getInt("ATD")!=0;
+			return PlaceOfInterest._createPlaceOfInterest(id,cityId,name,type,placeDescription,accessibilityToDisabled);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} 
+	}
+    
+    public void close()
+	{
+		try {
+			conn.close();
+			conn2.close();
+			stmt.close();
 			return;
 		}
-		catch (SQLException se) {
-			se.printStackTrace();
-			System.out.println("SQLException: " + se.getMessage());
-            System.out.println("SQLState: " + se.getSQLState());
-            System.out.println("VendorError: " + se.getErrorCode());
-		} catch (Exception e) {
+		catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if (this.stmt != null)
-					this.stmt.close();
-				if (this.conn != null)
-					this.conn.close();
-			} catch (SQLException se) {
-				se.printStackTrace();
-			}
 		}
 		return;
 	}

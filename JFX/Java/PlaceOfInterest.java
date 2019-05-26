@@ -4,14 +4,26 @@ public class PlaceOfInterest
 {
     public enum PlaceType
     {
-        HISTORICAL,
-        MUSIEM,
-        HOTEL,
-        RESTURANT,
-        PUBLIC,
-        PARK,
-        STORE,
-        CINEMA
+        HISTORICAL(0),
+        MUSIEM(1),
+        HOTEL(2),
+        RESTURANT(3),
+        PUBLIC(4),
+        PARK(5),
+        STORE(6),
+        CINEMA(7);
+        
+        private final int value;
+        
+        PlaceType(final int nv)
+        {
+        	value = nv;
+        }
+        
+        public int getValue()
+        {
+        	return value;
+        }
     }
 
     private int id;
