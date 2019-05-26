@@ -90,7 +90,7 @@ public class Database
 
 	public static int[] searchUser(String username, String password){return null;}
 
-	public static int[] searchPlaceOfInterest(String placeName,String placeDescription){return null;}
+	public static int[] searchPlaceOfInterest(String placeName,String placeDescription,Integer cityId){return null;}
 
     public static int[] searchRouteStop(Integer routeId,Integer placeId,Integer numStop){return null;}
 
