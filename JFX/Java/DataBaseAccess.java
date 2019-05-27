@@ -28,26 +28,13 @@ public class DataBaseAccess {
 	{
 		try {
 			Class.forName(JDBC_DRIVER);
-			this.conn = DriverManager.getConnection(DB_URL, USER, PASS);
-			this.conn2 = DriverManager.getConnection(DB_URL, USER, PASS);
-			this.stmt = this.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			conn2 = DriverManager.getConnection(DB_URL, USER, PASS);
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		}
-		catch (SQLException se) {
-			se.printStackTrace();
-			System.out.println("SQLException: " + se.getMessage());
-            System.out.println("SQLState: " + se.getSQLState());
-            System.out.println("VendorError: " + se.getErrorCode());
-		} catch (Exception e) {
+		catch (Exception e)
+		{
 			e.printStackTrace();
-		} finally {
-			try {
-				if (this.stmt != null)
-					this.stmt.close();
-				if (this.conn != null)
-					this.conn.close();
-			} catch (SQLException se) {
-				se.printStackTrace();
-			}
 		}
 		
 	}
