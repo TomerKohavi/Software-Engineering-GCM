@@ -8,10 +8,10 @@ public final class InformationSystem
 
     //list of Statistic
     public static Statistic getStatistic(int cityId, Date d){
-        int[] ids=Database.searchStatistic(cityId,d);
-        if(ids.length!=1)
+        ArrayList<Integer> ids=Database.searchStatistic(cityId,d);
+        if(ids.size()!=1)
             return null;
-        Statistic s=Database._getStatisticById(ids[0]);
+        Statistic s=Database._getStatisticById(ids.get(0));
         if(s==null)
             return null;
         if(Database.getCityById(s.getCityId())==null)
@@ -59,7 +59,7 @@ public final class InformationSystem
     }
 
     public ArrayList<Statistic> getAllStatistics() {
-        int[] ids= Database.searchMapSight(null,null);
+        ArrayList<Integer> ids= Database.searchMapSight(null,null);
         ArrayList<Statistic> arrList=new ArrayList<Statistic>();
         for(int id : ids)
         {

@@ -23,8 +23,8 @@ public class Customer extends User{
 
     public Subscription getActiveSubscribeToCity(int cityId,Date dateToCheck)
     {
-        int[] ids=Database.searchSubscription(super.getId(),cityId,null,dateToCheck);
-        if(ids.length>1)
+        ArrayList<Integer> ids=Database.searchSubscription(super.getId(),cityId,null,dateToCheck);
+        if(ids.size()>1)
             for (int id: ids)
             {
                 Subscription s=Database._getSubscriptionById(id);
@@ -39,7 +39,7 @@ public class Customer extends User{
         return getActiveSubscribeToCity(cityId,dateToCheck)!=null;
     }
     
-    private ArrayList<Subscription> generateListSubscriptions(int[] ids)
+    private ArrayList<Subscription> generateListSubscriptions(ArrayList<Integer> ids)
     {
         ArrayList<Subscription> arrList=new ArrayList<Subscription>();
         for(int id : ids)
@@ -56,7 +56,7 @@ public class Customer extends User{
     }
 
     public ArrayList<Subscription> getAllSubscriptions() {
-        int[] ids = Database.searchSubscription(super.getId(), null, null, null);
+        ArrayList<Integer> ids = Database.searchSubscription(super.getId(), null, null, null);
         return generateListSubscriptions(ids);
     }
         
@@ -66,7 +66,7 @@ public class Customer extends User{
     }
 
     public ArrayList<Subscription> getAllActiveSubscriptions(Date dateToCheck) {
-        int[] ids=Database.searchSubscription(super.getId(),null,null,dateToCheck);
+        ArrayList<Integer> ids=Database.searchSubscription(super.getId(),null,null,dateToCheck);
         return generateListSubscriptions(ids);
     }
 
@@ -108,8 +108,8 @@ public class Customer extends User{
 
     public OneTimePurchase getOneTimePurchaseToCity(int cityId,boolean wasDownload)
     {
-        int[] ids=Database.searchOneTimePurchase(super.getId(),cityId,null,wasDownload);
-        if(ids.length>1)
+        ArrayList<Integer> ids=Database.searchOneTimePurchase(super.getId(),cityId,null,wasDownload);
+        if(ids.size()>1)
             for (int id: ids)
             {
                 OneTimePurchase s=Database._getOneTimePurchaseById(id);
@@ -130,7 +130,7 @@ public class Customer extends User{
         return getActiveOneTimePurchaseToCity(cityId)!=null;
     }
 
-    private ArrayList<OneTimePurchase> generateListOneTimePurchases(int[] ids)
+    private ArrayList<OneTimePurchase> generateListOneTimePurchases(ArrayList<Integer> ids)
     {
         ArrayList<OneTimePurchase> arrList=new ArrayList<OneTimePurchase>();
         for(int id : ids)
@@ -147,7 +147,7 @@ public class Customer extends User{
     }
 
     public ArrayList<OneTimePurchase> getAllOneTimePurchases() {
-        int[] ids = Database.searchOneTimePurchase(super.getId(), null, null, null);
+        ArrayList<Integer> ids = Database.searchOneTimePurchase(super.getId(), null, null, null);
         return generateListOneTimePurchases(ids);
     }
 
@@ -157,7 +157,7 @@ public class Customer extends User{
     }
 
     public ArrayList<OneTimePurchase> getAllActiveOneTimePurchases() {
-        int[] ids=Database.searchOneTimePurchase(super.getId(),null,null,false);
+        ArrayList<Integer> ids=Database.searchOneTimePurchase(super.getId(),null,null,false);
         return generateListOneTimePurchases(ids);
     }
 

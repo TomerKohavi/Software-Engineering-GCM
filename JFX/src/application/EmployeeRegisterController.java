@@ -13,7 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
-public class RegisterController {
+public class EmployeeRegisterController {
 	
 	String usr, pass, first, last, emailAdd, phoneNumber;
 	
@@ -54,7 +54,7 @@ public class RegisterController {
     
     @FXML
     void loginScene(ActionEvent event) throws IOException {
-    	loadPage("LoginScene.fxml");
+    	loadPage("EmployeeLoginScene.fxml");
     }
 
     @FXML
@@ -76,6 +76,7 @@ public class RegisterController {
     		Connector.usr_id = "1";
     		loadPage("HomePageScene.fxml");
     	}
+
     }
     
 }

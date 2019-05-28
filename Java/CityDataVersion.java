@@ -32,7 +32,7 @@ public class CityDataVersion
     }
 
     public ArrayList<MapSight> getAllMapSights() {
-        int[] ids= Database.searchMapSight(this.id,null);
+        ArrayList<Integer> ids= Database.searchMapSight(this.id,null);
         ArrayList<MapSight> arrList=new ArrayList<MapSight>();
         for(int id : ids)
         {
@@ -53,10 +53,10 @@ public class CityDataVersion
 
     public MapSight getMapSightByMapId(int mapId)
     {
-        int[] msId= Database.searchMapSight(this.id,mapId);
-        if(msId.length!=1)
+        ArrayList<Integer> msId= Database.searchMapSight(this.id,mapId);
+        if(msId.size()!=1)
             return null;
-        MapSight o=Database._getMapSightById(msId[0]);
+        MapSight o=Database._getMapSightById(msId.get(0));
         if(Database.getMapById(o.getMapId())==null)
         {
             Database._deleteMapSight(o.getId());
@@ -97,7 +97,7 @@ public class CityDataVersion
     }
 
     public ArrayList<PlaceOfInterestSight> getAllPlaceOfInterestSights() {
-        int[] ids= Database.searchPlaceOfInterestSight(this.id,null);
+        ArrayList<Integer> ids= Database.searchPlaceOfInterestSight(this.id,null);
         ArrayList<PlaceOfInterestSight> arrList=new ArrayList<PlaceOfInterestSight>();
         for(int id : ids)
         {
@@ -118,10 +118,10 @@ public class CityDataVersion
 
     public PlaceOfInterestSight getPlaceOfInterestSightByPlaceOfInterestId(int placeId)
     {
-        int[] ids= Database.searchPlaceOfInterestSight(this.id,placeId);
-        if(ids.length!=1)
+        ArrayList<Integer> ids= Database.searchPlaceOfInterestSight(this.id,placeId);
+        if(ids.size()!=1)
             return null;
-        PlaceOfInterestSight o=Database._getPlaceOfInterestSightById(ids[0]);
+        PlaceOfInterestSight o=Database._getPlaceOfInterestSightById(ids.get(0));
         if(Database.getPlaceOfInterestById(o.getPlaceOfInterestId())==null)
         {
             Database.deletePlaceOfInterest(o.getId());
@@ -162,7 +162,7 @@ public class CityDataVersion
     }
 
     public ArrayList<RouteSight> getAllRouteSights() {
-        int[] ids= Database.searchRouteSight(this.id,null);
+        ArrayList<Integer> ids= Database.searchRouteSight(this.id,null);
         ArrayList<RouteSight> arrList=new ArrayList<RouteSight>();
         for(int id : ids)
         {
@@ -182,10 +182,10 @@ public class CityDataVersion
     }
 
     public RouteSight getRouteSightByRouteId(int routeId) {
-        int[] ids = Database.searchRouteSight(this.id, routeId);
-        if (ids.length != 1)
+        ArrayList<Integer> ids = Database.searchRouteSight(this.id, routeId);
+        if (ids.size() != 1)
             return null;
-        RouteSight o = Database._getRouteSightById(ids[0]);
+        RouteSight o = Database._getRouteSightById(ids.get(0));
         if (Database.getRouteById(o.getRouteId()) == null)
         {
             Database._deleteRouteSight(o.getId());

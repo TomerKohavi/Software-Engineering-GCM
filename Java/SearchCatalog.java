@@ -8,8 +8,8 @@ public final class SearchCatalog
     {
         ArrayList<City> listCities=new ArrayList<>();
         ArrayList<City> listCitiesAccordingToPlaces=new ArrayList<>();
-        int[] citiesIds=Database.searchCity(cityName,cityDescription);
-        int[] placesIds=Database.searchPlaceOfInterest(placeName,placeDescription,null);
+        ArrayList<Integer> citiesIds=Database.searchCity(cityName,cityDescription);
+        ArrayList<Integer> placesIds=Database.searchPlaceOfInterest(placeName,placeDescription,null);
         if(!(cityName==null & cityDescription==null))
             for(int id:citiesIds)
             {
@@ -39,8 +39,8 @@ public final class SearchCatalog
     {
         ArrayList<Map> listMapAccordingToCities=new ArrayList<>();
         ArrayList<Map> listMapAccordingToPlaces=new ArrayList<>();
-        int[] citiesIds=Database.searchCity(cityName,cityDescription);
-        int[] placesIds=Database.searchPlaceOfInterest(placeName,placeDescription,null);
+        ArrayList<Integer> citiesIds=Database.searchCity(cityName,cityDescription);
+        ArrayList<Integer> placesIds=Database.searchPlaceOfInterest(placeName,placeDescription,null);
         if(!(cityName==null & cityDescription==null))
             for(int id:citiesIds)
             {
@@ -61,7 +61,7 @@ public final class SearchCatalog
         if(!(placeName==null && placeDescription==null))
             for(int id:placesIds)
             {
-                int[] locIds=Database.searchLocation(null,id);
+                ArrayList<Integer> locIds=Database.searchLocation(null,id);
                 for(int locId:locIds)
                 {
                     Location c=Database._getLocationById(locId);
@@ -82,8 +82,8 @@ public final class SearchCatalog
     {
         ArrayList<PlaceOfInterest> listPlacesAccordingToCities=new ArrayList<>();
         ArrayList<PlaceOfInterest> listPlaces=new ArrayList<>();
-        int[] citiesIds=Database.searchCity(cityName,cityDescription);
-        int[] placesIds=Database.searchPlaceOfInterest(placeName,placeDescription,null);
+        ArrayList<Integer> citiesIds=Database.searchCity(cityName,cityDescription);
+        ArrayList<Integer> placesIds=Database.searchPlaceOfInterest(placeName,placeDescription,null);
         if(!(cityName==null & cityDescription==null))
             for(int id:citiesIds)
             {
