@@ -40,6 +40,9 @@ public class LoginController {
     
     @FXML // fx:id="RegisterHL"
     private Hyperlink RegisterHL; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="Back"
+    private JFXButton Back; // Value injected by FXMLLoader
 
     void loadPage(String FXMLpage) throws IOException {
         AnchorPane pane = (AnchorPane)FXMLLoader.load((URL)this.getClass().getResource(FXMLpage));
@@ -66,7 +69,10 @@ public class LoginController {
     	user = Username.getText();
     	pass = Password.getText();
     	if (user.equals(pass))
-    		loadPage("SearchScene.fxml");
+    	{
+    		Connector.usr_id = "1";
+    		loadPage("HomePageScene.fxml");
+    	}
     	else
     	{
     		Username.setText("");
@@ -74,6 +80,11 @@ public class LoginController {
     		IncorrectText.setOpacity(1);
     		
     	}
+    }
+    
+    @FXML
+    void goBack(ActionEvent event) throws IOException {
+    	loadPage("HomePageScene.fxml");
     }
     
 
