@@ -58,7 +58,7 @@ public class RegisterController {
     }
 
     @FXML
-    void register(ActionEvent event) throws IOException {
+    void register(ActionEvent event) {
     	usr = Username.getText();
     	pass = Password.getText();
     	first = FirstName.getText();
@@ -71,11 +71,7 @@ public class RegisterController {
     		IncorrectText.setOpacity(1);
     	}
     	else
-    	{
     		IncorrectText.setOpacity(0);
-    		Connector.usr_id = "1";
-    		loadPage("HomePageScene.fxml");
-    	}
     }
     
 }

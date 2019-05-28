@@ -45,7 +45,7 @@ public class PlaceOfInterest
     }
 
     public ArrayList<Location> getAllLocations() {
-        ArrayList<Integer> routeStopsIds= Database.searchLocation(null,this.id);
+        int[] routeStopsIds= Database.searchLocation(null,this.id);
         ArrayList<Location> arrList=new ArrayList<Location>();
         for(int lId : routeStopsIds)
             arrList.add(Database._getLocationById(lId));

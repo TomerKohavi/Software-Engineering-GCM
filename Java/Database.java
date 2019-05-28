@@ -86,31 +86,31 @@ public class Database
 
     //other types of search
     // something=null means don't search according to it!
-    public static ArrayList<Integer> searchCity(String cityName,String cityDescription){return null;}
+    public static int[] searchCity(String cityName,String cityDescription){return null;}
 
-	public static ArrayList<Integer> searchUser(String username, String password){return null;}
+	public static int[] searchUser(String username, String password){return null;}
 
-	public static ArrayList<Integer> searchPlaceOfInterest(String placeName,String placeDescription,Integer cityId){return null;}
+	public static int[] searchPlaceOfInterest(String placeName,String placeDescription,Integer cityId){return null;}
 
-    public static ArrayList<Integer> searchRouteStop(Integer routeId,Integer placeId,Integer numStop){return null;}
+    public static int[] searchRouteStop(Integer routeId,Integer placeId,Integer numStop){return null;}
 
-    public static ArrayList<Integer> searchLocation(Integer mapId,Integer placeId){return null;}
+    public static int[] searchLocation(Integer mapId,Integer placeId){return null;}
 
-    public static ArrayList<Integer> searchMapSight(Integer cityDataVersionId,Integer mapId){return null;}
+    public static int[] searchMapSight(Integer cityDataVersionId,Integer mapId){return null;}
 
-    public static ArrayList<Integer> searchPlaceOfInterestSight(Integer cityDataVersionId,Integer placeId){return null;}
+    public static int[] searchPlaceOfInterestSight(Integer cityDataVersionId,Integer placeId){return null;}
 
-    public static ArrayList<Integer> searchRouteSight(Integer cityDataVersionId,Integer routeId){return null;}
+    public static int[] searchRouteSight(Integer cityDataVersionId,Integer routeId){return null;}
 
-    public static ArrayList<Integer> searchCityDataVersion(Integer cityId){return null;}
+    public static int[] searchCityDataVersion(Integer cityId){return null;}
 
-    public static ArrayList<Integer> searchStatistic(Integer cityId, Date date){return null;}
+    public static int[] searchStatistic(Integer cityId, Date date){return null;}
 
-    public static ArrayList<Integer> searchSubscription(Integer userId,Integer cityId, Date purchaseDate,Date expirationDateAfterThis){return null;}// note: check the expirationDate is bigger than expirationDateAfterThis (not equal)
+    public static int[] searchSubscription(Integer userId,Integer cityId, Date purchaseDate,Date expirationDateAfterThis){return null;}// note: check the expirationDate is bigger than expirationDateAfterThis (not equal)
 
-    public static ArrayList<Integer> searchOneTimePurchase(Integer userId,Integer cityId, Date purchaseDate,Boolean wasDownload){return null;}
+    public static int[] searchOneTimePurchase(Integer userId,Integer cityId, Date purchaseDate,Boolean wasDownload){return null;}
 
-    /*public static ArrayList<Integer> intersection(ArrayList<Integer> a, ArrayList<Integer> b) {
+    /*public static int[] intersection(int[] a, int[] b) {
         return Arrays.stream(a)
                 .distinct()
                 .filter(x -> Arrays.stream(b).anyMatch(y -> y == x))

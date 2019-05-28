@@ -31,7 +31,7 @@ public class Route
     }
 
     public ArrayList<RouteStop> getAllRouteStops() {
-        ArrayList<Integer> routeStopsIds= Database.searchRouteStop(this.id,null,null);
+        int[] routeStopsIds= Database.searchRouteStop(this.id,null,null);
         ArrayList<RouteStop> arrList=new ArrayList<RouteStop>();
         for(int rdId : routeStopsIds)
             arrList.add(Database._getRouteStopById(rdId));
@@ -41,18 +41,18 @@ public class Route
 
     public RouteStop getRouteStopByPlaceId(int placeId)
     {
-        ArrayList<Integer> rsIds= Database.searchRouteStop(this.id,placeId,null);
-        if(rsIds.size()!=1)
+        int[] rsIds= Database.searchRouteStop(this.id,placeId,null);
+        if(rsIds.length!=1)
             return null;
-        return Database._getRouteStopById(rsIds.get(0));
+        return Database._getRouteStopById(rsIds[0]);
     }
 
     public RouteStop getRouteStopAtNum(int num)
     {
-        ArrayList<Integer> rsIds= Database.searchRouteStop(this.id,null,num);
-        if(rsIds.size()!=1)
+        int[] rsIds= Database.searchRouteStop(this.id,null,num);
+        if(rsIds.length!=1)
             return null;
-        return Database._getRouteStopById(rsIds.get(0));
+        return Database._getRouteStopById(rsIds[0]);
     }
 
     public RouteStop getRouteStopById(int rsId)

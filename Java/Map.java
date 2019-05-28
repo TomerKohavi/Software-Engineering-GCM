@@ -28,7 +28,7 @@ public class Map {
     }
 
     public ArrayList<Location> getAllLocations() {
-        ArrayList<Integer> ids= Database.searchLocation(this.id,null);
+        int[] ids= Database.searchLocation(this.id,null);
         ArrayList<Location> arrList=new ArrayList<Location>();
         for(int id : ids)
         {
@@ -49,10 +49,10 @@ public class Map {
 
     public Location getLocationByPlaceOfInterestId(int placeOfInterestId)
     {
-        ArrayList<Integer> locId= Database.searchLocation(this.id,placeOfInterestId);
-        if(locId.size()!=1)
+        int[] locId= Database.searchLocation(this.id,placeOfInterestId);
+        if(locId.length!=1)
             return null;
-        Location o=Database._getLocationById(locId.get(0));
+        Location o=Database._getLocationById(locId[0]);
         if(Database.getPlaceOfInterestById(o.getPlaceOfInterestId())==null)
         {
             Database._deleteLocation(o.getId());

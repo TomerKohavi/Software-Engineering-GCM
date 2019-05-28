@@ -11,7 +11,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
@@ -38,9 +37,6 @@ public class EmployeeLoginController {
     
     @FXML // fx:id="IncorrectText"
     private Text IncorrectText; // Value injected by FXMLLoader
-    
-    @FXML // fx:id="RegisterHL"
-    private Hyperlink RegisterHL; // Value injected by FXMLLoader
 
     void loadPage(String FXMLpage) throws IOException {
         AnchorPane pane = (AnchorPane)FXMLLoader.load((URL)this.getClass().getResource(FXMLpage));
@@ -49,17 +45,7 @@ public class EmployeeLoginController {
     
     @FXML
     void goBack(ActionEvent event) throws IOException {
-    	loadPage("HomePageScene.fxml");
-    }
-    
-    @FXML
-    void customerAccess(ActionEvent event) throws IOException {
     	loadPage("LoginScene.fxml");
-    }
-    
-    @FXML
-    void register(ActionEvent event) throws IOException {
-    	loadPage("employeeRegisterScene.fxml");
     }
 
     @FXML
@@ -77,10 +63,7 @@ public class EmployeeLoginController {
     	user = Username.getText();
     	pass = Password.getText();
     	if (user.equals(pass))
-    	{
-    		Connector.usr_id = "1";
-    		loadPage("HomePageScene.fxml");
-    	}
+    		loadPage("SearchScene.fxml");
     	else
     	{
     		Username.setText("");

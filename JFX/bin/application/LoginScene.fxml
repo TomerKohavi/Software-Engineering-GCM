@@ -41,10 +41,5 @@
       <Text fx:id="IncorrectText" fill="RED" layoutX="648.0" layoutY="585.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect Username or Password" />
       <Hyperlink fx:id="RegisterHL" layoutX="678.0" layoutY="565.0" onAction="#register" text="Click here" />
       <Text layoutX="738.0" layoutY="581.0" strokeType="OUTSIDE" strokeWidth="0.0" text="to register" />
-      <JFXButton fx:id="Back" layoutX="1125.0" layoutY="64.0" onAction="#goBack" prefHeight="45.0" prefWidth="105.0" style="-fx-background-color: #41e0d0;" text="Back">
-         <font>
-            <Font size="21.0" />
-         </font>
-      </JFXButton>
    </children>
 </AnchorPane>
