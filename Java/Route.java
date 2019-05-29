@@ -70,19 +70,23 @@ public class Route
             rs.deleteFromDatabase();
     }
 
-    public RouteStop addRouteStop(int placeId,Time recommendedTime)
+    public RouteStop addRouteStop(PlaceOfInterest p,Time recommendedTime)
     {
+        if(p.getCityId()!=this.cityId)
+            return null;
         int index=temp_routeStops.size();
-        RouteStop rs=new RouteStop(placeId,index,recommendedTime);
+        RouteStop rs=new RouteStop(p.getId(),index,recommendedTime);
         temp_routeStops.add(rs);
         return rs;
     }
 
-    public RouteStop addRouteStop(int placeId,Time recommendedTime,int index)
+    public RouteStop addRouteStop(PlaceOfInterest p,Time recommendedTime,int index)
     {
+        if(p.getCityId()!=this.cityId)
+            return null;
         if(index<0 || index>temp_routeStops.size())
             return null;
-        RouteStop rs=new RouteStop(placeId,index,recommendedTime);
+        RouteStop rs=new RouteStop(p.getId(),index,recommendedTime);
         temp_routeStops.add(index,rs);
         for(int i=index;i<temp_routeStops.size();i++)
             temp_routeStops.get(i).setNumStop(i);
