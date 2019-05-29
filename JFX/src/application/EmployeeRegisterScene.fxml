@@ -27,6 +27,10 @@
          </children></Pane>
       <JFXTextField fx:id="Username" focusColor="#41e0d0" layoutX="433.0" layoutY="310.0" prefHeight="25.0" prefWidth="287.0" promptText="Username" />
       <JFXPasswordField fx:id="Password" focusColor="#41e0d0" layoutX="792.0" layoutY="310.0" prefHeight="25.0" prefWidth="287.0" promptText="Password" />
+      <JFXTextField fx:id="FirstName" focusColor="#41e0d0" layoutX="433.0" layoutY="375.0" prefHeight="25.0" prefWidth="287.0" promptText="First Name" />
+      <JFXTextField fx:id="LastName" focusColor="#41e0d0" layoutX="792.0" layoutY="375.0" prefHeight="25.0" prefWidth="287.0" promptText="Last Name" />
+      <JFXTextField fx:id="Email" focusColor="#41e0d0" layoutX="433.0" layoutY="449.0" prefHeight="25.0" prefWidth="287.0" promptText="Email" />
+      <JFXTextField fx:id="Phone" focusColor="#41e0d0" layoutX="792.0" layoutY="449.0" prefHeight="25.0" prefWidth="287.0" promptText="Phone" />
       <JFXButton fx:id="Register" layoutX="616.0" layoutY="535.0" onAction="#register" prefHeight="45.0" prefWidth="287.0" style="-fx-background-color: #41e0d0;" text="Register">
          <font>
             <Font size="21.0" />
@@ -38,9 +42,5 @@
          </font>
       </JFXButton>
       <Text fx:id="IncorrectText" fill="RED" layoutX="674.0" layoutY="611.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect Username or Password" />
-      <JFXTextField fx:id="FirstName" focusColor="#41e0d0" layoutX="433.0" layoutY="375.0" prefHeight="25.0" prefWidth="287.0" promptText="First Name" />
-      <JFXTextField fx:id="LastName" focusColor="#41e0d0" layoutX="792.0" layoutY="375.0" prefHeight="25.0" prefWidth="287.0" promptText="Last Name" />
-      <JFXTextField fx:id="Email" focusColor="#41e0d0" layoutX="433.0" layoutY="449.0" prefHeight="25.0" prefWidth="287.0" promptText="Email" />
-      <JFXTextField fx:id="Phone" focusColor="#41e0d0" layoutX="792.0" layoutY="449.0" prefHeight="25.0" prefWidth="287.0" promptText="Phone" />
    </children>
 </AnchorPane>

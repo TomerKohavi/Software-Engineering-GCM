@@ -17,17 +17,20 @@
             <Font size="21.0" />
          </font>
       </JFXButton>
-      <Text fill="#41e0d0" layoutX="202.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search City">
+      <Text fill="#41e0d0" layoutX="202.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search">
          <font>
             <Font size="30.0" />
          </font>
       </Text>
-      <Text fx:id="NotValid" fill="RED" layoutX="789.0" layoutY="77.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Can't find matching result">
+      <Text fx:id="NotValid" fill="RED" layoutX="861.0" layoutY="116.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Can't find matching result">
          <font>
             <Font size="18.0" />
          </font></Text>
-      <JFXTextField fx:id="SearchBox" focusColor="#41e0d0" layoutX="369.0" layoutY="58.0" onAction="#search" prefHeight="25.0" prefWidth="290.0" promptText="Map Name" />
-      <JFXListView fx:id="Info" layoutX="162.0" layoutY="199.0" prefHeight="601.0" prefWidth="524.0" style="-fx-border-color: #41e0d0; -fx-border-width: 2 0 2 0;" />
+      <JFXTextField fx:id="NameBox" focusColor="#41e0d0" layoutX="315.0" layoutY="57.0" prefHeight="25.0" prefWidth="244.0" promptText="Name" />
+      <JFXTextField fx:id="InfoBox" focusColor="#41e0d0" layoutX="587.0" layoutY="58.0" prefHeight="25.0" prefWidth="244.0" promptText="Info" />
+      <JFXButton fx:id="SearchCityButton" layoutX="853.0" layoutY="58.0" onAction="#searchCity" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Search City" />
+      <JFXButton fx:id="SearchPOIButton" layoutX="977.0" layoutY="58.0" onAction="#searchPOI" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Search POI" />
+      <JFXListView fx:id="MainList" layoutX="162.0" layoutY="199.0" prefHeight="601.0" prefWidth="524.0" style="-fx-border-color: #41e0d0; -fx-border-width: 2 0 2 0;" />
       <Text fx:id="Text1" layoutX="202.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font size="18.0" />
@@ -43,7 +46,7 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <ImageView fx:id="MapImage" fitHeight="609.0" fitWidth="606.0" layoutX="686.0" layoutY="199.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="MapImage" fitHeight="600.0" fitWidth="600.0" layoutX="686.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true" />
       <Pane prefHeight="800.0" prefWidth="163.0" style="-fx-background-color: #41e0d0; -fx-border-width: 0 2 0 0; -fx-border-color: #000000;">
          <children>
             <ImageView fitHeight="265.0" fitWidth="338.0" layoutX="-51.0" layoutY="535.0" pickOnBounds="true" preserveRatio="true">
@@ -51,17 +54,22 @@
                   <Image url="@../../Pics/GCM%20Logo_WB.png" />
                </image>
             </ImageView>
-            <JFXButton fx:id="SideMap" layoutX="-3.0" layoutY="199.0" onAction="#showMaps" prefHeight="49.0" prefWidth="163.0" style="-fx-border-width: 2 0 2 0; -fx-border-color: #000000;" text="Maps">
+            <JFXButton fx:id="SideSearch" layoutY="199.0" onAction="#showSearch" opacity="0.5" prefHeight="49.0" prefWidth="163.0" style="-fx-border-width: 2 0 2 0; -fx-border-color: #000000;" text="Search">
                <font>
                   <Font size="21.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="SidePOI" layoutX="-3.0" layoutY="246.0" onAction="#showPOI" prefHeight="49.0" prefWidth="163.0" style="-fx-border-width: 2 0 2 0; -fx-border-color: #000000;" text="POI">
+            <JFXButton fx:id="SideMap" layoutY="246.0" onAction="#showMaps" opacity="0.5" prefHeight="49.0" prefWidth="163.0" style="-fx-border-width: 2 0 2 0; -fx-border-color: #000000;" text="Maps">
                <font>
                   <Font size="21.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="SideRoutes" layoutX="-3.0" layoutY="293.0" onAction="#showRoutes" prefHeight="49.0" prefWidth="163.0" style="-fx-border-width: 2 0 2 0; -fx-border-color: #000000;" text="Routes">
+            <JFXButton fx:id="SidePOI" layoutY="293.0" onAction="#showPOI" opacity="0.5" prefHeight="49.0" prefWidth="163.0" style="-fx-border-width: 2 0 2 0; -fx-border-color: #000000;" text="POI">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="SideRoutes" layoutY="340.0" onAction="#showRoutes" opacity="0.5" prefHeight="49.0" prefWidth="163.0" style="-fx-border-width: 2 0 2 0; -fx-border-color: #000000;" text="Routes">
                <font>
                   <Font size="21.0" />
                </font>
