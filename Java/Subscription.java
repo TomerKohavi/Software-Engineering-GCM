@@ -19,6 +19,14 @@ public class Subscription extends CityPurchase {
         this.expirationDate = expirationDate;
     }
 
+    public void saveToDatabase(){
+        Database._saveSubscription(this);
+    }
+
+    public void deleteFromDatabase(){
+        Database._deleteSubscription(this.getId());
+    }
+
     public boolean isGoingToEnd(Date currentDate)
     {
         return expirationDate.getTime()-currentDate.getTime()<closeTime.getTime();

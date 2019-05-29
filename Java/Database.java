@@ -43,9 +43,13 @@ public class Database
     public static boolean saveCity(City c){return true;}
     public static boolean deleteCity(int cityId) {return true;}
 	
-	public static User getUserById(int userId){ return null;}
-    public static boolean saveUser(User u){return true;}
-    public static boolean deleteUser(int userId) {return true;}
+	public static Customer getCustomerById(int customerId){ return null;}
+    public static boolean saveCustomer(Customer c){return true;}
+    public static boolean deleteCustomer(int customerId) {return true;}
+
+    public static Employee getEmployeeById(int employeeId){ return null;}
+    public static boolean saveEmployee(Employee e){return true;}
+    public static boolean deleteEmployee(int employeeId) {return true;}
 
     public static Location _getLocationById(int LocationId){ return null;} //friend to Map
     public static boolean _saveLocation(Location l){return true;} //friend to Map
@@ -56,7 +60,7 @@ public class Database
     public static boolean _deleteRouteStop(int routeStopId) {return true;} //friend to Route
 
     public static MapSight _getMapSightById(int mapSightId){ return null;} //friend to CityDataVersion
-    public static boolean _saveMapSight(MapSight ms){return true;} //friend to CityDataVersion
+    public static boolean _saveMapSight(MapSight ms){return true;} //friend to MapSight
     public static boolean _deleteMapSight(int mapSightId) {return true;} //friend to CityDataVersion
 
     public static PlaceOfInterestSight _getPlaceOfInterestSightById(int placeOfInterestSightId){ return null;} //friend to CityDataVersion
@@ -86,31 +90,31 @@ public class Database
 
     //other types of search
     // something=null means don't search according to it!
-    public static int[] searchCity(String cityName,String cityDescription){return null;}
+    public static ArrayList<Integer> searchCity(String cityName,String cityDescription){return null;}
 
-	public static int[] searchUser(String username, String password){return null;}
+	public static ArrayList<Integer> searchUser(String username, String password){return null;}
 
-	public static int[] searchPlaceOfInterest(String placeName,String placeDescription,Integer cityId){return null;}
+	public static ArrayList<Integer> searchPlaceOfInterest(String placeName,String placeDescription,Integer cityId){return null;}
 
-    public static int[] searchRouteStop(Integer routeId,Integer placeId,Integer numStop){return null;}
+    public static ArrayList<Integer> searchRouteStop(Integer routeId,Integer placeId,Integer numStop){return null;}
 
-    public static int[] searchLocation(Integer mapId,Integer placeId){return null;}
+    public static ArrayList<Integer> searchLocation(Integer mapId,Integer placeId){return null;}
 
-    public static int[] searchMapSight(Integer cityDataVersionId,Integer mapId){return null;}
+    public static ArrayList<Integer> searchMapSight(Integer cityDataVersionId,Integer mapId){return null;}
 
-    public static int[] searchPlaceOfInterestSight(Integer cityDataVersionId,Integer placeId){return null;}
+    public static ArrayList<Integer> searchPlaceOfInterestSight(Integer cityDataVersionId,Integer placeId){return null;}
 
-    public static int[] searchRouteSight(Integer cityDataVersionId,Integer routeId){return null;}
+    public static ArrayList<Integer> searchRouteSight(Integer cityDataVersionId,Integer routeId){return null;}
 
-    public static int[] searchCityDataVersion(Integer cityId){return null;}
+    public static ArrayList<Integer> searchCityDataVersion(Integer cityId){return null;}
 
-    public static int[] searchStatistic(Integer cityId, Date date){return null;}
+    public static ArrayList<Integer> searchStatistic(Integer cityId, Date date){return null;}
 
-    public static int[] searchSubscription(Integer userId,Integer cityId, Date purchaseDate,Date expirationDateAfterThis){return null;}// note: check the expirationDate is bigger than expirationDateAfterThis (not equal)
+    public static ArrayList<Integer> searchSubscription(Integer userId,Integer cityId, Date purchaseDate,Date date,Boolean afterDate){return null;}// note: afterDate=True, we looking for the active subscriptions means their date>=input date.  afterDate=false we are looking for unactivated subscriptions
 
-    public static int[] searchOneTimePurchase(Integer userId,Integer cityId, Date purchaseDate,Boolean wasDownload){return null;}
+    public static ArrayList<Integer> searchOneTimePurchase(Integer userId,Integer cityId, Date purchaseDate,Boolean wasDownload){return null;}
 
-    /*public static int[] intersection(int[] a, int[] b) {
+    /*public static ArrayList<Integer> intersection(ArrayList<Integer> a, ArrayList<Integer> b) {
         return Arrays.stream(a)
                 .distinct()
                 .filter(x -> Arrays.stream(b).anyMatch(y -> y == x))

@@ -28,7 +28,7 @@ public class City
     }
 
     public ArrayList<CityDataVersion> getAllCityDataVersions() {
-        int[] ids= Database.searchCityDataVersion(this.id);
+        ArrayList<Integer> ids= Database.searchCityDataVersion(this.id);
         ArrayList<CityDataVersion> arrList=new ArrayList<CityDataVersion>();
         for(int id : ids)
         {
@@ -40,7 +40,7 @@ public class City
     }
 
     public ArrayList<CityDataVersion> getAllUnpublishedCityDataVersions() {
-        int[] ids= Database.searchCityDataVersion(this.id);
+        ArrayList<Integer> ids= Database.searchCityDataVersion(this.id);
         ArrayList<CityDataVersion> arrList=new ArrayList<CityDataVersion>();
         for(int id : ids)
         {

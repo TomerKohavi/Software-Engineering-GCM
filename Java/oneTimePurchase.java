@@ -18,6 +18,12 @@ public class OneTimePurchase extends CityPurchase
         this.wasDownload = false;
     }
 
+    public void saveToDatabase(){
+        Database._saveOneTimePurchase(this);
+    }
+
+    public void deleteFromDatabase(){Database._deleteOneTimePurchase(this.getId());}
+
     public boolean getWasDownload() {
         return wasDownload;
     }

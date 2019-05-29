@@ -5,105 +5,128 @@ import java.util.Collections;
 public class Route
 {
     private int id;
+    private int cityId;
     private String info;
     private boolean acceptabilityToDisabled;
-    private int numStops;
-    //list of RouteStop
+
+    ArrayList<RouteStop> temp_routeStops;
+
+    ArrayList<RouteStop> temp_removeRouteStops;
 
 
-    private Route(int id, String info, boolean acceptabilityToDisabled, int numStops) {
+    private Route(int id,int cityId, String info, boolean acceptabilityToDisabled) {
         this.id = id;
+        this.cityId=cityId;
         this.info = info;
         this.acceptabilityToDisabled = acceptabilityToDisabled;
-        this.numStops = numStops;
+        this.temp_routeStops=generateRouteStops();
+        this.temp_removeRouteStops=new ArrayList<>();
     }
 
-    public static Route _createRoute(int id, String info, boolean acceptabilityToDisabled, int numStops){ //friend to Database
-        return new Route( id,  info,  acceptabilityToDisabled,  numStops);
+    public static Route _createRoute(int id,int cityId, String info, boolean acceptabilityToDisabled){ //friend to Database
+        return new Route( id,cityId,  info,  acceptabilityToDisabled);
     }
 
-    public Route(String info, boolean acceptabilityToDisabled)
+    public Route(int cityId,String info, boolean acceptabilityToDisabled)
     {
         this.id=Database.generateIdRoute();
+        this.cityId=cityId;
         this.info = info;
         this.acceptabilityToDisabled = acceptabilityToDisabled;
-        numStops=0;
+        this.temp_routeStops=new ArrayList<>();
+        this.temp_removeRouteStops=new ArrayList<>();
     }
 
-    public ArrayList<RouteStop> getAllRouteStops() {
-        int[] routeStopsIds= Database.searchRouteStop(this.id,null,null);
+    private ArrayList<RouteStop> generateRouteStops() {
+        ArrayList<Integer> routeStopsIds= Database.searchRouteStop(this.id,null,null);
         ArrayList<RouteStop> arrList=new ArrayList<RouteStop>();
         for(int rdId : routeStopsIds)
             arrList.add(Database._getRouteStopById(rdId));
         Collections.sort(arrList);
+        for(int i=0;i<arrList.size();i++)
+            arrList.get(i).setNumStop(i);
         return arrList;
     }
 
-    public RouteStop getRouteStopByPlaceId(int placeId)
+    public void saveToDatabase()
     {
-        int[] rsIds= Database.searchRouteStop(this.id,placeId,null);
-        if(rsIds.length!=1)
-            return null;
-        return Database._getRouteStopById(rsIds[0]);
+        Database.saveRoute(this);
+        //delete removes
+        for(RouteStop rs:temp_removeRouteStops)
+            rs.deleteFromDatabase();
+        this.temp_removeRouteStops=new ArrayList<>();
+        //save list
+        for(RouteStop rs:temp_routeStops)
+            rs.saveToDatabase();
     }
 
-    public RouteStop getRouteStopAtNum(int num)
+    public void deleteFromDatabase()
     {
-        int[] rsIds= Database.searchRouteStop(this.id,null,num);
-        if(rsIds.length!=1)
-            return null;
-        return Database._getRouteStopById(rsIds[0]);
-    }
-
-    public RouteStop getRouteStopById(int rsId)
-    {
-        RouteStop rs=Database._getRouteStopById(rsId);
-        if(rs==null || rs.getRouteId()!=this.id)
-            return null;
-        return rs;
+        Database.deleteRoute(this.id);
+        for(RouteStop rs:temp_removeRouteStops)
+            rs.deleteFromDatabase();
+        this.temp_removeRouteStops=new ArrayList<>();
+        for(RouteStop rs:temp_routeStops)
+            rs.deleteFromDatabase();
     }
 
     public RouteStop addRouteStop(int placeId,Time recommendedTime)
     {
-        int index=this.numStops;
-        this.numStops++;
+        int index=temp_routeStops.size();
         RouteStop rs=new RouteStop(placeId,index,recommendedTime);
-        Database._saveRouteStop(rs);
+        temp_routeStops.add(rs);
         return rs;
     }
 
     public RouteStop addRouteStop(int placeId,Time recommendedTime,int index)
     {
-        if(index>this.numStops)
+        if(index<0 || index>temp_routeStops.size())
             return null;
         RouteStop rs=new RouteStop(placeId,index,recommendedTime);
-        ArrayList<RouteStop> listRs=getAllRouteStops();
-        for(int i=index;i<listRs.size();i++)
-        {
-            RouteStop temp=listRs.get(i);
-            temp.setNumStop(i+1);
-            Database._saveRouteStop(temp);
-        }
-        Database._saveRouteStop(rs);
-        this.numStops++;
+        temp_routeStops.add(index,rs);
+        for(int i=index;i<temp_routeStops.size();i++)
+            temp_routeStops.get(i).setNumStop(i);
         return rs;
+    }
+
+    public RouteStop getRouteStopByPlaceId(int placeId)
+    {
+        for(RouteStop rs:temp_routeStops) {
+            if (rs.getPlaceId() == placeId)
+                return rs;
+        }
+        return null;
+    }
+
+    public RouteStop getRouteStopAtNum(int num)
+    {
+        if(num<0 || num>=temp_routeStops.size())
+            return null;
+        return temp_routeStops.get(num);
+    }
+
+    public RouteStop getRouteStopById(int rsId)
+    {
+        for(RouteStop rs:temp_routeStops) {
+            if (rs.getId() == rsId)
+                return rs;
+        }
+        return null;
     }
 
     public RouteStop removeRouteStopAtIndex(int index)
     {
-        if(index>=this.numStops)
+        if(index<0 || index>=temp_routeStops.size())
             return null;
-        ArrayList<RouteStop> listRs=getAllRouteStops();
-        RouteStop rs=listRs.get(index);
-        for(int i=index+1;i<listRs.size();i++)
-        {
-            RouteStop temp=listRs.get(i);
-            temp.setNumStop(i-1);
-            Database._saveRouteStop(temp);
-        }
-        Database._deleteRouteStop(rs.getId());
-        this.numStops--;
+        RouteStop rs= temp_routeStops.remove(index);
+        for(int i=index;i<temp_routeStops.size();i++)
+            temp_routeStops.get(i).setNumStop(i);
+        temp_removeRouteStops.add(rs);
         return rs;
+    }
+
+    public ArrayList<RouteStop> getCopyRouteStops(){
+        return new ArrayList<>(temp_routeStops);
     }
 
     public void setInfo(String info) {
@@ -127,6 +150,10 @@ public class Route
     }
 
     public int getNumStops() {
-        return numStops;
+        return temp_routeStops.size();
+    }
+
+    public int getCityId() {
+        return cityId;
     }
 }

@@ -3,32 +3,35 @@ import java.util.ArrayList;
 
 public class Map {
     private int id;
+    private int cityId;
     private String name;
     private String info;
     //list of locations
     private String imgURL;
 
-    private Map(int id, String name, String info, String imgURL) {
+    private Map(int id,int cityId, String name, String info, String imgURL) {
         this.id = id;
+        this.cityId=cityId;
         this.name = name;
         this.info = info;
         this.imgURL = imgURL;
     }
 
-    public static Map _createMap(int id, String name, String info, String imgURL){ //friend to Database
-        return new Map( id,  name,  info,  imgURL);
+    public static Map _createMap(int id,int cityId, String name, String info, String imgURL){ //friend to Database
+        return new Map( id,cityId,  name,  info,  imgURL);
     }
 
-    public Map(String name, String info, String imgURL)
+    public Map(int cityId,String name, String info, String imgURL)
     {
         this.id=Database.generateIdMap();
+        this.cityId=cityId;
         this.name=name;
         this.info=info;
         this.imgURL=imgURL;
     }
 
     public ArrayList<Location> getAllLocations() {
-        int[] ids= Database.searchLocation(this.id,null);
+        ArrayList<Integer> ids= Database.searchLocation(this.id,null);
         ArrayList<Location> arrList=new ArrayList<Location>();
         for(int id : ids)
         {
@@ -49,10 +52,10 @@ public class Map {
 
     public Location getLocationByPlaceOfInterestId(int placeOfInterestId)
     {
-        int[] locId= Database.searchLocation(this.id,placeOfInterestId);
-        if(locId.length!=1)
+        ArrayList<Integer> locId= Database.searchLocation(this.id,placeOfInterestId);
+        if(locId.size()!=1)
             return null;
-        Location o=Database._getLocationById(locId[0]);
+        Location o=Database._getLocationById(locId.get(0));
         if(Database.getPlaceOfInterestById(o.getPlaceOfInterestId())==null)
         {
             Database._deleteLocation(o.getId());
@@ -118,5 +121,9 @@ public class Map {
 
     public void setImgURL(String imgURL) {
         this.imgURL = imgURL;
+    }
+
+    public int getCityId() {
+        return cityId;
     }
 }

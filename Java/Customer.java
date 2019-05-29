@@ -3,13 +3,25 @@ import java.util.Date;
 
 public class Customer extends User{
     private String personalDetails;
-    // list of subscription
-    //list of one time purchase
+
+    ArrayList<Subscription> temp_activeSubscription;
+    ArrayList<Subscription> temp_unactiveSubscription;
+    ArrayList<OneTimePurchase> temp_activeOneTimePurchase;
+    ArrayList<OneTimePurchase> temp_unactiveOneTimePurchase;
+    ArrayList<Subscription> temp_removeSubscription;
+    ArrayList<OneTimePurchase> temp_removeOneTimePurchase;
 
 
-    public Customer(int id, String userName, String password, String email, String firstName, String lastName, String phoneNumber, String personalDetails) {
+    private Customer(int id, String userName, String password, String email, String firstName, String lastName, String phoneNumber, String personalDetails) {
         super(id, userName, password, email, firstName, lastName, phoneNumber);
+        Date today=new Date();
+        this.temp_activeSubscription=generateActiveSubscriptions(today);
+        this.temp_unactiveSubscription=generateUnactiveSubscriptions(today);
+        this.temp_activeOneTimePurchase=generateActiveOneTimePurchases();
+        this.temp_unactiveOneTimePurchase=generateUnactiveOneTimePurchases();
         this.personalDetails = personalDetails;
+        this.temp_removeSubscription=new ArrayList<>();
+        this.temp_removeOneTimePurchase=new ArrayList<>();
     }
 
     public static Customer _createCustomer(int id, String userName, String password, String email, String firstName, String lastName, String phoneNumber, String personalDetails){ //friend to Database
@@ -19,27 +31,25 @@ public class Customer extends User{
     public Customer(String userName, String password, String email, String firstName, String lastName, String phoneNumber, String personalDetails) {
         super(userName, password, email, firstName, lastName, phoneNumber);
         this.personalDetails = personalDetails;
+        this.temp_activeSubscription=new ArrayList<>();
+        this.temp_unactiveSubscription=new ArrayList<>();
+        this.temp_activeOneTimePurchase=new ArrayList<>();
+        this.temp_unactiveOneTimePurchase=new ArrayList<>();
+        this.temp_removeSubscription=new ArrayList<>();
+        this.temp_removeOneTimePurchase=new ArrayList<>();
     }
 
-    public Subscription getActiveSubscribeToCity(int cityId,Date dateToCheck)
-    {
-        int[] ids=Database.searchSubscription(super.getId(),cityId,null,dateToCheck);
-        if(ids.length>1)
-            for (int id: ids)
-            {
-                Subscription s=Database._getSubscriptionById(id);
-                if(s!=null)
-                    return s;
-            }
-        return null;
+    private ArrayList<Subscription> generateActiveSubscriptions(Date dateToCheck) {
+        ArrayList<Integer> ids=Database.searchSubscription(super.getId(),null,null,dateToCheck,true);
+        return generateListSubscriptions(ids);
+    }
+
+    private ArrayList<Subscription> generateUnactiveSubscriptions(Date dateToCheck) {
+        ArrayList<Integer> ids=Database.searchSubscription(super.getId(),null,null,dateToCheck,false);
+        return generateListSubscriptions(ids);
     }
     
-    public boolean isActiveSubscribeToCity(int cityId,Date dateToCheck)
-    {
-        return getActiveSubscribeToCity(cityId,dateToCheck)!=null;
-    }
-    
-    private ArrayList<Subscription> generateListSubscriptions(int[] ids)
+    private ArrayList<Subscription> generateListSubscriptions(ArrayList<Integer> ids)
     {
         ArrayList<Subscription> arrList=new ArrayList<Subscription>();
         for(int id : ids)
@@ -55,82 +65,17 @@ public class Customer extends User{
         return arrList;
     }
 
-    public ArrayList<Subscription> getAllSubscriptions() {
-        int[] ids = Database.searchSubscription(super.getId(), null, null, null);
-        return generateListSubscriptions(ids);
-    }
-        
-
-    public int getNumSubscriptions(){
-        return getAllSubscriptions().size();
+    private ArrayList<OneTimePurchase> generateActiveOneTimePurchases() {
+        ArrayList<Integer> ids=Database.searchOneTimePurchase(super.getId(),null,null,false);
+        return generateListOneTimePurchases(ids);
     }
 
-    public ArrayList<Subscription> getAllActiveSubscriptions(Date dateToCheck) {
-        int[] ids=Database.searchSubscription(super.getId(),null,null,dateToCheck);
-        return generateListSubscriptions(ids);
+    private ArrayList<OneTimePurchase> generateUnactiveOneTimePurchases() {
+        ArrayList<Integer> ids=Database.searchOneTimePurchase(super.getId(),null,null,true);
+        return generateListOneTimePurchases(ids);
     }
 
-    public int getNumActiveSubscriptions(Date dateToCheck){
-        return getAllActiveSubscriptions(dateToCheck).size();
-    }
-
-    public Subscription getSubscriptionById(int subId)
-    {
-        Subscription sub=Database._getSubscriptionById(subId);
-        if(sub==null || sub.getUserId()!=super.getId())
-            return null;
-        if(Database.getCityById(sub.getCityId())==null)
-        {
-            Database._deleteSubscription(sub.getId());
-            return null;
-        }
-        return sub;
-    }
-
-    public Subscription addSubscription(int cityId, Date purchaseDate, double fullPrice, double pricePayed, Date expirationDate)
-    {
-        if(Database.getCityById(cityId)==null)
-            return null;
-        Subscription sub=new Subscription(super.getId(),cityId,purchaseDate,fullPrice,pricePayed,expirationDate);
-        Database._saveSubscription(sub);
-        return sub;
-    }
-
-    public Subscription removeSubscriptionById(int subId)
-    {
-        Subscription sub=getSubscriptionById(subId);
-        if(sub==null || sub.getUserId()!=super.getId())
-            return null;
-        Database._deleteSubscription(sub.getId());
-        return sub;
-    }
-
-
-    public OneTimePurchase getOneTimePurchaseToCity(int cityId,boolean wasDownload)
-    {
-        int[] ids=Database.searchOneTimePurchase(super.getId(),cityId,null,wasDownload);
-        if(ids.length>1)
-            for (int id: ids)
-            {
-                OneTimePurchase s=Database._getOneTimePurchaseById(id);
-                if(s!=null)
-                    return s;
-            }
-        return null;
-    }
-
-
-    public OneTimePurchase getActiveOneTimePurchaseToCity(int cityId)
-    {
-        return getOneTimePurchaseToCity(cityId,false);
-    }
-
-    public boolean isActiveOneTimePurchaseToCity(int cityId)
-    {
-        return getActiveOneTimePurchaseToCity(cityId)!=null;
-    }
-
-    private ArrayList<OneTimePurchase> generateListOneTimePurchases(int[] ids)
+    private ArrayList<OneTimePurchase> generateListOneTimePurchases(ArrayList<Integer> ids)
     {
         ArrayList<OneTimePurchase> arrList=new ArrayList<OneTimePurchase>();
         for(int id : ids)
@@ -146,54 +91,172 @@ public class Customer extends User{
         return arrList;
     }
 
-    public ArrayList<OneTimePurchase> getAllOneTimePurchases() {
-        int[] ids = Database.searchOneTimePurchase(super.getId(), null, null, null);
-        return generateListOneTimePurchases(ids);
-    }
-
-
-    public int getNumOneTimePurchases(){
-        return getAllOneTimePurchases().size();
-    }
-
-    public ArrayList<OneTimePurchase> getAllActiveOneTimePurchases() {
-        int[] ids=Database.searchOneTimePurchase(super.getId(),null,null,false);
-        return generateListOneTimePurchases(ids);
-    }
-
-    public int getNumActiveOneTimePurchases(){
-        return getAllActiveOneTimePurchases().size();
-    }
-
-    public OneTimePurchase getOneTimePurchaseById(int subId)
+    public void saveToDatabase()
     {
-        OneTimePurchase otp=Database._getOneTimePurchaseById(subId);
-        if(otp==null || otp.getUserId()!=super.getId())
-            return null;
-        if(Database.getCityById(otp.getCityId())==null)
-        {
-            Database._deleteOneTimePurchase(otp.getId());
-            return null;
-        }
-        return otp;
+        Database.saveCustomer(this);
+        //delete removes
+        for(Subscription s:temp_removeSubscription)
+            s.deleteFromDatabase();
+        this.temp_removeSubscription=new ArrayList<>();
+        for(OneTimePurchase otp:temp_removeOneTimePurchase)
+            otp.deleteFromDatabase();
+        this.temp_removeOneTimePurchase=new ArrayList<>();
+        //saves lists
+        for(Subscription s:temp_activeSubscription)
+            s.saveToDatabase();
+        for(Subscription s:temp_unactiveSubscription)
+            s.saveToDatabase();
+        for(OneTimePurchase otp:temp_activeOneTimePurchase)
+            otp.saveToDatabase();
+        for(OneTimePurchase otp:temp_unactiveOneTimePurchase)
+            otp.saveToDatabase();
+    }
+
+    public void deleteFromDatabase()
+    {
+        Database.deleteCustomer(super.getId());
+        for(Subscription s:temp_removeSubscription)
+            s.deleteFromDatabase();
+        this.temp_removeSubscription=new ArrayList<>();
+        for(OneTimePurchase otp:temp_removeOneTimePurchase)
+            otp.deleteFromDatabase();
+        this.temp_removeOneTimePurchase=new ArrayList<>();
+        for(Subscription s:temp_activeSubscription)
+            s.deleteFromDatabase();
+        for(Subscription s:temp_unactiveSubscription)
+            s.deleteFromDatabase();
+        for(OneTimePurchase otp:temp_activeOneTimePurchase)
+            otp.deleteFromDatabase();
+        for(OneTimePurchase otp:temp_unactiveOneTimePurchase)
+            otp.deleteFromDatabase();
+    }
+
+    public Subscription addSubscription(int cityId, Date purchaseDate, double fullPrice, double pricePayed, Date expirationDate)
+    {
+        Subscription sub=new Subscription(super.getId(),cityId,purchaseDate,fullPrice,pricePayed,expirationDate);
+        Date today=new Date();
+        if(sub.getPurchaseDate().compareTo(today)>0)  //TODO: not sure if <0 or >0
+            temp_activeSubscription.add(sub);
+        else
+            temp_unactiveSubscription.add(sub);
+        return sub;
     }
 
     public OneTimePurchase addOneTimePurchase(int cityId, Date purchaseDate, double fullPrice, double pricePayed)
     {
-        if(Database.getCityById(cityId)==null)
-            return null;
         OneTimePurchase otp=new OneTimePurchase(super.getId(),cityId,purchaseDate,fullPrice,pricePayed);
-        Database._saveOneTimePurchase(otp);
+        Date today=new Date();
+        if(!otp.wasDownload)
+            temp_activeOneTimePurchase.add(otp);
+        else
+            temp_unactiveOneTimePurchase.add(otp);
         return otp;
     }
 
-    public OneTimePurchase removeOneTimePurchaseById(int otpId)
+    public ArrayList<Subscription> getGoingToEnd()
     {
-        OneTimePurchase otp=getOneTimePurchaseById(otpId);
-        if(otp==null || otp.getUserId()!=super.getId())
-            return null;
-        Database._deleteOneTimePurchase(otp.getId());
-        return otp;
+        ArrayList<Subscription> result=new ArrayList<>();
+        Date today=new Date();
+        for(Subscription s:temp_activeSubscription)
+            if(s.isGoingToEnd(today))
+                result.add(s);
+        return result;
+    }
+
+    public boolean canViewCityWithSubscription(int cityId)
+    {
+        for(Subscription s:temp_activeSubscription)
+            if(s.getCityId()==cityId)
+                return true;
+        return false;
+    }
+
+    public OneTimePurchase getActiveOneTimePurchaseByCity(int cityId)
+    {
+        for(OneTimePurchase otp:temp_activeOneTimePurchase)
+            if(otp.getCityId()==cityId)
+                return otp;
+        return null;
+    }
+
+    public Subscription removeSubscription(int subscriptionId)
+    {
+        for(int i=0;i<temp_activeSubscription.size();i++) {
+            if (temp_activeSubscription.get(i).getId() == subscriptionId)
+            {
+                Subscription s=temp_activeSubscription.remove(i);
+                temp_removeSubscription.add(s);
+                return s;
+            }
+        }
+        for(int i=0;i<temp_unactiveSubscription.size();i++) {
+            if (temp_unactiveSubscription.get(i).getId() == subscriptionId)
+            {
+                Subscription s=temp_unactiveSubscription.remove(i);
+                temp_removeSubscription.add(s);
+                return s;
+            }
+        }
+        return null;
+    }
+
+    public Subscription getSubscription(int subscriptionId)
+    {
+        for(Subscription s:temp_activeSubscription)
+            if(s.getId()==subscriptionId)
+                return s;
+        for(Subscription s:temp_unactiveSubscription)
+            if(s.getId()==subscriptionId)
+                return s;
+        return null;
+    }
+
+    public OneTimePurchase getOneTimePurchase(int subscriptionId)
+    {
+        for(OneTimePurchase otp:temp_activeOneTimePurchase)
+            if(otp.getId()==subscriptionId)
+                return otp;
+        for(OneTimePurchase otp:temp_unactiveOneTimePurchase)
+            if(otp.getId()==subscriptionId)
+                return otp;
+        return null;
+    }
+
+    public OneTimePurchase removeOneTimePurchase(int otpId)
+    {
+        for(int i=0;i<temp_activeOneTimePurchase.size();i++) {
+            if (temp_activeOneTimePurchase.get(i).getId() == otpId)
+            {
+                OneTimePurchase otp= temp_activeOneTimePurchase.remove(i);
+                temp_removeOneTimePurchase.add(otp);
+                return otp;
+            }
+        }
+        for(int i=0;i<temp_unactiveOneTimePurchase.size();i++) {
+            if (temp_unactiveOneTimePurchase.get(i).getId() == otpId)
+            {
+                OneTimePurchase otp= temp_unactiveOneTimePurchase.remove(i);
+                temp_removeOneTimePurchase.add(otp);
+                return otp;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Subscription> getCopyActiveSubscription() {
+        return new ArrayList<>(temp_activeSubscription);
+    }
+
+    public ArrayList<Subscription> getCopyUnactiveSubscription() {
+        return new ArrayList<>(temp_unactiveSubscription);
+    }
+
+    public ArrayList<OneTimePurchase> getCopyActiveOneTimePurchase() {
+        return new ArrayList<>(temp_activeOneTimePurchase);
+    }
+
+    public ArrayList<OneTimePurchase> getCopyUnactiveOneTimePurchase() {
+        return new ArrayList<>(temp_unactiveOneTimePurchase);
     }
 
     public String getPersonalDetails() {
