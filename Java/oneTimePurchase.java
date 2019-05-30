@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.Date;
 
-public class OneTimePurchase extends CityPurchase
+public class OneTimePurchase extends CityPurchase implements ClassMustProperties, Serializable
 {
     boolean wasDownload;
 
@@ -13,8 +14,8 @@ public class OneTimePurchase extends CityPurchase
         return new OneTimePurchase(id,cityId,userId,purchaseDate, fullPrice,pricePayed,wasDownload);
     }
 
-    public OneTimePurchase(int userId, int cityId, Date purchaseDate, double fullPrice, double pricePayed) {
-        super(userId, cityId, purchaseDate, fullPrice, pricePayed);
+    public OneTimePurchase(User u,City c, Date purchaseDate, double fullPrice, double pricePayed) {
+        super(u.getId(), c.getId(), purchaseDate, fullPrice, pricePayed);
         this.wasDownload = false;
     }
 
@@ -24,11 +25,18 @@ public class OneTimePurchase extends CityPurchase
 
     public void deleteFromDatabase(){Database._deleteOneTimePurchase(this.getId());}
 
+    public void reloadTempsFromDatabase(){}
+
     public boolean getWasDownload() {
         return wasDownload;
     }
 
     public void updateToWasDownload() {
         this.wasDownload = true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof OneTimePurchase && ((OneTimePurchase) o).getId()==this.getId();
     }
 }

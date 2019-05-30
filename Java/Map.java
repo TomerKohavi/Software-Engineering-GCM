@@ -1,13 +1,15 @@
-import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Map {
+public class Map implements ClassMustProperties, Serializable {
     private int id;
     private int cityId;
     private String name;
     private String info;
-    //list of locations
     private String imgURL;
+
+    private ArrayList<Location> temp_locations;
+    private ArrayList<Location> temp_removeLocations;
 
     private Map(int id,int cityId, String name, String info, String imgURL) {
         this.id = id;
@@ -15,6 +17,7 @@ public class Map {
         this.name = name;
         this.info = info;
         this.imgURL = imgURL;
+        reloadTempsFromDatabase();
     }
 
     public static Map _createMap(int id,int cityId, String name, String info, String imgURL){ //friend to Database
@@ -28,9 +31,11 @@ public class Map {
         this.name=name;
         this.info=info;
         this.imgURL=imgURL;
+        this.temp_locations=new ArrayList<>();
+        this.temp_removeLocations=new ArrayList<>();
     }
 
-    public ArrayList<Location> getAllLocations() {
+    private ArrayList<Location> generateLocations() {
         ArrayList<Integer> ids= Database.searchLocation(this.id,null);
         ArrayList<Location> arrList=new ArrayList<Location>();
         for(int id : ids)
@@ -46,53 +51,88 @@ public class Map {
         return arrList;
     }
 
+    public void saveToDatabase()
+    {
+        Database.saveMap(this);
+        //delete removes
+        for(Location l:temp_removeLocations)
+        {
+            if(!temp_locations.contains(l))
+                l.deleteFromDatabase();
+        }
+        this.temp_removeLocations=new ArrayList<>();
+        //save locations
+        for(Location l:temp_locations)
+            l.saveToDatabase();
+    }
+
+    public void deleteFromDatabase()
+    {
+        Database.deleteMap(this.id);
+        //delete removes
+        for(Location l:temp_removeLocations)
+            l.deleteFromDatabase();
+        this.temp_removeLocations=new ArrayList<>();
+        for(Location l:temp_locations)
+            l.deleteFromDatabase();
+        //delete all mapSights
+        ArrayList<Integer> ids=Database.searchMapSight(null,this.id);
+        for(int id:ids)
+        {
+            Map m=Database.getMapById(id);
+            if(m!=null)
+                m.deleteFromDatabase();
+        }
+    }
+
+    public void reloadTempsFromDatabase(){
+        this.temp_locations=generateLocations();
+        this.temp_removeLocations=new ArrayList<>();
+    }
+
     public int getNumLocations(){
-        return getAllLocations().size();
+        return temp_locations.size();
     }
 
     public Location getLocationByPlaceOfInterestId(int placeOfInterestId)
     {
-        ArrayList<Integer> locId= Database.searchLocation(this.id,placeOfInterestId);
-        if(locId.size()!=1)
-            return null;
-        Location o=Database._getLocationById(locId.get(0));
-        if(Database.getPlaceOfInterestById(o.getPlaceOfInterestId())==null)
-        {
-            Database._deleteLocation(o.getId());
-            return null;
+        for(Location l: temp_locations){
+            if(l.getPlaceOfInterestId()==placeOfInterestId)
+                return l;
         }
-        return o;
+        return null;
     }
 
     public Location getLocationById(int locId)
     {
-        Location loc=Database._getLocationById(locId);
-        if(loc==null || loc.getMapId()!=this.id)
-            return null;
-        if(Database.getPlaceOfInterestById(loc.getPlaceOfInterestId())==null)
-        {
-            Database._deleteLocation(loc.getId());
-            return null;
+        for(Location l: temp_locations){
+            if(l.getId()==locId)
+                return l;
         }
-        return loc;
+        return null;
     }
 
-    public Location addLocation(int placeOfInterestId,double[] coordinates)
+    public Location addLocation(PlaceOfInterest p,double[] coordinates)
     {
-        if(Database.getPlaceOfInterestById(placeOfInterestId)==null)
+        if(p.getCityId()!=this.cityId)
             return null;
-        Location loc=new Location(this.id,placeOfInterestId,coordinates);
-        Database._saveLocation(loc);
-        return loc;
+        Location l=new Location(this,p,coordinates);
+        temp_locations.add(l);
+        return l;
     }
 
     public Location removeLocationById(int locId)
     {
-        Location loc=getLocationById(locId);
-        if(loc==null || loc.getMapId()!=this.id)
-            return null;
-        Database._deleteLocation(loc.getId());
-        return loc;
+        for(int i=0;i<temp_locations.size();i++){
+            Location l=temp_locations.get(i);
+            if(l.getId()==locId)
+            {
+                temp_locations.remove(i);
+                temp_removeLocations.add(l);
+                return l;
+            }
+        }
+        return null;
     }
 
     public int getId() {
@@ -125,5 +165,14 @@ public class Map {
 
     public int getCityId() {
         return cityId;
+    }
+
+    public ArrayList<Location> getCopyLocations() {
+        return new ArrayList<>(temp_locations);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Map && ((Map) o).getId()==this.getId();
     }
 }

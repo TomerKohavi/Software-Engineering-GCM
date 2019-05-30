@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.Date;
 
-public class Statistic implements Comparable<Statistic>
+public class Statistic implements Comparable<Statistic>,ClassMustProperties
 {
     int id;
     int cityId;
@@ -30,6 +31,16 @@ public class Statistic implements Comparable<Statistic>
         this.numSubscriptions=0;
         this.numSubscriptionsRenewal=0;
     }
+
+    public void saveToDatabase() {
+        Database._saveStatistic(this);
+    }
+
+    public void deleteFromDatabase() {
+        Database._deleteStatistic(this.id);
+    }
+
+    public void reloadTempsFromDatabase() {}
 
     public int getId() {
         return id;

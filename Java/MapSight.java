@@ -1,4 +1,6 @@
-public class MapSight
+import java.io.Serializable;
+
+public class MapSight implements ClassMustProperties, Serializable
 {
     int id;
     int mapId;
@@ -10,22 +12,30 @@ public class MapSight
         this.id = id;
         this.mapId = mapId;
         this.cityDataVersionId = cityDataVersionId;
-        this.temp_map=Database.getMapById(mapId);
+        reloadTempsFromDatabase();
     }
 
     public static MapSight _createMapSight(int id, int mapId, int cityDataVersionId){ //friend to Database
         return new MapSight( id,  mapId,  cityDataVersionId);
     }
 
-    public MapSight(int mapId, int cityDataVersionId) {
+    public MapSight(CityDataVersion cdv,Map m) {
         this.id=Database.generateIdMapSight();
-        this.mapId = mapId;
-        this.cityDataVersionId = cityDataVersionId;
-        this.temp_map=Database.getMapById(mapId);
+        this.mapId = m.getId();
+        this.cityDataVersionId = cdv.getId();
+        this.temp_map=m;
     }
 
     public void saveToDatabase(){
         Database._saveMapSight(this);
+    }
+
+    public void deleteFromDatabase(){
+        Database._deleteMapSight(this.id);
+    }
+
+    public void reloadTempsFromDatabase(){
+        this.temp_map=Database.getMapById(mapId);
     }
 
     public Map getCopyMap(){
@@ -42,5 +52,10 @@ public class MapSight
 
     public int getCityDataVersionId() {
         return cityDataVersionId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof MapSight && ((MapSight) o).getId()==this.getId();
     }
 }

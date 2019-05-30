@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.sql.Time;
 
-public class RouteStop implements Comparable<RouteStop>
+public class RouteStop implements Comparable<RouteStop>,ClassMustProperties, Serializable
 {
     int id;
     int routeId;
@@ -16,20 +17,20 @@ public class RouteStop implements Comparable<RouteStop>
         this.placeId = placeId;
         this.numStop = numStop;
         this.recommendedTime = recommendedTime;
-        this.temp_place=Database.getPlaceOfInterestById(placeId);
+        reloadTempsFromDatabase();
     }
 
     public static RouteStop _createRouteStop(int id, int routeId, int placeId, int numStop, Time recommendedTime){ //friend to Database
         return new RouteStop( id,  routeId,  placeId,  numStop,  recommendedTime);
     }
 
-    public RouteStop(int placeId, int numStop, Time recommendedTime) {
+    public RouteStop(Route r,PlaceOfInterest p, int numStop, Time recommendedTime) {
         this.id=Database.generateIdRouteStop();
-        this.routeId = Database.generateIdRouteStop();
-        this.placeId = placeId;
+        this.routeId = r.getId();
+        this.placeId = p.getId();
         this.recommendedTime = recommendedTime;
         this.numStop=numStop;
-        this.temp_place=Database.getPlaceOfInterestById(placeId);
+        this.temp_place=p;
     }
 
     public void saveToDatabase() {
@@ -38,6 +39,10 @@ public class RouteStop implements Comparable<RouteStop>
 
     public void deleteFromDatabase() {
         Database._deleteRouteStop(this.id);
+    }
+
+    public void reloadTempsFromDatabase() {
+        this.temp_place=Database.getPlaceOfInterestById(placeId);
     }
 
     public PlaceOfInterest getCopyPlaceOfInterest(){
@@ -83,5 +88,10 @@ public class RouteStop implements Comparable<RouteStop>
     @Override
     public int compareTo(RouteStop o) {
         return this.numStop-o.numStop;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof RouteStop && ((RouteStop) o).getId()==this.getId();
     }
 }

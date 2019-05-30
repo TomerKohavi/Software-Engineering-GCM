@@ -1,4 +1,6 @@
-public class Employee extends User {
+import java.io.Serializable;
+
+public class Employee extends User implements ClassMustProperties, Serializable {
     public enum Role
     {
         MANGER,
@@ -20,11 +22,30 @@ public class Employee extends User {
         this.role = role;
     }
 
+    protected Employee(int id, String userName, String password, String email, String firstName, String lastName, String phoneNumber) {
+        super(id, userName, password, email, firstName, lastName, phoneNumber);
+    }
+
+    public void saveToDatabase() {
+        Database.saveEmployee(this);
+    }
+
+    public void deleteFromDatabase() {
+        Database.deleteEmployee(super.getId());
+    }
+
+    public void reloadTempsFromDatabase() {}
+
     public Role getRole() {
         return role;
     }
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Employee && ((Employee) o).getId()==this.getId();
     }
 }

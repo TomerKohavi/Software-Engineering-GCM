@@ -1,15 +1,21 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CityDataVersion
+public class CityDataVersion implements ClassMustProperties, Serializable
 {
     private int id;
     private int cityId;
     private String versionName;
-    // list of mapSight
-    // list of placeSight
-    // list of routeSight
     private double priceOneTime;
     private double pricePeriod;
+
+    private ArrayList<PlaceOfInterestSight> temp_placeSights;
+    private ArrayList<PlaceOfInterestSight> temp_removePlaceSights;
+    private ArrayList<MapSight> temp_mapSights;
+    private ArrayList<MapSight> temp_removeMapSights;
+    private ArrayList<RouteSight> temp_routeSights;
+    private ArrayList<RouteSight> temp_removeRouteSights;
+
 
     private CityDataVersion(int id, int cityId, String versionName, double priceOneTime, double pricePeriod) {
         this.id = id;
@@ -17,21 +23,90 @@ public class CityDataVersion
         this.versionName = versionName;
         this.priceOneTime = priceOneTime;
         this.pricePeriod = pricePeriod;
+        reloadTempsFromDatabase();
     }
 
     public static CityDataVersion _createCityDataVersion(int id, int cityId, String versionName, double priceOneTime, double pricePeriod){ //friend Database
         return new CityDataVersion(id,cityId,versionName,priceOneTime,pricePeriod);
     }
 
-    public CityDataVersion(String versionName, double priceOneTime, double pricePeriod, int cityId) {
+    public CityDataVersion(City c,String versionName, double priceOneTime, double pricePeriod) {
         this.id=Database.generateIdCityDataVersion();
         this.versionName = versionName;
         this.priceOneTime = priceOneTime;
         this.pricePeriod = pricePeriod;
-        this.cityId=cityId;
+        this.cityId=c.getId();
+        this.temp_placeSights=new ArrayList<>();
+        this.temp_removePlaceSights=new ArrayList<>();
+        this.temp_mapSights=new ArrayList<>();
+        this.temp_removeMapSights=new ArrayList<>();
+        this.temp_routeSights=new ArrayList<>();
+        this.temp_removeRouteSights=new ArrayList<>();
     }
 
-    public ArrayList<MapSight> getAllMapSights() {
+    public void saveToDatabase()
+    {
+        Database._saveCityDataVersion(this);
+        //delete removes
+        for(PlaceOfInterestSight ps:temp_removePlaceSights)
+        {
+            if(!temp_placeSights.contains(ps))
+                ps.deleteFromDatabase();
+        }
+        temp_removePlaceSights=new ArrayList<>();
+        for(MapSight ms:temp_removeMapSights)
+        {
+            if(!temp_mapSights.contains(ms))
+                ms.deleteFromDatabase();
+        }
+        temp_removeMapSights=new ArrayList<>();
+        for(RouteSight rs:temp_removeRouteSights)
+        {
+            if(!temp_routeSights.contains(rs))
+                rs.deleteFromDatabase();
+        }
+        temp_removeRouteSights=new ArrayList<>();
+        //save temps
+        for(PlaceOfInterestSight ps:temp_placeSights)
+            ps.saveToDatabase();
+        for(MapSight ms:temp_mapSights)
+            ms.saveToDatabase();
+        for(RouteSight rs:temp_routeSights)
+            rs.saveToDatabase();
+    }
+
+    public void deleteFromDatabase()
+    {
+        Database._deleteCityDataVersion(this.id);
+        //delete removes
+        for(PlaceOfInterestSight ps:temp_removePlaceSights)
+            ps.deleteFromDatabase();
+        temp_removePlaceSights=new ArrayList<>();
+        for(MapSight ms:temp_removeMapSights)
+            ms.deleteFromDatabase();
+        temp_removeMapSights=new ArrayList<>();
+        for(RouteSight rs:temp_removeRouteSights)
+            rs.deleteFromDatabase();
+        temp_removeRouteSights=new ArrayList<>();
+        //save temps
+        for(PlaceOfInterestSight ps:temp_placeSights)
+            ps.deleteFromDatabase();
+        for(MapSight ms:temp_mapSights)
+            ms.deleteFromDatabase();
+        for(RouteSight rs:temp_routeSights)
+            rs.deleteFromDatabase();
+    }
+
+    public void reloadTempsFromDatabase() {
+        this.temp_placeSights=generatePlaceOfInterestSights();
+        this.temp_removePlaceSights=new ArrayList<>();
+        this.temp_mapSights=generateMapSights();
+        this.temp_removeMapSights=new ArrayList<>();
+        this.temp_routeSights=generateRouteSights();
+        this.temp_removeRouteSights=new ArrayList<>();
+    }
+
+    private ArrayList<MapSight> generateMapSights() {
         ArrayList<Integer> ids= Database.searchMapSight(this.id,null);
         ArrayList<MapSight> arrList=new ArrayList<MapSight>();
         for(int id : ids)
@@ -48,55 +123,51 @@ public class CityDataVersion
     }
 
     public int getNumMapSights(){
-        return getAllMapSights().size();
+        return temp_mapSights.size();
     }
 
     public MapSight getMapSightByMapId(int mapId)
     {
-        ArrayList<Integer> msId= Database.searchMapSight(this.id,mapId);
-        if(msId.size()!=1)
-            return null;
-        MapSight o=Database._getMapSightById(msId.get(0));
-        if(Database.getMapById(o.getMapId())==null)
-        {
-            Database._deleteMapSight(o.getId());
-            return null;
+        for(MapSight ms:temp_mapSights){
+            if(ms.getMapId()==mapId)
+                return ms;
         }
-        return o;
+        return null;
     }
 
     public MapSight getMapSightById(int msId)
     {
-        MapSight ms=Database._getMapSightById(msId);
-        if(ms==null || ms.getCityDataVersionId()!=this.id)
-            return null;
-        if(Database.getMapById(ms.getMapId())==null)
-        {
-            Database._deleteMapSight(ms.getId());
-            return null;
+        for(MapSight ms:temp_mapSights){
+            if(ms.getId()==msId)
+                return ms;
         }
-        return ms;
+        return null;
     }
 
-    public MapSight addMapSight(int mapId)
+    public MapSight addMapSight(Map m)
     {
-        if(Database.getMapById(mapId)==null)
+        if(m.getCityId()!=this.getCityId())
             return null;
-        MapSight ms=new MapSight(this.id,mapId);
-        Database._saveMapSight(ms);
+        MapSight ms=new MapSight(this,m);
+        this.temp_mapSights.add(ms);
         return ms;
     }
 
     public MapSight removeMapSightById(int msId)
     {
-        MapSight ms=getMapSightById(msId);
-        if(ms==null || ms.getCityDataVersionId()!=this.id)
-            return null;
-        Database._deleteMapSight(ms.getId());
-        return ms;
+        for(int i=0;i<temp_mapSights.size();i++){
+            MapSight ms=temp_mapSights.get(i);
+            if(ms.getId()==msId)
+            {
+                temp_mapSights.remove(i);
+                temp_removeMapSights.add(ms);
+                return ms;
+            }
+        }
+        return null;
     }
 
-    public ArrayList<PlaceOfInterestSight> getAllPlaceOfInterestSights() {
+    private ArrayList<PlaceOfInterestSight> generatePlaceOfInterestSights() {
         ArrayList<Integer> ids= Database.searchPlaceOfInterestSight(this.id,null);
         ArrayList<PlaceOfInterestSight> arrList=new ArrayList<PlaceOfInterestSight>();
         for(int id : ids)
@@ -113,55 +184,51 @@ public class CityDataVersion
     }
 
     public int getNumPlaceOfInterestSights(){
-        return getAllPlaceOfInterestSights().size();
+        return temp_placeSights.size();
     }
 
     public PlaceOfInterestSight getPlaceOfInterestSightByPlaceOfInterestId(int placeId)
     {
-        ArrayList<Integer> ids= Database.searchPlaceOfInterestSight(this.id,placeId);
-        if(ids.size()!=1)
-            return null;
-        PlaceOfInterestSight o=Database._getPlaceOfInterestSightById(ids.get(0));
-        if(Database.getPlaceOfInterestById(o.getPlaceOfInterestId())==null)
-        {
-            Database.deletePlaceOfInterest(o.getId());
-            return null;
+        for(PlaceOfInterestSight ps:temp_placeSights){
+            if(ps.getPlaceOfInterestId()==placeId)
+                return ps;
         }
-        return o;
+        return null;
     }
 
     public PlaceOfInterestSight getPlaceOfInterestSightById(int psId)
     {
-        PlaceOfInterestSight ps=Database._getPlaceOfInterestSightById(psId);
-        if(ps==null || ps.getCityDataVersionId()!=this.id)
-            return null;
-        if(Database.getPlaceOfInterestById(ps.getPlaceOfInterestId())==null)
-        {
-            Database.deletePlaceOfInterest(ps.getId());
-            return null;
+        for(PlaceOfInterestSight ps:temp_placeSights){
+            if(ps.getId()==psId)
+                return ps;
         }
-        return ps;
+        return null;
     }
 
-    public PlaceOfInterestSight addPlaceOfInterestSight(int placeId)
+    public PlaceOfInterestSight addPlaceOfInterestSight(PlaceOfInterest p)
     {
-        if(Database.getPlaceOfInterestById(placeId)==null)
+        if(p.getCityId()!=this.cityId)
             return null;
-        PlaceOfInterestSight ps=new PlaceOfInterestSight(this.id,placeId);
-        Database._savePlaceOfInterestSight(ps);
+        PlaceOfInterestSight ps=new PlaceOfInterestSight(this,p);
+        temp_placeSights.add(ps);
         return ps;
     }
 
     public PlaceOfInterestSight removePlaceOfInterestSightById(int psId)
     {
-        PlaceOfInterestSight ps=getPlaceOfInterestSightById(psId);
-        if(ps==null || ps.getCityDataVersionId()!=this.id)
-            return null;
-        Database._deletePlaceOfInterestSight(ps.getId());
-        return ps;
+        for(int i=0;i<temp_placeSights.size();i++){
+            PlaceOfInterestSight ps=temp_placeSights.get(i);
+            if(ps.getId()==psId)
+            {
+                temp_placeSights.remove(i);
+                temp_removePlaceSights.add(ps);
+                return ps;
+            }
+        }
+        return null;
     }
 
-    public ArrayList<RouteSight> getAllRouteSights() {
+    private ArrayList<RouteSight> generateRouteSights() {
         ArrayList<Integer> ids= Database.searchRouteSight(this.id,null);
         ArrayList<RouteSight> arrList=new ArrayList<RouteSight>();
         for(int id : ids)
@@ -178,51 +245,48 @@ public class CityDataVersion
     }
 
     public int getNumRouteSights(){
-        return getAllRouteSights().size();
+        return temp_routeSights.size();
     }
 
     public RouteSight getRouteSightByRouteId(int routeId) {
-        ArrayList<Integer> ids = Database.searchRouteSight(this.id, routeId);
-        if (ids.size() != 1)
-            return null;
-        RouteSight o = Database._getRouteSightById(ids.get(0));
-        if (Database.getRouteById(o.getRouteId()) == null)
-        {
-            Database._deleteRouteSight(o.getId());
-            return null;
+        for(RouteSight rs:temp_routeSights){
+            if(rs.getRouteId()==routeId)
+                return rs;
         }
-        return o;
+        return null;
     }
 
     public RouteSight getRouteSightById(int rsId)
     {
-        RouteSight rs=Database._getRouteSightById(rsId);
-        if(rs==null || rs.getCityDataVersionId()!=this.id)
-            return null;
-        if (Database.getRouteById(rs.getRouteId()) == null)
-        {
-            Database._deleteRouteSight(rs.getId());
-            return null;
+        for(RouteSight rs:temp_routeSights){
+            if(rs.getId()==rsId)
+                return rs;
         }
-        return rs;
+        return null;
     }
 
-    public RouteSight addRouteSight(int routeId)
+    public RouteSight addRouteSight(Route r)
     {
-        if (Database.getRouteById(routeId) == null)
+        if(r.getCityId()!=this.cityId)
             return null;
-        RouteSight rs=new RouteSight(this.id,routeId);
-        Database._saveRouteSight(rs);
+        RouteSight rs=new RouteSight(this,r);
+        temp_routeSights.add(rs);
         return rs;
     }
 
     public RouteSight removeRouteSightById(int rsId)
     {
-        RouteSight rs=getRouteSightById(rsId);
-        if(rs==null || rs.getCityDataVersionId()!=this.id)
-            return null;
-        Database._deleteRouteSight(rs.getId());
-        return rs;
+        for(int i=0;i<temp_routeSights.size();i++)
+        {
+            RouteSight rs=temp_routeSights.get(i);
+            if(rs.getId()==rsId)
+            {
+                temp_routeSights.remove(i);
+                temp_removeRouteSights.add(rs);
+                return rs;
+            }
+        }
+        return null;
     }
 
     public int getId() {
@@ -255,5 +319,22 @@ public class CityDataVersion
 
     public void setPricePeriod(double pricePeriod) {
         this.pricePeriod = pricePeriod;
+    }
+
+    public ArrayList<PlaceOfInterestSight> getCopyPlaceSights() {
+        return new ArrayList<>(temp_placeSights);
+    }
+
+    public ArrayList<MapSight> getCopyMapSights() {
+        return new ArrayList<>(temp_mapSights);
+    }
+
+    public ArrayList<RouteSight> getCopyRouteSights() {
+        return new ArrayList<>(temp_routeSights);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof CityDataVersion && ((CityDataVersion) o).getId()==this.getId();
     }
 }

@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public class Database
+public final class Database
 {
     /*
     Things to save in Tables:

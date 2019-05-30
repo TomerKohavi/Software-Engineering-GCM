@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 public abstract  class User {
 
     private int id;

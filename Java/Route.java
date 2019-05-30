@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Route
+public class Route implements ClassMustProperties, Serializable
 {
     private int id;
     private int cityId;
@@ -19,8 +20,7 @@ public class Route
         this.cityId=cityId;
         this.info = info;
         this.acceptabilityToDisabled = acceptabilityToDisabled;
-        this.temp_routeStops=generateRouteStops();
-        this.temp_removeRouteStops=new ArrayList<>();
+        reloadTempsFromDatabase();
     }
 
     public static Route _createRoute(int id,int cityId, String info, boolean acceptabilityToDisabled){ //friend to Database
@@ -52,8 +52,10 @@ public class Route
     {
         Database.saveRoute(this);
         //delete removes
-        for(RouteStop rs:temp_removeRouteStops)
-            rs.deleteFromDatabase();
+        for(RouteStop rs:temp_removeRouteStops){
+            if(!temp_routeStops.contains(rs))
+                rs.deleteFromDatabase();
+        }
         this.temp_removeRouteStops=new ArrayList<>();
         //save list
         for(RouteStop rs:temp_routeStops)
@@ -68,6 +70,19 @@ public class Route
         this.temp_removeRouteStops=new ArrayList<>();
         for(RouteStop rs:temp_routeStops)
             rs.deleteFromDatabase();
+        //delete all routeSights
+        ArrayList<Integer> ids=Database.searchRouteSight(null,this.id);
+        for(int id:ids)
+        {
+            RouteSight rs=Database._getRouteSightById(id);
+            if(rs!=null)
+                rs.deleteFromDatabase();
+        }
+    }
+
+    public void reloadTempsFromDatabase(){
+        this.temp_routeStops=generateRouteStops();
+        this.temp_removeRouteStops=new ArrayList<>();
     }
 
     public RouteStop addRouteStop(PlaceOfInterest p,Time recommendedTime)
@@ -75,7 +90,7 @@ public class Route
         if(p.getCityId()!=this.cityId)
             return null;
         int index=temp_routeStops.size();
-        RouteStop rs=new RouteStop(p.getId(),index,recommendedTime);
+        RouteStop rs=new RouteStop(this,p,index,recommendedTime);
         temp_routeStops.add(rs);
         return rs;
     }
@@ -86,7 +101,7 @@ public class Route
             return null;
         if(index<0 || index>temp_routeStops.size())
             return null;
-        RouteStop rs=new RouteStop(p.getId(),index,recommendedTime);
+        RouteStop rs=new RouteStop(this,p,index,recommendedTime);
         temp_routeStops.add(index,rs);
         for(int i=index;i<temp_routeStops.size();i++)
             temp_routeStops.get(i).setNumStop(i);
@@ -159,5 +174,10 @@ public class Route
 
     public int getCityId() {
         return cityId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Route && ((Route) o).getId()==this.getId();
     }
 }

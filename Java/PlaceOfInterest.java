@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class PlaceOfInterest
+public class PlaceOfInterest implements ClassMustProperties, Serializable
 {
     public enum PlaceType
     {
@@ -44,13 +45,39 @@ public class PlaceOfInterest
         this.accessibilityToDisabled = accessibilityToDisabled;
     }
 
-    public ArrayList<Location> getAllLocations() {
-        ArrayList<Integer> routeStopsIds= Database.searchLocation(null,this.id);
-        ArrayList<Location> arrList=new ArrayList<Location>();
-        for(int lId : routeStopsIds)
-            arrList.add(Database._getLocationById(lId));
-        return arrList;
+    public void saveToDatabase() {
+        Database.savePlaceOfInterest(this);
     }
+
+    public void deleteFromDatabase() {
+        Database.deletePlaceOfInterest(this.id);
+        //delete PlacesSights
+        ArrayList<Integer> ids=Database.searchPlaceOfInterestSight(null,this.id);
+        for(int id:ids)
+        {
+            PlaceOfInterestSight ps=Database._getPlaceOfInterestSightById(id);
+            if(ps!=null)
+                ps.deleteFromDatabase();
+        }
+        //delete locations
+        ids=Database.searchLocation(null,this.id);
+        for(int id:ids)
+        {
+            Location l=Database._getLocationById(id);
+            if(l!=null)
+                l.deleteFromDatabase();
+        }
+        //delete routeStops
+        ids=Database.searchRouteStop(null,this.id,null);
+        for(int id:ids)
+        {
+            RouteStop rs=Database._getRouteStopById(id);
+            if(rs!=null)
+                rs.deleteFromDatabase();
+        }
+    }
+
+    public void reloadTempsFromDatabase() {}
 
     public int getId() {
         return id;
@@ -90,5 +117,10 @@ public class PlaceOfInterest
 
     public int getCityId() {
         return cityId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof PlaceOfInterest && ((PlaceOfInterest) o).getId()==this.getId();
     }
 }

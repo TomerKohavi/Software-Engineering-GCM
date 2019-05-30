@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Customer extends User{
+public class Customer extends User implements ClassMustProperties, Serializable {
     private String personalDetails;
 
     ArrayList<Subscription> temp_activeSubscription;
@@ -15,13 +16,7 @@ public class Customer extends User{
     private Customer(int id, String userName, String password, String email, String firstName, String lastName, String phoneNumber, String personalDetails) {
         super(id, userName, password, email, firstName, lastName, phoneNumber);
         Date today=new Date();
-        this.temp_activeSubscription=generateActiveSubscriptions(today);
-        this.temp_unactiveSubscription=generateUnactiveSubscriptions(today);
-        this.temp_activeOneTimePurchase=generateActiveOneTimePurchases();
-        this.temp_unactiveOneTimePurchase=generateUnactiveOneTimePurchases();
-        this.personalDetails = personalDetails;
-        this.temp_removeSubscription=new ArrayList<>();
-        this.temp_removeOneTimePurchase=new ArrayList<>();
+        reloadTempsFromDatabase();
     }
 
     public static Customer _createCustomer(int id, String userName, String password, String email, String firstName, String lastName, String phoneNumber, String personalDetails){ //friend to Database
@@ -35,6 +30,17 @@ public class Customer extends User{
         this.temp_unactiveSubscription=new ArrayList<>();
         this.temp_activeOneTimePurchase=new ArrayList<>();
         this.temp_unactiveOneTimePurchase=new ArrayList<>();
+        this.temp_removeSubscription=new ArrayList<>();
+        this.temp_removeOneTimePurchase=new ArrayList<>();
+    }
+
+    public void reloadTempsFromDatabase() {
+        Date today=new Date();
+        this.temp_activeSubscription=generateActiveSubscriptions(today);
+        this.temp_unactiveSubscription=generateUnactiveSubscriptions(today);
+        this.temp_activeOneTimePurchase=generateActiveOneTimePurchases();
+        this.temp_unactiveOneTimePurchase=generateUnactiveOneTimePurchases();
+        this.personalDetails = personalDetails;
         this.temp_removeSubscription=new ArrayList<>();
         this.temp_removeOneTimePurchase=new ArrayList<>();
     }
@@ -96,10 +102,16 @@ public class Customer extends User{
         Database.saveCustomer(this);
         //delete removes
         for(Subscription s:temp_removeSubscription)
-            s.deleteFromDatabase();
+        {
+            if(!temp_unactiveSubscription.contains(s) && !temp_activeSubscription.contains(s))
+                s.deleteFromDatabase();
+        }
         this.temp_removeSubscription=new ArrayList<>();
         for(OneTimePurchase otp:temp_removeOneTimePurchase)
-            otp.deleteFromDatabase();
+        {
+            if(!temp_activeOneTimePurchase.contains(otp) && !temp_unactiveOneTimePurchase.contains(otp))
+                otp.deleteFromDatabase();
+        }
         this.temp_removeOneTimePurchase=new ArrayList<>();
         //saves lists
         for(Subscription s:temp_activeSubscription)
@@ -131,9 +143,9 @@ public class Customer extends User{
             otp.deleteFromDatabase();
     }
 
-    public Subscription addSubscription(int cityId, Date purchaseDate, double fullPrice, double pricePayed, Date expirationDate)
+    public Subscription addSubscription(City c, Date purchaseDate, double fullPrice, double pricePayed, Date expirationDate)
     {
-        Subscription sub=new Subscription(super.getId(),cityId,purchaseDate,fullPrice,pricePayed,expirationDate);
+        Subscription sub=new Subscription(this,c,purchaseDate,fullPrice,pricePayed,expirationDate);
         Date today=new Date();
         if(sub.getPurchaseDate().compareTo(today)>0)  //TODO: not sure if <0 or >0
             temp_activeSubscription.add(sub);
@@ -142,9 +154,9 @@ public class Customer extends User{
         return sub;
     }
 
-    public OneTimePurchase addOneTimePurchase(int cityId, Date purchaseDate, double fullPrice, double pricePayed)
+    public OneTimePurchase addOneTimePurchase(City c, Date purchaseDate, double fullPrice, double pricePayed)
     {
-        OneTimePurchase otp=new OneTimePurchase(super.getId(),cityId,purchaseDate,fullPrice,pricePayed);
+        OneTimePurchase otp=new OneTimePurchase(this,c,purchaseDate,fullPrice,pricePayed);
         Date today=new Date();
         if(!otp.wasDownload)
             temp_activeOneTimePurchase.add(otp);
@@ -265,5 +277,10 @@ public class Customer extends User{
 
     public void setPersonalDetails(String personalDetails) {
         this.personalDetails = personalDetails;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Customer && ((Customer) o).getId()==this.getId();
     }
 }
