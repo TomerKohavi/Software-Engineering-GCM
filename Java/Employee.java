@@ -3,8 +3,20 @@ import java.io.Serializable;
 public class Employee extends User implements ClassMustProperties, Serializable {
     public enum Role
     {
-        MANGER,
-        REGULAR
+        MANAGER(0),
+        REGULAR(1);
+
+    	private final int value;
+        
+        Role(final int nv)
+        {
+        	value = nv;
+        }
+        
+        public int getValue()
+        {
+        	return value;
+        }
     }
     private Role role;
 
