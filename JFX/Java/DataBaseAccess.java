@@ -51,19 +51,21 @@ public class DataBaseAccess {
     }
     public enum Table
     {
-    	PlaceOfInterest("POIs");
-//    	User(1),
-//    	Map(2),
-//    	Location(3),
-//    	CityDataVersion(4),
-//    	Route(5),
-//    	CityPurchase(6),
-//    	City(7),
-//    	RouteStop(8),
-//    	MapSight(9),
-//    	PlaceOfInterestSight(10),
-//    	RouteSight(11),
-//    	Statistic(12);
+    	PlaceOfInterest("POIs"),
+    	Map("Maps"),
+    	Route("Routes"),
+    	City("Cities"),
+    	Customer("Customers"),
+    	Employee("Employees"),
+    	Location("Locations"),
+    	RouteStop("RouteStop"),
+    	MapSight("MapSights"),
+    	PlaceOfInterestSight("POISights"),
+    	RouteSight("RouteSights"),
+    	CityDataVersion("CityDataVersions"),
+    	Subscription("Subscription"),
+    	OneTimePurchase("OneTimePurchase");
+    	
      
         private final String url;
      
@@ -368,7 +370,8 @@ public class DataBaseAccess {
     
     
     
-	private static boolean existePlaceOfInterest(int id) {
+	private static boolean existePlaceOfInterest(int id) 
+	{
 		try {
 			String sql="SELECT ID FROM "+ Table.PlaceOfInterest.getValue()+ " WHERE ID=?";
 			PreparedStatement check = conn.prepareStatement(sql);
@@ -386,7 +389,256 @@ public class DataBaseAccess {
 		}
 		return true;
 	}
-    
+	private static boolean existeMap(int id) 
+	{
+		try {
+			String sql="SELECT ID FROM "+ Table.Map.getValue()+ " WHERE ID=?";
+			PreparedStatement check = conn.prepareStatement(sql);
+			check.setInt(1, id);
+			ResultSet res = check.executeQuery();
+			// check if there is exciting row in table before insert
+			if(!res.next())
+				return false;
+			return true;
+			} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return true;
+	}
+	private static boolean existeRoute(int id) 
+	{
+		try {
+			String sql="SELECT ID FROM "+ Table.Route.getValue()+ " WHERE ID=?";
+			PreparedStatement check = conn.prepareStatement(sql);
+			check.setInt(1, id);
+			ResultSet res = check.executeQuery();
+			// check if there is exciting row in table before insert
+			if(!res.next())
+				return false;
+			return true;
+			} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return true;
+	}
+	private static boolean existeCity(int id) 
+	{
+		try {
+			String sql="SELECT ID FROM "+ Table.City.getValue()+ " WHERE ID=?";
+			PreparedStatement check = conn.prepareStatement(sql);
+			check.setInt(1, id);
+			ResultSet res = check.executeQuery();
+			// check if there is exciting row in table before insert
+			if(!res.next())
+				return false;
+			return true;
+			} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return true;
+	}
+	private static boolean existeCustomer(int id) 
+	{
+		try {
+			String sql="SELECT ID FROM "+ Table.Customer.getValue()+ " WHERE ID=?";
+			PreparedStatement check = conn.prepareStatement(sql);
+			check.setInt(1, id);
+			ResultSet res = check.executeQuery();
+			// check if there is exciting row in table before insert
+			if(!res.next())
+				return false;
+			return true;
+			} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return true;
+	}
+	private static boolean existeEmployee(int id) 
+	{
+		try {
+			String sql="SELECT ID FROM "+ Table.Employee.getValue()+ " WHERE ID=?";
+			PreparedStatement check = conn.prepareStatement(sql);
+			check.setInt(1, id);
+			ResultSet res = check.executeQuery();
+			// check if there is exciting row in table before insert
+			if(!res.next())
+				return false;
+			return true;
+			} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return true;
+	}
+	private static boolean existeLocation(int id) 
+	{
+		try {
+			String sql="SELECT ID FROM "+ Table.Location.getValue()+ " WHERE ID=?";
+			PreparedStatement check = conn.prepareStatement(sql);
+			check.setInt(1, id);
+			ResultSet res = check.executeQuery();
+			// check if there is exciting row in table before insert
+			if(!res.next())
+				return false;
+			return true;
+			} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return true;
+	}
+	private static boolean existeRouteStop(int id)
+	{
+		try {
+			String sql="SELECT ID FROM "+ Table.RouteStop.getValue()+ " WHERE ID=?";
+			PreparedStatement check = conn.prepareStatement(sql);
+			check.setInt(1, id);
+			ResultSet res = check.executeQuery();
+			// check if there is exciting row in table before insert
+			if(!res.next())
+				return false;
+			return true;
+			} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return true;
+	}
+	private static boolean existeMapSight(int id) 
+	{
+		try {
+			String sql="SELECT ID FROM "+ Table.MapSight.getValue()+ " WHERE ID=?";
+			PreparedStatement check = conn.prepareStatement(sql);
+			check.setInt(1, id);
+			ResultSet res = check.executeQuery();
+			// check if there is exciting row in table before insert
+			if(!res.next())
+				return false;
+			return true;
+			} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return true;
+	}
+	private static boolean existePlaceOfInterestSight(int id)
+	{
+		try {
+			String sql="SELECT ID FROM "+ Table.PlaceOfInterestSight.getValue()+ " WHERE ID=?";
+			PreparedStatement check = conn.prepareStatement(sql);
+			check.setInt(1, id);
+			ResultSet res = check.executeQuery();
+			// check if there is exciting row in table before insert
+			if(!res.next())
+				return false;
+			return true;
+			} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return true;
+	}
+	private static boolean existeRouteSight(int id) 
+	{
+		try {
+			String sql="SELECT ID FROM "+ Table.RouteSight.getValue()+ " WHERE ID=?";
+			PreparedStatement check = conn.prepareStatement(sql);
+			check.setInt(1, id);
+			ResultSet res = check.executeQuery();
+			// check if there is exciting row in table before insert
+			if(!res.next())
+				return false;
+			return true;
+			} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return true;
+	}
+	private static boolean existeCityDataVersion(int id) 
+	{
+		try {
+			String sql="SELECT ID FROM "+ Table.CityDataVersion.getValue()+ " WHERE ID=?";
+			PreparedStatement check = conn.prepareStatement(sql);
+			check.setInt(1, id);
+			ResultSet res = check.executeQuery();
+			// check if there is exciting row in table before insert
+			if(!res.next())
+				return false;
+			return true;
+			} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return true;
+	}
+	private static boolean existeSubscription(int id)
+	{
+		try {
+			String sql="SELECT ID FROM "+ Table.Subscription.getValue()+ " WHERE ID=?";
+			PreparedStatement check = conn.prepareStatement(sql);
+			check.setInt(1, id);
+			ResultSet res = check.executeQuery();
+			// check if there is exciting row in table before insert
+			if(!res.next())
+				return false;
+			return true;
+			} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return true;
+	}
+	private static boolean existeOneTimePurchase(int id) 
+	{
+		try {
+			String sql="SELECT ID FROM "+ Table.OneTimePurchase.getValue()+ " WHERE ID=?";
+			PreparedStatement check = conn.prepareStatement(sql);
+			check.setInt(1, id);
+			ResultSet res = check.executeQuery();
+			// check if there is exciting row in table before insert
+			if(!res.next())
+				return false;
+			return true;
+			} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	
+	
     public static boolean savePlaceOfInterest(PlaceOfInterest p)//return true if it's already in the database
 	{
 		try {
@@ -424,7 +676,488 @@ public class DataBaseAccess {
 		}
 		return false;
 	}
+    public static boolean saveMap(Map p)
+	{
+		try {
+			if(existeMap(p.getId()))
+			{
+				String sql="UPDATE "+ Table.Map.getValue()+" SET Name=?, Info=?, imgURL=?, CityID=? WHERE ID=?";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setString(1, p.getName());
+				su.setString(2, p.getInfo());
+				su.setString(3, p.getImgURL());
+				su.setint(4,  p.getCityId());
+				su.setInt(5, p.getId());
+				su.executeUpdate();
+				return true;
+			}
+			else
+			{
+				String sql="INSERT INTO "+ Table.Map.getValue() +" (ID,Name, Info, imgURL, CityID) VALUES (?,?, ?, ?, ?)";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setInt(1, p.getId());
+				su.setString(2, p.getName());
+				su.setString(3, p.getInfo());
+				su.setString(4, p.getImgURL());
+				su.setint(5,  p.getCityId());
+				su.executeUpdate();
+				return false;
+			}
+		} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return false;
+	}
+    public static boolean saveRoute(Route p)
+	{
+		try {
+			if(existeRoute(p.getId()))
+			{
+				String sql="UPDATE "+ Table.Route.getValue()+" SET Info=?, ATD=?, NumStops=?, CityID=? WHERE ID=?";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setString(1, p.getInfo());
+				su.setBoolean(2, p.isAcceptabilityToDisabled());
+				su.setInt(3, p.getNumStops());
+				su.setInt(4,  p.getCityId());
+				su.setInt(5, p.getId());
+				su.executeUpdate();
+				return true;
+			}
+			else
+			{
+				String sql="INSERT INTO "+ Table.Route.getValue() +" (ID,Info, ATD, NumStops, CityID) VALUES (?,?, ?, ?, ?)";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setInt(1, p.getId());
+				su.setString(2, p.getInfo());
+				su.setBoolean(3, p.isAcceptabilityToDisabled());
+				su.setInt(4, p.getNumStops());
+				su.setInt(5,  p.getCityId());
+				su.executeUpdate();
+				return false;
+			}
+		} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return false;
+	}
+    public static boolean saveCity(City p)
+	{
+		try {
+			if(existeCity(p.getId()))
+			{
+				String sql="UPDATE "+ Table.City.getValue()+" SET Name=?, Description=?, VersionID=? WHERE ID=?";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setString(1, p.getCityName());
+				su.setString(2, p.getCityDescription());
+				su.setInt(3, p.getPublishedVersionId());
+				su.setInt(4, p.getId());
+				su.executeUpdate();
+				return true;
+			}
+			else
+			{
+				String sql="INSERT INTO "+ Table.City.getValue() +" (ID,Name, Description, VersionID) VALUES (?,?, ?, ?)";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setInt(1, p.getId());
+				su.setString(2, p.getCityName());
+				su.setString(3, p.getCityDescription());
+				su.setInt(4, p.getPublishedVersionId());
+				su.executeUpdate();
+				return false;
+			}
+		} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return false;
+	}
+    public static boolean saveCustomer(Customer p)
+	{
+		try {
+			if(existeCustomer(p.getId()))
+			{
+				String sql="UPDATE "+ Table.Customer.getValue()+" SET Username=?, Password=?, Email=?, FirstName=?, LastName=?, PhoneNumber=?, personalDetails=? WHERE ID=?";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setString(1, p.getUserName());
+				su.setString(2, p.getPassword());
+				su.setString(3, p.getEmail());
+				su.setString(4, p.getFirstName());
+				su.setString(5, p.getLastName());
+				su.setString(6,  p.getPhoneNumber());
+				su.setString(7, p.getPersonalDetails());
+				su.setInt(8, p.getId());
+				su.executeUpdate();
+				return true;
+			}
+			else
+			{
+				String sql="INSERT INTO "+ Table.Customer.getValue() +" (ID,Username, Password, Email, FirstName, LastName, PhoneNumber, personalDetails) VALUES (?,?, ?, ?, ?, ?,?,?)";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setInt(1, p.getId());
+				su.setString(2, p.getUserName());
+				su.setString(3, p.getPassword());
+				su.setString(4, p.getEmail());
+				su.setString(5, p.getFirstName());
+				su.setString(6, p.getLastName());
+				su.setString(7,  p.getPhoneNumber());
+				su.setString(8, p.getPersonalDetails());
+				su.executeUpdate();
+				return false;
+			}
+		} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return false;
+	}
+    public static boolean saveEmployee(Employee p)
+	{
+		try {
+			if(existeEmployee(p.getId()))
+			{
+				String sql="UPDATE "+ Table.Employee.getValue()+" SET CityID=?, Name=?, Type=?, Description=?, ATD=? WHERE ID=?";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setInt(1, p.getCityId());
+				su.setString(2, p.getName());
+				su.setInt(3, p.getType().getValue());
+				su.setString(4,  p.getPlaceDescription());
+				su.setBoolean(5, p.isAccessibilityToDisabled());
+				su.setInt(6, p.getId());
+				su.executeUpdate();
+				return true;
+			}
+			else
+			{
+				String sql="INSERT INTO "+ Table.Employee.getValue() +" (ID,CityID, Name, Type, Description, ATD) VALUES (?,?, ?, ?, ?, ?)";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setInt(1, p.getId());
+				su.setInt(2, p.getCityId());
+				su.setString(3, p.getName());
+				su.setInt(4, p.getType().getValue());
+				su.setString(5,  p.getPlaceDescription());
+				su.setBoolean(6, p.isAccessibilityToDisabled());
+				su.executeUpdate();
+				return false;
+			}
+		} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return false;
+	}
+    public static boolean _saveLocation(Location p) //friend to Map
+	{
+		try {
+			if(existeLocation(p.getId()))
+			{
+				String sql="UPDATE "+ Table.Location.getValue()+" SET CityID=?, Name=?, Type=?, Description=?, ATD=? WHERE ID=?";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setInt(1, p.getCityId());
+				su.setString(2, p.getName());
+				su.setInt(3, p.getType().getValue());
+				su.setString(4,  p.getPlaceDescription());
+				su.setBoolean(5, p.isAccessibilityToDisabled());
+				su.setInt(6, p.getId());
+				su.executeUpdate();
+				return true;
+			}
+			else
+			{
+				String sql="INSERT INTO "+ Table.Location.getValue() +" (ID,CityID, Name, Type, Description, ATD) VALUES (?,?, ?, ?, ?, ?)";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setInt(1, p.getId());
+				su.setInt(2, p.getCityId());
+				su.setString(3, p.getName());
+				su.setInt(4, p.getType().getValue());
+				su.setString(5,  p.getPlaceDescription());
+				su.setBoolean(6, p.isAccessibilityToDisabled());
+				su.executeUpdate();
+				return false;
+			}
+		} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return false;
+	}
+    public static boolean _saveRouteStop(RouteStop p)//friend to Route
+	{
+		try {
+			if(existeRouteStop(p.getId()))
+			{
+				String sql="UPDATE "+ Table.RouteStop.getValue()+" SET CityID=?, Name=?, Type=?, Description=?, ATD=? WHERE ID=?";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setInt(1, p.getCityId());
+				su.setString(2, p.getName());
+				su.setInt(3, p.getType().getValue());
+				su.setString(4,  p.getPlaceDescription());
+				su.setBoolean(5, p.isAccessibilityToDisabled());
+				su.setInt(6, p.getId());
+				su.executeUpdate();
+				return true;
+			}
+			else
+			{
+				String sql="INSERT INTO "+ Table.RouteStop.getValue() +" (ID,CityID, Name, Type, Description, ATD) VALUES (?,?, ?, ?, ?, ?)";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setInt(1, p.getId());
+				su.setInt(2, p.getCityId());
+				su.setString(3, p.getName());
+				su.setInt(4, p.getType().getValue());
+				su.setString(5,  p.getPlaceDescription());
+				su.setBoolean(6, p.isAccessibilityToDisabled());
+				su.executeUpdate();
+				return false;
+			}
+		} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return false;
+	}
+    public static boolean _saveMapSight(MapSight p) //friend to MapSight
+	{
+		try {
+			if(existeMapSight(p.getId()))
+			{
+				String sql="UPDATE "+ Table.MapSight.getValue()+" SET CityID=?, Name=?, Type=?, Description=?, ATD=? WHERE ID=?";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setInt(1, p.getCityId());
+				su.setString(2, p.getName());
+				su.setInt(3, p.getType().getValue());
+				su.setString(4,  p.getPlaceDescription());
+				su.setBoolean(5, p.isAccessibilityToDisabled());
+				su.setInt(6, p.getId());
+				su.executeUpdate();
+				return true;
+			}
+			else
+			{
+				String sql="INSERT INTO "+ Table.MapSight.getValue() +" (ID,CityID, Name, Type, Description, ATD) VALUES (?,?, ?, ?, ?, ?)";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setInt(1, p.getId());
+				su.setInt(2, p.getCityId());
+				su.setString(3, p.getName());
+				su.setInt(4, p.getType().getValue());
+				su.setString(5,  p.getPlaceDescription());
+				su.setBoolean(6, p.isAccessibilityToDisabled());
+				su.executeUpdate();
+				return false;
+			}
+		} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return false;
+	}
+    public static boolean _savePlaceOfInterestSight(PlaceOfInterestSight p)//friend to CityDataVersion
+	{
+		try {
+			if(existePlaceOfInterestSight(p.getId()))
+			{
+				String sql="UPDATE "+ Table.PlaceOfInterestSight.getValue()+" SET CityID=?, Name=?, Type=?, Description=?, ATD=? WHERE ID=?";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setInt(1, p.getCityId());
+				su.setString(2, p.getName());
+				su.setInt(3, p.getType().getValue());
+				su.setString(4,  p.getPlaceDescription());
+				su.setBoolean(5, p.isAccessibilityToDisabled());
+				su.setInt(6, p.getId());
+				su.executeUpdate();
+				return true;
+			}
+			else
+			{
+				String sql="INSERT INTO "+ Table.PlaceOfInterestSight.getValue() +" (ID,CityID, Name, Type, Description, ATD) VALUES (?,?, ?, ?, ?, ?)";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setInt(1, p.getId());
+				su.setInt(2, p.getCityId());
+				su.setString(3, p.getName());
+				su.setInt(4, p.getType().getValue());
+				su.setString(5,  p.getPlaceDescription());
+				su.setBoolean(6, p.isAccessibilityToDisabled());
+				su.executeUpdate();
+				return false;
+			}
+		} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return false;
+	}
+    public static boolean _saveRouteSight(RouteSight p)//friend to CityDataVersion
+	{
+		try {
+			if(existeRouteSight(p.getId()))
+			{
+				String sql="UPDATE "+ Table.RouteSight.getValue()+" SET CityID=?, Name=?, Type=?, Description=?, ATD=? WHERE ID=?";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setInt(1, p.getCityId());
+				su.setString(2, p.getName());
+				su.setInt(3, p.getType().getValue());
+				su.setString(4,  p.getPlaceDescription());
+				su.setBoolean(5, p.isAccessibilityToDisabled());
+				su.setInt(6, p.getId());
+				su.executeUpdate();
+				return true;
+			}
+			else
+			{
+				String sql="INSERT INTO "+ Table.RouteSight.getValue() +" (ID,CityID, Name, Type, Description, ATD) VALUES (?,?, ?, ?, ?, ?)";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setInt(1, p.getId());
+				su.setInt(2, p.getCityId());
+				su.setString(3, p.getName());
+				su.setInt(4, p.getType().getValue());
+				su.setString(5,  p.getPlaceDescription());
+				su.setBoolean(6, p.isAccessibilityToDisabled());
+				su.executeUpdate();
+				return false;
+			}
+		} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return false;
+	}
+    public static boolean _saveCityDataVersion(CityDataVersion p)//friend to City
+	{
+		try {
+			if(existeCityDataVersion(p.getId()))
+			{
+				String sql="UPDATE "+ Table.CityDataVersion.getValue()+" SET CityID=?, Name=?, Type=?, Description=?, ATD=? WHERE ID=?";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setInt(1, p.getCityId());
+				su.setString(2, p.getName());
+				su.setInt(3, p.getType().getValue());
+				su.setString(4,  p.getPlaceDescription());
+				su.setBoolean(5, p.isAccessibilityToDisabled());
+				su.setInt(6, p.getId());
+				su.executeUpdate();
+				return true;
+			}
+			else
+			{
+				String sql="INSERT INTO "+ Table.CityDataVersion.getValue() +" (ID,CityID, Name, Type, Description, ATD) VALUES (?,?, ?, ?, ?, ?)";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setInt(1, p.getId());
+				su.setInt(2, p.getCityId());
+				su.setString(3, p.getName());
+				su.setInt(4, p.getType().getValue());
+				su.setString(5,  p.getPlaceDescription());
+				su.setBoolean(6, p.isAccessibilityToDisabled());
+				su.executeUpdate();
+				return false;
+			}
+		} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return false;
+	}
+    public static boolean _saveSubscription(Subscription p) //friend to Customer
+    {
+		try {
+			if(existeSubscription(p.getId()))
+			{
+				String sql="UPDATE "+ Table.Subscription.getValue()+" SET CityID=?, Name=?, Type=?, Description=?, ATD=? WHERE ID=?";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setInt(1, p.getCityId());
+				su.setString(2, p.getName());
+				su.setInt(3, p.getType().getValue());
+				su.setString(4,  p.getPlaceDescription());
+				su.setBoolean(5, p.isAccessibilityToDisabled());
+				su.setInt(6, p.getId());
+				su.executeUpdate();
+				return true;
+			}
+			else
+			{
+				String sql="INSERT INTO "+ Table.Subscription.getValue() +" (ID,CityID, Name, Type, Description, ATD) VALUES (?,?, ?, ?, ?, ?)";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setInt(1, p.getId());
+				su.setInt(2, p.getCityId());
+				su.setString(3, p.getName());
+				su.setInt(4, p.getType().getValue());
+				su.setString(5,  p.getPlaceDescription());
+				su.setBoolean(6, p.isAccessibilityToDisabled());
+				su.executeUpdate();
+				return false;
+			}
+		} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return false;
+	}
+    public static boolean _saveOneTimePurchase(OneTimePurchase p) //friend to Customer
+    {
+		try {
+			if(existeOneTimePurchase(p.getId()))
+			{
+				String sql="UPDATE "+ Table.OneTimePurchase.getValue()+" SET CityID=?, Name=?, Type=?, Description=?, ATD=? WHERE ID=?";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setInt(1, p.getCityId());
+				su.setString(2, p.getName());
+				su.setInt(3, p.getType().getValue());
+				su.setString(4,  p.getPlaceDescription());
+				su.setBoolean(5, p.isAccessibilityToDisabled());
+				su.setInt(6, p.getId());
+				su.executeUpdate();
+				return true;
+			}
+			else
+			{
+				String sql="INSERT INTO "+ Table.OneTimePurchase.getValue() +" (ID,CityID, Name, Type, Description, ATD) VALUES (?,?, ?, ?, ?, ?)";
+				PreparedStatement su = conn.prepareStatement(sql);
+				su.setInt(1, p.getId());
+				su.setInt(2, p.getCityId());
+				su.setString(3, p.getName());
+				su.setInt(4, p.getType().getValue());
+				su.setString(5,  p.getPlaceDescription());
+				su.setBoolean(6, p.isAccessibilityToDisabled());
+				su.executeUpdate();
+				return false;
+			}
+		} 
+		catch (Exception e)
+		{
+	  	    closeConnection();
+			e.printStackTrace();
+		}
+		return false;
+	}
 
+    
+    
+    
+    
     public static ArrayList<Integer> searchPlaceOfInterest(String placeName,String placeDescription,Integer cityId)
 	{
 		try {
