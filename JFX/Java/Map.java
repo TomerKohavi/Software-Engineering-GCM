@@ -119,4 +119,7 @@ public class Map {
     public void setImgURL(String imgURL) {
         this.imgURL = imgURL;
     }
+
+
+	
 }

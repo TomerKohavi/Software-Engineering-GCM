@@ -1,8 +1,20 @@
 public class Employee extends User {
     public enum Role
     {
-        MANGER,
-        REGULAR
+        MANAGER(0),
+        REGULAR(1);
+        
+        private final int value;
+        
+        Role(final int nv)
+        {
+        	value = nv;
+        }
+        
+        public int getValue()
+        {
+        	return value;
+        }
     }
     private Role role;
 
