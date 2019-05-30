@@ -5,11 +5,15 @@ import javafx.stage.Stage;
 
 public class Connector {
 	
-	public static String usr_id;
+	public static int usr_id;
 	
 	public static Stage mainStage;
 	
 	public static JFXButton sideButton;
+	
+	public static String listType = "city";
+	
+	public static boolean searchedCity = true;
 	
 //	static void loadPage(AnchorPane pane, String FXMLpage) throws IOException
 //	{

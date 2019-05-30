@@ -76,7 +76,7 @@ public class EmployeeRegisterController {
     	else
     	{
     		IncorrectText.setOpacity(0);
-    		Connector.usr_id = "1";
+    		Connector.usr_id = 1;
     		loadPage("HomePageScene.fxml");
     	}
 

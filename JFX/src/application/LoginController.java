@@ -73,7 +73,7 @@ public class LoginController {
     	pass = Password.getText();
     	if (user.equals(pass))
     	{
-    		Connector.usr_id = "1";
+    		Connector.usr_id = 1;
     		loadPage("HomePageScene.fxml");
     	}
     	else

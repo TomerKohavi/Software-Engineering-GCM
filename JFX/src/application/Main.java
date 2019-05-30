@@ -20,7 +20,7 @@ extends Application {
 //        catch (Exception e) {
 //            e.printStackTrace();
 //        }
-    	Connector.mainStage = primaryStage;
+    	
         FXMLLoader loader = new FXMLLoader(((Object)((Object)this)).getClass().getResource("HomePageScene.fxml"));
         AnchorPane pane = (AnchorPane)loader.load();
         Scene scene = new Scene((Parent)pane);
