@@ -75,6 +75,7 @@ public class MapEditController {
 //    	Name.getText();
 //		InfoBox.getText();
 //		MapImage.getImage();
+    	mainPane.getScene().getWindow().hide();
     }
 
     @FXML

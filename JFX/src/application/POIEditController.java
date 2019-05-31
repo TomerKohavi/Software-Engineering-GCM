@@ -65,6 +65,7 @@ public class POIEditController {
 //		InfoBox.getText();
 //		TypeCombo.getValue();
 //    	Accessibility.selectedProperty();
+    	mainPane.getScene().getWindow().hide();
     }
 
     @FXML

@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -29,7 +30,7 @@ public class RouteEditController {
     private JFXListView<String> POIBox; // Value injected by FXMLLoader
     
     @FXML // fx:id="StopsBox"
-    private JFXListView<String> StopsBox; // Value injected by FXMLLoader
+    private TableView<String> StopsBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="AddPoiButton"
     private JFXButton AddPoiButton; // Value injected by FXMLLoader
@@ -95,6 +96,7 @@ public class RouteEditController {
 //		InfoBox.getText();
 //		TypeCombo.getValue();
 //    	Accessability.selectedProperty();
+    	mainPane.getScene().getWindow().hide();
     }
 
     @FXML

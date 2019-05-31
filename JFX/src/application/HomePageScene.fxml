@@ -3,6 +3,8 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -31,37 +33,48 @@
       <JFXTextField fx:id="InfoBox" focusColor="#41e0d0" layoutX="587.0" layoutY="58.0" prefHeight="25.0" prefWidth="244.0" promptText="Info" />
       <JFXButton fx:id="SearchCityButton" layoutX="853.0" layoutY="58.0" onAction="#searchCity" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Search City" />
       <JFXButton fx:id="SearchPOIButton" layoutX="977.0" layoutY="58.0" onAction="#searchPOI" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Search POI" />
-      <ImageView fx:id="MapImage" fitHeight="600.0" fitWidth="600.0" layoutX="686.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true" />
-      <JFXButton fx:id="ShowMapButton" layoutX="1116.0" layoutY="720.0" onAction="#showMapImage" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Show Map" visible="false" />
-      <Pane fx:id="InfoPane" layoutX="686.0" layoutY="198.0" prefHeight="610.0" prefWidth="600.0">
+      <Pane fx:id="InfoPane" layoutX="686.0" layoutY="198.0" prefHeight="610.0" prefWidth="600.0" visible="false">
          <children>
-            <Text fx:id="ResultInfo" layoutX="61.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="477.13671875">
+            <Text fx:id="ResultInfo" layoutX="61.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Info" wrappingWidth="477.13671875">
                <font>
                   <Font size="14.0" />
                </font>
             </Text>
-            <Text fx:id="ResultName" fill="#41e0d0" layoutX="61.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0">
+            <Text fx:id="ResultName" fill="#41e0d0" layoutX="61.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-            <Text fx:id="Text1" layoutX="61.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0">
+            <Text fx:id="Text1" layoutX="61.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text1">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <Text fx:id="Text2" layoutX="238.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0">
+            <Text fx:id="Text2" layoutX="238.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text2">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <Text fx:id="Text3" layoutX="414.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0">
+            <Text fx:id="Text3" layoutX="414.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text3">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
+            <TableView fx:id="StopsTable" layoutX="74.0" layoutY="248.0" prefHeight="274.0" prefWidth="452.0" visible="false">
+              <columns>
+                <TableColumn prefWidth="359.0" text="POI" />
+                <TableColumn minWidth="0.0" prefWidth="92.0" text="Time" />
+              </columns>
+            </TableView>
+            <JFXButton fx:id="EditButton" layoutX="74.0" layoutY="547.0" onAction="#callEdit" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Edit" />
+            <JFXButton fx:id="BuyButton" layoutX="435.0" layoutY="547.0" onAction="#openBuyWindodw" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Buy" visible="false" />
          </children>
       </Pane>
+      <ImageView fx:id="MapImage" fitHeight="600.0" fitWidth="600.0" layoutX="686.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../../Pics/No_Image.png" />
+         </image></ImageView>
+      <JFXButton fx:id="ShowMapButton" layoutX="1116.0" layoutY="745.0" onAction="#showMapImage" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Show Map" visible="false" />
       <Pane prefHeight="800.0" prefWidth="163.0" style="-fx-background-color: #41e0d0; -fx-border-width: 0 2 0 0; -fx-border-color: #000000;">
          <children>
             <ImageView fitHeight="265.0" fitWidth="338.0" layoutX="-51.0" layoutY="535.0" pickOnBounds="true" preserveRatio="true">

@@ -9,6 +9,8 @@ import com.jfoenix.controls.JFXTextField;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -69,6 +72,15 @@ public class HomePageController {
     @FXML // fx:id="NumOfRoutes"
     private Text Text3; // Value injected by FXMLLoader
     
+    @FXML // fx:id="EditButton"
+    private JFXButton EditButton; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="BuyButton"
+    private JFXButton BuyButton; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="StopsTable"
+    private TableView<String> StopsTable; // Value injected by FXMLLoader
+    
     @FXML // fx:id="ShowMapButton"
     private JFXButton ShowMapButton; // Value injected by FXMLLoader
     
@@ -91,15 +103,15 @@ public class HomePageController {
     private JFXButton SideRoutes; // Value injected by FXMLLoader
 
     
-//    void loadPage(String FXMLpage) throws IOException {
-//    	FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLpage));  
-//        Stage stage = new Stage();
-//        stage.initOwner(mainPane.getScene().getWindow());
-//        stage.setScene(new Scene((Parent) loader.load()));
-//
-//        // showAndWait will block execution until the window closes...
-//        stage.showAndWait();
-//    }
+    void openNewPage(String FXMLpage) throws IOException {
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLpage));  
+        Stage stage = new Stage();
+        stage.initOwner(mainPane.getScene().getWindow());
+        stage.setScene(new Scene((Parent) loader.load()));
+
+        // showAndWait will block execution until the window closes...
+        stage.showAndWait();
+    }
     
     void loadPage(String FXMLpage) throws IOException {
         AnchorPane pane = (AnchorPane)FXMLLoader.load((URL)this.getClass().getResource(FXMLpage));
@@ -120,13 +132,22 @@ public class HomePageController {
 	    Text1.setText("");
 	    Text2.setText("");
 	    Text3.setText("");
+	    InfoPane.setVisible(false);
+		MapImage.setVisible(false);
+		ShowMapButton.setText("Show Map");
 	    ShowMapButton.setVisible(false);
+		StopsTable.setVisible(false);
+		BuyButton.setVisible(false);
     }
     
     public void initialize() {
     	
     	Connector.sideButton = SideSearch;
     	Connector.sideButton.setOpacity(1);
+    	
+//    	if (employee) { // check if employee -> can edit
+//    		EditButton.setVisible(true);
+//    	}
     	
     	MainList.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -145,9 +166,11 @@ public class HomePageController {
         	        		   Text1.setText("Maps Found: " + 2); // #Maps for the city 
         	        		   Text2.setText("POI Found: " + 2); // #POI for the city
         	        		   Text3.setText("Routes Found: " + 2); // #Routes for the city
+        	        		   BuyButton.setVisible(true);
         	        		   SideMap.setDisable(false);
         	        		   SidePOI.setDisable(false);
         	        		   SideRoutes.setDisable(false);
+        	        		   ShowMapButton.setVisible(false);
     	        		   }
     	        		   else { // POI Search
     	        			   ResultName.setText(currentItemSelected + " - " + "Hotel"); // set name and type
@@ -155,6 +178,7 @@ public class HomePageController {
         	        		   Text1.setText("City: " + "Haifa"); // name of the city 
         	        		   Text2.setText("Maps Found: " + 2); // #Maps for the city 
         	        		   Text3.setText("Accessible to Disabled"); // Accessible or not
+        	        		   BuyButton.setVisible(false);
         	        		   SideMap.setDisable(false);
         	        		   SidePOI.setDisable(true);
         	        		   SideRoutes.setDisable(true);
@@ -165,15 +189,18 @@ public class HomePageController {
     	        		   ResultInfo.setText("Info"); // set info
     	        		   Text1.setText("Accessible to Disabled"); // Accessible or not
     	        	   }
-    	        	   else if (Connector.listType.equals("map")) { // map
+    	        	   else if (Connector.listType.equals("Map")) { // map
     	        		   ResultName.setText(currentItemSelected); // set name
     	        		   ResultInfo.setText("Info"); // set info
     	        		   ShowMapButton.setVisible(true);
     	        	   }
-    	        	   else if (Connector.listType.equals("route")) { // route
+    	        	   else if (Connector.listType.equals("Route")) { // route
     	        		   ResultName.setText(currentItemSelected); // set name and type
     	        		   ResultInfo.setText("Info"); // set info
     	        		   Text1.setText("Accessible to Disabled"); // Accessible or not
+    	        		   StopsTable.setVisible(true);
+    	        		   ObservableList<String> stops = FXCollections.observableArrayList();
+    	        		   StopsTable.setItems(stops);
     	        	   }
     	           }
     	        }
@@ -184,6 +211,7 @@ public class HomePageController {
     
     @FXML
     void searchCity(ActionEvent event) throws IOException {
+    	setMainSideButton(SideSearch);
     	Connector.searchedCity = true;
     	Connector.listType = "search";
     	name = NameBox.getText();
@@ -202,6 +230,7 @@ public class HomePageController {
     
     @FXML
     void searchPOI(ActionEvent event) throws IOException {
+    	setMainSideButton(SideSearch);
     	Connector.searchedCity = false;
     	Connector.listType = "search";
     	name = NameBox.getText();
@@ -224,15 +253,18 @@ public class HomePageController {
     	if (show_map) {
     		InfoPane.setVisible(false);
     		MapImage.setVisible(true);
+    		ShowMapButton.setText("Hide Map");
     	}
     	else {
     		InfoPane.setVisible(true);
     		MapImage.setVisible(false);
+    		ShowMapButton.setText("Show Map");
     	}
     }
     
     @FXML
     void showSearch(ActionEvent event) {
+    	Connector.listType = "search";
     	setMainSideButton(SideSearch);
     	MainList.getItems().clear();
 		MainList.getItems().addAll("city1", "poi1");
@@ -245,7 +277,7 @@ public class HomePageController {
     
     @FXML
     void showMaps(ActionEvent event) {
-    	Connector.listType = "map";
+    	Connector.listType = "Map";
     	setMainSideButton(SideMap);
     	MainList.getItems().clear();
 		MainList.getItems().addAll("map1", "map2");
@@ -261,9 +293,24 @@ public class HomePageController {
 
     @FXML
     void showRoutes(ActionEvent event) {
-    	Connector.listType = "route";
+    	Connector.listType = "Route";
     	setMainSideButton(SideRoutes);
     	MainList.getItems().clear();
 		MainList.getItems().addAll("route1", "route2");
     }
+    
+    @FXML
+    void callEdit(ActionEvent event) throws IOException {
+    	String prefix = Connector.listType;
+    	if (prefix.equals("search"))
+    		prefix = Connector.searchedCity ? "City" : "POI";
+    	openNewPage(prefix + "EditScene.fxml");
+    }
+ 
+
+    @FXML
+    void openBuyWindodw(ActionEvent event) {
+
+    }
+    
 }

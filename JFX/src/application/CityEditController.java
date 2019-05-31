@@ -44,6 +44,7 @@ public class CityEditController {
     void apply(ActionEvent event) {
 //    	Name.getText();
 //		InfoBox.getText();
+    	mainPane.getScene().getWindow().hide();
     }
 
     @FXML
