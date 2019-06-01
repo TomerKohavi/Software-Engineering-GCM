@@ -111,21 +111,23 @@ public class City implements ClassMustProperties, Serializable
         return null;
     }
 
-    public CityDataVersion addUnpublishedCityDataVersion(String versionName, double priceOneTime, double pricePeriod)
+    public boolean addUnpublishedCityDataVersion(CityDataVersion cdv)
     {
-        CityDataVersion cdv=new CityDataVersion(this,versionName,priceOneTime,pricePeriod);
+        if(cdv.getCityId()!=this.getId())
+            return false;
         temp_unpublishedVersions.add(cdv);
-        return cdv;
+        return true;
     }
 
-    public CityDataVersion addPublishedCityDataVersion(String versionName, double priceOneTime, double pricePeriod)
+    public boolean addPublishedCityDataVersion(CityDataVersion cdv)
     {
-        CityDataVersion cdv=new CityDataVersion(this,versionName,priceOneTime,pricePeriod);
+        if(cdv.getCityId()!=this.getId())
+            return false;
         if(this.publishedVersionId!=null && this.temp_publishedVersion!=null)
             temp_unpublishedVersions.add(temp_publishedVersion);
         publishedVersionId=cdv.getId();
         temp_publishedVersion=cdv;
-        return cdv;
+        return true;
     }
 
     public boolean setUnpublishedToPublishedByVersionId(int cdvId)

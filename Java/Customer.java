@@ -143,26 +143,28 @@ public class Customer extends User implements ClassMustProperties, Serializable 
             otp.deleteFromDatabase();
     }
 
-    public Subscription addSubscription(City c, Date purchaseDate, double fullPrice, double pricePayed, Date expirationDate)
+    public boolean addSubscription(Subscription sub)
     {
-        Subscription sub=new Subscription(this,c,purchaseDate,fullPrice,pricePayed,expirationDate);
+        if(sub.getUserId()!=this.getId())
+            return false;
         Date today=new Date();
         if(sub.getPurchaseDate().compareTo(today)>0)  //TODO: not sure if <0 or >0
             temp_activeSubscription.add(sub);
         else
             temp_unactiveSubscription.add(sub);
-        return sub;
+        return true;
     }
 
-    public OneTimePurchase addOneTimePurchase(City c, Date purchaseDate, double fullPrice, double pricePayed)
+    public boolean addOneTimePurchase(OneTimePurchase otp)
     {
-        OneTimePurchase otp=new OneTimePurchase(this,c,purchaseDate,fullPrice,pricePayed);
+        if(otp.getUserId()!=this.getId())
+            return false;
         Date today=new Date();
         if(!otp.wasDownload)
             temp_activeOneTimePurchase.add(otp);
         else
             temp_unactiveOneTimePurchase.add(otp);
-        return otp;
+        return true;
     }
 
     public ArrayList<Subscription> getGoingToEnd()

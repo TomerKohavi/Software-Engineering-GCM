@@ -112,13 +112,12 @@ public class Map implements ClassMustProperties, Serializable {
         return null;
     }
 
-    public Location addLocation(PlaceOfInterest p,double[] coordinates)
+    public boolean addLocation(Location l)
     {
-        if(p.getCityId()!=this.cityId)
-            return null;
-        Location l=new Location(this,p,coordinates);
+        if(l.getCopyPlaceOfInterest().getCityId()!=this.cityId || l.getMapId()!=this.id)
+            return false;
         temp_locations.add(l);
-        return l;
+        return true;
     }
 
     public Location removeLocationById(int locId)

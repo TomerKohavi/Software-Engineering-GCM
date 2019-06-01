@@ -73,7 +73,7 @@ public class RouteStop implements Comparable<RouteStop>,ClassMustProperties, Ser
         return placeId;
     }
 
-    public PlaceOfInterest getPlace(){
+    public PlaceOfInterest getCopyPlace(){
         return Database.getPlaceOfInterestById(placeId);
     }
 

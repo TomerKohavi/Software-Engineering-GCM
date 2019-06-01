@@ -144,13 +144,12 @@ public class CityDataVersion implements ClassMustProperties, Serializable
         return null;
     }
 
-    public MapSight addMapSight(Map m)
+    public boolean addMapSight(MapSight ms)
     {
-        if(m.getCityId()!=this.getCityId())
-            return null;
-        MapSight ms=new MapSight(this,m);
+        if(ms.getCopyMap().getCityId()!=this.getCityId() || ms.getCityDataVersionId()!=this.id)
+            return false;
         this.temp_mapSights.add(ms);
-        return ms;
+        return true;
     }
 
     public MapSight removeMapSightById(int msId)
@@ -205,13 +204,12 @@ public class CityDataVersion implements ClassMustProperties, Serializable
         return null;
     }
 
-    public PlaceOfInterestSight addPlaceOfInterestSight(PlaceOfInterest p)
+    public boolean addPlaceOfInterestSight(PlaceOfInterestSight ps)
     {
-        if(p.getCityId()!=this.cityId)
-            return null;
-        PlaceOfInterestSight ps=new PlaceOfInterestSight(this,p);
+        if(ps.getCopyPlace().getCityId()!=this.cityId || ps.getCityDataVersionId()!=this.id)
+            return false;
         temp_placeSights.add(ps);
-        return ps;
+        return true;
     }
 
     public PlaceOfInterestSight removePlaceOfInterestSightById(int psId)
@@ -265,13 +263,12 @@ public class CityDataVersion implements ClassMustProperties, Serializable
         return null;
     }
 
-    public RouteSight addRouteSight(Route r)
+    public boolean addRouteSight(RouteSight rs)
     {
-        if(r.getCityId()!=this.cityId)
-            return null;
-        RouteSight rs=new RouteSight(this,r);
+        if(rs.getCopyRoute().getCityId()!=this.cityId || rs.getCityDataVersionId()!=this.getId())
+            return false;
         temp_routeSights.add(rs);
-        return rs;
+        return true;
     }
 
     public RouteSight removeRouteSightById(int rsId)

@@ -1,5 +1,4 @@
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -85,27 +84,22 @@ public class Route implements ClassMustProperties, Serializable
         this.temp_removeRouteStops=new ArrayList<>();
     }
 
-    public RouteStop addRouteStop(PlaceOfInterest p,Time recommendedTime)
+    public boolean addRouteStop(RouteStop rs)
     {
-        if(p.getCityId()!=this.cityId)
-            return null;
-        int index=temp_routeStops.size();
-        RouteStop rs=new RouteStop(this,p,index,recommendedTime);
+        if(rs.getRouteId()!=this.id || rs.getCopyPlace().getCityId()!=this.getCityId())
+            return false;
         temp_routeStops.add(rs);
-        return rs;
+        return true;
     }
 
-    public RouteStop addRouteStop(PlaceOfInterest p,Time recommendedTime,int index)
+    public boolean addRouteStop(RouteStop rs,int index)
     {
-        if(p.getCityId()!=this.cityId)
-            return null;
-        if(index<0 || index>temp_routeStops.size())
-            return null;
-        RouteStop rs=new RouteStop(this,p,index,recommendedTime);
+        if(rs.getRouteId()!=this.id || rs.getCopyPlace().getCityId()!=this.getCityId())
+            return false;
         temp_routeStops.add(index,rs);
         for(int i=index;i<temp_routeStops.size();i++)
             temp_routeStops.get(i).setNumStop(i);
-        return rs;
+        return true;
     }
 
     public RouteStop getRouteStopByPlaceId(int placeId)
