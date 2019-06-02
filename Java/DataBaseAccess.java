@@ -1937,7 +1937,9 @@ public class DataBaseAccess {
 			if(!res.next()) 
 				return null;
 			res.last();
-			return Employee._Employee(res.getInt("ID"),res.getString("Username"),res.getString("Password"),res.getString("Email"),res.getString("FirstName"),res.getString("LastName"),res.getString("PhoneNumber"),Employee.Role(res.getInt("Role")));
+			return Employee._createEmployee(res.getInt("ID"),res.getString("Username"),
+					res.getString("Password"),res.getString("Email"),res.getString("FirstName"),
+					res.getString("LastName"),res.getString("PhoneNumber"),Employee.Role.values()[res.getInt("Role")]);
 		}
 		catch (Exception e) {
 	  	    closeConnection();
