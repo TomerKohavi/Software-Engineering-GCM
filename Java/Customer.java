@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Customer extends User implements ClassMustProperties, Serializable {
-    private String personalDetails;
 
     ArrayList<Subscription> temp_activeSubscription;
     ArrayList<Subscription> temp_unactiveSubscription;
@@ -13,19 +12,17 @@ public class Customer extends User implements ClassMustProperties, Serializable 
     ArrayList<OneTimePurchase> temp_removeOneTimePurchase;
 
 
-    private Customer(int id, String userName, String password, String email, String firstName, String lastName, String phoneNumber, String personalDetails) {
+    private Customer(int id, String userName, String password, String email, String firstName, String lastName, String phoneNumber) {
         super(id, userName, password, email, firstName, lastName, phoneNumber);
-        Date today=new Date();
         reloadTempsFromDatabase();
     }
 
-    public static Customer _createCustomer(int id, String userName, String password, String email, String firstName, String lastName, String phoneNumber, String personalDetails){ //friend to Database
-        return new Customer(id,userName, password, email, firstName,  lastName,  phoneNumber,  personalDetails);
+    public static Customer _createCustomer(int id, String userName, String password, String email, String firstName, String lastName, String phoneNumber){ //friend to Database
+        return new Customer(id,userName, password, email, firstName,  lastName,  phoneNumber);
     }
 
-    public Customer(String userName, String password, String email, String firstName, String lastName, String phoneNumber, String personalDetails) {
+    public Customer(String userName, String password, String email, String firstName, String lastName, String phoneNumber) {
         super(userName, password, email, firstName, lastName, phoneNumber);
-        this.personalDetails = personalDetails;
         this.temp_activeSubscription=new ArrayList<>();
         this.temp_unactiveSubscription=new ArrayList<>();
         this.temp_activeOneTimePurchase=new ArrayList<>();
@@ -40,7 +37,6 @@ public class Customer extends User implements ClassMustProperties, Serializable 
         this.temp_unactiveSubscription=generateUnactiveSubscriptions(today);
         this.temp_activeOneTimePurchase=generateActiveOneTimePurchases();
         this.temp_unactiveOneTimePurchase=generateUnactiveOneTimePurchases();
-        this.personalDetails = personalDetails;
         this.temp_removeSubscription=new ArrayList<>();
         this.temp_removeOneTimePurchase=new ArrayList<>();
     }
@@ -159,7 +155,6 @@ public class Customer extends User implements ClassMustProperties, Serializable 
     {
         if(otp.getUserId()!=this.getId())
             return false;
-        Date today=new Date();
         if(!otp.wasDownload)
             temp_activeOneTimePurchase.add(otp);
         else
@@ -273,13 +268,6 @@ public class Customer extends User implements ClassMustProperties, Serializable 
         return new ArrayList<>(temp_unactiveOneTimePurchase);
     }
 
-    public String getPersonalDetails() {
-        return personalDetails;
-    }
-
-    public void setPersonalDetails(String personalDetails) {
-        this.personalDetails = personalDetails;
-    }
 
     @Override
     public boolean equals(Object o) {

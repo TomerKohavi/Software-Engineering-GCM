@@ -27,9 +27,9 @@ public final class InformationSystem
     }
 
     public void addOneTimePurchase(int cityId,Date d) {
-        Statistic s=getStatistic(cityId,d);
-        if(s==null)
-            s=new Statistic(cityId,d);
+        Statistic s = getStatistic(cityId,d);
+        if(s == null)
+            s = new Statistic(cityId,d);
         s.addOneTimePurchase();
         Database._saveStatistic(s);
     }

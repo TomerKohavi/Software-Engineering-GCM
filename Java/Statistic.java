@@ -51,11 +51,11 @@ public class Statistic implements Comparable<Statistic>,ClassMustProperties
     }
 
     public void addSubscription() {
-        this.numSubscriptions+=1;
+        this.numSubscriptions += 1;
     }
 
     public void addSubscriptionRenewal() {
-        this.numSubscriptionsRenewal+=1;
+        this.numSubscriptionsRenewal += 1;
     }
 
     public void setNumOneTimePurchases(int numOneTimePurchases) {
