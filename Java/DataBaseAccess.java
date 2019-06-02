@@ -1847,7 +1847,9 @@ public class DataBaseAccess {
 			if(!res.next()) 
 				return null;
 			res.last();
-			return PlaceOfInterest._createPlaceOfInterest(res.getInt("ID"),res.getInt("CityID"),res.getString("Name"),PlaceOfInterest.PlaceType.values()[res.getInt("Type")],res.getString("Description"),res.getInt("ATD")!=0);
+			return PlaceOfInterest._createPlaceOfInterest(res.getInt("ID"),res.getInt("CityID"),res.getString("Name"),
+					PlaceOfInterest.PlaceType.values()[res.getInt("Type")],
+					res.getString("Description"),res.getInt("ATD")!=0);
 		}
 		catch (Exception e) {
 	  	    closeConnection();
