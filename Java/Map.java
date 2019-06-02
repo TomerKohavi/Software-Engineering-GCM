@@ -122,11 +122,10 @@ public class Map implements ClassMustProperties, Serializable {
 
     public Location removeLocationById(int locId)
     {
-        for(int i=0;i<temp_locations.size();i++){
-            Location l=temp_locations.get(i);
+        for(Location l:new ArrayList<>(temp_locations)){
             if(l.getId()==locId)
             {
-                temp_locations.remove(i);
+                temp_locations.remove(l);
                 temp_removeLocations.add(l);
                 return l;
             }

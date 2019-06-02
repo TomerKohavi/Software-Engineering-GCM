@@ -108,7 +108,7 @@ public final class Database
 
     public static ArrayList<Integer> searchCityDataVersion(Integer cityId){return null;}
 
-    public static ArrayList<Integer> searchStatistic(Integer cityId, Date date){return null;}
+    public static ArrayList<Integer> searchStatistic(Integer cityId, Date date,Date dateFrom,Date dateEnd){return null;}
 
     public static ArrayList<Integer> searchSubscription(Integer userId,Integer cityId, Date purchaseDate,Date date,Boolean afterDate){return null;}// note: afterDate=True, we looking for the active subscriptions means their date>=input date.  afterDate=false we are looking for unactivated subscriptions
 

@@ -64,7 +64,7 @@ public class City implements ClassMustProperties, Serializable
         if(temp_publishedVersion!=null)
             temp_publishedVersion.deleteFromDatabase();
         //remove statistics
-        ArrayList<Integer> ids=Database.searchStatistic(this.id,null);
+        ArrayList<Integer> ids=Database.searchStatistic(this.id,null,null,null);
         for(int id:ids)
         {
             Statistic s=Database._getStatisticById(id);
@@ -133,12 +133,11 @@ public class City implements ClassMustProperties, Serializable
     public boolean setUnpublishedToPublishedByVersionId(int cdvId)
     {
         CityDataVersion cdv=null;
-        for(int i=0;i<temp_unpublishedVersions.size();i++)
+        for(CityDataVersion temp:new ArrayList<>(temp_unpublishedVersions))
         {
-            CityDataVersion temp=temp_unpublishedVersions.get(i);
             if(temp.getId()==cdvId)
             {
-                temp_unpublishedVersions.remove(i);
+                temp_unpublishedVersions.remove(temp);
                 cdv=temp;
                 break;
             }
@@ -186,12 +185,11 @@ public class City implements ClassMustProperties, Serializable
             temp_publishedVersion=null;
             return cdv;
         }
-        for(int i=0;i<temp_unpublishedVersions.size();i++)
+        for(CityDataVersion cdv:new ArrayList<>(temp_unpublishedVersions))
         {
-            CityDataVersion cdv=temp_unpublishedVersions.get(i);
             if(cdv.getId()==cdvId)
             {
-                temp_unpublishedVersions.remove(i);
+                temp_unpublishedVersions.remove(cdv);
                 temp_removeVersions.add(cdv);
                 return cdv;
             }

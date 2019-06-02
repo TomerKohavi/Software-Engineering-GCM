@@ -44,6 +44,20 @@ public class CityDataVersion implements ClassMustProperties, Serializable
         this.temp_removeRouteSights=new ArrayList<>();
     }
 
+    public CityDataVersion(CityDataVersion other) {
+        this.id=Database.generateIdCityDataVersion();
+        this.versionName = other.versionName;
+        this.priceOneTime = other.priceOneTime;
+        this.pricePeriod = other.pricePeriod;
+        this.cityId=other.cityId;
+        this.temp_placeSights=new ArrayList<>(other.temp_placeSights);
+        this.temp_removePlaceSights=new ArrayList<>(other.temp_removePlaceSights);
+        this.temp_mapSights=new ArrayList<>(other.temp_mapSights);
+        this.temp_removeMapSights=new ArrayList<>(other.temp_removeMapSights);
+        this.temp_routeSights=new ArrayList<>(other.temp_routeSights);
+        this.temp_removeRouteSights=new ArrayList<>(other.temp_removeRouteSights);
+    }
+
     public void saveToDatabase()
     {
         Database._saveCityDataVersion(this);
@@ -154,11 +168,10 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 
     public MapSight removeMapSightById(int msId)
     {
-        for(int i=0;i<temp_mapSights.size();i++){
-            MapSight ms=temp_mapSights.get(i);
+        for(MapSight ms:new ArrayList<>(temp_mapSights)){
             if(ms.getId()==msId)
             {
-                temp_mapSights.remove(i);
+                temp_mapSights.remove(ms);
                 temp_removeMapSights.add(ms);
                 return ms;
             }
@@ -214,11 +227,10 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 
     public PlaceOfInterestSight removePlaceOfInterestSightById(int psId)
     {
-        for(int i=0;i<temp_placeSights.size();i++){
-            PlaceOfInterestSight ps=temp_placeSights.get(i);
+        for(PlaceOfInterestSight ps:new ArrayList<>(temp_placeSights)){
             if(ps.getId()==psId)
             {
-                temp_placeSights.remove(i);
+                temp_placeSights.remove(ps);
                 temp_removePlaceSights.add(ps);
                 return ps;
             }
@@ -273,12 +285,11 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 
     public RouteSight removeRouteSightById(int rsId)
     {
-        for(int i=0;i<temp_routeSights.size();i++)
+        for(RouteSight rs:new ArrayList<>(temp_routeSights))
         {
-            RouteSight rs=temp_routeSights.get(i);
             if(rs.getId()==rsId)
             {
-                temp_routeSights.remove(i);
+                temp_routeSights.remove(rs);
                 temp_removeRouteSights.add(rs);
                 return rs;
             }

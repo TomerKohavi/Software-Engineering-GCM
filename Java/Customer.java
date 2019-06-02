@@ -190,18 +190,18 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 
     public Subscription removeSubscription(int subscriptionId)
     {
-        for(int i=0;i<temp_activeSubscription.size();i++) {
-            if (temp_activeSubscription.get(i).getId() == subscriptionId)
+        for(Subscription s:new ArrayList<>(temp_activeSubscription)) {
+            if (s.getId() == subscriptionId)
             {
-                Subscription s=temp_activeSubscription.remove(i);
+                temp_activeSubscription.remove(s);
                 temp_removeSubscription.add(s);
                 return s;
             }
         }
-        for(int i=0;i<temp_unactiveSubscription.size();i++) {
-            if (temp_unactiveSubscription.get(i).getId() == subscriptionId)
+        for(Subscription s:new ArrayList<>(temp_unactiveSubscription)) {
+            if (s.getId() == subscriptionId)
             {
-                Subscription s=temp_unactiveSubscription.remove(i);
+                temp_unactiveSubscription.remove(s);
                 temp_removeSubscription.add(s);
                 return s;
             }
@@ -233,18 +233,18 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 
     public OneTimePurchase removeOneTimePurchase(int otpId)
     {
-        for(int i=0;i<temp_activeOneTimePurchase.size();i++) {
-            if (temp_activeOneTimePurchase.get(i).getId() == otpId)
+        for(OneTimePurchase otp:new ArrayList<>(temp_activeOneTimePurchase)) {
+            if (otp.getId() == otpId)
             {
-                OneTimePurchase otp= temp_activeOneTimePurchase.remove(i);
+                temp_activeOneTimePurchase.remove(otp);
                 temp_removeOneTimePurchase.add(otp);
                 return otp;
             }
         }
-        for(int i=0;i<temp_unactiveOneTimePurchase.size();i++) {
-            if (temp_unactiveOneTimePurchase.get(i).getId() == otpId)
+        for(OneTimePurchase otp:new ArrayList<>(temp_unactiveOneTimePurchase)) {
+            if (otp.getId() == otpId)
             {
-                OneTimePurchase otp= temp_unactiveOneTimePurchase.remove(i);
+                temp_unactiveOneTimePurchase.remove(otp);
                 temp_removeOneTimePurchase.add(otp);
                 return otp;
             }
