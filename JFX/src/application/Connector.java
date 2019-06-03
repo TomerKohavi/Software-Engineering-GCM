@@ -5,7 +5,7 @@ import javafx.stage.Stage;
 
 public class Connector {
 	
-	public static int usr_id;
+	public static int usr_id = -1;
 	
 	public static Stage mainStage;
 	

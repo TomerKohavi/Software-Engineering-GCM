@@ -144,6 +144,11 @@ public class HomePageController {
     	
     	Connector.sideButton = SideSearch;
     	Connector.sideButton.setOpacity(1);
+    
+    	if (Connector.usr_id != -1)
+    		LoginButton.setText("Log Off");
+    	else
+    		LoginButton.setText("Login");
     	
 //    	if (employee) { // check if employee -> can edit
 //    		EditButton.setVisible(true);
@@ -272,7 +277,14 @@ public class HomePageController {
     
     @FXML
     void login(ActionEvent event) throws IOException {
-    	loadPage("LoginScene.fxml");
+    	if (Connector.usr_id == -1)
+    		loadPage("LoginScene.fxml");
+    	else {
+    		Connector.usr_id = -1;
+    		// send that the user has logged off to the server
+    		loadPage("HomePageScene.fxml");
+    	}
+    		
     }
     
     @FXML
