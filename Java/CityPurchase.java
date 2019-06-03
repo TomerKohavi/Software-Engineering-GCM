@@ -1,4 +1,5 @@
 import java.util.Date;
+
 public abstract class CityPurchase implements Comparable<CityPurchase>{
     private int  id;
     private int cityId;

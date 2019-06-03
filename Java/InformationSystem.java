@@ -8,7 +8,7 @@ public final class InformationSystem
 
     //list of Statistic
     public static Statistic getStatistic(int cityId, Date d){
-        ArrayList<Integer> ids=Database.searchStatistic(cityId,d);
+        ArrayList<Integer> ids=Database.searchStatistic(cityId,d,null,null);
         if(ids.size()!=1)
             return null;
         Statistic s=Database._getStatisticById(ids.get(0));
@@ -22,15 +22,40 @@ public final class InformationSystem
         return s;
     }
 
+    public static Statistic getRangeSumStatistics(Integer cityId,Date from,Date end)
+    {
+        ArrayList<Integer> ids=Database.searchStatistic(cityId,null ,from,end);
+        Statistic sum=Statistic.createBlankStatistic();
+        for(int id:ids)
+        {
+            Statistic s=Database._getStatisticById(id);
+            if(s!=null);
+            sum=Statistic.addStatistics(sum,s);
+        }
+        return sum;
+    }
+
     public void addOneTimePurchase(int cityId) {
         addOneTimePurchase(cityId,new Date());
     }
 
     public void addOneTimePurchase(int cityId,Date d) {
-        Statistic s=getStatistic(cityId,d);
-        if(s==null)
-            s=new Statistic(cityId,d);
+        Statistic s = getStatistic(cityId,d);
+        if(s == null)
+            s = new Statistic(cityId,d);
         s.addOneTimePurchase();
+        Database._saveStatistic(s);
+    }
+
+    public void addVisit(int cityId){
+        addVisit(cityId,new Date());
+    }
+
+    public void addVisit(int cityId,Date d) {
+        Statistic s = getStatistic(cityId,d);
+        if(s == null)
+            s = new Statistic(cityId,d);
+        s.addVisit();
         Database._saveStatistic(s);
     }
 

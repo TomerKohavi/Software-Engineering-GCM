@@ -783,7 +783,7 @@ public class DataBaseAccess {
 			if(existCustomer(p.getId()))
 			{
 				String sql="UPDATE "+ Table.Customer.getValue()+" SET Username=?, Password=?, Email=?, FirstName=?, LastName=?,"
-						+ " PhoneNumber=?, personalDetails=? WHERE ID=?";
+						+ " PhoneNumber=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setString(1, p.getUserName());
 				su.setString(2, p.getPassword());
@@ -791,16 +791,15 @@ public class DataBaseAccess {
 				su.setString(4, p.getFirstName());
 				su.setString(5, p.getLastName());
 				su.setString(6,  p.getPhoneNumber());
-				su.setString(7, p.getPersonalDetails());
-				su.setInt(8, p.getId());
+				su.setInt(7, p.getId());
 				su.executeUpdate();
 				return true;
 			}
 			else
 			{
 				String sql="INSERT INTO "+ Table.Customer.getValue() +" "
-						+ "(ID,Username, Password, Email, FirstName, LastName, PhoneNumber, personalDetails) VALUES "
-						+ "(?,?, ?, ?, ?, ?,?,?)";
+						+ "(ID,Username, Password, Email, FirstName, LastName, PhoneNumber) VALUES "
+						+ "(?, ?, ?, ?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getId());
 				su.setString(2, p.getUserName());
@@ -809,7 +808,6 @@ public class DataBaseAccess {
 				su.setString(5, p.getFirstName());
 				su.setString(6, p.getLastName());
 				su.setString(7,  p.getPhoneNumber());
-				su.setString(8, p.getPersonalDetails());
 				su.executeUpdate();
 				return false;
 			}
@@ -906,7 +904,7 @@ public class DataBaseAccess {
 				su.setInt(1, p.getRouteId());
 				su.setInt(2, p.getPlaceId());
 				su.setInt(3, p.getNumStop());
-				su.setInt(4,  p.getRecommendedTime().getMinutes()); //fix here - RON
+				su.setLong(4,  p.getRecommendedTime().getTime()); //fix here - RON
 				su.setInt(5, p.getId());
 				su.executeUpdate();
 				return true;
@@ -919,7 +917,7 @@ public class DataBaseAccess {
 				su.setInt(2, p.getRouteId());
 				su.setInt(3, p.getPlaceId());
 				su.setInt(4, p.getNumStop());
-				su.setInt(5,  p.getRecommendedTime().getMinutes());//fix here - RON
+				su.setLong(5,  p.getRecommendedTime().getTime());//fix here - RON
 				su.executeUpdate();
 				return false;
 			}
@@ -1847,7 +1845,9 @@ public class DataBaseAccess {
 			if(!res.next()) 
 				return null;
 			res.last();
-			return PlaceOfInterest._createPlaceOfInterest(res.getInt("ID"),res.getInt("CityID"),res.getString("Name"),PlaceOfInterest.PlaceType.values()[res.getInt("Type")],res.getString("Description"),res.getInt("ATD")!=0);
+			return PlaceOfInterest._createPlaceOfInterest(res.getInt("ID"),res.getInt("CityID"),res.getString("Name"),
+					PlaceOfInterest.PlaceType.values()[res.getInt("Type")],
+					res.getString("Description"),res.getInt("ATD")!=0);
 		}
 		catch (Exception e) {
 	  	    closeConnection();
@@ -1919,7 +1919,9 @@ public class DataBaseAccess {
 			if(!res.next()) 
 				return null;
 			res.last();
-			return Customer._createCustomer(res.getInt("ID"),res.getString("Username"),res.getString("Password"),res.getString("Email"),res.getString("FirstName"),res.getString("LastName"),res.getString("PhoneNumber"),res.getString("personalDetails"));
+			return Customer._createCustomer(res.getInt("ID"),res.getString("Username"),
+					res.getString("Password"),res.getString("Email"),res.getString("FirstName"),
+					res.getString("LastName"),res.getString("PhoneNumber"));
 		}
 		catch (Exception e) {
 	  	    closeConnection();
@@ -1937,7 +1939,9 @@ public class DataBaseAccess {
 			if(!res.next()) 
 				return null;
 			res.last();
-			return Employee._Employee(res.getInt("ID"),res.getString("Username"),res.getString("Password"),res.getString("Email"),res.getString("FirstName"),res.getString("LastName"),res.getString("PhoneNumber"),Employee.Role(res.getInt("Role")));
+			return Employee._createEmployee(res.getInt("ID"),res.getString("Username"),
+					res.getString("Password"),res.getString("Email"),res.getString("FirstName"),
+					res.getString("LastName"),res.getString("PhoneNumber"),Employee.Role.values()[res.getInt("Role")]);
 		}
 		catch (Exception e) {
 	  	    closeConnection();

@@ -1,5 +1,8 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 public final class SearchCatalog
 {
@@ -7,113 +10,58 @@ public final class SearchCatalog
 
     public ArrayList<City> SearchCity(String cityName,String cityDescription,String placeName,String placeDescription) // they can be null
     {
-        ArrayList<City> listCities=new ArrayList<>();
-        ArrayList<City> listCitiesAccordingToPlaces=new ArrayList<>();
-        ArrayList<Integer> citiesIds=Database.searchCity(cityName,cityDescription);
-        ArrayList<Integer> placesIds=Database.searchPlaceOfInterest(placeName,placeDescription,null);
-        if(!(cityName==null & cityDescription==null))
+        if(cityName==null && cityDescription==null && placeName==null && placeDescription==null)
+            return null;
+
+        ArrayList<City> result=new ArrayList<>();
+        //just city
+        if(placeName==null && placeDescription==null)
+        {
+            ArrayList<Integer> citiesIds=Database.searchCity(cityName,cityDescription);
             for(int id:citiesIds)
             {
                 City c=Database.getCityById(id);
-                if(c==null) continue;
-                if(!c.isTherePublishedVersion()) continue;
-                listCities.add(c);
+                if(c!=null);
+                result.add(c);
             }
-        if(!(placeName==null && placeDescription==null))
+            return result;
+        }
+        //just place
+        if(cityName==null && cityDescription==null)
+        {
+            Set<Integer> citiesIds = new HashSet<>();
+            ArrayList<Integer> placesIds=Database.searchPlaceOfInterest(placeName,placeDescription,null);
             for(int id:placesIds)
             {
                 PlaceOfInterest p=Database.getPlaceOfInterestById(id);
-                if(p==null) continue;
-                City c=Database.getCityById(p.getCityId());
-                if(c==null) continue;
-                if(!c.isTherePublishedVersion()) continue;
-                listCitiesAccordingToPlaces.add(c);
+                if(p!=null)
+                    citiesIds.add(p.getCityId());
             }
-        if(placeName==null && placeDescription==null)
-            return listCities;
-        if(cityName==null & cityDescription==null)
-            return listCitiesAccordingToPlaces;
-        return Database.intersection(listCities,listCitiesAccordingToPlaces);
-    }
-
-    public ArrayList<Map> SearchMap(String cityName,String cityDescription,String placeName,String placeDescription) // they can be null
-    {
-        ArrayList<Map> listMapAccordingToCities=new ArrayList<>();
-        ArrayList<Map> listMapAccordingToPlaces=new ArrayList<>();
-        ArrayList<Integer> citiesIds=Database.searchCity(cityName,cityDescription);
-        ArrayList<Integer> placesIds=Database.searchPlaceOfInterest(placeName,placeDescription,null);
-        if(!(cityName==null & cityDescription==null))
             for(int id:citiesIds)
             {
                 City c=Database.getCityById(id);
-                if(c==null) continue;
-                Integer publishedVersionId=c.getPublishedVersionId();
-                if(publishedVersionId==null) continue;
-                CityDataVersion cdv=Database._getCityDataVersionById(publishedVersionId);
-                if(cdv==null) continue;
-                ArrayList<MapSight> listMS=cdv.getAllMapSights();
-                for(MapSight ms:listMS)
-                {
-                    Map m=Database.getMapById(ms.getMapId());
-                    if(m==null) continue;
-                    listMapAccordingToCities.add(m);
-                }
+                if(c!=null);
+                result.add(c);
             }
-        if(!(placeName==null && placeDescription==null))
-            for(int id:placesIds)
-            {
-                ArrayList<Integer> locIds=Database.searchLocation(null,id);
-                for(int locId:locIds)
-                {
-                    Location c=Database._getLocationById(locId);
-                    if(c==null) continue;
-                    Map m=Database.getMapById(c.getMapId());
-                    if(m==null) continue;
-                    listMapAccordingToPlaces.add(m);
-                }
-            }
-        if(placeName==null && placeDescription==null)
-            return listMapAccordingToCities;
-        if(cityName==null & cityDescription==null)
-            return listMapAccordingToPlaces;
-        return Database.intersection(listMapAccordingToPlaces,listMapAccordingToPlaces);
-    }
-
-    public ArrayList<PlaceOfInterest> SearchPOI(String placeName,String placeDescription,String cityName,String cityDescription) // they can be null
-    {
-        ArrayList<PlaceOfInterest> listPlacesAccordingToCities=new ArrayList<>();
-        ArrayList<PlaceOfInterest> listPlaces=new ArrayList<>();
+            return result;
+        }
+        //both
         ArrayList<Integer> citiesIds=Database.searchCity(cityName,cityDescription);
-        ArrayList<Integer> placesIds=Database.searchPlaceOfInterest(placeName,placeDescription,null);
-        if(!(cityName==null & cityDescription==null))
-            for(int id:citiesIds)
-            {
-                City c=Database.getCityById(id);
-                if(c==null) continue;
-                Integer publishedVersionId=c.getPublishedVersionId();
-                if(publishedVersionId==null) continue;
-                CityDataVersion cdv=Database._getCityDataVersionById(publishedVersionId);
-                if(cdv==null) continue;
-                ArrayList<PlaceOfInterestSight> listPOIS=cdv.getAllPlaceOfInterestSights();
-                for(PlaceOfInterestSight ps:listPOIS)
-                {
-                    PlaceOfInterest p=Database.getPlaceOfInterestById(ps.getPlaceOfInterestId());
-                    if(p==null) continue;
-                    listPlacesAccordingToCities.add(p);
-                }
-            }
-        if(!(placeName==null && placeDescription==null))
-            for(int id:placesIds)
-            {
-                PlaceOfInterest p=Database.getPlaceOfInterestById(id);
-                if(p==null) continue;
-                listPlaces.add(p);
-            }
-        if(placeName==null && placeDescription==null)
-            return listPlacesAccordingToCities;
-        if(cityName==null & cityDescription==null)
-            return listPlaces;
-        return Database.intersection(listPlaces,listPlacesAccordingToCities);
+        ArrayList<Integer> placesIds=new ArrayList<>();
+        Iterator<Integer> i=citiesIds.iterator();
+        for(Integer id:new ArrayList<>(citiesIds))
+        {
+            ArrayList<Integer> placesOfCity=Database.searchPlaceOfInterest(placeName,placeDescription,id);
+            if(placesOfCity.size()==0)
+                citiesIds.remove(id);
+        }
+        for(int id:citiesIds)
+        {
+            City c=Database.getCityById(id);
+            if(c!=null);
+            result.add(c);
+        }
+        return result;
     }
 
 }
