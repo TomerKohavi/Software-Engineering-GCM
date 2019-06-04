@@ -45,12 +45,12 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 	}
 
 	private ArrayList<Subscription> generateActiveSubscriptions(Date dateToCheck) {
-		ArrayList<Integer> ids = Database.searchSubscription(super.getId(), null, null, dateToCheck, true);
+		ArrayList<Integer> ids = Database.searchSubscription(super.getId(), null, dateToCheck, true);
 		return generateListSubscriptions(ids);
 	}
 
 	private ArrayList<Subscription> generateUnactiveSubscriptions(Date dateToCheck) {
-		ArrayList<Integer> ids = Database.searchSubscription(super.getId(), null, null, dateToCheck, false);
+		ArrayList<Integer> ids = Database.searchSubscription(super.getId(), null, dateToCheck, false);
 		return generateListSubscriptions(ids);
 	}
 

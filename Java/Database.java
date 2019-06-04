@@ -681,7 +681,7 @@ public class Database {
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setString(1, p.getCityName());
 				su.setString(2, p.getCityDescription());
-				su.setInt(3, p.getPublishedVersionId());
+				su.setInt(3, p.getPublishedVersionId() == null ? -1 : p.getPublishedVersionId());
 				su.setInt(4, p.getId());
 				su.executeUpdate();
 				return true;
@@ -692,7 +692,7 @@ public class Database {
 				su.setInt(1, p.getId());
 				su.setString(2, p.getCityName());
 				su.setString(3, p.getCityDescription());
-				su.setInt(4, p.getPublishedVersionId());
+				su.setInt(4, p.getPublishedVersionId() == null ? -1 : p.getPublishedVersionId());
 				su.executeUpdate();
 				return false;
 			}
@@ -1700,45 +1700,30 @@ public class Database {
 		}
 	}
 
-	public static ArrayList<Integer> searchSubscription(Integer userId, Integer cityId, Date purchaseDate, Date date,
-			Boolean afterDate) // fix this - RON
+	public static ArrayList<Integer> searchSubscription(Integer userId, Integer cityId, Date date,
+			Boolean active) // fix this - RON
 	{
 		try {
 			int counter = 1;
-			String sql = "SELECT ID FROM " + Table.Subscription.getValue() + " WHERE ";
+			String sql = "SELECT ID, PurchaseDate, ExpDate FROM " + Table.Subscription.getValue() + " WHERE ";
 			if (userId != null)
 				sql += "UserID=? AND ";
 			if (cityId != null)
 				sql += "CityID=? AND ";
-			if (purchaseDate != null)
-				sql += "PurchaseDate=? AND ";
-			if (date != null)
-				sql += "ExpDate=? AND ";
-			if (afterDate != null)
-				sql += "CityID=? AND ";
+			if (active)
+				sql += "(? BETWEEN PurchaseDate AND ExpDate) AND";
+			else
+				sql += "(? NOT BETWEEN PurchaseDate AND ExpDate) AND";
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (userId != null) {
-				gt.setInt(counter, userId);
-				counter += 1;
+				gt.setInt(counter++, userId);
 			}
 			if (cityId != null) {
-				gt.setInt(counter, cityId);
-				counter += 1;
+				gt.setInt(counter++, cityId);
 			}
-			if (purchaseDate != null) {
-				gt.setDate(counter, purchaseDate);
-				counter += 1;
-			}
-			if (date != null) {
-				gt.setDate(counter, date);
-				counter += 1;
-			}
-			if (afterDate != null) {
-				gt.setBoolean(counter, afterDate);
-				counter += 1;
-			}
+			gt.setDate(counter, date);
 			ResultSet res = gt.executeQuery();
 			ArrayList<Integer> IDs = new ArrayList<>();
 			while (res.next()) {
@@ -1902,7 +1887,7 @@ public class Database {
 				return null;
 			res.last();
 			return City._createCity(res.getInt("ID"), res.getString("Name"), res.getString("Description"),
-					res.getInt("VersionID"));
+					res.getInt("VersionID") == -1 ? null : res.getInt("VersionID") );
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();

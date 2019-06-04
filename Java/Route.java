@@ -25,7 +25,7 @@ public class Route implements ClassMustProperties, Serializable {
 		return new Route(id, cityId, info, acceptabilityToDisabled);
 	}
 
-	public Route(int cityId, String info, boolean acceptabilityToDisabled,boolean favorite) {
+	public Route(int cityId, String info, boolean acceptabilityToDisabled) {
 		this.id = Database.generateIdRoute();
 		this.cityId = cityId;
 		this.info = info;
