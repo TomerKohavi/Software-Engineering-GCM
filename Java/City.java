@@ -12,6 +12,14 @@ public class City implements ClassMustProperties, Serializable {
 	private CityDataVersion temp_publishedVersion;
 
 	private City(int id, String cityName, String cityDescription, Integer publishedVersionId) {
+		   /**
+		   * This method is private Constractor for City
+		   * @param id the id of the city
+		   * @param cityName the name of the city 
+		   * @param cityDescription the description of the city 
+		   * @param publishedVersionId the id of the publish
+		   * @return City object
+		   */
 		this.id = id;
 		this.cityName = cityName;
 		this.cityDescription = cityDescription;
@@ -22,10 +30,24 @@ public class City implements ClassMustProperties, Serializable {
 	public static City _createCity(int id, String cityName, String cityDescription, Integer publishedVersionId) { // friend
 																													// to
 																													// Database
+		   /**
+		   * This method is public Constractor that get id for City
+		   * @param id the id of the city
+		   * @param cityName the name of the city 
+		   * @param cityDescription the description of the city 
+		   * @param publishedVersionId the id of the publish
+		   * @return City object
+		   */
 		return new City(id, cityName, cityDescription, publishedVersionId);
 	}
 
 	public City(String cityName, String cityDescription) {
+		   /**
+		   * This method is public Constractor that generete get id for City
+		   * @param cityName the name of the city 
+		   * @param cityDescription the description of the city 
+		   * @return City object that genetere his id
+		   */
 		this.id = Database.generateIdCity();
 		this.cityName = cityName;
 		this.cityDescription = cityDescription;
@@ -36,6 +58,10 @@ public class City implements ClassMustProperties, Serializable {
 	}
 
 	public void saveToDatabase() {
+		   /**
+		   * save the city object to the data base
+		   * @return None
+		   */
 		Database.saveCity(this);
 		// delete removes
 		for (CityDataVersion cdv : temp_removeVersions) {
@@ -51,6 +77,10 @@ public class City implements ClassMustProperties, Serializable {
 	}
 
 	public void deleteFromDatabase() {
+		   /**
+		   * delete the city object from the data base
+		   * @return None
+		   */
 		Database.deleteCity(this.getId());
 		// delete removes
 		for (CityDataVersion cdv : temp_removeVersions)
@@ -71,6 +101,10 @@ public class City implements ClassMustProperties, Serializable {
 	}
 
 	public void reloadTempsFromDatabase() {
+		   /**
+		   * load the city object from the data base
+		   * @return None
+		   */
 		this.temp_unpublishedVersions = generateUnpublishedCityDataVersions();
 		this.temp_removeVersions = new ArrayList<>();
 		if (this.publishedVersionId == null)
@@ -83,6 +117,10 @@ public class City implements ClassMustProperties, Serializable {
 	}
 
 	private ArrayList<CityDataVersion> generateUnpublishedCityDataVersions() {
+		   /**
+		   * generate unpublished city data versions
+		   * @return array list of city data version
+		   */
 		ArrayList<Integer> ids = Database.searchCityDataVersion(this.id);
 		ArrayList<CityDataVersion> arrList = new ArrayList<CityDataVersion>();
 		for (int id : ids) {
@@ -94,10 +132,17 @@ public class City implements ClassMustProperties, Serializable {
 	}
 
 	public int getNumUnpublishedCityDataVersions() {
+		   /**
+		   * @return int - number of un published city data version
+		   */
 		return temp_unpublishedVersions.size();
 	}
 
 	public CityDataVersion getUnpublishedCityDataVersionById(int cdvId) {
+		   /**
+		   * load the city data version by id from data base
+		   * @return city data version
+		   */
 		for (CityDataVersion cdv : temp_unpublishedVersions) {
 			if (cdv.getId() == cdvId)
 				return cdv;
@@ -106,6 +151,10 @@ public class City implements ClassMustProperties, Serializable {
 	}
 
 	public boolean addUnpublishedCityDataVersion(CityDataVersion cdv) {
+		   /**
+		   * add unpublished city data version
+		   * @return boolean - true if that was added
+		   */
 		if (cdv.getCityId() != this.getId())
 			return false;
 		temp_unpublishedVersions.add(cdv);
@@ -113,6 +162,10 @@ public class City implements ClassMustProperties, Serializable {
 	}
 
 	public boolean addPublishedCityDataVersion(CityDataVersion cdv) {
+		   /**
+		   * add published city data version
+		   * @return boolean - true if that was added
+		   */
 		if (cdv.getCityId() != this.getId())
 			return false;
 		if (this.publishedVersionId != null && this.temp_publishedVersion != null)
@@ -123,6 +176,10 @@ public class City implements ClassMustProperties, Serializable {
 	}
 
 	public boolean setUnpublishedToPublishedByVersionId(int cdvId) {
+		   /**
+		   * set unpublished to published by versionId
+		   * @return boolean - true if that was been in the data base
+		   */
 		CityDataVersion cdv = null;
 		for (CityDataVersion temp : new ArrayList<>(temp_unpublishedVersions)) {
 			if (temp.getId() == cdvId) {
@@ -140,6 +197,10 @@ public class City implements ClassMustProperties, Serializable {
 	}
 
 	public boolean setPublishedToUnpublished() {
+		   /**
+		   * set published to unpublished
+		   * @return boolean - true if that was been in the data base
+		   */
 		if (this.publishedVersionId == null || this.temp_publishedVersion == null)
 			return false;
 		temp_unpublishedVersions.add(temp_publishedVersion);
@@ -149,18 +210,35 @@ public class City implements ClassMustProperties, Serializable {
 	}
 
 	public CityDataVersion getPublishedVersion() {
+		   /**
+		   * get published version
+		   * @return city data version
+		   */
 		return temp_publishedVersion;
 	}
 
 	public Integer getPublishedVersionId() {
+		   /**
+		   * get get published version Id
+		   * @return integer of the id
+		   */
 		return publishedVersionId;
 	}
 
 	public boolean isTherePublishedVersion() {
+		   /**
+		   * check if there is published version
+		   * @return boolean
+		   */
 		return getPublishedVersion() != null;
 	}
 
 	public CityDataVersion removeCityDataVersionById(int cdvId) {
+		   /**
+		   * remove the city data version with the id from the data base
+		   * @param the id of the city
+		   * @return city data version
+		   */
 		if (cdvId == publishedVersionId) {
 			CityDataVersion cdv = temp_publishedVersion;
 			publishedVersionId = null;
