@@ -66,7 +66,7 @@ public class Route implements ClassMustProperties, Serializable {
 		for (RouteStop rs : temp_routeStops)
 			rs.deleteFromDatabase();
 		// delete all routeSights
-		ArrayList<Integer> ids = Database.searchRouteSight(null, this.id);
+		ArrayList<Integer> ids = Database.searchRouteSight(null, this.id, null);
 		for (int id : ids) {
 			RouteSight rs = Database._getRouteSightById(id);
 			if (rs != null)
