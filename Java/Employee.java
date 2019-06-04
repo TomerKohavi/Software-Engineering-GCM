@@ -2,7 +2,7 @@ import java.io.Serializable;
 
 public class Employee extends User implements ClassMustProperties, Serializable {
 	public enum Role {
-		MANAGER(0), REGULAR(1);
+		REGULAR(0), MANAGER(1), CEO(2);
 
 		private final int value;
 
