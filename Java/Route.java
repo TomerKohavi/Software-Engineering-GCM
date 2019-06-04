@@ -7,29 +7,32 @@ public class Route implements ClassMustProperties, Serializable {
 	private int cityId;
 	private String info;
 	private boolean acceptabilityToDisabled;
+	private boolean favorite;
 
 	ArrayList<RouteStop> temp_routeStops;
 
 	ArrayList<RouteStop> temp_removeRouteStops;
 
-	private Route(int id, int cityId, String info, boolean acceptabilityToDisabled) {
+	private Route(int id, int cityId, String info, boolean acceptabilityToDisabled,boolean favorite) {
 		this.id = id;
 		this.cityId = cityId;
 		this.info = info;
 		this.acceptabilityToDisabled = acceptabilityToDisabled;
+		this.favorite=favorite;
 		reloadTempsFromDatabase();
 	}
 
-	public static Route _createRoute(int id, int cityId, String info, boolean acceptabilityToDisabled) { // friend to
+	public static Route _createRoute(int id, int cityId, String info, boolean acceptabilityToDisabled,boolean favorite) { // friend to
 																											// Database
-		return new Route(id, cityId, info, acceptabilityToDisabled);
+		return new Route(id, cityId, info, acceptabilityToDisabled,favorite);
 	}
 
-	public Route(int cityId, String info, boolean acceptabilityToDisabled) {
+	public Route(int cityId, String info, boolean acceptabilityToDisabled,boolean favorite) {
 		this.id = Database.generateIdRoute();
 		this.cityId = cityId;
 		this.info = info;
 		this.acceptabilityToDisabled = acceptabilityToDisabled;
+		this.favorite=favorite;
 		this.temp_routeStops = new ArrayList<>();
 		this.temp_removeRouteStops = new ArrayList<>();
 	}
@@ -157,6 +160,14 @@ public class Route implements ClassMustProperties, Serializable {
 
 	public int getCityId() {
 		return cityId;
+	}
+
+	public boolean isFavorite() {
+		return favorite;
+	}
+
+	public void setFavorite(boolean favorite) {
+		this.favorite = favorite;
 	}
 
 	@Override

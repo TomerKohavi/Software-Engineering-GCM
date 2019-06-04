@@ -24,6 +24,15 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 		this.expirationDate = expirationDate;
 	}
 
+	public Subscription resubscribe(double fullPrice,double pricePayed)
+	{
+		int id=Database.generateIdCityPurchase();
+		Date expirationDate=new Date(this.expirationDate.getTime()+this.expirationDate.getTime()-this.getPurchaseDate().getTime());
+		Subscription s=new Subscription(id,this.getCityId(),this.getUserId(),this.expirationDate,fullPrice,pricePayed,
+				expirationDate);
+		return s;
+	}
+
 	public void saveToDatabase() {
 		Database._saveSubscription(this);
 	}
