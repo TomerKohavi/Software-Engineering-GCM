@@ -1305,7 +1305,7 @@ public class Database {
 			if (cityId != null)
 				sql += "CityID=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			System.out.println(sql);
+			 
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (placeName != null) {
 				gt.setString(counter, placeName);
@@ -1346,7 +1346,6 @@ public class Database {
 			if (imgURL != null)
 				sql += "imgURL=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			System.out.println(sql);
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (cityId != null) {
 				gt.setInt(counter, cityId);
@@ -1389,7 +1388,6 @@ public class Database {
 			if (acceptabilityToDisabled != null)
 				sql += "ATD=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			System.out.println(sql);
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (cityId != null) {
 				gt.setInt(counter, cityId);
@@ -1426,7 +1424,7 @@ public class Database {
 			if (cityDescription != null)
 				sql += "Description=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			System.out.println(sql);
+			 
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (cityName != null) {
 				gt.setString(counter, cityName);
@@ -1460,7 +1458,7 @@ public class Database {
 			if (password != null)
 				sql += "Password=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			System.out.println(sql);
+			 
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (userName != null) {
 				gt.setString(counter++, userName);
@@ -1501,7 +1499,7 @@ public class Database {
 			if (placeId != null)
 				sql += "POIID=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			System.out.println(sql);
+			 
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (mapId != null) {
 				gt.setInt(counter, mapId);
@@ -1536,7 +1534,7 @@ public class Database {
 			if (numStop != null)
 				sql += "NumStops=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			System.out.println(sql);
+			 
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (routeId != null) {
 				gt.setInt(counter, routeId);
@@ -1573,7 +1571,7 @@ public class Database {
 			if (mapId != null)
 				sql += "MapID=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			System.out.println(sql);
+			 
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (cityDataVersionId != null) {
 				gt.setInt(counter, cityDataVersionId);
@@ -1606,7 +1604,7 @@ public class Database {
 			if (placeId != null)
 				sql += "POIID=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			System.out.println(sql);
+			 
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (cityDataVersionId != null) {
 				gt.setInt(counter, cityDataVersionId);
@@ -1641,7 +1639,7 @@ public class Database {
 			if (isFavorite != null)
 				sql += "IsFavorite=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			System.out.println(sql);
+			 
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (cityDataVersionId != null) {
 				gt.setInt(counter, cityDataVersionId);
@@ -1676,7 +1674,7 @@ public class Database {
 			if (cityId != null)
 				sql += "CityID=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			System.out.println(sql);
+			 
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (cityId != null) {
 				gt.setInt(counter, cityId);
@@ -1713,7 +1711,7 @@ public class Database {
 			if (afterDate != null)
 				sql += "CityID=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			System.out.println(sql);
+			 
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (userId != null) {
 				gt.setInt(counter, userId);
@@ -1763,7 +1761,6 @@ public class Database {
 			if (wasDownload != null)
 				sql += "WasDownloaded=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			System.out.println(sql);
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (userId != null) {
 				gt.setInt(counter, userId);
