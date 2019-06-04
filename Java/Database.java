@@ -919,11 +919,12 @@ public class Database {
 				return true;
 			} else {
 				String sql = "INSERT INTO " + Table.RouteSight.getValue()
-						+ " (ID,CityDataVersions, RouteID) VALUES (?, ?, ?)";
+						+ " (ID,CityDataVersions, RouteID, IsFavorite) VALUES (?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getId());
 				su.setInt(2, p.getCityDataVersionId());
 				su.setInt(3, p.getRouteId());
+				su.setBoolean(4, p.getIsFavorite());
 				su.executeUpdate();
 				return false;
 			}

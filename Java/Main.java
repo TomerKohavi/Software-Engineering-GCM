@@ -1,4 +1,5 @@
 import java.sql.Date;
+import java.sql.Time;
 import java.util.Calendar;
 
 import javafx.scene.chart.PieChart.Data;
@@ -19,10 +20,20 @@ public class Main {
 		City c2=Database.getCityById(c.getId());
 		CityDataVersion cdv2=c2.getPublishedVersion();
 		System.out.println(cdv2.getPlaceOfInterestSightByPlaceOfInterestId(p.getId())==null);
+		
+		Route r = new Route(c.getId(), "C",true);
+		RouteStop rs=new RouteStop(r, p, 1,new Time(213123));
+		r.addRouteStop(rs);
+		rs.saveToDatabase();
+		RouteSight rss=new RouteSight(cdv2, r, false);
+		cdv2.addRouteSight(rss);
 		cdv2.removePlaceOfInterestSightById(ps.getId());
 		cdv2.saveToDatabase();
 		cdv2=c2.getPublishedVersion();
 		System.out.println(cdv2.getPlaceOfInterestSightByPlaceOfInterestId(p.getId())==null);
+		System.out.println(cdv2.getRouteSightByRouteId(r.getId()).getCopyRoute().getCopyRouteStops().get(0).getCopyPlace().equals(p));
+		
+		
 		Customer cust = new Customer("Tal20", "11235", "a@a.com", "Tal", "Shahnov", "055");
 		Subscription sub=new Subscription(cust, c, today, 2000, 1999.99, new Date(2028,5,12));
 		cust.addSubscription(sub);
