@@ -221,7 +221,7 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 	}
 
 	private ArrayList<RouteSight> generateRouteSights() {
-		ArrayList<Integer> ids = Database.searchRouteSight(this.id, null);
+		ArrayList<Integer> ids = Database.searchRouteSight(this.id, null,null);
 		ArrayList<RouteSight> arrList = new ArrayList<RouteSight>();
 		for (int id : ids) {
 			RouteSight o = Database._getRouteSightById(id);
@@ -315,6 +315,16 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 
 	public ArrayList<RouteSight> getCopyRouteSights() {
 		return new ArrayList<>(temp_routeSights);
+	}
+
+	public ArrayList<RouteSight> getCopyFavoriteRouteSights() {
+		ArrayList<RouteSight> favorList=new ArrayList<>();
+		for(RouteSight r:temp_routeSights)
+		{
+			if(r.getIsFavorite())
+				favorList.add(r);
+		}
+		return favorList;
 	}
 
 	@Override

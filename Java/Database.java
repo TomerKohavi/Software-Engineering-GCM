@@ -902,11 +902,12 @@ public class Database {
 	{
 		try {
 			if (existRouteSight(p.getId())) {
-				String sql = "UPDATE " + Table.RouteSight.getValue() + " SET CityDataVersions=?, RouteID=? WHERE ID=?";
+				String sql = "UPDATE " + Table.RouteSight.getValue() + " SET CityDataVersions=?, RouteID=?, IsFavorite=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityDataVersionId());
 				su.setInt(2, p.getRouteId());
-				su.setInt(3, p.getId());
+				su.setBoolean(3, p.getIsFavorite());
+				su.setInt(4, p.getId());
 				su.executeUpdate();
 				return true;
 			} else {
@@ -1597,7 +1598,7 @@ public class Database {
 		}
 	}
 
-	public static ArrayList<Integer> searchRouteSight(Integer cityDataVersionId, Integer routeId) {
+	public static ArrayList<Integer> searchRouteSight(Integer cityDataVersionId, Integer routeId, Boolean isFavorite) {
 		try {
 			int counter = 1;
 			String sql = "SELECT ID FROM " + Table.RouteSight.getValue() + " WHERE ";
@@ -1605,6 +1606,8 @@ public class Database {
 				sql += "CityDataVersions	=? AND ";
 			if (routeId != null)
 				sql += "RouteID=? AND ";
+			if (isFavorite != null)
+				sql += "IsFavorite=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
 			System.out.println(sql);
 			PreparedStatement gt = conn.prepareStatement(sql);
@@ -1614,6 +1617,10 @@ public class Database {
 			}
 			if (routeId != null) {
 				gt.setInt(counter, routeId);
+				counter += 1;
+			}
+			if (isFavorite != null) {
+				gt.setBoolean(counter, isFavorite);
 				counter += 1;
 			}
 			ResultSet res = gt.executeQuery();
@@ -1987,7 +1994,7 @@ public class Database {
 				return null;
 			res.last();
 			return RouteSight._createRouteSight(res.getInt("ID"), res.getInt("CityDataVersions"),
-					res.getInt("RouteID"));
+					res.getInt("RouteID"), res.getBoolean("IsFavorite"));
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();

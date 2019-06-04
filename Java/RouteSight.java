@@ -4,24 +4,27 @@ public class RouteSight implements ClassMustProperties, Serializable {
 	private int id;
 	private int cityDataVersionId;
 	private int routeId;
+	private boolean isFavorite;
 
 	private Route temp_route;
 
-	private RouteSight(int id, int cityDataVersionId, int routeId) {
+	private RouteSight(int id, int cityDataVersionId, int routeId,boolean isFavorite) {
 		this.id = id;
 		this.cityDataVersionId = cityDataVersionId;
 		this.routeId = routeId;
+		this.isFavorite=isFavorite;
 		reloadTempsFromDatabase();
 	}
 
-	public static RouteSight _createRouteSight(int id, int cityDataVersionId, int routeId) { // friend to Database
-		return new RouteSight(id, cityDataVersionId, routeId);
+	public static RouteSight _createRouteSight(int id, int cityDataVersionId, int routeId,boolean isFavorite) { // friend to Database
+		return new RouteSight(id, cityDataVersionId, routeId,isFavorite);
 	}
 
-	public RouteSight(CityDataVersion cdv, Route r) {
+	public RouteSight(CityDataVersion cdv, Route r,boolean isFavorite) {
 		this.id = Database.generateIdRouteSight();
 		this.cityDataVersionId = cdv.getId();
 		this.routeId = r.getId();
+		this.isFavorite=isFavorite;
 		this.temp_route = r;
 	}
 
@@ -51,6 +54,14 @@ public class RouteSight implements ClassMustProperties, Serializable {
 
 	public Route getCopyRoute() {
 		return temp_route;
+	}
+
+	public boolean getIsFavorite() {
+		return isFavorite;
+	}
+
+	public void setFavorite(boolean favorite) {
+		isFavorite = favorite;
 	}
 
 	@Override
