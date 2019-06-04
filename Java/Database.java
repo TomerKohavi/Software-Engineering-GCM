@@ -719,7 +719,13 @@ public class Database {
 				su.setInt(7, p.getId());
 				su.executeUpdate();
 				return true;
-			} else {
+			}
+//			else if(!searchCustomer(p.getUserName(), null).isEmpty())
+//			{
+//				System.out.println("already saved");
+//				return false;
+//			}
+			else {
 				String sql = "INSERT INTO " + Table.Customer.getValue() + " "
 						+ "(ID,Username, Password, Email, FirstName, LastName, PhoneNumber) VALUES "
 						+ "(?, ?, ?, ?, ?, ?, ?)";
@@ -902,7 +908,8 @@ public class Database {
 	{
 		try {
 			if (existRouteSight(p.getId())) {
-				String sql = "UPDATE " + Table.RouteSight.getValue() + " SET CityDataVersions=?, RouteID=?, IsFavorite=? WHERE ID=?";
+				String sql = "UPDATE " + Table.RouteSight.getValue()
+						+ " SET CityDataVersions=?, RouteID=?, IsFavorite=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityDataVersionId());
 				su.setInt(2, p.getRouteId());
@@ -1305,7 +1312,7 @@ public class Database {
 			if (cityId != null)
 				sql += "CityID=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			 
+
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (placeName != null) {
 				gt.setString(counter, placeName);
@@ -1424,7 +1431,7 @@ public class Database {
 			if (cityDescription != null)
 				sql += "Description=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			 
+
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (cityName != null) {
 				gt.setString(counter, cityName);
@@ -1448,17 +1455,16 @@ public class Database {
 		}
 	}
 
-	private static ArrayList<Integer> searchUser(String userName, String password, String table)
-	{
+	private static ArrayList<Integer> searchUser(String userName, String password, String table) {
 		try {
 			int counter = 1;
-			String sql = "SELECT ID FROM " + table + " WHERE ";
+			String sql = "SELECT ID, Username, Password FROM " + table + " WHERE ";
 			if (userName != null)
 				sql += "Username=? AND ";
 			if (password != null)
 				sql += "Password=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			 
+			System.out.println(sql);
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (userName != null) {
 				gt.setString(counter++, userName);
@@ -1471,6 +1477,8 @@ public class Database {
 			while (res.next()) {
 				int id = res.getInt("ID");
 				IDs.add(id);
+				System.out.println(res.getString("Username"));
+
 			}
 			return IDs;
 		} catch (Exception e) {
@@ -1480,13 +1488,11 @@ public class Database {
 		}
 	}
 
-	public static ArrayList<Integer> searchCustomer(String userName, String password)
-	{
+	public static ArrayList<Integer> searchCustomer(String userName, String password) {
 		return searchUser(userName, password, Table.Customer.getValue());
 	}
-	
-	public static ArrayList<Integer> searchEmployee(String userName, String password)
-	{
+
+	public static ArrayList<Integer> searchEmployee(String userName, String password) {
 		return searchUser(userName, password, Table.Employee.getValue());
 	}
 
@@ -1499,7 +1505,7 @@ public class Database {
 			if (placeId != null)
 				sql += "POIID=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			 
+
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (mapId != null) {
 				gt.setInt(counter, mapId);
@@ -1534,7 +1540,7 @@ public class Database {
 			if (numStop != null)
 				sql += "NumStops=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			 
+
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (routeId != null) {
 				gt.setInt(counter, routeId);
@@ -1571,7 +1577,7 @@ public class Database {
 			if (mapId != null)
 				sql += "MapID=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			 
+
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (cityDataVersionId != null) {
 				gt.setInt(counter, cityDataVersionId);
@@ -1604,7 +1610,7 @@ public class Database {
 			if (placeId != null)
 				sql += "POIID=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			 
+
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (cityDataVersionId != null) {
 				gt.setInt(counter, cityDataVersionId);
@@ -1639,7 +1645,7 @@ public class Database {
 			if (isFavorite != null)
 				sql += "IsFavorite=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			 
+
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (cityDataVersionId != null) {
 				gt.setInt(counter, cityDataVersionId);
@@ -1674,7 +1680,7 @@ public class Database {
 			if (cityId != null)
 				sql += "CityID=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			 
+
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (cityId != null) {
 				gt.setInt(counter, cityId);
@@ -1711,7 +1717,7 @@ public class Database {
 			if (afterDate != null)
 				sql += "CityID=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			 
+
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (userId != null) {
 				gt.setInt(counter, userId);
@@ -2022,8 +2028,8 @@ public class Database {
 			if (!res.next())
 				return null;
 			res.last();
-			return RouteSight._createRouteSight(res.getInt("ID"), res.getInt("CityDataVersions"),
-					res.getInt("RouteID"), res.getBoolean("IsFavorite"));
+			return RouteSight._createRouteSight(res.getInt("ID"), res.getInt("CityDataVersions"), res.getInt("RouteID"),
+					res.getBoolean("IsFavorite"));
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();

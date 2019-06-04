@@ -5,8 +5,9 @@ public class Main {
 		Database.createConnection();
 		Customer cust = new Customer("Tal20", "11235", "a@a.com", "Tal", "Shahnov", "055");
 		cust.saveToDatabase();
-		Customer cust2 = Database.getCustomerById(cust.getId());
-		System.out.println(cust2.getEmail());
+		System.out.println(Database.searchCustomer("Tal20", "11235"));
+		cust.deleteFromDatabase();
+		System.out.println(Database.searchCustomer("Tal20", "11235"));
 		Database.closeConnection();
 	}
 }
