@@ -138,7 +138,7 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 		if (sub.getUserId() != this.getId())
 			return false;
 		Date today = new Date(Calendar.getInstance().getTime().getTime());
-		if (sub.getPurchaseDate().compareTo(today) > 0) // TODO: not sure if <0 or >0
+		if (sub.getPurchaseDate().compareTo(today) >= 0)
 			temp_activeSubscription.add(sub);
 		else
 			temp_unactiveSubscription.add(sub);
