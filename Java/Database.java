@@ -3,13 +3,9 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
-import javax.net.ssl.SSLException;
-
-public class Database{
+public class Database {
 	static private final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 
 	// update USER, PASS and DB URL according to credentials provided by the
@@ -78,7 +74,7 @@ public class Database{
 	}
 
 	// generate ID's
-	
+
 	public static int generateIdUser() {
 		try {
 			PreparedStatement gt = conn.prepareStatement("SELECT Counter FROM Counters WHERE Object=? ");
@@ -1073,7 +1069,6 @@ public class Database{
 		return false;
 	}
 
-	
 	public static boolean deletePlaceOfInterest(int placeId) // return true if the item was deleted
 	{
 		try {
@@ -1089,7 +1084,6 @@ public class Database{
 		}
 	}
 
-	
 	public static boolean deleteMap(int placeId) // return true if the item was deleted
 	{
 		try {
@@ -1105,7 +1099,6 @@ public class Database{
 		}
 	}
 
-	
 	public static boolean deleteRoute(int placeId) // return true if the item was deleted
 	{
 		try {
@@ -1121,7 +1114,6 @@ public class Database{
 		}
 	}
 
-	
 	public static boolean deleteCity(int placeId) // return true if the item was deleted
 	{
 		try {
@@ -1137,7 +1129,6 @@ public class Database{
 		}
 	}
 
-	
 	public static boolean deleteCustomer(int placeId) // return true if the item was deleted
 	{
 		try {
@@ -1153,7 +1144,6 @@ public class Database{
 		}
 	}
 
-	
 	public static boolean deleteEmployee(int placeId) // return true if the item was deleted
 	{
 		try {
@@ -1169,7 +1159,6 @@ public class Database{
 		}
 	}
 
-	
 	public static boolean _deleteLocation(int placeId) // return true if the item was deleted
 	{
 		try {
@@ -1185,7 +1174,6 @@ public class Database{
 		}
 	}
 
-	
 	public static boolean _deleteRouteStop(int placeId) // return true if the item was deleted
 	{
 		try {
@@ -1201,7 +1189,6 @@ public class Database{
 		}
 	}
 
-	
 	public static boolean _deleteMapSight(int placeId) // return true if the item was deleted
 	{
 		try {
@@ -1217,7 +1204,6 @@ public class Database{
 		}
 	}
 
-	
 	public static boolean _deletePlaceOfInterestSight(int placeId) // return true if the item was deleted
 	{
 		try {
@@ -1233,7 +1219,6 @@ public class Database{
 		}
 	}
 
-	
 	public static boolean _deleteRouteSight(int placeId) // return true if the item was deleted
 	{
 		try {
@@ -1249,7 +1234,6 @@ public class Database{
 		}
 	}
 
-	
 	public static boolean _deleteCityDataVersion(int placeId) // return true if the item was deleted
 	{
 		try {
@@ -1265,7 +1249,6 @@ public class Database{
 		}
 	}
 
-	
 	public static boolean _deleteSubscription(int placeId) // return true if the item was deleted
 	{
 		try {
@@ -1281,7 +1264,6 @@ public class Database{
 		}
 	}
 
-	
 	public static boolean _deleteOneTimePurchase(int placeId) // return true if the item was deleted
 	{
 		try {
@@ -1297,7 +1279,6 @@ public class Database{
 		}
 	}
 
-	
 	public static boolean _deleteStatistic(int statisticId) {
 		try {
 			String sql = "DELETE FROM " + Table.Statistic.getValue() + " WHERE ID=?";
@@ -1312,7 +1293,6 @@ public class Database{
 		}
 	}
 
-	
 	public static ArrayList<Integer> searchPlaceOfInterest(String placeName, String placeDescription, Integer cityId) {
 		try {
 			int counter = 1;
@@ -1352,7 +1332,6 @@ public class Database{
 		}
 	}
 
-	
 	public static ArrayList<Integer> searchMap(Integer cityId, String name, String info, String imgURL) {
 		try {
 			int counter = 1;
@@ -1398,7 +1377,6 @@ public class Database{
 		}
 	}
 
-
 	public static ArrayList<Integer> searchRoute(Integer cityId, String info, Boolean acceptabilityToDisabled) {
 		try {
 			int counter = 1;
@@ -1438,7 +1416,6 @@ public class Database{
 		}
 	}
 
-
 	public static ArrayList<Integer> searchCity(String cityName, String cityDescription) {
 		try {
 			int counter = 1;
@@ -1472,18 +1449,15 @@ public class Database{
 		}
 	}
 
-
 	public static ArrayList<Integer> searchCustomer() // no need
 	{
 		return new ArrayList<>();
 	}
 
-
 	public static ArrayList<Integer> searchEmployee() // no need
 	{
 		return new ArrayList<>();
 	}
-
 
 	public static ArrayList<Integer> searchLocation(Integer mapId, Integer placeId) {
 		try {
@@ -1517,7 +1491,6 @@ public class Database{
 			return new ArrayList<>();
 		}
 	}
-
 
 	public static ArrayList<Integer> searchRouteStop(Integer routeId, Integer placeId, Integer numStop) {
 		try {
@@ -1558,7 +1531,6 @@ public class Database{
 		}
 	}
 
-	
 	public static ArrayList<Integer> searchMapSight(Integer cityDataVersionId, Integer mapId) {
 		try {
 			int counter = 1;
@@ -1625,7 +1597,6 @@ public class Database{
 		}
 	}
 
-	
 	public static ArrayList<Integer> searchRouteSight(Integer cityDataVersionId, Integer routeId) {
 		try {
 			int counter = 1;
@@ -1659,7 +1630,6 @@ public class Database{
 		}
 	}
 
-	
 	public static ArrayList<Integer> searchCityDataVersion(Integer cityId) {
 		try {
 			int counter = 1;
@@ -1687,7 +1657,6 @@ public class Database{
 		}
 	}
 
-	
 	public static ArrayList<Integer> searchSubscription(Integer userId, Integer cityId, Date purchaseDate, Date date,
 			Boolean afterDate) // fix this - RON
 	{
@@ -1740,7 +1709,6 @@ public class Database{
 			return new ArrayList<>();
 		}
 	}
-	
 
 	public static ArrayList<Integer> searchOneTimePurchase(Integer userId, Integer cityId, Date purchaseDate,
 			Boolean wasDownload) {
@@ -1788,8 +1756,6 @@ public class Database{
 		}
 	}
 
-	
-	
 	public static ArrayList<Integer> searchStatistic(Integer cityId, Date date, Date dateFrom, Date dateEnd) {
 		try {
 			int counter = 1;
@@ -1829,7 +1795,6 @@ public class Database{
 		}
 	}
 
-	
 	public static PlaceOfInterest getPlaceOfInterestById(int placeId) {
 		try {
 			String sql = "SELECT * FROM " + Table.PlaceOfInterest.getValue() + " WHERE ID=?";
@@ -1849,7 +1814,6 @@ public class Database{
 		}
 	}
 
-	
 	public static Map getMapById(int placeId) {
 		try {
 			String sql = "SELECT * FROM " + Table.Map.getValue() + " WHERE ID=?";
@@ -1868,7 +1832,6 @@ public class Database{
 		}
 	}
 
-	
 	public static Route getRouteById(int placeId) {
 		try {
 			String sql = "SELECT * FROM " + Table.Route.getValue() + " WHERE ID=?";
@@ -1887,7 +1850,6 @@ public class Database{
 		}
 	}
 
-	
 	public static City getCityById(int placeId) {
 		try {
 			String sql = "SELECT * FROM " + Table.City.getValue() + " WHERE ID=?";
@@ -1906,7 +1868,6 @@ public class Database{
 		}
 	}
 
-	
 	public static Customer getCustomerById(int placeId) {
 		try {
 			String sql = "SELECT * FROM " + Table.Customer.getValue() + " WHERE ID=?";
@@ -1926,7 +1887,6 @@ public class Database{
 		}
 	}
 
-	
 	public static Employee getEmployeeById(int placeId) {
 		try {
 			String sql = "SELECT * FROM " + Table.Employee.getValue() + " WHERE ID=?";
@@ -1946,7 +1906,6 @@ public class Database{
 		}
 	}
 
-	
 	public static Location _getLocationById(int placeId) {
 		try {
 			String sql = "SELECT * FROM " + Table.Location.getValue() + " WHERE ID=?";
@@ -1965,7 +1924,6 @@ public class Database{
 		}
 	}
 
-	
 	public static RouteStop _getRouteStopById(int placeId) {
 		try {
 			String sql = "SELECT * FROM " + Table.RouteStop.getValue() + " WHERE ID=?";
@@ -1984,7 +1942,6 @@ public class Database{
 		}
 	}
 
-	
 	public static MapSight _getMapSightById(int placeId) {
 		try {
 			String sql = "SELECT * FROM " + Table.MapSight.getValue() + " WHERE ID=?";
@@ -2001,7 +1958,6 @@ public class Database{
 			return null;
 		}
 	}
-
 
 	public static PlaceOfInterestSight _getPlaceOfInterestSightById(int placeId) {
 		try {
@@ -2021,7 +1977,6 @@ public class Database{
 		}
 	}
 
-
 	public static RouteSight _getRouteSightById(int placeId) {
 		try {
 			String sql = "SELECT * FROM " + Table.RouteSight.getValue() + " WHERE ID=?";
@@ -2040,8 +1995,7 @@ public class Database{
 		}
 	}
 
-
-	public static CityDataVersion _getCityDataVersion(int placeId) {
+	public static CityDataVersion _getCityDataVersionById(int placeId) {
 		try {
 			String sql = "SELECT * FROM " + Table.CityDataVersion.getValue() + " WHERE ID=?";
 			PreparedStatement gt = conn.prepareStatement(sql);
@@ -2058,7 +2012,6 @@ public class Database{
 			return null;
 		}
 	}
-
 
 	public static Subscription _getSubscriptionById(int placeId) {
 		try {
@@ -2079,7 +2032,6 @@ public class Database{
 		}
 	}
 
-	
 	public static OneTimePurchase _getOneTimePurchaseById(int placeId) {
 		try {
 			String sql = "SELECT * FROM " + Table.OneTimePurchase.getValue() + " WHERE ID=?";
@@ -2099,7 +2051,6 @@ public class Database{
 		}
 	}
 
-	
 	public static Statistic _getStatisticById(int statisticId) {
 		try {
 			String sql = "SELECT * FROM " + Table.Statistic.getValue() + " WHERE ID=?";

@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
+import java.sql.Date;
+import java.util.Calendar;
 
 public final class InformationSystem
 {
@@ -8,7 +9,7 @@ public final class InformationSystem
 
     //list of Statistic
     public static Statistic getStatistic(int cityId, Date d){
-        ArrayList<Integer> ids=Database.searchStatistic(cityId,d,null,null);
+        ArrayList<Integer> ids=Database.searchStatistic((Integer) cityId, d, null, null);
         if(ids.size()!=1)
             return null;
         Statistic s=Database._getStatisticById(ids.get(0));
@@ -24,7 +25,7 @@ public final class InformationSystem
 
     public static Statistic getRangeSumStatistics(Integer cityId,Date from,Date end)
     {
-        ArrayList<Integer> ids=Database.searchStatistic(cityId,null ,from,end);
+        ArrayList<Integer> ids=Database.searchStatistic((Integer) cityId, null, from, end);
         Statistic sum=Statistic.createBlankStatistic();
         for(int id:ids)
         {
@@ -36,7 +37,7 @@ public final class InformationSystem
     }
 
     public void addOneTimePurchase(int cityId) {
-        addOneTimePurchase(cityId,new Date());
+        addOneTimePurchase(cityId,new Date(Calendar.getInstance().getTime().getTime()));
     }
 
     public void addOneTimePurchase(int cityId,Date d) {
@@ -48,7 +49,7 @@ public final class InformationSystem
     }
 
     public void addVisit(int cityId){
-        addVisit(cityId,new Date());
+        addVisit(cityId,new Date(Calendar.getInstance().getTime().getTime()));
     }
 
     public void addVisit(int cityId,Date d) {
@@ -60,7 +61,7 @@ public final class InformationSystem
     }
 
     public void addSubscription(int cityId) {
-        addSubscription(cityId,new Date());
+        addSubscription(cityId,new Date(Calendar.getInstance().getTime().getTime()));
     }
 
     public void addSubscription(int cityId,Date d) {
@@ -72,7 +73,7 @@ public final class InformationSystem
     }
 
     public void addSubscriptionRenewal(int cityId) {
-        addSubscriptionRenewal(cityId,new Date());
+        addSubscriptionRenewal(cityId,new Date(Calendar.getInstance().getTime().getTime()));
     }
 
     public void addSubscriptionRenewal(int cityId,Date d) {
