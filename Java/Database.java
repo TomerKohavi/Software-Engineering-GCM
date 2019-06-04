@@ -1450,14 +1450,46 @@ public class Database {
 		}
 	}
 
-	public static ArrayList<Integer> searchCustomer() // no need
+	private static ArrayList<Integer> searchUser(String userName, String password, String table)
 	{
-		return new ArrayList<>();
+		try {
+			int counter = 1;
+			String sql = "SELECT ID FROM " + table + " WHERE ";
+			if (userName != null)
+				sql += "Username=? AND ";
+			if (password != null)
+				sql += "Password=? AND ";
+			sql = sql.substring(0, sql.length() - 4);
+			System.out.println(sql);
+			PreparedStatement gt = conn.prepareStatement(sql);
+			if (userName != null) {
+				gt.setString(counter++, userName);
+			}
+			if (password != null) {
+				gt.setString(counter++, password);
+			}
+			ResultSet res = gt.executeQuery();
+			ArrayList<Integer> IDs = new ArrayList<>();
+			while (res.next()) {
+				int id = res.getInt("ID");
+				IDs.add(id);
+			}
+			return IDs;
+		} catch (Exception e) {
+			closeConnection();
+			e.printStackTrace();
+			return new ArrayList<>();
+		}
 	}
 
-	public static ArrayList<Integer> searchEmployee() // no need
+	public static ArrayList<Integer> searchCustomer(String userName, String password)
 	{
-		return new ArrayList<>();
+		return searchUser(userName, password, Table.Customer.getValue());
+	}
+	
+	public static ArrayList<Integer> searchEmployee(String userName, String password)
+	{
+		return searchUser(userName, password, Table.Employee.getValue());
 	}
 
 	public static ArrayList<Integer> searchLocation(Integer mapId, Integer placeId) {
