@@ -1,6 +1,11 @@
 package application;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.jfoenix.controls.JFXButton;
+
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class Connector {
@@ -11,9 +16,11 @@ public class Connector {
 	
 	public static JFXButton sideButton;
 	
-	public static String listType = "city";
+	public static String listType = "City";
 	
 	public static boolean searchedCity = true;
+	
+	public static List<ImageView> imageList = new ArrayList<ImageView> ();
 	
 //	static void loadPage(AnchorPane pane, String FXMLpage) throws IOException
 //	{

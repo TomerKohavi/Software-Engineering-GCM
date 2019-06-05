@@ -1,14 +1,19 @@
 package application;
 
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,14 +22,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class HomePageController {
@@ -39,11 +45,17 @@ public class HomePageController {
     @FXML // fx:id="MapNotValid"
     private Text NotValid; // Value injected by FXMLLoader
 
-    @FXML // fx:id="NameBox"
-    private JFXTextField NameBox; // Value injected by FXMLLoader
+    @FXML // fx:id="CityNameBox"
+    private JFXTextField CityNameBox; // Value injected by FXMLLoader
 
-    @FXML // fx:id="InfoBox"
-    private JFXTextField InfoBox; // Value injected by FXMLLoader
+    @FXML // fx:id="CityInfoBox"
+    private JFXTextField CityInfoBox; // Value injected by FXMLLoader
+
+    @FXML // fx:id="POINameBox"
+    private JFXTextField POINameBox; // Value injected by FXMLLoader
+
+    @FXML // fx:id="POIInfoBox"
+    private JFXTextField POIInfoBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="SearchCityButton"
     private JFXButton SearchCityButton; // Value injected by FXMLLoader
@@ -84,6 +96,24 @@ public class HomePageController {
     @FXML // fx:id="ShowMapButton"
     private JFXButton ShowMapButton; // Value injected by FXMLLoader
     
+    @FXML // fx:id="FirstDate"
+    private JFXDatePicker FirstDate; // Value injected by FXMLLoader
+
+    @FXML // fx:id="LastDate"
+    private JFXDatePicker LastDate; // Value injected by FXMLLoader
+
+    @FXML // fx:id="WatchButton"
+    private JFXButton WatchButton; // Value injected by FXMLLoader
+
+    @FXML // fx:id="DateNotValid"
+    private Text DateNotValid; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="ReportCityName"
+    private Text ReportCityName; // Value injected by FXMLLoader
+
+    @FXML // fx:id="ReportInfo"
+    private Text ReportInfo; // Value injected by FXMLLoader
+    
     @FXML // fx:id="LoginButton"
     private JFXButton LoginButton; // Value injected by FXMLLoader
 
@@ -101,13 +131,21 @@ public class HomePageController {
 
     @FXML // fx:id="SideRoutes"
     private JFXButton SideRoutes; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="SideReport"
+    private JFXButton SideReport; // Value injected by FXMLLoader
+
+    @FXML // fx:id="SideUsers"
+    private JFXButton SideUsers; // Value injected by FXMLLoader
 
     
     void openNewPage(String FXMLpage) throws IOException {
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLpage));  
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLpage));
         Stage stage = new Stage();
+        stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(mainPane.getScene().getWindow());
         stage.setScene(new Scene((Parent) loader.load()));
+        stage.setResizable(false);
 
         // showAndWait will block execution until the window closes...
         stage.showAndWait();
@@ -127,6 +165,7 @@ public class HomePageController {
     }
     
     void clearInfo() {
+    	MainList.getItems().clear();
     	ResultName.setText("");
     	ResultInfo.setText("");
 	    Text1.setText("");
@@ -138,6 +177,18 @@ public class HomePageController {
 	    ShowMapButton.setVisible(false);
 		StopsTable.setVisible(false);
 		BuyButton.setVisible(false);
+	    for (ImageView img : Connector.imageList) {
+	    	mainPane.getChildren().remove(img);
+	    }
+	    Connector.imageList.clear();
+	    ReportCityName.setVisible(false);
+	    ReportInfo.setVisible(false);
+	    FirstDate.setVisible(false);
+	    LastDate.setVisible(false);
+	    WatchButton.setVisible(false);
+//    	if (employee) { // check if employee -> can edit
+//		EditButton.setVisible(true);
+//	}
     }
     
     public void initialize() {
@@ -154,6 +205,9 @@ public class HomePageController {
 //    		EditButton.setVisible(true);
 //    	}
     	
+    	SideReport.setDisable(false);
+	    SideUsers.setDisable(false);
+    	
     	MainList.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
     	    @Override
@@ -164,30 +218,21 @@ public class HomePageController {
     	                                                    .getSelectedItem();
     	           if (currentItemSelected != null) {
     	        	   InfoPane.setVisible(true);
-    	        	   if (Connector.listType.equals("search")) { // search tab 
-    	        		   if (Connector.searchedCity) { // City
-    	        			   ResultName.setText(currentItemSelected); // set name
-        	        		   ResultInfo.setText("Info"); // set info
-        	        		   Text1.setText("Maps Found: " + 2); // #Maps for the city 
-        	        		   Text2.setText("POI Found: " + 2); // #POI for the city
-        	        		   Text3.setText("Routes Found: " + 2); // #Routes for the city
-        	        		   BuyButton.setVisible(true);
-        	        		   SideMap.setDisable(false);
-        	        		   SidePOI.setDisable(false);
-        	        		   SideRoutes.setDisable(false);
-        	        		   ShowMapButton.setVisible(false);
-    	        		   }
-    	        		   else { // POI Search
-    	        			   ResultName.setText(currentItemSelected + " - " + "Hotel"); // set name and type
-        	        		   ResultInfo.setText("Info"); // set info
-        	        		   Text1.setText("City: " + "Haifa"); // name of the city 
-        	        		   Text2.setText("Maps Found: " + 2); // #Maps for the city 
-        	        		   Text3.setText("Accessible to Disabled"); // Accessible or not
-        	        		   BuyButton.setVisible(false);
-        	        		   SideMap.setDisable(false);
-        	        		   SidePOI.setDisable(true);
-        	        		   SideRoutes.setDisable(true);
-    	        		   }
+    	        	   if (Connector.listType.equals("City")) { // City 
+	        			   ResultName.setText(currentItemSelected); // set name
+    	        		   ResultInfo.setText("Info"); // set info
+    	        		   Text1.setText("Maps Found: " + 2); // #Maps for the city 
+    	        		   Text2.setText("POI Found: " + 2); // #POI for the city
+    	        		   Text3.setText("Routes Found: " + 2); // #Routes for the city
+    	        		   BuyButton.setVisible(true);
+//    	        		   if (Connector.user_id != -1  && subscribed to the map) // check if it bought the map
+//        	        		   BuyButton.setText("Download");
+//    	        		   else
+//    	        			   BuyButton.setText("Buy");
+    	        		   ShowMapButton.setVisible(false);
+    	        		   SideMap.setDisable(false);
+    	        		   SidePOI.setDisable(false);
+    	        		   SideRoutes.setDisable(false);
     	        	   }
     	        	   else if (Connector.listType.equals("POI")) { // POI
     	        		   ResultName.setText(currentItemSelected + " - " + "Hotel"); // set name and type
@@ -207,20 +252,51 @@ public class HomePageController {
     	        		   ObservableList<String> stops = FXCollections.observableArrayList();
     	        		   StopsTable.setItems(stops);
     	        	   }
+    	        	   else if (Connector.listType.equals("Report")) { // users
+    	        		   ReportCityName.setVisible(true);
+    	        		   ReportInfo.setVisible(true);
+    	        		   InfoPane.setVisible(false);
+    	        		   ReportCityName.setText(currentItemSelected); // set name and type
+    	        		   ReportInfo.setText("Number of Maps: " + 6 + "\n" +
+    	        				   "Number of One Time Purchases: " + 6 + "\n" +
+    	        				   "Number of Subscriptions: " + 6 + "\n" +
+    	        				   "Number of Re-Subscriptions: " + 6 + "\n" +
+    	        				   "Number of Views: " + 6 + "\n" +
+    	        				   "Number of Downloads: " + 6);
+    	        	   }
+    	        	   else if (Connector.listType.equals("Users")) { // users
+    	        		   ResultName.setText(currentItemSelected); // set name and type
+    	        		   ResultInfo.setText("Name: " + "first" + " " + "last" + "\n" +
+    	        				   "Email: " + "coreset@sigal.is.gay" + "\n" +
+    	        				   "Phone: " + "0544444444");
+    	        		   EditButton.setDisable(false);
+    	        		   // add purchase history
+    	        	   }
     	           }
     	        }
     	    }
     	});
     	
+    	MapImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+    	    @Override
+    	    public void handle(MouseEvent click) {
+    	    	Point p = MouseInfo.getPointerInfo().getLocation();
+    	    	System.out.println(p);
+        	}
+    	});
+    	
     }
     
     @FXML
-    void searchCity(ActionEvent event) throws IOException {
+    void search(ActionEvent event) throws IOException {
     	setMainSideButton(SideSearch);
     	Connector.searchedCity = true;
-    	Connector.listType = "search";
-    	name = NameBox.getText();
-    	info = InfoBox.getText();
+    	Connector.listType = "City";
+    	name = CityNameBox.getText();
+    	info = CityInfoBox.getText();
+    	name = POINameBox.getText();
+    	info = POIInfoBox.getText();
     	if (name.equals("city"))
     	{
     		MainList.getItems().clear();
@@ -234,45 +310,51 @@ public class HomePageController {
     }
     
     @FXML
-    void searchPOI(ActionEvent event) throws IOException {
-    	setMainSideButton(SideSearch);
-    	Connector.searchedCity = false;
-    	Connector.listType = "search";
-    	name = NameBox.getText();
-    	info = InfoBox.getText();
-    	if (name.equals("poi"))
-    	{
-    		MainList.getItems().clear();
-    		MainList.getItems().addAll("poi1", "poi2");
-    		NotValid.setOpacity(0);
+    void watch(ActionEvent event) {
+    	if (FirstDate.getValue() == null || LastDate.getValue() == null) { // date not valid
+    		DateNotValid.setVisible(true);
     	}
-    	else
-    	{
-    		NotValid.setOpacity(1);
+    	else {
+    		MainList.getItems().addAll("city1", "city2");
     	}
+    		
     }
     
     @FXML
-    void showMapImage(ActionEvent event) {
+    void showMapImage(ActionEvent event) throws FileNotFoundException {
     	show_map = !show_map;
     	if (show_map) {
     		InfoPane.setVisible(false);
     		MapImage.setVisible(true);
     		ShowMapButton.setText("Hide Map");
+    		Image image = new Image(new FileInputStream("Pics\\POI.png"));
+    		List<Point> posList = new ArrayList<Point> ();
+    		posList.add(new Point(1211 - 334, 578 - 130));
+    		posList.add(new Point(1211 - 334 + 50, 578 - 130 + 50));
+    	    for (Point p : posList) {
+    	    	ImageView img = new ImageView(image);
+    	    	img.setX(p.getX());
+    	    	img.setY(p.getY());
+    	        Connector.imageList.add(img);
+    	    }
+    	    mainPane.getChildren().addAll(Connector.imageList);
     	}
     	else {
     		InfoPane.setVisible(true);
     		MapImage.setVisible(false);
     		ShowMapButton.setText("Show Map");
+    	    for (ImageView img : Connector.imageList) {
+    	    	mainPane.getChildren().remove(img);
+    	    }
+    	    Connector.imageList.clear();
     	}
     }
     
     @FXML
     void showSearch(ActionEvent event) {
-    	Connector.listType = "search";
+    	Connector.listType = "City";
     	setMainSideButton(SideSearch);
-    	MainList.getItems().clear();
-		MainList.getItems().addAll("city1", "poi1");
+		MainList.getItems().addAll("city1", "city2");
     }
     
     @FXML
@@ -288,10 +370,9 @@ public class HomePageController {
     }
     
     @FXML
-    void showMaps(ActionEvent event) {
+    void showMaps(ActionEvent event) throws FileNotFoundException {
     	Connector.listType = "Map";
     	setMainSideButton(SideMap);
-    	MainList.getItems().clear();
 		MainList.getItems().addAll("map1", "map2");
     }
 
@@ -299,7 +380,6 @@ public class HomePageController {
     void showPOI(ActionEvent event) {
     	Connector.listType = "POI";
     	setMainSideButton(SidePOI);
-    	MainList.getItems().clear();
 		MainList.getItems().addAll("POI1", "POI2");
     }
 
@@ -307,22 +387,42 @@ public class HomePageController {
     void showRoutes(ActionEvent event) {
     	Connector.listType = "Route";
     	setMainSideButton(SideRoutes);
-    	MainList.getItems().clear();
 		MainList.getItems().addAll("route1", "route2");
+    }
+
+    @FXML
+    void showReport(ActionEvent event) {
+    	Connector.listType = "Report";
+    	setMainSideButton(SideReport);
+    	FirstDate.setVisible(true);
+    	LastDate.setVisible(true);
+    	WatchButton.setVisible(true);
+    }
+
+    @FXML
+    void showUsers(ActionEvent event) {
+    	Connector.listType = "Users";
+    	setMainSideButton(SideUsers);
+		MainList.getItems().addAll("user1", "user2");
     }
     
     @FXML
     void callEdit(ActionEvent event) throws IOException {
-    	String prefix = Connector.listType;
-    	if (prefix.equals("search"))
-    		prefix = Connector.searchedCity ? "City" : "POI";
-    	openNewPage(prefix + "EditScene.fxml");
+    	openNewPage(Connector.listType + "EditScene.fxml");
     }
  
 
     @FXML
-    void openBuyWindodw(ActionEvent event) {
-
+    void openBuyWindodw(ActionEvent event) throws IOException {
+    	if (Connector.usr_id == -1) // check if logged in
+    		openNewPage("LoginErrorScene.fxml");
+    	else {
+    		if (BuyButton.getText().equals("Buy"))
+    			openNewPage("BuyScene.fxml");
+    		//else
+    			//download
+    		
+    	}
     }
     
 }
