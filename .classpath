@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="ClientServer/src"/>
+	<classpathentry kind="src" path="Java"/>
+	<classpathentry kind="src" path="JFX/src"/>
+	<classpathentry kind="lib" path="ClientServer/mysql-connector-java-8.0.16.jar"/>
+	<classpathentry kind="lib" path="JFX/JAR/jfoenix-8.0.8.jar"/>
+	<classpathentry kind="lib" path="JFX/JAR/jfoenix-9.0.8.jar"/>
+	<classpathentry kind="lib" path="JFX/JAR/org.eclipse.fx.ide.css.jfx8_3.5.0.201902220800.jar"/>
+	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
+	<classpathentry kind="output" path="ClientServer/bin"/>
+</classpath>

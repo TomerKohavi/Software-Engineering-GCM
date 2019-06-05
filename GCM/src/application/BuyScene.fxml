@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="839.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.BuyController">
+   <children>
+      <Text fill="#41e0d0" layoutX="58.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Purchase Plane" textAlignment="CENTER">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Text layoutX="61.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="One time Purchase">
+         <font>
+            <Font size="18.0" />
+         </font></Text>
+      <Text fx:id="OneTimePrice" layoutX="657.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.00 ₪">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <JFXRadioButton fx:id="RadioOneTime" layoutX="748.0" layoutY="136.0" onAction="#chooseOneTime" prefHeight="17.0" prefWidth="12.0" selected="true" text=" " />
+      <Text layoutX="61.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subscription For">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <JFXComboBox fx:id="MonthBox" layoutX="201.0" layoutY="207.0" onAction="#updatePrice" />
+      <Text layoutX="265.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Months">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="SubscriptionPrice" layoutX="657.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.00 ₪">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <JFXRadioButton fx:id="RadioSubscribe" layoutX="748.0" layoutY="211.0" onAction="#chooseSubscribe" prefHeight="17.0" prefWidth="12.0" text=" " />
+      <JFXButton fx:id="Back" layoutX="168.0" layoutY="305.0" onAction="#goBack" prefHeight="37.0" prefWidth="204.0" style="-fx-background-color: #41e0d0;" text="Cancel">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="BuyButton" layoutX="473.0" layoutY="305.0" onAction="#buy" prefHeight="39.0" prefWidth="204.0" style="-fx-background-color: #41e0d0;" text="Buy">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>
