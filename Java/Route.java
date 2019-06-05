@@ -6,30 +6,27 @@ public class Route implements ClassMustProperties, Serializable {
 	private int id;
 	private int cityId;
 	private String info;
-	private boolean acceptabilityToDisabled;
 
 	ArrayList<RouteStop> temp_routeStops;
 
 	ArrayList<RouteStop> temp_removeRouteStops;
 
-	private Route(int id, int cityId, String info, boolean acceptabilityToDisabled) {
+	private Route(int id, int cityId, String info) {
 		this.id = id;
 		this.cityId = cityId;
 		this.info = info;
-		this.acceptabilityToDisabled = acceptabilityToDisabled;
 		reloadTempsFromDatabase();
 	}
 
-	public static Route _createRoute(int id, int cityId, String info, boolean acceptabilityToDisabled) { // friend to
+	public static Route _createRoute(int id, int cityId, String info) { // friend to
 																											// Database
-		return new Route(id, cityId, info, acceptabilityToDisabled);
+		return new Route(id, cityId, info);
 	}
 
 	public Route(int cityId, String info, boolean acceptabilityToDisabled) {
 		this.id = Database.generateIdRoute();
 		this.cityId = cityId;
 		this.info = info;
-		this.acceptabilityToDisabled = acceptabilityToDisabled;
 		this.temp_routeStops = new ArrayList<>();
 		this.temp_removeRouteStops = new ArrayList<>();
 	}
@@ -82,6 +79,7 @@ public class Route implements ClassMustProperties, Serializable {
 	public boolean addRouteStop(RouteStop rs) {
 		if (rs.getRouteId() != this.id || rs.getCopyPlace().getCityId() != this.getCityId())
 			return false;
+		rs.setNumStop(temp_routeStops.size());
 		temp_routeStops.add(rs);
 		return true;
 	}
@@ -90,6 +88,7 @@ public class Route implements ClassMustProperties, Serializable {
 		if (rs.getRouteId() != this.id || rs.getCopyPlace().getCityId() != this.getCityId())
 			return false;
 		temp_routeStops.add(index, rs);
+		rs.setNumStop(index);
 		for (int i = index; i < temp_routeStops.size(); i++)
 			temp_routeStops.get(i).setNumStop(i);
 		return true;
@@ -135,10 +134,6 @@ public class Route implements ClassMustProperties, Serializable {
 		this.info = info;
 	}
 
-	public void setAcceptabilityToDisabled(boolean acceptabilityToDisabled) {
-		this.acceptabilityToDisabled = acceptabilityToDisabled;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -148,7 +143,11 @@ public class Route implements ClassMustProperties, Serializable {
 	}
 
 	public boolean isAcceptabilityToDisabled() {
-		return acceptabilityToDisabled;
+		for(RouteStop rs:temp_routeStops){
+			if(!rs.getCopyPlace().isAccessibilityToDisabled())
+				return false;
+		}
+		return true;
 	}
 
 	public int getNumStops() {

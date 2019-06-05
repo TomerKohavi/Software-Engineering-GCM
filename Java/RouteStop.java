@@ -25,12 +25,12 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 		return new RouteStop(id, routeId, placeId, numStop, recommendedTime);
 	}
 
-	public RouteStop(Route r, PlaceOfInterest p, int numStop, Time recommendedTime) {
+	public RouteStop(Route r, PlaceOfInterest p, Time recommendedTime) {
 		this.id = Database.generateIdRouteStop();
 		this.routeId = r.getId();
 		this.placeId = p.getId();
 		this.recommendedTime = recommendedTime;
-		this.numStop = numStop;
+		this.numStop = -1;
 		this.temp_place = p;
 	}
 

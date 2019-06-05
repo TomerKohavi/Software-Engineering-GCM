@@ -62,7 +62,34 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 		// delete removes
 		for (PlaceOfInterestSight ps : temp_removePlaceSights) {
 			if (!temp_placeSights.contains(ps))
-				ps.deleteFromDatabase();
+            {
+                ps.deleteFromDatabase();
+                System.out.println("print of POIS from city, very big");
+                int pId=ps.getCopyPlace().getId();
+                //remove RouteStops and Locations of that POI
+                for (MapSight ms : temp_mapSights)
+                {
+                    Map m=ms.getCopyMap();
+                    Location l=m.getLocationByPlaceOfInterestId(pId);
+                    while(l!=null)
+                    {
+                        m.removeLocationById(l.getId());
+                        l=m.getLocationByPlaceOfInterestId(pId);
+                    }
+                    m.saveToDatabase();
+                }
+                for (RouteSight rs : temp_routeSights)
+                {
+                    Route r=rs.getCopyRoute();
+                    RouteStop rss=r.getRouteStopByPlaceId(pId);
+                    while(rss!=null)
+                    {
+                        r.removeRouteStopAtIndex(rss.getNumStop());
+                        rss=r.getRouteStopByPlaceId(pId);
+                    }
+                    r.saveToDatabase();
+                }
+            }
 		}
 		temp_removePlaceSights = new ArrayList<>();
 		for (MapSight ms : temp_removeMapSights) {
