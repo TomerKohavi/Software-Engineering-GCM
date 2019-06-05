@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="JFX/JAR/jfoenix-9.0.8.jar"/>
 	<classpathentry kind="lib" path="JFX/JAR/org.eclipse.fx.ide.css.jfx8_3.5.0.201902220800.jar"/>
 	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="ClientServer/bin"/>
 </classpath>

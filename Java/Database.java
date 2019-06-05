@@ -55,6 +55,7 @@ public class Database {
 			if (conn == null) {
 				Class.forName(JDBC_DRIVER);
 				conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				System.out.println("connection opening");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -65,7 +66,10 @@ public class Database {
 	public static void closeConnection() {
 		try {
 			if (conn != null)
+				{
 				conn.close();
+				System.out.println("connection closing");
+				}
 			return;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -210,7 +214,7 @@ public class Database {
 
 	public static int generateIdCity() {
 		try {
-			PreparedStatement gt = conn.prepareStatement("SELECT Counter FROM Counters WHERE Object=? ");
+			PreparedStatement gt = conn.prepareStatement("SELECT Counter FROM Counters WHERE Object=?");
 			gt.setInt(1, Counter.City.getValue());
 			ResultSet res = gt.executeQuery();
 			res.last();
