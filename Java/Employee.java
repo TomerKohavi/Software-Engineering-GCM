@@ -1,63 +1,65 @@
 import java.io.Serializable;
 
 public class Employee extends User implements ClassMustProperties, Serializable {
-    public enum Role
-    {
-        MANAGER(0),
-        REGULAR(1);
+	public enum Role {
+		REGULAR(0), MANAGER(1), CEO(2);
 
-    	private final int value;
-        
-        Role(final int nv)
-        {
-        	value = nv;
-        }
-        
-        public int getValue()
-        {
-        	return value;
-        }
-    }
-    private Role role;
+		private final int value;
 
-    private Employee(int id, String userName, String password, String email, String firstName, String lastName, String phoneNumber, Role role) {
-        super(id, userName, password, email, firstName, lastName, phoneNumber);
-        this.role = role;
-    }
+		Role(final int nv) {
+			value = nv;
+		}
 
-    public static Employee _createEmployee(int id, String userName, String password, String email, String firstName, String lastName, String phoneNumber, Role role){ //friend to Database
-        return new Employee( id,  userName,  password,  email,  firstName,  lastName,  phoneNumber,  role);
-    }
+		public int getValue() {
+			return value;
+		}
+	}
 
-    public Employee(String userName, String password, String email, String firstName, String lastName, String phoneNumber, Role role) {
-        super(userName, password, email, firstName, lastName, phoneNumber);
-        this.role = role;
-    }
+	private Role role;
 
-    protected Employee(int id, String userName, String password, String email, String firstName, String lastName, String phoneNumber) {
-        super(id, userName, password, email, firstName, lastName, phoneNumber);
-    }
+	private Employee(int id, String userName, String password, String email, String firstName, String lastName,
+			String phoneNumber, Role role) {
+		super(id, userName, password, email, firstName, lastName, phoneNumber);
+		this.role = role;
+	}
 
-    public void saveToDatabase() {
-        Database.saveEmployee(this);
-    }
+	public static Employee _createEmployee(int id, String userName, String password, String email, String firstName,
+			String lastName, String phoneNumber, Role role) { // friend to Database
+		return new Employee(id, userName, password, email, firstName, lastName, phoneNumber, role);
+	}
 
-    public void deleteFromDatabase() {
-        Database.deleteEmployee(super.getId());
-    }
+	public Employee(String userName, String password, String email, String firstName, String lastName,
+			String phoneNumber, Role role) {
+		super(userName, password, email, firstName, lastName, phoneNumber);
+		this.role = role;
+	}
 
-    public void reloadTempsFromDatabase() {}
+	protected Employee(int id, String userName, String password, String email, String firstName, String lastName,
+			String phoneNumber) {
+		super(id, userName, password, email, firstName, lastName, phoneNumber);
+	}
 
-    public Role getRole() {
-        return role;
-    }
+	public void saveToDatabase() {
+		Database.saveEmployee(this);
+	}
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
+	public void deleteFromDatabase() {
+		Database.deleteEmployee(super.getId());
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        return o instanceof Employee && ((Employee) o).getId()==this.getId();
-    }
+	public void reloadTempsFromDatabase() {
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		return o instanceof Employee && ((Employee) o).getId() == this.getId();
+	}
 }

@@ -1,8 +1,7 @@
-public interface ClassMustProperties
-{
-    public void saveToDatabase();
+public interface ClassMustProperties {
+	public void saveToDatabase();
 
-    public void deleteFromDatabase();
+	public void deleteFromDatabase();
 
-    public void reloadTempsFromDatabase();
+	public void reloadTempsFromDatabase();
 }
