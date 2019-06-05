@@ -646,24 +646,22 @@ public class Database {
 	public static boolean saveRoute(Route p) {
 		try {
 			if (existRoute(p.getId())) {
-				String sql = "UPDATE " + Table.Route.getValue() + " SET Info=?, ATD=?, NumStops=?, CityID=? WHERE ID=?";
+				String sql = "UPDATE " + Table.Route.getValue() + " SET Info=?, NumStops=?, CityID=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setString(1, p.getInfo());
-				su.setBoolean(2, p.isAcceptabilityToDisabled());
-				su.setInt(3, p.getNumStops());
-				su.setInt(4, p.getCityId());
-				su.setInt(5, p.getId());
+				su.setInt(2, p.getNumStops());
+				su.setInt(3, p.getCityId());
+				su.setInt(4, p.getId());
 				su.executeUpdate();
 				return true;
 			} else {
 				String sql = "INSERT INTO " + Table.Route.getValue()
-						+ " (ID,Info, ATD, NumStops, CityID) VALUES (?,?, ?, ?, ?)";
+						+ " (ID, Info, NumStops, CityID) VALUES (?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getId());
 				su.setString(2, p.getInfo());
-				su.setBoolean(3, p.isAcceptabilityToDisabled());
-				su.setInt(4, p.getNumStops());
-				su.setInt(5, p.getCityId());
+				su.setInt(3, p.getNumStops());
+				su.setInt(4, p.getCityId());
 				su.executeUpdate();
 				return false;
 			}
@@ -1385,7 +1383,7 @@ public class Database {
 		}
 	}
 
-	public static ArrayList<Integer> searchRoute(Integer cityId, String info, Boolean acceptabilityToDisabled) {
+	public static ArrayList<Integer> searchRoute(Integer cityId, String info) {
 		try {
 			int counter = 1;
 			String sql = "SELECT ID FROM " + Table.Route.getValue() + " WHERE ";
@@ -1393,21 +1391,13 @@ public class Database {
 				sql += "CityID=? AND ";
 			if (info != null)
 				sql += "Info=? AND ";
-			if (acceptabilityToDisabled != null)
-				sql += "ATD=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (cityId != null) {
-				gt.setInt(counter, cityId);
-				counter += 1;
+				gt.setInt(counter++, cityId);
 			}
 			if (info != null) {
-				gt.setString(counter, info);
-				counter += 1;
-			}
-			if (acceptabilityToDisabled != null) {
-				gt.setBoolean(counter, acceptabilityToDisabled);
-				counter += 1;
+				gt.setString(counter++, info);
 			}
 			ResultSet res = gt.executeQuery();
 			ArrayList<Integer> IDs = new ArrayList<>();
@@ -1869,8 +1859,7 @@ public class Database {
 			if (!res.next())
 				return null;
 			res.last();
-			return Route._createRoute(res.getInt("ID"), res.getInt("CityID"), res.getString("Info"),
-					res.getBoolean("ATD"));
+			return Route._createRoute(res.getInt("ID"), res.getInt("CityID"), res.getString("Info"));
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();

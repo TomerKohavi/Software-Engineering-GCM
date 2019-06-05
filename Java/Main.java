@@ -22,7 +22,7 @@ public class Main {
 		System.out.println(cdv2.getPlaceOfInterestSightByPlaceOfInterestId(p.getId())==null);
 		
 		Route r = new Route(c.getId(), "C",true);
-		RouteStop rs=new RouteStop(r, p, 1,new Time(213123));
+		RouteStop rs=new RouteStop(r, p, new Time(213123));
 		r.addRouteStop(rs);
 		rs.saveToDatabase();
 		RouteSight rss=new RouteSight(cdv2, r, false);
