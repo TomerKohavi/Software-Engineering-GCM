@@ -43,15 +43,20 @@ public class Main {
 			System.out.println(Database.searchCustomer("Tal20", "11235"));
 			System.out.println(cust2.getCopyUnactiveSubscription().size());
 			Date d2=new Date(2028,5,12);
-			System.out.println(d2.compareTo(today));
 			
 			cust.deleteFromDatabase();
 			c.deleteFromDatabase();
+			p.deleteFromDatabase();
+			rs.deleteFromDatabase();
+			cdv2.deleteFromDatabase();
 			
+			System.out.println("Ss");
+
 			
 		}catch (Exception e) {
 			System.out.println(e);
 		}
 		Database.closeConnection();
+		System.out.println("Done");
 	}
 }

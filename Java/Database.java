@@ -79,16 +79,17 @@ public class Database {
 
 	// generate ID's
 
-	public static int generateIdUser() {
+	private static int generateId(int type)
+	{
 		try {
 			PreparedStatement gt = conn.prepareStatement("SELECT Counter FROM Counters WHERE Object=? ");
-			gt.setInt(1, Counter.User.getValue());
+			gt.setInt(1, type);
 			ResultSet res = gt.executeQuery();
 			res.last();
 			Integer counter = res.getInt("Counter") + 1;
 			PreparedStatement su = conn.prepareStatement("UPDATE `Counters` SET Counter=? WHERE Object=?");
 			su.setInt(1, counter);
-			su.setInt(2, Counter.User.getValue());
+			su.setInt(2, type);
 			su.executeUpdate();
 			return counter;
 		} catch (Exception e) {
@@ -96,239 +97,65 @@ public class Database {
 			e.printStackTrace();
 			return -1;
 		}
+	}
+	
+	public static int generateIdUser() {
+		return generateId(Counter.User.getValue());
 	}
 
 	public static int generateIdPlaceOfInterest() {// first example
-		try {
-			PreparedStatement gt = conn.prepareStatement("SELECT Counter FROM Counters WHERE Object=? ");
-			gt.setInt(1, Counter.PlaceOfInterest.getValue());
-			ResultSet res = gt.executeQuery();
-			res.last();
-			Integer counter = res.getInt("Counter") + 1;
-			PreparedStatement su = conn.prepareStatement("UPDATE `Counters` SET Counter=? WHERE Object=?");
-			su.setInt(1, counter);
-			su.setInt(2, Counter.PlaceOfInterest.getValue());
-			su.executeUpdate();
-			return counter;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return -1;
-		}
+		return generateId(Counter.PlaceOfInterest.getValue());
+
 	}
 
 	public static int generateIdMap() {
-		try {
-			PreparedStatement gt = conn.prepareStatement("SELECT Counter FROM Counters WHERE Object=? ");
-			gt.setInt(1, Counter.Map.getValue());
-			ResultSet res = gt.executeQuery();
-			res.last();
-			Integer counter = res.getInt("Counter") + 1;
-			PreparedStatement su = conn.prepareStatement("UPDATE `Counters` SET Counter=? WHERE Object=?");
-			su.setInt(1, counter);
-			su.setInt(2, Counter.Map.getValue());
-			su.executeUpdate();
-			return counter;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return -1;
-		}
+		return generateId(Counter.Map.getValue());
 	}
 
 	public static int generateIdLocation() {
-		try {
-			PreparedStatement gt = conn.prepareStatement("SELECT Counter FROM Counters WHERE Object=? ");
-			gt.setInt(1, Counter.Location.getValue());
-			ResultSet res = gt.executeQuery();
-			res.last();
-			Integer counter = res.getInt("Counter") + 1;
-			PreparedStatement su = conn.prepareStatement("UPDATE `Counters` SET Counter=? WHERE Object=?");
-			su.setInt(1, counter);
-			su.setInt(2, Counter.Location.getValue());
-			su.executeUpdate();
-			return counter;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return -1;
-		}
+		return generateId(Counter.Location.getValue());
 	}
 
 	public static int generateIdCityDataVersion() {
-		try {
-			PreparedStatement gt = conn.prepareStatement("SELECT Counter FROM Counters WHERE Object=? ");
-			gt.setInt(1, Counter.CityDataVersion.getValue());
-			ResultSet res = gt.executeQuery();
-			res.last();
-			Integer counter = res.getInt("Counter") + 1;
-			PreparedStatement su = conn.prepareStatement("UPDATE `Counters` SET Counter=? WHERE Object=?");
-			su.setInt(1, counter);
-			su.setInt(2, Counter.CityDataVersion.getValue());
-			su.executeUpdate();
-			return counter;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return -1;
-		}
+		return generateId(Counter.CityDataVersion.getValue());
 	}
 
 	public static int generateIdRoute() {
-		try {
-			PreparedStatement gt = conn.prepareStatement("SELECT Counter FROM Counters WHERE Object=? ");
-			gt.setInt(1, Counter.Route.getValue());
-			ResultSet res = gt.executeQuery();
-			res.last();
-			Integer counter = res.getInt("Counter") + 1;
-			PreparedStatement su = conn.prepareStatement("UPDATE `Counters` SET Counter=? WHERE Object=?");
-			su.setInt(1, counter);
-			su.setInt(2, Counter.Route.getValue());
-			su.executeUpdate();
-			return counter;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return -1;
-		}
+		return generateId(Counter.Route.getValue());
 	}
 
 	public static int generateIdCityPurchase() {
-		try {
-			PreparedStatement gt = conn.prepareStatement("SELECT Counter FROM Counters WHERE Object=? ");
-			gt.setInt(1, Counter.CityPurchase.getValue());
-			ResultSet res = gt.executeQuery();
-			res.last();
-			Integer counter = res.getInt("Counter") + 1;
-			PreparedStatement su = conn.prepareStatement("UPDATE `Counters` SET Counter=? WHERE Object=?");
-			su.setInt(1, counter);
-			su.setInt(2, Counter.CityPurchase.getValue());
-			su.executeUpdate();
-			return counter;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return -1;
-		}
+		return generateId(Counter.CityPurchase.getValue());
 	}
 
 	public static int generateIdCity() {
-		try {
-			PreparedStatement gt = conn.prepareStatement("SELECT Counter FROM Counters WHERE Object=?");
-			gt.setInt(1, Counter.City.getValue());
-			ResultSet res = gt.executeQuery();
-			res.last();
-			Integer counter = res.getInt("Counter") + 1;
-			PreparedStatement su = conn.prepareStatement("UPDATE `Counters` SET Counter=? WHERE Object=?");
-			su.setInt(1, counter);
-			su.setInt(2, Counter.City.getValue());
-			su.executeUpdate();
-			return counter;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return -1;
-		}
+		return generateId(Counter.City.getValue());
 	}
 
 	public static int generateIdRouteStop() {
-		try {
-			PreparedStatement gt = conn.prepareStatement("SELECT Counter FROM Counters WHERE Object=? ");
-			gt.setInt(1, Counter.RouteStop.getValue());
-			ResultSet res = gt.executeQuery();
-			res.last();
-			Integer counter = res.getInt("Counter") + 1;
-			PreparedStatement su = conn.prepareStatement("UPDATE `Counters` SET Counter=? WHERE Object=?");
-			su.setInt(1, counter);
-			su.setInt(2, Counter.RouteStop.getValue());
-			su.executeUpdate();
-			return counter;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return -1;
-		}
+		return generateId(Counter.RouteStop.getValue());
 	}
 
 	public static int generateIdMapSight() {
-		try {
-			PreparedStatement gt = conn.prepareStatement("SELECT Counter FROM Counters WHERE Object=? ");
-			gt.setInt(1, Counter.MapSight.getValue());
-			ResultSet res = gt.executeQuery();
-			res.last();
-			Integer counter = res.getInt("Counter") + 1;
-			PreparedStatement su = conn.prepareStatement("UPDATE `Counters` SET Counter=? WHERE Object=?");
-			su.setInt(1, counter);
-			su.setInt(2, Counter.MapSight.getValue());
-			su.executeUpdate();
-			return counter;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return -1;
-		}
+		return generateId(Counter.MapSight.getValue());
 	}
 
 	public static int generateIdPlaceOfInterestSight() {
-		try {
-			PreparedStatement gt = conn.prepareStatement("SELECT Counter FROM Counters WHERE Object=? ");
-			gt.setInt(1, Counter.PlaceOfInterestSight.getValue());
-			ResultSet res = gt.executeQuery();
-			res.last();
-			Integer counter = res.getInt("Counter") + 1;
-			PreparedStatement su = conn.prepareStatement("UPDATE `Counters` SET Counter=? WHERE Object=?");
-			su.setInt(1, counter);
-			su.setInt(2, Counter.PlaceOfInterestSight.getValue());
-			su.executeUpdate();
-			return counter;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return -1;
-		}
+		return generateId(Counter.PlaceOfInterestSight.getValue());
 	}
 
 	public static int generateIdRouteSight() {
-		try {
-			PreparedStatement gt = conn.prepareStatement("SELECT Counter FROM Counters WHERE Object=? ");
-			gt.setInt(1, Counter.RouteSight.getValue());
-			ResultSet res = gt.executeQuery();
-			res.last();
-			Integer counter = res.getInt("Counter") + 1;
-			PreparedStatement su = conn.prepareStatement("UPDATE `Counters` SET Counter=? WHERE Object=?");
-			su.setInt(1, counter);
-			su.setInt(2, Counter.RouteSight.getValue());
-			su.executeUpdate();
-			return counter;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return -1;
-		}
+		return generateId(Counter.RouteSight.getValue());
 	}
 
 	public static int generateIdStatistic() {
-		try {
-			PreparedStatement gt = conn.prepareStatement("SELECT Counter FROM Counters WHERE Object=? ");
-			gt.setInt(1, Counter.Statistic.getValue());
-			ResultSet res = gt.executeQuery();
-			res.last();
-			Integer counter = res.getInt("Counter") + 1;
-			PreparedStatement su = conn.prepareStatement("UPDATE `Counters` SET Counter=? WHERE Object=?");
-			su.setInt(1, counter);
-			su.setInt(2, Counter.Statistic.getValue());
-			su.executeUpdate();
-			return counter;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return -1;
-		}
+		return generateId(Counter.Statistic.getValue());
 	}
 
-	private static boolean existPlaceOfInterest(int id) {
+	private static boolean exist(String table, int id)
+	{
 		try {
-			String sql = "SELECT ID FROM " + Table.PlaceOfInterest.getValue() + " WHERE ID=?";
+			String sql = "SELECT ID FROM " + table + " WHERE ID=?";
 			PreparedStatement check = conn.prepareStatement(sql);
 			check.setInt(1, id);
 			ResultSet res = check.executeQuery();
@@ -341,244 +168,66 @@ public class Database {
 			e.printStackTrace();
 		}
 		return true;
+	}
+	
+	private static boolean existPlaceOfInterest(int id) {
+		return exist(Table.PlaceOfInterest.getValue(), id);
 	}
 
 	private static boolean existMap(int id) {
-		try {
-			String sql = "SELECT ID FROM " + Table.Map.getValue() + " WHERE ID=?";
-			PreparedStatement check = conn.prepareStatement(sql);
-			check.setInt(1, id);
-			ResultSet res = check.executeQuery();
-			// check if there is exciting row in table before insert
-			if (!res.next())
-				return false;
-			return true;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-		}
-		return true;
+		return exist(Table.Map.getValue(), id);
 	}
 
 	private static boolean existRoute(int id) {
-		try {
-			String sql = "SELECT ID FROM " + Table.Route.getValue() + " WHERE ID=?";
-			PreparedStatement check = conn.prepareStatement(sql);
-			check.setInt(1, id);
-			ResultSet res = check.executeQuery();
-			// check if there is exciting row in table before insert
-			if (!res.next())
-				return false;
-			return true;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-		}
-		return true;
+		return exist(Table.Route.getValue(), id);
 	}
 
 	private static boolean existCity(int id) {
-		try {
-			String sql = "SELECT ID FROM " + Table.City.getValue() + " WHERE ID=?";
-			PreparedStatement check = conn.prepareStatement(sql);
-			check.setInt(1, id);
-			ResultSet res = check.executeQuery();
-			// check if there is exciting row in table before insert
-			if (!res.next())
-				return false;
-			return true;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-		}
-		return true;
+		return exist(Table.City.getValue(), id);
 	}
 
 	private static boolean existCustomer(int id) {
-		try {
-			String sql = "SELECT ID FROM " + Table.Customer.getValue() + " WHERE ID=?";
-			PreparedStatement check = conn.prepareStatement(sql);
-			check.setInt(1, id);
-			ResultSet res = check.executeQuery();
-			// check if there is exciting row in table before insert
-			if (!res.next())
-				return false;
-			return true;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-		}
-		return true;
+		return exist(Table.Customer.getValue(), id);
 	}
 
 	private static boolean existEmployee(int id) {
-		try {
-			String sql = "SELECT ID FROM " + Table.Employee.getValue() + " WHERE ID=?";
-			PreparedStatement check = conn.prepareStatement(sql);
-			check.setInt(1, id);
-			ResultSet res = check.executeQuery();
-			// check if there is exciting row in table before insert
-			if (!res.next())
-				return false;
-			return true;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-		}
-		return true;
+		return exist(Table.Employee.getValue(), id);
 	}
 
 	private static boolean existLocation(int id) {
-		try {
-			String sql = "SELECT ID FROM " + Table.Location.getValue() + " WHERE ID=?";
-			PreparedStatement check = conn.prepareStatement(sql);
-			check.setInt(1, id);
-			ResultSet res = check.executeQuery();
-			// check if there is exciting row in table before insert
-			if (!res.next())
-				return false;
-			return true;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-		}
-		return true;
+		return exist(Table.Employee.getValue(), id);
 	}
 
 	private static boolean existRouteStop(int id) {
-		try {
-			String sql = "SELECT ID FROM " + Table.RouteStop.getValue() + " WHERE ID=?";
-			PreparedStatement check = conn.prepareStatement(sql);
-			check.setInt(1, id);
-			ResultSet res = check.executeQuery();
-			// check if there is exciting row in table before insert
-			if (!res.next())
-				return false;
-			return true;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-		}
-		return true;
+		return exist(Table.RouteStop.getValue(), id);
 	}
 
 	private static boolean existMapSight(int id) {
-		try {
-			String sql = "SELECT ID FROM " + Table.MapSight.getValue() + " WHERE ID=?";
-			PreparedStatement check = conn.prepareStatement(sql);
-			check.setInt(1, id);
-			ResultSet res = check.executeQuery();
-			// check if there is exciting row in table before insert
-			if (!res.next())
-				return false;
-			return true;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-		}
-		return true;
+		return exist(Table.MapSight.getValue(), id);
 	}
 
 	private static boolean existPlaceOfInterestSight(int id) {
-		try {
-			String sql = "SELECT ID FROM " + Table.PlaceOfInterestSight.getValue() + " WHERE ID=?";
-			PreparedStatement check = conn.prepareStatement(sql);
-			check.setInt(1, id);
-			ResultSet res = check.executeQuery();
-			// check if there is exciting row in table before insert
-			if (!res.next())
-				return false;
-			return true;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-		}
-		return true;
+		return exist(Table.PlaceOfInterestSight.getValue(), id);
 	}
 
 	private static boolean existRouteSight(int id) {
-		try {
-			String sql = "SELECT ID FROM " + Table.RouteSight.getValue() + " WHERE ID=?";
-			PreparedStatement check = conn.prepareStatement(sql);
-			check.setInt(1, id);
-			ResultSet res = check.executeQuery();
-			// check if there is exciting row in table before insert
-			if (!res.next())
-				return false;
-			return true;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-		}
-		return true;
+		return exist(Table.RouteSight.getValue(), id);
 	}
 
 	private static boolean existCityDataVersion(int id) {
-		try {
-			String sql = "SELECT ID FROM " + Table.CityDataVersion.getValue() + " WHERE ID=?";
-			PreparedStatement check = conn.prepareStatement(sql);
-			check.setInt(1, id);
-			ResultSet res = check.executeQuery();
-			// check if there is exciting row in table before insert
-			if (!res.next())
-				return false;
-			return true;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-		}
-		return true;
+		return exist(Table.CityDataVersion.getValue(), id);
 	}
 
 	private static boolean existSubscription(int id) {
-		try {
-			String sql = "SELECT ID FROM " + Table.Subscription.getValue() + " WHERE ID=?";
-			PreparedStatement check = conn.prepareStatement(sql);
-			check.setInt(1, id);
-			ResultSet res = check.executeQuery();
-			// check if there is exciting row in table before insert
-			if (!res.next())
-				return false;
-			return true;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-		}
-		return true;
+		return exist(Table.Subscription.getValue(), id);
 	}
 
 	private static boolean existOneTimePurchase(int id) {
-		try {
-			String sql = "SELECT ID FROM " + Table.OneTimePurchase.getValue() + " WHERE ID=?";
-			PreparedStatement check = conn.prepareStatement(sql);
-			check.setInt(1, id);
-			ResultSet res = check.executeQuery();
-			// check if there is exciting row in table before insert
-			if (!res.next())
-				return false;
-			return true;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-		}
-		return true;
+		return exist(Table.OneTimePurchase.getValue(), id);
 	}
 
 	private static boolean existStatistic(int id) {
-		try {
-			String sql = "SELECT ID FROM " + Table.Statistic.getValue() + " WHERE ID=?";
-			PreparedStatement check = conn.prepareStatement(sql);
-			check.setInt(1, id);
-			ResultSet res = check.executeQuery();
-			// check if there is exciting row in table before insert
-			if (!res.next())
-				return false;
-			return true;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-		}
-		return true;
+		return exist(Table.Statistic.getValue(), id);
 	}
 
 	public static boolean savePlaceOfInterest(PlaceOfInterest p)// return true if it's already in the database
@@ -1080,12 +729,12 @@ public class Database {
 		return false;
 	}
 
-	public static boolean deletePlaceOfInterest(int placeId) // return true if the item was deleted
+	private static boolean delete(String table, int id)
 	{
 		try {
-			String sql = "DELETE FROM " + Table.PlaceOfInterest.getValue() + " WHERE ID=?";
+			String sql = "DELETE FROM " + table + " WHERE ID=?";
 			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
+			gt.setInt(1, id);
 			int count = gt.executeUpdate();
 			return count != 0;
 		} catch (Exception e) {
@@ -1095,212 +744,91 @@ public class Database {
 		}
 	}
 
-	public static boolean deleteMap(int placeId) // return true if the item was deleted
+	public static boolean deletePlaceOfInterest(int id) // return true if the item was deleted
 	{
-		try {
-			String sql = "DELETE FROM " + Table.Map.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			int count = gt.executeUpdate();
-			return count != 0;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return false;
-		}
+		return delete(Table.PlaceOfInterest.getValue(), id);
 	}
 
-	public static boolean deleteRoute(int placeId) // return true if the item was deleted
+	public static boolean deleteMap(int id) // return true if the item was deleted
 	{
-		try {
-			String sql = "DELETE FROM " + Table.Route.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			int count = gt.executeUpdate();
-			return count != 0;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return false;
-		}
+		return delete(Table.Map.getValue(), id);
 	}
 
-	public static boolean deleteCity(int placeId) // return true if the item was deleted
+	public static boolean deleteRoute(int id) // return true if the item was deleted
 	{
-		try {
-			String sql = "DELETE FROM " + Table.City.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			int count = gt.executeUpdate();
-			return count != 0;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return false;
-		}
+		return delete(Table.Route.getValue(), id);
 	}
 
-	public static boolean deleteCustomer(int placeId) // return true if the item was deleted
+	public static boolean deleteCity(int id) // return true if the item was deleted
 	{
-		try {
-			String sql = "DELETE FROM " + Table.Customer.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			int count = gt.executeUpdate();
-			return count != 0;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return false;
-		}
+		return delete(Table.City.getValue(), id);
 	}
 
-	public static boolean deleteEmployee(int placeId) // return true if the item was deleted
+	public static boolean deleteCustomer(int id) // return true if the item was deleted
 	{
-		try {
-			String sql = "DELETE FROM " + Table.Employee.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			int count = gt.executeUpdate();
-			return count != 0;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return false;
-		}
+		return delete(Table.Customer.getValue(), id);
 	}
 
-	public static boolean _deleteLocation(int placeId) // return true if the item was deleted
+	public static boolean deleteEmployee(int id) // return true if the item was deleted
 	{
-		try {
-			String sql = "DELETE FROM " + Table.Location.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			int count = gt.executeUpdate();
-			return count != 0;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return false;
-		}
+		return delete(Table.Employee.getValue(), id);
 	}
 
-	public static boolean _deleteRouteStop(int placeId) // return true if the item was deleted
+	public static boolean _deleteLocation(int id) // return true if the item was deleted
 	{
-		try {
-			String sql = "DELETE FROM " + Table.RouteStop.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			int count = gt.executeUpdate();
-			return count != 0;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return false;
-		}
+		return delete(Table.Location.getValue(), id);
 	}
 
-	public static boolean _deleteMapSight(int placeId) // return true if the item was deleted
+	public static boolean _deleteRouteStop(int id) // return true if the item was deleted
 	{
-		try {
-			String sql = "DELETE FROM " + Table.MapSight.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			int count = gt.executeUpdate();
-			return count != 0;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return false;
-		}
+		return delete(Table.RouteStop.getValue(), id);
 	}
 
-	public static boolean _deletePlaceOfInterestSight(int placeId) // return true if the item was deleted
+	public static boolean _deleteMapSight(int id) // return true if the item was deleted
 	{
-		try {
-			String sql = "DELETE FROM " + Table.PlaceOfInterestSight.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			int count = gt.executeUpdate();
-			return count != 0;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return false;
-		}
+		return delete(Table.MapSight.getValue(), id);
 	}
 
-	public static boolean _deleteRouteSight(int placeId) // return true if the item was deleted
+	public static boolean _deletePlaceOfInterestSight(int id) // return true if the item was deleted
 	{
-		try {
-			String sql = "DELETE FROM " + Table.RouteSight.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			int count = gt.executeUpdate();
-			return count != 0;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return false;
-		}
+		return delete(Table.PlaceOfInterestSight.getValue(), id);
 	}
 
-	public static boolean _deleteCityDataVersion(int placeId) // return true if the item was deleted
+	public static boolean _deleteRouteSight(int id) // return true if the item was deleted
 	{
-		try {
-			String sql = "DELETE FROM " + Table.CityDataVersion.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			int count = gt.executeUpdate();
-			return count != 0;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return false;
-		}
+		return delete(Table.RouteSight.getValue(), id);
 	}
 
-	public static boolean _deleteSubscription(int placeId) // return true if the item was deleted
+	public static boolean _deleteCityDataVersion(int id) // return true if the item was deleted
 	{
-		try {
-			String sql = "DELETE FROM " + Table.Subscription.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			int count = gt.executeUpdate();
-			return count != 0;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return false;
-		}
+		return delete(Table.CityDataVersion.getValue(), id);
 	}
 
-	public static boolean _deleteOneTimePurchase(int placeId) // return true if the item was deleted
+	public static boolean _deleteSubscription(int id) // return true if tid)he item was deleted
 	{
-		try {
-			String sql = "DELETE FROM " + Table.OneTimePurchase.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			int count = gt.executeUpdate();
-			return count != 0;
-		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
-			return false;
-		}
+		return delete(Table.Subscription.getValue(), id);
 	}
 
-	public static boolean _deleteStatistic(int statisticId) {
+	public static boolean _deleteOneTimePurchase(int id) // return true if the item was deleted
+	{
+		return delete(Table.OneTimePurchase.getValue(), id);
+	}
+
+	public static boolean _deleteStatistic(int id) {
+		return delete(Table.Statistic.getValue(), id);
+	}
+
+	private static ArrayList<Integer> queryToList(PreparedStatement gt){
 		try {
-			String sql = "DELETE FROM " + Table.Statistic.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, statisticId);
-			int count = gt.executeUpdate();
-			return count != 0;
+			ResultSet res = gt.executeQuery();
+			ArrayList<Integer> IDs = new ArrayList<>();
+			while (res.next()) 
+				IDs.add(res.getInt("ID"));
+			return IDs;
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
-			return false;
+			return new ArrayList<>();
 		}
 	}
 
@@ -1317,25 +845,16 @@ public class Database {
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (placeName != null) {
-				gt.setString(counter, placeName);
-				counter += 1;
-			}
-			if (placeDescription != null) {
-				gt.setString(counter, placeDescription);
-				counter += 1;
-			}
-			if (cityId != null) {
-				gt.setInt(counter, cityId);
-				counter += 1;
-			}
-			ResultSet res = gt.executeQuery();
-			ArrayList<Integer> IDs = new ArrayList<>();
-			while (res.next()) {
-				int id = res.getInt("ID");
-				IDs.add(id);
-			}
-			return IDs;
+			if (placeName != null) 
+				gt.setString(counter++, placeName);
+			
+			if (placeDescription != null) 
+				gt.setString(counter++, placeDescription);
+				
+			if (cityId != null) 
+				gt.setInt(counter++, cityId);
+				
+			return queryToList(gt);
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
@@ -1357,29 +876,19 @@ public class Database {
 				sql += "imgURL=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (cityId != null) {
-				gt.setInt(counter, cityId);
-				counter += 1;
-			}
-			if (name != null) {
-				gt.setString(counter, name);
-				counter += 1;
-			}
-			if (info != null) {
-				gt.setString(counter, info);
-				counter += 1;
-			}
-			if (imgURL != null) {
-				gt.setString(counter, imgURL);
-				counter += 1;
-			}
-			ResultSet res = gt.executeQuery();
-			ArrayList<Integer> IDs = new ArrayList<>();
-			while (res.next()) {
-				int id = res.getInt("ID");
-				IDs.add(id);
-			}
-			return IDs;
+			if (cityId != null)
+				gt.setInt(counter++, cityId);
+			
+			if (name != null) 
+				gt.setString(counter++, name);
+			
+			if (info != null) 
+				gt.setString(counter++, info);
+			
+			if (imgURL != null) 
+				gt.setString(counter++, imgURL);
+			
+			return queryToList(gt);
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
@@ -1397,19 +906,14 @@ public class Database {
 				sql += "Info=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (cityId != null) {
+			if (cityId != null) 
 				gt.setInt(counter++, cityId);
-			}
-			if (info != null) {
+			
+			if (info != null) 
 				gt.setString(counter++, info);
-			}
-			ResultSet res = gt.executeQuery();
-			ArrayList<Integer> IDs = new ArrayList<>();
-			while (res.next()) {
-				int id = res.getInt("ID");
-				IDs.add(id);
-			}
-			return IDs;
+			
+			return queryToList(gt);
+
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
@@ -1428,21 +932,14 @@ public class Database {
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (cityName != null) {
-				gt.setString(counter, cityName);
-				counter += 1;
-			}
-			if (cityDescription != null) {
-				gt.setString(counter, cityDescription);
-				counter += 1;
-			}
-			ResultSet res = gt.executeQuery();
-			ArrayList<Integer> IDs = new ArrayList<>();
-			while (res.next()) {
-				int id = res.getInt("ID");
-				IDs.add(id);
-			}
-			return IDs;
+			if (cityName != null) 
+				gt.setString(counter++, cityName);
+
+			if (cityDescription != null)
+				gt.setString(counter++, cityDescription);
+				
+			return queryToList(gt);
+
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
@@ -1461,21 +958,14 @@ public class Database {
 			sql = sql.substring(0, sql.length() - 4);
 			System.out.println(sql);
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (userName != null) {
+			if (userName != null) 
 				gt.setString(counter++, userName);
-			}
-			if (password != null) {
+			
+			if (password != null) 
 				gt.setString(counter++, password);
-			}
-			ResultSet res = gt.executeQuery();
-			ArrayList<Integer> IDs = new ArrayList<>();
-			while (res.next()) {
-				int id = res.getInt("ID");
-				IDs.add(id);
-				System.out.println(res.getString("Username"));
+			
+			return queryToList(gt);
 
-			}
-			return IDs;
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
@@ -1502,21 +992,14 @@ public class Database {
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (mapId != null) {
-				gt.setInt(counter, mapId);
-				counter += 1;
-			}
-			if (placeId != null) {
-				gt.setInt(counter, placeId);
-				counter += 1;
-			}
-			ResultSet res = gt.executeQuery();
-			ArrayList<Integer> IDs = new ArrayList<>();
-			while (res.next()) {
-				int id = res.getInt("ID");
-				IDs.add(id);
-			}
-			return IDs;
+			if (mapId != null) 
+				gt.setInt(counter++, mapId);
+			
+			if (placeId != null) 
+				gt.setInt(counter++, placeId);
+			
+			return queryToList(gt);
+
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
@@ -1537,25 +1020,17 @@ public class Database {
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (routeId != null) {
-				gt.setInt(counter, routeId);
-				counter += 1;
-			}
-			if (placeId != null) {
-				gt.setInt(counter, placeId);
-				counter += 1;
-			}
-			if (numStop != null) {
-				gt.setInt(counter, numStop);
-				counter += 1;
-			}
-			ResultSet res = gt.executeQuery();
-			ArrayList<Integer> IDs = new ArrayList<>();
-			while (res.next()) {
-				int id = res.getInt("ID");
-				IDs.add(id);
-			}
-			return IDs;
+			if (routeId != null) 
+				gt.setInt(counter++, routeId);
+			
+			if (placeId != null) 
+				gt.setInt(counter++, placeId);
+		
+			if (numStop != null) 
+				gt.setInt(counter++, numStop);
+			
+			return queryToList(gt);
+
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
@@ -1574,21 +1049,14 @@ public class Database {
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (cityDataVersionId != null) {
-				gt.setInt(counter, cityDataVersionId);
-				counter += 1;
-			}
-			if (mapId != null) {
-				gt.setInt(counter, mapId);
-				counter += 1;
-			}
-			ResultSet res = gt.executeQuery();
-			ArrayList<Integer> IDs = new ArrayList<>();
-			while (res.next()) {
-				int id = res.getInt("ID");
-				IDs.add(id);
-			}
-			return IDs;
+			if (cityDataVersionId != null) 
+				gt.setInt(counter++, cityDataVersionId);
+			
+			if (mapId != null) 
+				gt.setInt(counter++, mapId);
+			
+			return queryToList(gt);
+
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
@@ -1607,21 +1075,14 @@ public class Database {
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (cityDataVersionId != null) {
-				gt.setInt(counter, cityDataVersionId);
-				counter += 1;
-			}
-			if (placeId != null) {
-				gt.setInt(counter, placeId);
-				counter += 1;
-			}
-			ResultSet res = gt.executeQuery();
-			ArrayList<Integer> IDs = new ArrayList<>();
-			while (res.next()) {
-				int id = res.getInt("ID");
-				IDs.add(id);
-			}
-			return IDs;
+			if (cityDataVersionId != null) 
+				gt.setInt(counter++, cityDataVersionId);
+			
+			if (placeId != null) 
+				gt.setInt(counter++, placeId);
+			
+			return queryToList(gt);
+
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
@@ -1642,25 +1103,17 @@ public class Database {
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (cityDataVersionId != null) {
-				gt.setInt(counter, cityDataVersionId);
-				counter += 1;
-			}
-			if (routeId != null) {
-				gt.setInt(counter, routeId);
-				counter += 1;
-			}
-			if (isFavorite != null) {
-				gt.setBoolean(counter, isFavorite);
-				counter += 1;
-			}
-			ResultSet res = gt.executeQuery();
-			ArrayList<Integer> IDs = new ArrayList<>();
-			while (res.next()) {
-				int id = res.getInt("ID");
-				IDs.add(id);
-			}
-			return IDs;
+			if (cityDataVersionId != null) 
+				gt.setInt(counter++, cityDataVersionId);
+			
+			if (routeId != null) 
+				gt.setInt(counter++, routeId);
+			
+			if (isFavorite != null) 
+				gt.setBoolean(counter++, isFavorite);
+			
+			return queryToList(gt);
+
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
@@ -1677,17 +1130,11 @@ public class Database {
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (cityId != null) {
-				gt.setInt(counter, cityId);
-				counter += 1;
-			}
-			ResultSet res = gt.executeQuery();
-			ArrayList<Integer> IDs = new ArrayList<>();
-			while (res.next()) {
-				int id = res.getInt("ID");
-				IDs.add(id);
-			}
-			return IDs;
+			if (cityId != null) 
+				gt.setInt(counter++, cityId);
+			
+			return queryToList(gt);
+
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
@@ -1712,20 +1159,17 @@ public class Database {
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (userId != null) {
+			if (userId != null) 
 				gt.setInt(counter++, userId);
-			}
-			if (cityId != null) {
+			
+			if (cityId != null) 
 				gt.setInt(counter++, cityId);
-			}
-			gt.setDate(counter, date);
-			ResultSet res = gt.executeQuery();
-			ArrayList<Integer> IDs = new ArrayList<>();
-			while (res.next()) {
-				int id = res.getInt("ID");
-				IDs.add(id);
-			}
-			return IDs;
+			
+			if (date != null) 
+				gt.setDate(counter++, date);
+			
+			return queryToList(gt);
+
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
@@ -1748,29 +1192,20 @@ public class Database {
 				sql += "WasDownloaded=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (userId != null) {
-				gt.setInt(counter, userId);
-				counter += 1;
-			}
-			if (cityId != null) {
-				gt.setInt(counter, cityId);
-				counter += 1;
-			}
-			if (purchaseDate != null) {
-				gt.setDate(counter, purchaseDate);
-				counter += 1;
-			}
-			if (wasDownload != null) {
-				gt.setBoolean(counter, wasDownload);
-				counter += 1;
-			}
-			ResultSet res = gt.executeQuery();
-			ArrayList<Integer> IDs = new ArrayList<>();
-			while (res.next()) {
-				int id = res.getInt("ID");
-				IDs.add(id);
-			}
-			return IDs;
+			if (userId != null) 
+				gt.setInt(counter++, userId);
+			
+			if (cityId != null) 
+				gt.setInt(counter++, cityId);
+			
+			if (purchaseDate != null) 
+				gt.setDate(counter++, purchaseDate);
+			
+			if (wasDownload != null) 
+				gt.setBoolean(counter++, wasDownload);
+			
+			return queryToList(gt);
+
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
@@ -1803,13 +1238,8 @@ public class Database {
 			} else if (date != null)
 				gt.setDate(counter++, date);
 
-			ResultSet res = gt.executeQuery();
-			ArrayList<Integer> IDs = new ArrayList<>();
-			while (res.next()) {
-				int id = res.getInt("ID");
-				IDs.add(id);
-			}
-			return IDs;
+			return queryToList(gt);
+
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
@@ -1817,15 +1247,28 @@ public class Database {
 		}
 	}
 
-	public static PlaceOfInterest getPlaceOfInterestById(int placeId) {
+	private static ResultSet get(String table, int id)
+	{
 		try {
-			String sql = "SELECT * FROM " + Table.PlaceOfInterest.getValue() + " WHERE ID=?";
+			String sql = "SELECT * FROM " + table + " WHERE ID=?";
 			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
+			gt.setInt(1, id);
 			ResultSet res = gt.executeQuery();
 			if (!res.next())
 				return null;
 			res.last();
+			return res;
+		} catch (Exception e) {
+			closeConnection();
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static PlaceOfInterest getPlaceOfInterestById(int id) {
+		try {
+			ResultSet res = get(Table.PlaceOfInterest.getValue(), id);
+			if(res == null) return null;
 			return PlaceOfInterest._createPlaceOfInterest(res.getInt("ID"), res.getInt("CityID"), res.getString("Name"),
 					PlaceOfInterest.PlaceType.values()[res.getInt("Type")], res.getString("Description"),
 					res.getInt("ATD") != 0);
@@ -1836,15 +1279,10 @@ public class Database {
 		}
 	}
 
-	public static Map getMapById(int placeId) {
+	public static Map getMapById(int id) {
 		try {
-			String sql = "SELECT * FROM " + Table.Map.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			ResultSet res = gt.executeQuery();
-			if (!res.next())
-				return null;
-			res.last();
+			ResultSet res = get(Table.Map.getValue(), id);
+			if(res == null) return null;
 			return Map._createMap(res.getInt("ID"), res.getInt("CityID"), res.getString("Name"), res.getString("Info"),
 					res.getString("imgURL"));
 		} catch (Exception e) {
@@ -1854,15 +1292,10 @@ public class Database {
 		}
 	}
 
-	public static Route getRouteById(int placeId) {
+	public static Route getRouteById(int id) {
 		try {
-			String sql = "SELECT * FROM " + Table.Route.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			ResultSet res = gt.executeQuery();
-			if (!res.next())
-				return null;
-			res.last();
+			ResultSet res = get(Table.Route.getValue(), id);
+			if(res == null) return null;
 			return Route._createRoute(res.getInt("ID"), res.getInt("CityID"), res.getString("Info"));
 		} catch (Exception e) {
 			closeConnection();
@@ -1871,15 +1304,10 @@ public class Database {
 		}
 	}
 
-	public static City getCityById(int placeId) {
+	public static City getCityById(int id) {
 		try {
-			String sql = "SELECT * FROM " + Table.City.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			ResultSet res = gt.executeQuery();
-			if (!res.next())
-				return null;
-			res.last();
+			ResultSet res = get(Table.City.getValue(), id);
+			if(res == null) return null;
 			return City._createCity(res.getInt("ID"), res.getString("Name"), res.getString("Description"),
 					res.getInt("VersionID") == -1 ? null : res.getInt("VersionID") );
 		} catch (Exception e) {
@@ -1889,15 +1317,10 @@ public class Database {
 		}
 	}
 
-	public static Customer getCustomerById(int placeId) {
+	public static Customer getCustomerById(int id) {
 		try {
-			String sql = "SELECT * FROM " + Table.Customer.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			ResultSet res = gt.executeQuery();
-			if (!res.next())
-				return null;
-			res.last();
+			ResultSet res = get(Table.Customer.getValue(), id);
+			if(res == null) return null;
 			return Customer._createCustomer(res.getInt("ID"), res.getString("Username"), res.getString("Password"),
 					res.getString("Email"), res.getString("FirstName"), res.getString("LastName"),
 					res.getString("PhoneNumber"));
@@ -1908,15 +1331,10 @@ public class Database {
 		}
 	}
 
-	public static Employee getEmployeeById(int placeId) {
+	public static Employee getEmployeeById(int id) {
 		try {
-			String sql = "SELECT * FROM " + Table.Employee.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			ResultSet res = gt.executeQuery();
-			if (!res.next())
-				return null;
-			res.last();
+			ResultSet res = get(Table.Employee.getValue(), id);
+			if(res == null) return null;
 			return Employee._createEmployee(res.getInt("ID"), res.getString("Username"), res.getString("Password"),
 					res.getString("Email"), res.getString("FirstName"), res.getString("LastName"),
 					res.getString("PhoneNumber"), Employee.Role.values()[res.getInt("Role")]);
@@ -1927,15 +1345,10 @@ public class Database {
 		}
 	}
 
-	public static Location _getLocationById(int placeId) {
+	public static Location _getLocationById(int id) {
 		try {
-			String sql = "SELECT * FROM " + Table.Location.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			ResultSet res = gt.executeQuery();
-			if (!res.next())
-				return null;
-			res.last();
+			ResultSet res = get(Table.Location.getValue(), id);
+			if(res == null) return null;
 			double[] coordinates = { res.getInt("x"), res.getInt("y") };
 			return Location._createLocation(res.getInt("ID"), res.getInt("MapID"), res.getInt("POIID"), coordinates);
 		} catch (Exception e) {
@@ -1945,15 +1358,10 @@ public class Database {
 		}
 	}
 
-	public static RouteStop _getRouteStopById(int placeId) {
+	public static RouteStop _getRouteStopById(int id) {
 		try {
-			String sql = "SELECT * FROM " + Table.RouteStop.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			ResultSet res = gt.executeQuery();
-			if (!res.next())
-				return null;
-			res.last();
+			ResultSet res = get(Table.PlaceOfInterest.getValue(), id);
+			if(res == null) return null;
 			return RouteStop._createRouteStop(res.getInt("ID"), res.getInt("RouteID"), res.getInt("PlaceID"),
 					res.getInt("NumStops"), res.getTime("Time"));
 		} catch (Exception e) {
@@ -1963,15 +1371,10 @@ public class Database {
 		}
 	}
 
-	public static MapSight _getMapSightById(int placeId) {
+	public static MapSight _getMapSightById(int id) {
 		try {
-			String sql = "SELECT * FROM " + Table.MapSight.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			ResultSet res = gt.executeQuery();
-			if (!res.next())
-				return null;
-			res.last();
+			ResultSet res = get(Table.MapSight.getValue(), id);
+			if(res == null) return null;
 			return MapSight._createMapSight(res.getInt("ID"), res.getInt("MapID"), res.getInt("CityDataVersionID"));
 		} catch (Exception e) {
 			closeConnection();
@@ -1980,15 +1383,10 @@ public class Database {
 		}
 	}
 
-	public static PlaceOfInterestSight _getPlaceOfInterestSightById(int placeId) {
+	public static PlaceOfInterestSight _getPlaceOfInterestSightById(int id) {
 		try {
-			String sql = "SELECT * FROM " + Table.PlaceOfInterestSight.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			ResultSet res = gt.executeQuery();
-			if (!res.next())
-				return null;
-			res.last();
+			ResultSet res = get(Table.PlaceOfInterestSight.getValue(), id);
+			if(res == null) return null;
 			return PlaceOfInterestSight._PlaceOfInterestSight(res.getInt("ID"), res.getInt("CityDataVersions"),
 					res.getInt("POIID"));
 		} catch (Exception e) {
@@ -1998,15 +1396,10 @@ public class Database {
 		}
 	}
 
-	public static RouteSight _getRouteSightById(int placeId) {
+	public static RouteSight _getRouteSightById(int id) {
 		try {
-			String sql = "SELECT * FROM " + Table.RouteSight.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			ResultSet res = gt.executeQuery();
-			if (!res.next())
-				return null;
-			res.last();
+			ResultSet res = get(Table.RouteSight.getValue(), id);
+			if(res == null) return null;
 			return RouteSight._createRouteSight(res.getInt("ID"), res.getInt("CityDataVersions"), res.getInt("RouteID"),
 					res.getBoolean("IsFavorite"));
 		} catch (Exception e) {
@@ -2016,15 +1409,9 @@ public class Database {
 		}
 	}
 
-	public static CityDataVersion _getCityDataVersionById(int placeId) {
+	public static CityDataVersion _getCityDataVersionById(int id) {
 		try {
-			String sql = "SELECT * FROM " + Table.CityDataVersion.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			ResultSet res = gt.executeQuery();
-			if (!res.next())
-				return null;
-			res.last();
+			ResultSet res = get(Table.CityDataVersion.getValue(), id);
 			return CityDataVersion._createCityDataVersion(res.getInt("ID"), res.getInt("CityID"),
 					res.getString("VersionName"), res.getDouble("PriceOneTime"), res.getDouble("PricePeriod"));
 		} catch (Exception e) {
@@ -2034,15 +1421,9 @@ public class Database {
 		}
 	}
 
-	public static Subscription _getSubscriptionById(int placeId) {
+	public static Subscription _getSubscriptionById(int id) {
 		try {
-			String sql = "SELECT * FROM " + Table.Subscription.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			ResultSet res = gt.executeQuery();
-			if (!res.next())
-				return null;
-			res.last();
+			ResultSet res = get(Table.Subscription.getValue(), id);
 			return Subscription._createSubscription(res.getInt("ID"), res.getInt("CityID"), res.getInt("UserID"),
 					res.getDate("PurchaseDate"), res.getDouble("FullPrice"), res.getDouble("PricePayed"),
 					res.getDate("ExpDate"));
@@ -2053,15 +1434,9 @@ public class Database {
 		}
 	}
 
-	public static OneTimePurchase _getOneTimePurchaseById(int placeId) {
+	public static OneTimePurchase _getOneTimePurchaseById(int id) {
 		try {
-			String sql = "SELECT * FROM " + Table.OneTimePurchase.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, placeId);
-			ResultSet res = gt.executeQuery();
-			if (!res.next())
-				return null;
-			res.last();
+			ResultSet res = get(Table.OneTimePurchase.getValue(), id);
 			return OneTimePurchase._createOneTimePurchase(res.getInt("ID"), res.getInt("CityID"), res.getInt("UserID"),
 					res.getDate("PurchaseDate"), res.getDouble("FullPrice"), res.getDouble("PricePayed"),
 					res.getBoolean("WasDownloaded"));
@@ -2072,15 +1447,9 @@ public class Database {
 		}
 	}
 
-	public static Statistic _getStatisticById(int statisticId) {
+	public static Statistic _getStatisticById(int id) {
 		try {
-			String sql = "SELECT * FROM " + Table.Statistic.getValue() + " WHERE ID=?";
-			PreparedStatement gt = conn.prepareStatement(sql);
-			gt.setInt(1, statisticId);
-			ResultSet res = gt.executeQuery();
-			if (!res.next())
-				return null;
-			res.last();
+			ResultSet res = get(Table.Statistic.getValue(), id);
 			return Statistic._createStatistic(res.getInt("ID"), res.getInt("CityID"), res.getDate("Date"),
 					res.getInt("NOTP"), res.getInt("NS"), res.getInt("NSR"), res.getInt("NV"));
 		} catch (Exception e) {
