@@ -12,7 +12,8 @@ public class Main {
 			Date today = new Date(Calendar.getInstance().getTime().getTime());
 			City c=new City("Haifa", "boring city");
 			CityDataVersion cdv=new CityDataVersion(c,"0.11",29.90,132);
-			PlaceOfInterest p=new PlaceOfInterest(c.getId(), "Haifa Universita", PlaceOfInterest.PlaceType.RESTURANT, "gaddddi", false);
+			PlaceOfInterest p=new PlaceOfInterest(c.getId(), "Haifa Universita", PlaceOfInterest.PlaceType.RESTURANT, 
+					"gaddddi", false);
 			p.saveToDatabase();
 			PlaceOfInterestSight ps=new PlaceOfInterestSight(cdv, p);
 			cdv.addPlaceOfInterestSight(ps);
@@ -33,7 +34,7 @@ public class Main {
 			cdv2=c2.getPublishedVersion();
 			System.out.println(cdv2.getPlaceOfInterestSightByPlaceOfInterestId(p.getId())==null);
 			System.out.println(cdv2.getRouteSightByRouteId(r.getId()).getCopyRoute().getCopyRouteStops().get(0).getCopyPlace().equals(p));
-			
+		
 			
 			Customer cust = Customer._createCustomer(-1,"Tal20", "11235", "a@a.com", "Tal", "Shahnov", "055");
 			Subscription sub=new Subscription(cust, c, today, 2000, 1999.99, new Date(2028,5,12));
@@ -43,6 +44,10 @@ public class Main {
 			System.out.println(Database.searchCustomer("Tal20", "11235"));
 			System.out.println(cust2.getCopyUnactiveSubscription().size());
 			Date d2=new Date(2028,5,12);
+			
+			System.out.println("Tal's tests start");
+			
+			System.out.println(Database.searchPlaceOfInterest(null, "gad", null));
 			
 			cust.deleteFromDatabase();
 			c.deleteFromDatabase();

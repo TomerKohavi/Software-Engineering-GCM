@@ -5,6 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+/**
+ * @author tal20
+ *
+ */
 public class Database {
 	static private final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 
@@ -18,21 +22,39 @@ public class Database {
 	static private final String PASS = "KOzAI33szl";
 	static Connection conn = null;
 
+	/**
+	 * @author tal20
+	 * This enum maps from integers to their entries on the counter table
+	 * 
+	 */
 	public enum Counter {
 		PlaceOfInterest(0), User(1), Map(2), Location(3), CityDataVersion(4), Route(5), CityPurchase(6), City(7),
 		RouteStop(8), MapSight(9), PlaceOfInterestSight(10), RouteSight(11), Statistic(12);
 
 		private final int value;
 
+		/**
+		 * Constructor.
+		 * @param nv: Integer that hold the value
+		 * @return: A Counter object.
+		 */
 		Counter(final int nv) {
 			value = nv;
 		}
 
+		/**
+		 * Translate to int
+		 * @return: Returns the value
+		 */
 		public int getValue() {
 			return value;
 		}
 	}
 
+	/**
+	 * @author tal20
+	 * This enum maps from full table names and local names.
+	 */
 	public enum Table {
 		PlaceOfInterest("POIs"), Map("Maps"), Route("Routes"), City("Cities"), Customer("Customers"),
 		Employee("Employees"), Location("Locations"), RouteStop("RouteStop"), MapSight("MapSights"),
@@ -41,15 +63,26 @@ public class Database {
 
 		private final String url;
 
+		/**
+		 * Constructor.
+		 * @param envUrl
+		 */
 		Table(final String envUrl) {
 			url = envUrl;
 		}
 
+		/**
+		 * @return the table name
+		 */
 		public String getValue() {
 			return url;
 		}
 	}
 
+	
+	/**
+	 * Create a new database connection.
+	 */
 	public static void createConnection() {
 		try {
 			if (conn == null) {
@@ -63,6 +96,9 @@ public class Database {
 
 	}
 
+	/**
+	 * CLose the database connection
+	 */
 	public static void closeConnection() {
 		try {
 			if (conn != null)
@@ -79,6 +115,10 @@ public class Database {
 
 	// generate ID's
 
+	/**
+	 * @param type: the table find ID
+	 * @return: the ID of this table
+	 */
 	private static int generateId(int type)
 	{
 		try {
@@ -99,59 +139,103 @@ public class Database {
 		}
 	}
 	
+	/**
+	 * @return the ID of the next user
+	 */
 	public static int generateIdUser() {
 		return generateId(Counter.User.getValue());
 	}
 
+	/**
+	 * @return the ID of the next POI
+	 */
 	public static int generateIdPlaceOfInterest() {// first example
 		return generateId(Counter.PlaceOfInterest.getValue());
 
 	}
 
+	/**
+	 * @return the ID of the next map
+	 */
 	public static int generateIdMap() {
 		return generateId(Counter.Map.getValue());
 	}
 
+	/**
+	 * @return the ID of the next location
+	 */
 	public static int generateIdLocation() {
 		return generateId(Counter.Location.getValue());
 	}
 
+	/**
+	 * @return the ID of the next city data version
+	 */
 	public static int generateIdCityDataVersion() {
 		return generateId(Counter.CityDataVersion.getValue());
 	}
 
+	/**
+	 * @return the ID of the next route
+	 */
 	public static int generateIdRoute() {
 		return generateId(Counter.Route.getValue());
 	}
 
+	/**
+	 * @return the ID of the next city purchase
+	 */
 	public static int generateIdCityPurchase() {
 		return generateId(Counter.CityPurchase.getValue());
 	}
 
+	/**
+	 * @return the ID of the next city
+	 */
 	public static int generateIdCity() {
 		return generateId(Counter.City.getValue());
 	}
 
+	/**
+	 * @return the ID of the next route stop
+	 */
 	public static int generateIdRouteStop() {
 		return generateId(Counter.RouteStop.getValue());
 	}
 
+	/**
+	 * @return the ID of the next map sight
+	 */
 	public static int generateIdMapSight() {
 		return generateId(Counter.MapSight.getValue());
 	}
 
+	/**
+	 * @return the ID of the next POI sight
+	 */
 	public static int generateIdPlaceOfInterestSight() {
 		return generateId(Counter.PlaceOfInterestSight.getValue());
 	}
 
+	/**
+	 * @return the ID of the next route sight
+	 */
 	public static int generateIdRouteSight() {
 		return generateId(Counter.RouteSight.getValue());
 	}
 
+	/**
+	 * @return the ID of the next statistic
+	 */
 	public static int generateIdStatistic() {
 		return generateId(Counter.Statistic.getValue());
 	}
 
+	/**
+	 * @param table: the table to search in
+	 * @param id: the id to search
+	 * @return: true if exists, false else.
+	 */
 	private static boolean exist(String table, int id)
 	{
 		try {
@@ -170,67 +254,147 @@ public class Database {
 		return true;
 	}
 	
+	/**
+	 * checks if there is an entry on the table with this ID.
+	 * @param id: id to search for
+	 * @return: whether there is a POI with this ID.
+	 */
 	private static boolean existPlaceOfInterest(int id) {
 		return exist(Table.PlaceOfInterest.getValue(), id);
 	}
 
+	/**
+	 * checks if there is an entry on the table with this ID.
+	 * @param id: id to search for
+	 * @return: whether there is a map with this ID.
+	 */
 	private static boolean existMap(int id) {
 		return exist(Table.Map.getValue(), id);
 	}
 
+	/**
+	 * checks if there is an entry on the table with this ID.
+	 * @param id: id to search for
+	 * @return: whether there is a route with this ID.
+	 */
 	private static boolean existRoute(int id) {
 		return exist(Table.Route.getValue(), id);
 	}
 
+	/**
+	 * checks if there is an entry on the table with this ID.
+	 * @param id: id to search for
+	 * @return: whether there is a city with this ID.
+	 */
 	private static boolean existCity(int id) {
 		return exist(Table.City.getValue(), id);
 	}
 
+	/**
+	 * checks if there is an entry on the table with this ID.
+	 * @param id: id to search for
+	 * @return: whether there is a customer with this ID.
+	 */
 	private static boolean existCustomer(int id) {
 		return exist(Table.Customer.getValue(), id);
 	}
 
+	/**
+	 * checks if there is an entry on the table with this ID.
+	 * @param id: id to search for
+	 * @return: whether there is a employee with this ID.
+	 */
 	private static boolean existEmployee(int id) {
 		return exist(Table.Employee.getValue(), id);
 	}
 
+	/**
+	 * checks if there is an entry on the table with this ID.
+	 * @param id: id to search for
+	 * @return: whether there is a location with this ID.
+	 */
 	private static boolean existLocation(int id) {
 		return exist(Table.Employee.getValue(), id);
 	}
 
+	/**
+	 * checks if there is an entry on the table with this ID.
+	 * @param id: id to search for
+	 * @return: whether there is a route stop with this ID.
+	 */
 	private static boolean existRouteStop(int id) {
 		return exist(Table.RouteStop.getValue(), id);
 	}
 
+	/**
+	 * checks if there is an entry on the table with this ID.
+	 * @param id: id to search for
+	 * @return: whether there is a map sight with this ID.
+	 */
 	private static boolean existMapSight(int id) {
 		return exist(Table.MapSight.getValue(), id);
 	}
 
+	/**
+	 * checks if there is an entry on the table with this ID.
+	 * @param id: id to search for
+	 * @return: whether there is a POI sight with this ID.
+	 */
 	private static boolean existPlaceOfInterestSight(int id) {
 		return exist(Table.PlaceOfInterestSight.getValue(), id);
 	}
 
+	/**
+	 * checks if there is an entry on the table with this ID.
+	 * @param id: id to search for
+	 * @return: whether there is a route sight with this ID.
+	 */
 	private static boolean existRouteSight(int id) {
 		return exist(Table.RouteSight.getValue(), id);
 	}
 
+	/**
+	 * checks if there is an entry on the table with this ID.
+	 * @param id: id to search for
+	 * @return: whether there is a city data version with this ID.
+	 */
 	private static boolean existCityDataVersion(int id) {
 		return exist(Table.CityDataVersion.getValue(), id);
 	}
 
+	/**
+	 * checks if there is an entry on the table with this ID.
+	 * @param id: id to search for
+	 * @return: whether there is a subscription with this ID.
+	 */
 	private static boolean existSubscription(int id) {
 		return exist(Table.Subscription.getValue(), id);
 	}
 
+	/**
+	 * checks if there is an entry on the table with this ID.
+	 * @param id: id to search for
+	 * @return: whether there is a one time purchase with this ID.
+	 */
 	private static boolean existOneTimePurchase(int id) {
 		return exist(Table.OneTimePurchase.getValue(), id);
 	}
 
+	/**
+	 * checks if there is an entry on the table with this ID.
+	 * @param id: id to search for
+	 * @return: whether there is a statistic with this ID.
+	 */
 	private static boolean existStatistic(int id) {
 		return exist(Table.Statistic.getValue(), id);
 	}
 
-	public static boolean savePlaceOfInterest(PlaceOfInterest p)// return true if it's already in the database
+	/**
+	 * saves a new instance to the database.
+	 * @param p
+	 * @return true if an updated was made. false for new element.
+	 */
+	public static boolean savePlaceOfInterest(PlaceOfInterest p)
 	{
 		try {
 			if (existPlaceOfInterest(p.getId())) {
@@ -265,6 +429,11 @@ public class Database {
 		return false;
 	}
 
+	/**
+	 * saves a new instance to the database.
+	 * @param p
+	 * @return true if an updated was made. false for new element.
+	 */
 	public static boolean saveMap(Map p) {
 		try {
 			if (existMap(p.getId())) {
@@ -296,6 +465,11 @@ public class Database {
 		return false;
 	}
 
+	/**
+	 * saves a new instance to the database.
+	 * @param p
+	 * @return true if an updated was made. false for new element.
+	 */
 	public static boolean saveRoute(Route p) {
 		try {
 			if (existRoute(p.getId())) {
@@ -325,6 +499,11 @@ public class Database {
 		return false;
 	}
 
+	/**
+	 * saves a new instance to the database.
+	 * @param p
+	 * @return true if an updated was made. false for new element.
+	 */
 	public static boolean saveCity(City p) {
 		try {
 			if (existCity(p.getId())) {
@@ -354,6 +533,11 @@ public class Database {
 		return false;
 	}
 
+	/**
+	 * saves a new instance to the database.
+	 * @param p
+	 * @return true if an updated was made. false for new element.
+	 */
 	public static boolean saveCustomer(Customer p) {
 		try {
 			if (existCustomer(p.getId())) {
@@ -398,6 +582,11 @@ public class Database {
 		return false;
 	}
 
+	/**
+	 * saves a new instance to the database.
+	 * @param p
+	 * @return true if an updated was made. false for new element.
+	 */
 	public static boolean saveEmployee(Employee p) {
 		try {
 			if (existEmployee(p.getId())) {
@@ -433,6 +622,11 @@ public class Database {
 		return false;
 	}
 
+	/**
+	 * saves a new instance to the database.
+	 * @param p
+	 * @return true if an updated was made. false for new element.
+	 */
 	public static boolean _saveLocation(Location p) // friend to Map
 	{
 		try {
@@ -465,6 +659,11 @@ public class Database {
 		return false;
 	}
 
+	/**
+	 * saves a new instance to the database.
+	 * @param p
+	 * @return true if an updated was made. false for new element.
+	 */
 	public static boolean _saveRouteStop(RouteStop p)// friend to Route
 	{
 		try {
@@ -498,6 +697,11 @@ public class Database {
 		return false;
 	}
 
+	/**
+	 * saves a new instance to the database.
+	 * @param p
+	 * @return true if an updated was made. false for new element.
+	 */
 	public static boolean _saveMapSight(MapSight p) // friend to MapSight
 	{
 		try {
@@ -526,6 +730,11 @@ public class Database {
 		return false;
 	}
 
+	/**
+	 * saves a new instance to the database.
+	 * @param p
+	 * @return true if an updated was made. false for new element.
+	 */
 	public static boolean _savePlaceOfInterestSight(PlaceOfInterestSight p)// friend to CityDataVersion
 	{
 		try {
@@ -555,6 +764,11 @@ public class Database {
 		return false;
 	}
 
+	/**
+	 * saves a new instance to the database.
+	 * @param p
+	 * @return true if an updated was made. false for new element.
+	 */
 	public static boolean _saveRouteSight(RouteSight p)// friend to CityDataVersion
 	{
 		try {
@@ -586,6 +800,11 @@ public class Database {
 		return false;
 	}
 
+	/**
+	 * saves a new instance to the database.
+	 * @param p
+	 * @return true if an updated was made. false for new element.
+	 */
 	public static boolean _saveCityDataVersion(CityDataVersion p)// friend to City
 	{
 		try {
@@ -619,6 +838,11 @@ public class Database {
 		return false;
 	}
 
+	/**
+	 * saves a new instance to the database.
+	 * @param p
+	 * @return true if an updated was made. false for new element.
+	 */
 	public static boolean _saveSubscription(Subscription p) // friend to Customer
 	{
 		try {
@@ -656,6 +880,11 @@ public class Database {
 		return false;
 	}
 
+	/**
+	 * saves a new instance to the database.
+	 * @param p
+	 * @return true if an updated was made. false for new element.
+	 */
 	public static boolean _saveOneTimePurchase(OneTimePurchase p) // friend to Customer
 	{
 		try {
@@ -693,6 +922,11 @@ public class Database {
 		return false;
 	}
 
+	/**
+	 * saves a new instance to the database.
+	 * @param p
+	 * @return true if an updated was made. false for new element.
+	 */
 	public static boolean _saveStatistic(Statistic p) {
 		try {
 			if (existStatistic(p.getId())) {
@@ -729,6 +963,11 @@ public class Database {
 		return false;
 	}
 
+	/**
+	 * @param table: the table to search in
+	 * @param id: the id to delete
+	 * @return: true if deleted, false else.
+	 */
 	private static boolean delete(String table, int id)
 	{
 		try {
@@ -744,80 +983,144 @@ public class Database {
 		}
 	}
 
-	public static boolean deletePlaceOfInterest(int id) // return true if the item was deleted
+	/**
+	 * @param id the id to delete
+	 * @return true if deleted, false else.
+	 */
+	public static boolean deletePlaceOfInterest(int id) 
 	{
 		return delete(Table.PlaceOfInterest.getValue(), id);
 	}
 
-	public static boolean deleteMap(int id) // return true if the item was deleted
+	/**
+	 * @param id the id to delete
+	 * @return true if deleted, false else.
+	 */
+	public static boolean deleteMap(int id) 
 	{
 		return delete(Table.Map.getValue(), id);
 	}
 
-	public static boolean deleteRoute(int id) // return true if the item was deleted
+	/**
+	 * @param id the id to delete
+	 * @return true if deleted, false else.
+	 */
+	public static boolean deleteRoute(int id) 
 	{
 		return delete(Table.Route.getValue(), id);
 	}
 
-	public static boolean deleteCity(int id) // return true if the item was deleted
+	/**
+	 * @param id the id to delete
+	 * @return true if deleted, false else.
+	 */
+	public static boolean deleteCity(int id) 
 	{
 		return delete(Table.City.getValue(), id);
 	}
 
-	public static boolean deleteCustomer(int id) // return true if the item was deleted
+	/**
+	 * @param id the id to delete
+	 * @return true if deleted, false else.
+	 */
+	public static boolean deleteCustomer(int id) 
 	{
 		return delete(Table.Customer.getValue(), id);
 	}
 
-	public static boolean deleteEmployee(int id) // return true if the item was deleted
+	/**
+	 * @param id the id to delete
+	 * @return true if deleted, false else.
+	 */
+	public static boolean deleteEmployee(int id) 
 	{
 		return delete(Table.Employee.getValue(), id);
 	}
 
-	public static boolean _deleteLocation(int id) // return true if the item was deleted
+	/**
+	 * @param id the id to delete
+	 * @return true if deleted, false else.
+	 */
+	public static boolean _deleteLocation(int id) 
 	{
 		return delete(Table.Location.getValue(), id);
 	}
 
-	public static boolean _deleteRouteStop(int id) // return true if the item was deleted
+	/**
+	 * @param id the id to delete
+	 * @return true if deleted, false else.
+	 */
+	public static boolean _deleteRouteStop(int id) 
 	{
 		return delete(Table.RouteStop.getValue(), id);
 	}
 
-	public static boolean _deleteMapSight(int id) // return true if the item was deleted
+	/**
+	 * @param id the id to delete
+	 * @return true if deleted, false else.
+	 */
+	public static boolean _deleteMapSight(int id) 
 	{
 		return delete(Table.MapSight.getValue(), id);
 	}
 
-	public static boolean _deletePlaceOfInterestSight(int id) // return true if the item was deleted
+	/**
+	 * @param id the id to delete
+	 * @return true if deleted, false else.
+	 */
+	public static boolean _deletePlaceOfInterestSight(int id) 
 	{
 		return delete(Table.PlaceOfInterestSight.getValue(), id);
 	}
 
-	public static boolean _deleteRouteSight(int id) // return true if the item was deleted
+	/**
+	 * @param id the id to delete
+	 * @return true if deleted, false else.
+	 */
+	public static boolean _deleteRouteSight(int id) 
 	{
 		return delete(Table.RouteSight.getValue(), id);
 	}
 
-	public static boolean _deleteCityDataVersion(int id) // return true if the item was deleted
+	/**
+	 * @param id the id to delete
+	 * @return true if deleted, false else.
+	 */
+	public static boolean _deleteCityDataVersion(int id) 
 	{
 		return delete(Table.CityDataVersion.getValue(), id);
 	}
 
-	public static boolean _deleteSubscription(int id) // return true if tid)he item was deleted
+	/**
+	 * @param id the id to delete
+	 * @return true if deleted, false else.
+	 */
+	public static boolean _deleteSubscription(int id) 
 	{
 		return delete(Table.Subscription.getValue(), id);
 	}
 
-	public static boolean _deleteOneTimePurchase(int id) // return true if the item was deleted
+	/**
+	 * @param id the id to delete
+	 * @return true if deleted, false else.
+	 */
+	public static boolean _deleteOneTimePurchase(int id) 
 	{
 		return delete(Table.OneTimePurchase.getValue(), id);
 	}
 
+	/**
+	 * @param id the id to delete
+	 * @return true if deleted, false else.
+	 */
 	public static boolean _deleteStatistic(int id) {
 		return delete(Table.Statistic.getValue(), id);
 	}
 
+	/**
+	 * @param gt: A finished SQL query to run.
+	 * @return: returns the list of the results.
+	 */
 	private static ArrayList<Integer> queryToList(PreparedStatement gt){
 		try {
 			ResultSet res = gt.executeQuery();
@@ -832,6 +1135,13 @@ public class Database {
 		}
 	}
 
+	/**
+	 * search function. if a parameter is null, we ignore it.
+	 * @param placeName
+	 * @param placeDescription
+	 * @param cityId
+	 * @return: the result list.
+	 */
 	public static ArrayList<Integer> searchPlaceOfInterest(String placeName, String placeDescription, Integer cityId) {
 		try {
 			int counter = 1;
@@ -839,7 +1149,7 @@ public class Database {
 			if (placeName != null)
 				sql += "Name=? AND ";
 			if (placeDescription != null)
-				sql += "Description=? AND ";
+				sql += "(Description LIKE ?) AND ";
 			if (cityId != null)
 				sql += "CityID=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
@@ -849,7 +1159,7 @@ public class Database {
 				gt.setString(counter++, placeName);
 			
 			if (placeDescription != null) 
-				gt.setString(counter++, placeDescription);
+				gt.setString(counter++, "%"+placeDescription+"%");
 				
 			if (cityId != null) 
 				gt.setInt(counter++, cityId);
@@ -862,6 +1172,14 @@ public class Database {
 		}
 	}
 
+	/**
+	 * search function. if a parameter is null, we ignore it.
+	 * @param cityId
+	 * @param name
+	 * @param info
+	 * @param imgURL
+	 * @return: the result list.
+	 */
 	public static ArrayList<Integer> searchMap(Integer cityId, String name, String info, String imgURL) {
 		try {
 			int counter = 1;
@@ -896,6 +1214,12 @@ public class Database {
 		}
 	}
 
+	/**
+	 * search function. if a parameter is null, we ignore it.
+	 * @param cityId
+	 * @param info
+	 * @return: the result list.
+	 */
 	public static ArrayList<Integer> searchRoute(Integer cityId, String info) {
 		try {
 			int counter = 1;
@@ -921,6 +1245,12 @@ public class Database {
 		}
 	}
 
+	/**
+	 * search function. if a parameter is null, we ignore it.
+	 * @param cityName
+	 * @param cityDescription
+	 * @return: the result list.
+	 */
 	public static ArrayList<Integer> searchCity(String cityName, String cityDescription) {
 		try {
 			int counter = 1;
@@ -947,6 +1277,13 @@ public class Database {
 		}
 	}
 
+	/**
+	 * search function. if a parameter is null, we ignore it.
+	 * @param userName
+	 * @param password
+	 * @param table: user type
+	 * @return: the result list.
+	 */
 	private static ArrayList<Integer> searchUser(String userName, String password, String table) {
 		try {
 			int counter = 1;
@@ -956,7 +1293,7 @@ public class Database {
 			if (password != null)
 				sql += "Password=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			System.out.println(sql);
+
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (userName != null) 
 				gt.setString(counter++, userName);
@@ -973,14 +1310,32 @@ public class Database {
 		}
 	}
 
+	/**
+	 * search function. if a parameter is null, we ignore it.
+	 * @param userName
+	 * @param password
+	 * @return: the result list.
+	 */
 	public static ArrayList<Integer> searchCustomer(String userName, String password) {
 		return searchUser(userName, password, Table.Customer.getValue());
 	}
 
+	/**
+	 * search function. if a parameter is null, we ignore it.
+	 * @param userName
+	 * @param password
+	 * @return: the result list.
+	 */
 	public static ArrayList<Integer> searchEmployee(String userName, String password) {
 		return searchUser(userName, password, Table.Employee.getValue());
 	}
 
+	/**
+	 * search function. if a parameter is null, we ignore it.
+	 * @param mapId
+	 * @param placeId
+	 * @return: the result list.
+	 */
 	public static ArrayList<Integer> searchLocation(Integer mapId, Integer placeId) {
 		try {
 			int counter = 1;
@@ -1007,6 +1362,13 @@ public class Database {
 		}
 	}
 
+	/**
+	 * search function. if a parameter is null, we ignore it.
+	 * @param routeId
+	 * @param placeId
+	 * @param numStop
+	 * @return: the result list.
+	 */
 	public static ArrayList<Integer> searchRouteStop(Integer routeId, Integer placeId, Integer numStop) {
 		try {
 			int counter = 1;
@@ -1038,6 +1400,12 @@ public class Database {
 		}
 	}
 
+	/**
+	 * search function. if a parameter is null, we ignore it.
+	 * @param cityDataVersionId
+	 * @param mapId
+	 * @return: the result list.
+	 */
 	public static ArrayList<Integer> searchMapSight(Integer cityDataVersionId, Integer mapId) {
 		try {
 			int counter = 1;
@@ -1064,6 +1432,12 @@ public class Database {
 		}
 	}
 
+	/**
+	 * search function. if a parameter is null, we ignore it.
+	 * @param cityDataVersionId
+	 * @param placeId
+	 * @return: the result list.
+	 */
 	public static ArrayList<Integer> searchPlaceOfInterestSight(Integer cityDataVersionId, Integer placeId) {
 		try {
 			int counter = 1;
@@ -1090,6 +1464,13 @@ public class Database {
 		}
 	}
 
+	/**
+	 * search function. if a parameter is null, we ignore it.
+	 * @param cityDataVersionId
+	 * @param routeId
+	 * @param isFavorite
+	 * @return: the result list.
+	 */
 	public static ArrayList<Integer> searchRouteSight(Integer cityDataVersionId, Integer routeId, Boolean isFavorite) {
 		try {
 			int counter = 1;
@@ -1121,6 +1502,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * search function. if a parameter is null, we ignore it.
+	 * @param cityId
+	 * @return: the result list.
+	 */
 	public static ArrayList<Integer> searchCityDataVersion(Integer cityId) {
 		try {
 			int counter = 1;
@@ -1142,6 +1528,14 @@ public class Database {
 		}
 	}
 
+	/**
+	 * search function. if a parameter is null, we ignore it.
+	 * @param userId
+	 * @param cityId
+	 * @param date
+	 * @param active
+	 * @return: the result list.
+	 */
 	public static ArrayList<Integer> searchSubscription(Integer userId, Integer cityId, Date date,
 			Boolean active) // fix this - RON
 	{
@@ -1177,6 +1571,14 @@ public class Database {
 		}
 	}
 
+	/**
+	 * search function. if a parameter is null, we ignore it.
+	 * @param userId
+	 * @param cityId
+	 * @param purchaseDate
+	 * @param wasDownload
+	 * @return: the result list.
+	 */
 	public static ArrayList<Integer> searchOneTimePurchase(Integer userId, Integer cityId, Date purchaseDate,
 			Boolean wasDownload) {
 		try {
@@ -1213,6 +1615,15 @@ public class Database {
 		}
 	}
 
+	/**
+	 * search function. if a parameter is null, we ignore it.
+	 * @param cityId
+	 * @param date
+	 * @param dateFrom
+	 * @param dateEnd
+	 * @return: the result list.
+
+	 */
 	public static ArrayList<Integer> searchStatistic(Integer cityId, Date date, Date dateFrom, Date dateEnd) {
 		try {
 			int counter = 1;
@@ -1247,6 +1658,12 @@ public class Database {
 		}
 	}
 
+	/**
+	 * returns the row with id=id on table.
+	 * @param table: where to look
+	 * @param id: target ID
+	 * @return: last element from resultset
+	 */
 	private static ResultSet get(String table, int id)
 	{
 		try {
@@ -1265,6 +1682,11 @@ public class Database {
 		}
 	}
 	
+	/**
+	 * builds an object from the entry with this id.
+	 * @param id
+	 * @return: the new object
+	 */
 	public static PlaceOfInterest getPlaceOfInterestById(int id) {
 		try {
 			ResultSet res = get(Table.PlaceOfInterest.getValue(), id);
@@ -1279,6 +1701,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * builds an object from the entry with this id.
+	 * @param id
+	 * @return: the new object
+	 */
 	public static Map getMapById(int id) {
 		try {
 			ResultSet res = get(Table.Map.getValue(), id);
@@ -1292,6 +1719,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * builds an object from the entry with this id.
+	 * @param id
+	 * @return: the new object
+	 */
 	public static Route getRouteById(int id) {
 		try {
 			ResultSet res = get(Table.Route.getValue(), id);
@@ -1304,6 +1736,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * builds an object from the entry with this id.
+	 * @param id
+	 * @return: the new object
+	 */
 	public static City getCityById(int id) {
 		try {
 			ResultSet res = get(Table.City.getValue(), id);
@@ -1317,6 +1754,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * builds an object from the entry with this id.
+	 * @param id
+	 * @return: the new object
+	 */
 	public static Customer getCustomerById(int id) {
 		try {
 			ResultSet res = get(Table.Customer.getValue(), id);
@@ -1331,6 +1773,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * builds an object from the entry with this id.
+	 * @param id
+	 * @return: the new object
+	 */
 	public static Employee getEmployeeById(int id) {
 		try {
 			ResultSet res = get(Table.Employee.getValue(), id);
@@ -1345,6 +1792,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * builds an object from the entry with this id.
+	 * @param id
+	 * @return: the new object
+	 */
 	public static Location _getLocationById(int id) {
 		try {
 			ResultSet res = get(Table.Location.getValue(), id);
@@ -1358,6 +1810,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * builds an object from the entry with this id.
+	 * @param id
+	 * @return: the new object
+	 */
 	public static RouteStop _getRouteStopById(int id) {
 		try {
 			ResultSet res = get(Table.PlaceOfInterest.getValue(), id);
@@ -1371,6 +1828,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * builds an object from the entry with this id.
+	 * @param id
+	 * @return: the new object
+	 */
 	public static MapSight _getMapSightById(int id) {
 		try {
 			ResultSet res = get(Table.MapSight.getValue(), id);
@@ -1383,6 +1845,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * builds an object from the entry with this id.
+	 * @param id
+	 * @return: the new object
+	 */
 	public static PlaceOfInterestSight _getPlaceOfInterestSightById(int id) {
 		try {
 			ResultSet res = get(Table.PlaceOfInterestSight.getValue(), id);
@@ -1396,6 +1863,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * builds an object from the entry with this id.
+	 * @param id
+	 * @return: the new object
+	 */
 	public static RouteSight _getRouteSightById(int id) {
 		try {
 			ResultSet res = get(Table.RouteSight.getValue(), id);
@@ -1409,6 +1881,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * builds an object from the entry with this id.
+	 * @param id
+	 * @return: the new object
+	 */
 	public static CityDataVersion _getCityDataVersionById(int id) {
 		try {
 			ResultSet res = get(Table.CityDataVersion.getValue(), id);
@@ -1421,6 +1898,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * builds an object from the entry with this id.
+	 * @param id
+	 * @return: the new object
+	 */
 	public static Subscription _getSubscriptionById(int id) {
 		try {
 			ResultSet res = get(Table.Subscription.getValue(), id);
@@ -1434,6 +1916,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * builds an object from the entry with this id.
+	 * @param id
+	 * @return: the new object
+	 */
 	public static OneTimePurchase _getOneTimePurchaseById(int id) {
 		try {
 			ResultSet res = get(Table.OneTimePurchase.getValue(), id);
@@ -1447,6 +1934,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * builds an object from the entry with this id.
+	 * @param id
+	 * @return: the new object
+	 */
 	public static Statistic _getStatisticById(int id) {
 		try {
 			ResultSet res = get(Table.Statistic.getValue(), id);
@@ -1459,9 +1951,12 @@ public class Database {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#finalize()
+	 * clean the connection when finished.
+	 */
 	@Override
 	protected void finalize() throws Throwable {
-		System.out.println("lior is king");
 		closeConnection();
 	}
 }
