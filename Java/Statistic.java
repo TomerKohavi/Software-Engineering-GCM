@@ -8,9 +8,10 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 	int numSubscriptions;
 	int numSubscriptionsRenewal;
 	int numVisited;
+	int numSubDownloads;
 
 	private Statistic(int id, int cityId, Date date, int numOneTimePurchases, int numSubscriptions,
-			int numSubscriptionsRenewal, int numVisited) {
+			int numSubscriptionsRenewal, int numVisited,int numSubDownloads) {
 		this.id = id;
 		this.cityId = cityId;
 		this.date = date;
@@ -18,12 +19,13 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 		this.numSubscriptions = numSubscriptions;
 		this.numSubscriptionsRenewal = numSubscriptionsRenewal;
 		this.numVisited = numVisited;
+		this.numSubDownloads=numSubDownloads;
 	}
 
 	public static Statistic _createStatistic(int id, int cityId, Date date, int numOneTimePurchases,
-			int numSubscriptions, int numSubscriptionsRenewal, int numVisited) { // friend to Database
+			int numSubscriptions, int numSubscriptionsRenewal, int numVisited,int numSubDownloads) { // friend to Database
 		return new Statistic(id, cityId, date, numOneTimePurchases, numSubscriptions, numSubscriptionsRenewal,
-				numVisited);
+				numVisited,numSubDownloads);
 	}
 
 	public Statistic(int cityId, Date date) {
@@ -34,10 +36,11 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 		this.numSubscriptions = 0;
 		this.numSubscriptionsRenewal = 0;
 		this.numVisited = 0;
+		this.numSubDownloads=0;
 	}
 
 	static Statistic createBlankStatistic() {
-		return new Statistic(-1, -1, null, 0, 0, 0, 0);
+		return new Statistic(-1, -1, null, 0, 0, 0, 0,0);
 	}
 
 	static Statistic addStatistics(Statistic s1, Statistic s2) {
@@ -82,6 +85,10 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 		this.numSubscriptionsRenewal += 1;
 	}
 
+	public void addSubDownload() {
+		this.numSubDownloads += 1;
+	}
+
 	public void setNumOneTimePurchases(int numOneTimePurchases) {
 		this.numOneTimePurchases = numOneTimePurchases;
 	}
@@ -120,6 +127,10 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 
 	public int getNumSubscriptionsRenewal() {
 		return numSubscriptionsRenewal;
+	}
+
+	public int getNumSubDownloads() {
+		return numSubDownloads;
 	}
 
 	@Override

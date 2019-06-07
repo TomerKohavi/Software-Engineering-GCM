@@ -2,8 +2,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.Calendar;
 
-import javafx.scene.chart.PieChart.Data;
-
 public class Main {
 	public static void main(String [] args)
 	{
@@ -12,7 +10,7 @@ public class Main {
 			Date today = new Date(Calendar.getInstance().getTime().getTime());
 			City c=new City("Haifa", "boring city");
 			CityDataVersion cdv=new CityDataVersion(c,"0.11",29.90,132);
-			PlaceOfInterest p=new PlaceOfInterest(c.getId(), "Haifa Universita", PlaceOfInterest.PlaceType.RESTURANT, 
+			PlaceOfInterest p=new PlaceOfInterest(c.getId(), "Haifa Universita", PlaceOfInterest.PlaceType.RESTAURANT,
 					"gaddddi", false);
 			p.saveToDatabase();
 			PlaceOfInterestSight ps=new PlaceOfInterestSight(cdv, p);

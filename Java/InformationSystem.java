@@ -45,7 +45,7 @@ public final class InformationSystem
         if(s == null)
             s = new Statistic(cityId,d);
         s.addOneTimePurchase();
-        Database._saveStatistic(s);
+        s.saveToDatabase();
     }
 
     public void addVisit(int cityId){
@@ -57,7 +57,7 @@ public final class InformationSystem
         if(s == null)
             s = new Statistic(cityId,d);
         s.addVisit();
-        Database._saveStatistic(s);
+        s.saveToDatabase();
     }
 
     public void addSubscription(int cityId) {
@@ -69,7 +69,7 @@ public final class InformationSystem
         if(s==null)
             s=new Statistic(cityId,d);
         s.addSubscription();
-        Database._saveStatistic(s);
+        s.saveToDatabase();
     }
 
     public void addSubscriptionRenewal(int cityId) {
@@ -81,8 +81,21 @@ public final class InformationSystem
         if(s==null)
             s=new Statistic(cityId,d);
         s.addSubscriptionRenewal();
-        Database._saveStatistic(s);
+        s.saveToDatabase();
     }
+
+    public void addSubDownload(int cityId) {
+        addSubDownload(cityId,new Date(Calendar.getInstance().getTime().getTime()));
+    }
+
+    public void addSubDownload(int cityId,Date d) {
+        Statistic s=getStatistic(cityId,d);
+        if(s==null)
+            s=new Statistic(cityId,d);
+        s.addSubDownload();
+        s.saveToDatabase();
+    }
+    
 
     public ArrayList<Statistic> getAllStatistics() {
         ArrayList<Integer> ids= Database.searchMapSight(null,null);
