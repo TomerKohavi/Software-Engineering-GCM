@@ -3,6 +3,7 @@ import java.sql.Time;
 import java.util.Calendar;
 
 public class Main {
+
 	public static void main(String [] args)
 	{
 		Database.createConnection();
@@ -10,8 +11,10 @@ public class Main {
 			Date today = new Date(Calendar.getInstance().getTime().getTime());
 			City c=new City("Haifa", "boring city");
 			CityDataVersion cdv=new CityDataVersion(c,"0.11",29.90,132);
+			
 			PlaceOfInterest p=new PlaceOfInterest(c.getId(), "Haifa Universita", PlaceOfInterest.PlaceType.RESTAURANT,
-					"gaddddi", false);
+					"Gadi is the king", false);
+
 			p.saveToDatabase();
 			PlaceOfInterestSight ps=new PlaceOfInterestSight(cdv, p);
 			cdv.addPlaceOfInterestSight(ps);
@@ -45,13 +48,15 @@ public class Main {
 			
 			System.out.println("Tal's tests start");
 			
-			System.out.println(Database.searchPlaceOfInterest(null, "gad", null));
+			System.out.println(Database.searchPlaceOfInterest(null, "gAd king", null));
 			
 			cust.deleteFromDatabase();
 			c.deleteFromDatabase();
 			p.deleteFromDatabase();
 			rs.deleteFromDatabase();
 			cdv2.deleteFromDatabase();
+			
+			Database.resetAll("Tal", "11235813");
 			
 			System.out.println("Ss");
 

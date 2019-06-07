@@ -1,11 +1,14 @@
 package classes;
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.security.MessageDigest;
+
+
+import javax.xml.bind.DatatypeConverter;
 
 /**
  * @author tal20
@@ -113,6 +116,39 @@ public class Database {
 			e.printStackTrace();
 		}
 		return;
+	}
+
+	/**
+	 * Reset the entire database. Delete all inputs, set counters to 0.
+	 * Only Tal and Lior should use this method.
+	 */
+	public static void resetAll(String name, String pass) {
+		try {
+			String sql = "SELECT Name FROM Team WHERE Name=? AND Password=?";
+			PreparedStatement check = conn.prepareStatement(sql);
+			check.setString(1, name);
+			check.setString(2, pass);
+			ResultSet res = check.executeQuery();
+			// check if there is exciting row in table before insert
+			if (!res.next())
+				return;
+			for (Table table : Table.values()) {
+				sql = "DELETE FROM " + table.getValue() + " WHERE TRUE";
+				PreparedStatement gt = conn.prepareStatement(sql);
+				gt.executeUpdate();
+			}
+
+			for (Counter type : Counter.values()) {
+				PreparedStatement su = conn.prepareStatement("UPDATE `Counters` SET Counter=0 WHERE Object=?");
+				su.setInt(1, type.getValue());
+				su.executeUpdate();
+			}
+			System.out.println("Finished reset");
+		} catch (Exception e) {
+			closeConnection();
+			e.printStackTrace();
+		}
+
 	}
 
 	// generate ID's
@@ -964,7 +1000,7 @@ public class Database {
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityId());
 				su.setDate(2, (Date) p.getDate());
-				su.setInt(3, p.getNumOneTimePurchases()); // fix here - RON
+				su.setInt(3, p.getNumOneTimePurchases());
 				su.setInt(4, p.getNumSubscriptions());
 				su.setInt(5, p.getNumSubscriptionsRenewal());
 				su.setInt(6, p.getNumVisited());
@@ -973,7 +1009,7 @@ public class Database {
 				return true;
 			} else {
 				String sql = "INSERT INTO " + Table.OneTimePurchase.getValue()
-						+ " (ID,CityID, Date, NOTP, NS, NSR, NV) VALUES (?, ?, ?, ?, ?, ?, ?)";
+						+ " (ID, CityID, Date, NOTP, NS, NSR, NV) VALUES (?, ?, ?, ?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getId());
 				su.setInt(2, p.getCityId());
@@ -1150,7 +1186,9 @@ public class Database {
 	}
 
 	/**
-	 * search function. if a parameter is null, we ignore it.
+	 * search function. if a parameter is null, we ignore it. When searching by
+	 * description, we look for a POI such that every word from the query
+	 * description is a substring of the POI description.
 	 * 
 	 * @param placeName
 	 * @param placeDescription
@@ -1160,11 +1198,14 @@ public class Database {
 	public static ArrayList<Integer> searchPlaceOfInterest(String placeName, String placeDescription, Integer cityId) {
 		try {
 			int counter = 1;
+			String[] words = placeDescription.split(" ");
+			int len = words.length;
 			String sql = "SELECT ID FROM " + Table.PlaceOfInterest.getValue() + " WHERE ";
 			if (placeName != null)
 				sql += "Name=? AND ";
 			if (placeDescription != null)
-				sql += "(Description LIKE ?) AND ";
+				for (int i = 0; i < len; i++)
+					sql += "(Description LIKE ?) AND";
 			if (cityId != null)
 				sql += "CityID=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
@@ -1174,7 +1215,8 @@ public class Database {
 				gt.setString(counter++, placeName);
 
 			if (placeDescription != null)
-				gt.setString(counter++, "%" + placeDescription + "%");
+				for (int i = 0; i < len; i++)
+					gt.setString(counter++, "%" + words[i] + "%");
 
 			if (cityId != null)
 				gt.setInt(counter++, cityId);
@@ -1263,7 +1305,9 @@ public class Database {
 	}
 
 	/**
-	 * search function. if a parameter is null, we ignore it.
+	 * search function. if a parameter is null, we ignore it. When searching by
+	 * description, we look for a city such that every word from the query
+	 * description is in the city description.
 	 * 
 	 * @param cityName
 	 * @param cityDescription
@@ -1272,11 +1316,15 @@ public class Database {
 	public static ArrayList<Integer> searchCity(String cityName, String cityDescription) {
 		try {
 			int counter = 1;
+			String[] words = cityDescription.split(" ");
+			int len = words.length;
 			String sql = "SELECT ID FROM " + Table.City.getValue() + " WHERE ";
 			if (cityName != null)
 				sql += "Name=? AND ";
 			if (cityDescription != null)
-				sql += "(Description LIKE ?) AND ";
+				for (int i = 0; i < len; i++)
+					sql += "(Description LIKE ?) AND";
+
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
@@ -1284,7 +1332,8 @@ public class Database {
 				gt.setString(counter++, cityName);
 
 			if (cityDescription != null)
-				gt.setString(counter++, "%" + cityDescription + "%");
+				for (int i = 0; i < len; i++)
+					gt.setString(counter++, "%" + words[i] + "%");
 
 			return queryToList(gt);
 
@@ -2007,6 +2056,26 @@ public class Database {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	/**
+	 * Hashing with SHA1
+	 *
+	 * @param input String to hash
+	 * @return String hashed
+	 */
+	public static String sha1(String input) {
+
+		MessageDigest msdDigest;
+		try {
+			msdDigest = MessageDigest.getInstance("SHA-1");
+			msdDigest.update(input.getBytes("UTF-8"), 0, input.length());
+			return DatatypeConverter.printHexBinary(msdDigest.digest());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/*
