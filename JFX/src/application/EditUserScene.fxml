@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="582.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.EditUserController">
+   <children>
+      <Text fill="#41e0d0" layoutX="95.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Information" textAlignment="CENTER">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <JFXTextField fx:id="Username" focusColor="#41e0d0" layoutX="152.0" layoutY="190.0" prefHeight="25.0" prefWidth="287.0" promptText="Username" />
+      <JFXPasswordField fx:id="Password" focusColor="#41e0d0" layoutX="511.0" layoutY="190.0" prefHeight="25.0" prefWidth="287.0" promptText="Password" />
+      <JFXTextField fx:id="FirstName" focusColor="#41e0d0" layoutX="152.0" layoutY="255.0" prefHeight="25.0" prefWidth="287.0" promptText="First Name" />
+      <JFXTextField fx:id="LastName" focusColor="#41e0d0" layoutX="511.0" layoutY="255.0" prefHeight="25.0" prefWidth="287.0" promptText="Last Name" />
+      <JFXTextField fx:id="Email" focusColor="#41e0d0" layoutX="152.0" layoutY="329.0" prefHeight="25.0" prefWidth="287.0" promptText="Email" />
+      <JFXTextField fx:id="Phone" focusColor="#41e0d0" layoutX="511.0" layoutY="329.0" prefHeight="25.0" prefWidth="287.0" promptText="Phone" />
+      <JFXButton fx:id="ViewPurchaseHistoryButton" layoutX="390.0" layoutY="404.0" onAction="#viewPurchaseHistory" prefHeight="30.0" prefWidth="171.0" style="-fx-background-color: #41e0d0;" text="View Purchase History">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
+      <Text fx:id="IncorrectText" fill="RED" layoutX="440.0" layoutY="467.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Invalid Inputs" visible="false" />
+      <JFXButton fx:id="ApplyChangesButton" layoutX="598.0" layoutY="493.0" onAction="#applyChanges" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: #41e0d0;" text="Apply Changes">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="Back" layoutX="152.0" layoutY="493.0" onAction="#goBack" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: #41e0d0;" text="Back">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>

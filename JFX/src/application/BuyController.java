@@ -4,8 +4,6 @@
 
 package application;
 
-import java.text.DecimalFormat;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
@@ -18,8 +16,6 @@ import javafx.scene.text.Text;
 public class BuyController {
 	
 	private double oneTimePrice, monthPrice;
-	
-	private static DecimalFormat df2 = new DecimalFormat("#.##");
 
     @FXML // fx:id="mainPane"
     private AnchorPane mainPane; // Value injected by FXMLLoader
@@ -48,10 +44,10 @@ public class BuyController {
     public void initialize() {
     	MonthBox.getItems().addAll(1,2,3,4,5,6);
     	MonthBox.setValue(1);
-    	oneTimePrice = 5.00;
-    	monthPrice = 10.00;
-    	OneTimePrice.setText(df2.format(oneTimePrice) + "¤");
-    	SubscriptionPrice.setText(df2.format(monthPrice) + "¤");
+    	oneTimePrice = 5;
+    	monthPrice = 10;
+    	OneTimePrice.setText(String.format("%.02f", oneTimePrice) + "$");
+    	SubscriptionPrice.setText(String.format("%.02f", monthPrice) + "$");
     }
     
     @FXML
@@ -71,12 +67,12 @@ public class BuyController {
     void chooseSubscribe(ActionEvent event) {
     	RadioSubscribe.setSelected(true);
     	RadioOneTime.setSelected(false);
-    	SubscriptionPrice.setText(df2.format(monthPrice * MonthBox.getValue()) + "¤");
+    	SubscriptionPrice.setText(String.format("%.02f", monthPrice * MonthBox.getValue()) + "$");
     }
     
     @FXML
     void updatePrice(ActionEvent event) {
-    	SubscriptionPrice.setText(df2.format(monthPrice * MonthBox.getValue()) + "¤");
+    	SubscriptionPrice.setText(String.format("%.02f", monthPrice * MonthBox.getValue()) + "$");
     }
 
     @FXML

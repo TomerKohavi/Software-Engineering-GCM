@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="839.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ChangePriceController">
+   <children>
+      <Text fill="#41e0d0" layoutX="58.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Change Prices" textAlignment="CENTER">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Text layoutX="61.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="One time Purchase">
+         <font>
+            <Font size="18.0" />
+         </font></Text>
+      <JFXTextField fx:id="OneTimeField" layoutX="627.0" layoutY="131.0" prefHeight="25.0" prefWidth="62.0" />
+      <Text layoutX="689.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" $" textAlignment="RIGHT">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="61.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subscription For 1 Month">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <JFXTextField fx:id="MonthField" layoutX="627.0" layoutY="207.0" prefHeight="25.0" prefWidth="62.0" />
+      <Text layoutX="689.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" $" textAlignment="RIGHT">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="NotValid" fill="RED" layoutX="313.0" layoutY="271.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Input is not a valid number" visible="false">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <JFXButton fx:id="Back" layoutX="168.0" layoutY="305.0" onAction="#goBack" prefHeight="37.0" prefWidth="204.0" style="-fx-background-color: #41e0d0;" text="Cancel">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="BuyButton" layoutX="473.0" layoutY="305.0" onAction="#applyChanges" prefHeight="39.0" prefWidth="204.0" style="-fx-background-color: #41e0d0;" text="Apply Changes">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>

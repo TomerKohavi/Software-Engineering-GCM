@@ -100,6 +100,9 @@ public class HomePageController {
     @FXML // fx:id="BuyButton"
     private JFXButton BuyButton; // Value injected by FXMLLoader
     
+    @FXML // fx:id="ReSubscribeButton"
+    private JFXButton ReSubscribeButton; // Value injected by FXMLLoader
+    
     @FXML // fx:id="StopsTable"
     private TableView<String> StopsTable; // Value injected by FXMLLoader
     
@@ -127,9 +130,15 @@ public class HomePageController {
     @FXML // fx:id="ReportInfo"
     private Text ReportInfo; // Value injected by FXMLLoader
     
+    @FXML // fx:id="ViewPurchaseHistoryButton"
+    private JFXButton ViewPurchaseHistoryButton; // Value injected by FXMLLoader
+    
     @FXML // fx:id="LoginButton"
     private JFXButton LoginButton; // Value injected by FXMLLoader
-
+    
+    @FXML // fx:id="UserInfoButton"
+    private JFXButton UserInfoButton; // Value injected by FXMLLoader
+    
     @FXML // fx:id="MapImage"
     private ImageView MapImage; // Value injected by FXMLLoader
     
@@ -189,11 +198,12 @@ public class HomePageController {
     	Connector.sideButton.setOpacity(0.5);
     	Connector.sideButton = button;
     	Connector.sideButton.setOpacity(1);
- 	    clearInfo();
+ 	    clearInfo(true);
     }
     
-    void clearInfo() {
-    	MainList.getItems().clear();
+    void clearInfo(boolean clearList) {
+    	if (clearList)
+    		MainList.getItems().clear();
     	ResultName.setText("");
     	ResultInfo.setText("");
 	    Text1.setText("");
@@ -204,9 +214,11 @@ public class HomePageController {
 		show_map = false;
 		ShowMapButton.setText("Show Map");
 	    ShowMapButton.setVisible(false);
+	    ViewPurchaseHistoryButton.setVisible(false);
 	    AddPOILocButton.setVisible(false);
 		StopsTable.setVisible(false);
 		BuyButton.setVisible(false);
+		ReSubscribeButton.setVisible(false);
 	    for (ImageView img : Connector.imageList) {
 	    	mainPane.getChildren().remove(img);
 	    }
@@ -230,13 +242,40 @@ public class HomePageController {
     	}
     }
     
+    private void fillCityInfo(String currentItemSelected) {
+    	InfoPane.setVisible(true);
+    	ResultName.setText(currentItemSelected); // set name
+    	ResultInfo.setText("Info"); // set info
+		Text1.setText("Maps Found: " + 2); // #Maps for the city 
+		Text2.setText("POI Found: " + 2); // #POI for the city
+	    Text3.setText("Routes Found: " + 2); // #Routes for the city
+	    BuyButton.setVisible(true);
+//	    if (user is director of content department)
+//		    BuyButton.setText("Change Price");
+//	    else if (user is regulsar employee or CEO)
+//	 	    BuyButton.setVisible(false);
+//	    else if (Connector.user_id != -1  && subscribed to the map) {// check if the user is subscribed to the map
+//	    	BuyButton.setText("Download");
+//	    	if (three days left for subscription)
+//	    		ReSubscribeButton.setVisible(true);
+//    	}
+//	    else
+//		    BuyButton.setText("Buy");
+	    ShowMapButton.setVisible(false);
+	    SideMap.setDisable(false);
+	    SidePOI.setDisable(false);
+	    SideRoutes.setDisable(false);
+    }
+    
     public void initialize() {
     	
     	Connector.sideButton = SideSearch;
     	Connector.sideButton.setOpacity(1);
     
-    	if (Connector.usr_id != -1)
+    	if (Connector.usr_id != -1)  {
     		LoginButton.setText("Log Off");
+    		UserInfoButton.setVisible(true);
+    	}
     	else
     		LoginButton.setText("Login");
     	
@@ -258,20 +297,7 @@ public class HomePageController {
     	           if (currentItemSelected != null) {
     	        	   InfoPane.setVisible(true);
     	        	   if (Connector.listType.equals("City")) { // City 
-	        			   ResultName.setText(currentItemSelected); // set name
-    	        		   ResultInfo.setText("Info"); // set info
-    	        		   Text1.setText("Maps Found: " + 2); // #Maps for the city 
-    	        		   Text2.setText("POI Found: " + 2); // #POI for the city
-    	        		   Text3.setText("Routes Found: " + 2); // #Routes for the city
-    	        		   BuyButton.setVisible(true);
-//    	        		   if (Connector.user_id != -1  && subscribed to the map) // check if it bought the map
-//        	        		   BuyButton.setText("Download");
-//    	        		   else
-//    	        			   BuyButton.setText("Buy");
-    	        		   ShowMapButton.setVisible(false);
-    	        		   SideMap.setDisable(false);
-    	        		   SidePOI.setDisable(false);
-    	        		   SideRoutes.setDisable(false);
+    	        		   fillCityInfo(currentItemSelected);
     	        	   }
     	        	   else if (Connector.listType.equals("POI")) { // POI
     	        		   ResultName.setText(currentItemSelected + " - " + "Hotel"); // set name and type
@@ -308,6 +334,7 @@ public class HomePageController {
     	        		   ResultInfo.setText("Name: " + "first" + " " + "last" + "\n" +
     	        				   "Email: " + "coreset@sigal.is.gay" + "\n" +
     	        				   "Phone: " + "0544444444");
+    	        		   ViewPurchaseHistoryButton.setVisible(true);
     	        		   EditButton.setDisable(false);
     	        		   RemoveButton.setDisable(false);
     	        		   // add purchase history
@@ -321,7 +348,10 @@ public class HomePageController {
 
     	    @Override
     	    public void handle(MouseEvent click) {
+    	    	if (!Connector.unpublished)
+    	    		return;
     	    	Point p = MouseInfo.getPointerInfo().getLocation();
+    	    	System.out.println(p);
     	    	if (AddPOILocButton.isVisible()) {
     	    		mainPane.getChildren().remove(mainPane.getChildren().size() - 1);
     	    	}
@@ -363,9 +393,8 @@ public class HomePageController {
     			System.out.println();
     		}
     		
-    		clearInfo();
-    		
-    		MainList.getItems().clear();
+    		clearInfo(true);
+
     		MainList.getItems().addAll("city1", "city2");
     		NotValid.setOpacity(0);
     	}
@@ -384,6 +413,11 @@ public class HomePageController {
     		MainList.getItems().addAll("city1", "city2");
     	}
     		
+    }
+    
+    @FXML
+    void viewPurchaseHistory(ActionEvent event) throws IOException {
+    	openNewPage("PurchaseHistoryScene.fxml");
     }
     
     @FXML
@@ -410,9 +444,8 @@ public class HomePageController {
     		MapImage.setVisible(false);
     		AddPOILocButton.setVisible(false);
     		ShowMapButton.setText("Show Map");
-    	    for (ImageView img : Connector.imageList) {
+    	    for (ImageView img : Connector.imageList)
     	    	mainPane.getChildren().remove(img);
-    	    }
     	    Connector.imageList.clear();
     	}
     }
@@ -422,6 +455,7 @@ public class HomePageController {
     	Connector.listType = "City";
     	setMainSideButton(SideSearch);
 		MainList.getItems().addAll("city1", "city2");
+		fillCityInfo("city1");
     }
     
     @FXML
@@ -434,6 +468,11 @@ public class HomePageController {
     		loadPage("HomePageScene.fxml");
     	}
     		
+    }
+    
+    @FXML
+    void editUser(ActionEvent event) throws IOException {
+    		openNewPage("EditUserScene.fxml");
     }
     
     @FXML
@@ -483,9 +522,9 @@ public class HomePageController {
     	int index = MainList.getSelectionModel().getSelectedIndex();
     	MainList.getItems().remove(index);
     	// call server to remove that thing -> can check which type it is by looking at the value of Connector.listType
+    	clearInfo(false);
     }
     
-
     @FXML
     void callCreate(ActionEvent event) throws IOException {
     	openNewPage(Connector.listType + "EditScene.fxml");
@@ -495,8 +534,12 @@ public class HomePageController {
     void addPOILoc(ActionEvent event) throws IOException {
     	openNewPage("ChoosePOIScene.fxml");
     }
+    
+    @FXML
+    void callReSubscribe(ActionEvent event) throws IOException {
+    	openNewPage("ReSubscribeScene.fxml");
+    }
  
-
     @FXML
     void openBuyWindodw(ActionEvent event) throws IOException {
     	if (Connector.usr_id == -1) // check if logged in
@@ -504,9 +547,11 @@ public class HomePageController {
     	else {
     		if (BuyButton.getText().equals("Buy"))
     			openNewPage("BuyScene.fxml");
-    		//else
-    			//download
-    		
+    		else if (BuyButton.getText().equals("Download"))
+    			// download
+    			System.out.println();
+    		else if (BuyButton.getText().equals("Change Price"))
+    			openNewPage("ChangePriceScene.fxml");
     	}
     }
     

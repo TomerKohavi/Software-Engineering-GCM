@@ -18,7 +18,7 @@
          <font>
             <Font size="18.0" />
          </font></Text>
-      <Text fx:id="OneTimePrice" layoutX="657.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.00 ₪">
+      <Text fx:id="OneTimePrice" layoutX="657.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.00 ₪" textAlignment="RIGHT">
          <font>
             <Font size="18.0" />
          </font>
@@ -35,7 +35,7 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Text fx:id="SubscriptionPrice" layoutX="657.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.00 ₪">
+      <Text fx:id="SubscriptionPrice" layoutX="657.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.00 ₪" textAlignment="RIGHT">
          <font>
             <Font size="18.0" />
          </font>
