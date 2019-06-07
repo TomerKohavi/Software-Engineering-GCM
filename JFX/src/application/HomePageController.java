@@ -21,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
@@ -350,8 +351,7 @@ public class HomePageController {
     	    public void handle(MouseEvent click) {
     	    	if (!Connector.unpublished)
     	    		return;
-    	    	Point p = MouseInfo.getPointerInfo().getLocation();
-    	    	System.out.println(p);
+    	    	System.out.println(boundsInScene.getMinX() + " " + boundsInScene.getMinY());
     	    	if (AddPOILocButton.isVisible()) {
     	    		mainPane.getChildren().remove(mainPane.getChildren().size() - 1);
     	    	}
@@ -364,8 +364,9 @@ public class HomePageController {
 					e.printStackTrace();
 				}
         	    ImageView img = new ImageView(image);
-    	    	img.setX(p.getX() - 334);
-    	    	img.setY(p.getY() - 130);
+    	    	Bounds boundsInScene = MapImage.localToScene(MapImage.getBoundsInLocal());
+    	    	img.setX(click.getX() + boundsInScene.getMinX() - 15);
+    	    	img.setY(click.getY() + boundsInScene.getMinY() - 32);
     	        Connector.imageList.add(img);
         	    mainPane.getChildren().add(img);
         	}
