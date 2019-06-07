@@ -1,11 +1,14 @@
 package classes;
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.security.MessageDigest;
+
+
+import javax.xml.bind.DatatypeConverter;
 
 /**
  * @author tal20
@@ -113,6 +116,39 @@ public class Database {
 			e.printStackTrace();
 		}
 		return;
+	}
+
+	/**
+	 * Reset the entire database. Delete all inputs, set counters to 0.
+	 * Only Tal and Lior should use this method.
+	 */
+	public static void resetAll(String name, String pass) {
+		try {
+			String sql = "SELECT Name FROM Team WHERE Name=? AND Password=?";
+			PreparedStatement check = conn.prepareStatement(sql);
+			check.setString(1, name);
+			check.setString(2, pass);
+			ResultSet res = check.executeQuery();
+			// check if there is exciting row in table before insert
+			if (!res.next())
+				return;
+			for (Table table : Table.values()) {
+				sql = "DELETE FROM " + table.getValue() + " WHERE TRUE";
+				PreparedStatement gt = conn.prepareStatement(sql);
+				gt.executeUpdate();
+			}
+
+			for (Counter type : Counter.values()) {
+				PreparedStatement su = conn.prepareStatement("UPDATE `Counters` SET Counter=0 WHERE Object=?");
+				su.setInt(1, type.getValue());
+				su.executeUpdate();
+			}
+			System.out.println("Finished reset");
+		} catch (Exception e) {
+			closeConnection();
+			e.printStackTrace();
+		}
+
 	}
 
 	// generate ID's
@@ -1150,8 +1186,10 @@ public class Database {
 	}
 
 	/**
-	 * search function. if a parameter is null, we ignore it.
-	 * When searching by description, we look for a POI such that every word from the query description is a substring of the POI description.
+	 * search function. if a parameter is null, we ignore it. When searching by
+	 * description, we look for a POI such that every word from the query
+	 * description is a substring of the POI description.
+	 * 
 	 * @param placeName
 	 * @param placeDescription
 	 * @param cityId
@@ -1166,7 +1204,7 @@ public class Database {
 			if (placeName != null)
 				sql += "Name=? AND ";
 			if (placeDescription != null)
-				for(int i=0 ; i<len ; i++)
+				for (int i = 0; i < len; i++)
 					sql += "(Description LIKE ?) AND";
 			if (cityId != null)
 				sql += "CityID=? AND ";
@@ -1177,7 +1215,7 @@ public class Database {
 				gt.setString(counter++, placeName);
 
 			if (placeDescription != null)
-				for(int i=0 ; i<len ; i++)
+				for (int i = 0; i < len; i++)
 					gt.setString(counter++, "%" + words[i] + "%");
 
 			if (cityId != null)
@@ -1267,8 +1305,10 @@ public class Database {
 	}
 
 	/**
-	 * search function. if a parameter is null, we ignore it.
-	 * When searching by description, we look for a city such that every word from the query description is in the city description.
+	 * search function. if a parameter is null, we ignore it. When searching by
+	 * description, we look for a city such that every word from the query
+	 * description is in the city description.
+	 * 
 	 * @param cityName
 	 * @param cityDescription
 	 * @return: the result list.
@@ -1282,9 +1322,9 @@ public class Database {
 			if (cityName != null)
 				sql += "Name=? AND ";
 			if (cityDescription != null)
-				for(int i=0 ; i<len ; i++)
+				for (int i = 0; i < len; i++)
 					sql += "(Description LIKE ?) AND";
-			
+
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
@@ -1292,7 +1332,7 @@ public class Database {
 				gt.setString(counter++, cityName);
 
 			if (cityDescription != null)
-				for(int i=0 ; i<len ; i++)
+				for (int i = 0; i < len; i++)
 					gt.setString(counter++, "%" + words[i] + "%");
 
 			return queryToList(gt);
@@ -2016,6 +2056,26 @@ public class Database {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	/**
+	 * Hashing with SHA1
+	 *
+	 * @param input String to hash
+	 * @return String hashed
+	 */
+	public static String sha1(String input) {
+
+		MessageDigest msdDigest;
+		try {
+			msdDigest = MessageDigest.getInstance("SHA-1");
+			msdDigest.update(input.getBytes("UTF-8"), 0, input.length());
+			return DatatypeConverter.printHexBinary(msdDigest.digest());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/*

@@ -5,7 +5,6 @@ import java.util.Calendar;
 import javafx.scene.chart.PieChart.Data;
 
 public class Main {
-	private static Database DataBase;
 
 	public static void main(String [] args)
 	{
@@ -57,7 +56,7 @@ public class Main {
 			rs.deleteFromDatabase();
 			cdv2.deleteFromDatabase();
 			
-			Database.resetAll("Sigal", "123");
+			Database.resetAll("Tal", "11235813");
 			
 			System.out.println("Ss");
 
