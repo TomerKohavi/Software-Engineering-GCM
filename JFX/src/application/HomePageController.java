@@ -7,10 +7,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 
@@ -56,6 +57,9 @@ public class HomePageController {
 
     @FXML // fx:id="POIInfoBox"
     private JFXTextField POIInfoBox; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="UnpublishSearch"
+    private JFXCheckBox UnpublishSearch; // Value injected by FXMLLoader
 
     @FXML // fx:id="SearchCityButton"
     private JFXButton SearchCityButton; // Value injected by FXMLLoader
@@ -65,6 +69,9 @@ public class HomePageController {
     
     @FXML // fx:id="Info"
     private ListView<String> MainList; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="CreateButton"
+    private JFXButton CreateButton; // Value injected by FXMLLoader
     
     @FXML // fx:id="InfoPane"
     private Pane InfoPane; // Value injected by FXMLLoader
@@ -87,6 +94,9 @@ public class HomePageController {
     @FXML // fx:id="EditButton"
     private JFXButton EditButton; // Value injected by FXMLLoader
     
+    @FXML // fx:id="RemoveButton"
+    private JFXButton RemoveButton; // Value injected by FXMLLoader
+    
     @FXML // fx:id="BuyButton"
     private JFXButton BuyButton; // Value injected by FXMLLoader
     
@@ -95,6 +105,9 @@ public class HomePageController {
     
     @FXML // fx:id="ShowMapButton"
     private JFXButton ShowMapButton; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="addPOILocButton"
+    private JFXButton AddPOILocButton; // Value injected by FXMLLoader
     
     @FXML // fx:id="FirstDate"
     private JFXDatePicker FirstDate; // Value injected by FXMLLoader
@@ -137,7 +150,22 @@ public class HomePageController {
 
     @FXML // fx:id="SideUsers"
     private JFXButton SideUsers; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="LoadingGif"
+    private ImageView LoadingGif; // Value injected by FXMLLoader
 
+    void startLoad() throws FileNotFoundException {
+    	mainPane.setDisable(true);
+    	Random r = new Random();
+		Image image = new Image(new FileInputStream("Pics\\Gif_" + (r.nextInt(4) + 1) + ".gif"));
+		LoadingGif.setImage(image);
+    	LoadingGif.setVisible(true);
+    }
+    
+    void endLoad() {
+    	LoadingGif.setVisible(false);
+    	mainPane.setDisable(true);
+    }
     
     void openNewPage(String FXMLpage) throws IOException {
     	FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLpage));
@@ -173,8 +201,10 @@ public class HomePageController {
 	    Text3.setText("");
 	    InfoPane.setVisible(false);
 		MapImage.setVisible(false);
+		show_map = false;
 		ShowMapButton.setText("Show Map");
 	    ShowMapButton.setVisible(false);
+	    AddPOILocButton.setVisible(false);
 		StopsTable.setVisible(false);
 		BuyButton.setVisible(false);
 	    for (ImageView img : Connector.imageList) {
@@ -186,9 +216,18 @@ public class HomePageController {
 	    FirstDate.setVisible(false);
 	    LastDate.setVisible(false);
 	    WatchButton.setVisible(false);
-//    	if (employee) { // check if employee -> can edit
-//		EditButton.setVisible(true);
-//	}
+    	if (Connector.unpublished) {
+			EditButton.setVisible(true);
+			RemoveButton.setVisible(true);
+			if (Connector.listType.equals("Map") || Connector.listType.equals("POI") || Connector.listType.equals("Route"))
+		    	CreateButton.setVisible(true);
+		    else
+		    	CreateButton.setVisible(false);
+    	}
+    	else {
+    		EditButton.setVisible(false);
+    		RemoveButton.setVisible(false);
+    	}
     }
     
     public void initialize() {
@@ -202,7 +241,7 @@ public class HomePageController {
     		LoginButton.setText("Login");
     	
 //    	if (employee) { // check if employee -> can edit
-//    		EditButton.setVisible(true);
+//    		UnpublishSearch.SetVisible(true);
 //    	}
     	
     	SideReport.setDisable(false);
@@ -270,6 +309,7 @@ public class HomePageController {
     	        				   "Email: " + "coreset@sigal.is.gay" + "\n" +
     	        				   "Phone: " + "0544444444");
     	        		   EditButton.setDisable(false);
+    	        		   RemoveButton.setDisable(false);
     	        		   // add purchase history
     	        	   }
     	           }
@@ -282,7 +322,22 @@ public class HomePageController {
     	    @Override
     	    public void handle(MouseEvent click) {
     	    	Point p = MouseInfo.getPointerInfo().getLocation();
-    	    	System.out.println(p);
+    	    	if (AddPOILocButton.isVisible()) {
+    	    		mainPane.getChildren().remove(mainPane.getChildren().size() - 1);
+    	    	}
+        		AddPOILocButton.setVisible(true);
+        		Image image = null;
+				try {
+					image = new Image(new FileInputStream("Pics\\Add_POI.png"));
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        	    ImageView img = new ImageView(image);
+    	    	img.setX(p.getX() - 334);
+    	    	img.setY(p.getY() - 130);
+    	        Connector.imageList.add(img);
+        	    mainPane.getChildren().add(img);
         	}
     	});
     	
@@ -299,6 +354,17 @@ public class HomePageController {
     	info = POIInfoBox.getText();
     	if (name.equals("city"))
     	{
+    		if (UnpublishSearch.isSelected()) {// search unpublished
+    			Connector.unpublished = true;
+    			System.out.println();
+    		}
+    		else {// search published
+    			Connector.unpublished = false;
+    			System.out.println();
+    		}
+    		
+    		clearInfo();
+    		
     		MainList.getItems().clear();
     		MainList.getItems().addAll("city1", "city2");
     		NotValid.setOpacity(0);
@@ -342,6 +408,7 @@ public class HomePageController {
     	else {
     		InfoPane.setVisible(true);
     		MapImage.setVisible(false);
+    		AddPOILocButton.setVisible(false);
     		ShowMapButton.setText("Show Map");
     	    for (ImageView img : Connector.imageList) {
     	    	mainPane.getChildren().remove(img);
@@ -409,6 +476,24 @@ public class HomePageController {
     @FXML
     void callEdit(ActionEvent event) throws IOException {
     	openNewPage(Connector.listType + "EditScene.fxml");
+    }
+    
+    @FXML
+    void callRemove(ActionEvent event) {
+    	int index = MainList.getSelectionModel().getSelectedIndex();
+    	MainList.getItems().remove(index);
+    	// call server to remove that thing -> can check which type it is by looking at the value of Connector.listType
+    }
+    
+
+    @FXML
+    void callCreate(ActionEvent event) throws IOException {
+    	openNewPage(Connector.listType + "EditScene.fxml");
+    }
+    
+    @FXML
+    void addPOILoc(ActionEvent event) throws IOException {
+    	openNewPage("ChoosePOIScene.fxml");
     }
  
 

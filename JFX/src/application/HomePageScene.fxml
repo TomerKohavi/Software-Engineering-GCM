@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.ListView?>
@@ -28,16 +29,20 @@
       <Text fx:id="NotValid" fill="RED" layoutX="824.0" layoutY="158.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Can't find matching result">
          <font>
             <Font size="18.0" />
-         </font></Text>
+         </font>
+      </Text>
       <ListView fx:id="MainList" fixedCellSize="40.0" layoutX="163.0" layoutY="199.0" prefHeight="600.0" prefWidth="524.0" />
+      <JFXButton fx:id="CreateButton" layoutX="525.0" layoutY="745.0" onAction="#callCreate" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Create" visible="false" />
       <JFXTextField fx:id="CityNameBox" focusColor="#41e0d0" layoutX="315.0" layoutY="57.0" prefHeight="25.0" prefWidth="244.0" promptText="City Name" />
       <JFXTextField fx:id="CityInfoBox" focusColor="#41e0d0" layoutX="587.0" layoutY="58.0" prefHeight="25.0" prefWidth="244.0" promptText="City Info" />
       <JFXTextField fx:id="POINameBox" focusColor="#41e0d0" layoutX="315.0" layoutY="97.0" prefHeight="25.0" prefWidth="244.0" promptText="POI Name" />
       <JFXTextField fx:id="POIInfoBox" focusColor="#41e0d0" layoutX="587.0" layoutY="97.0" prefHeight="25.0" prefWidth="244.0" promptText="POI Info" />
+      <JFXCheckBox fx:id="UnpublishSearch" layoutX="315.0" layoutY="142.0" text="Unpublished Versions" />
       <JFXButton fx:id="SearchCityButton" layoutX="870.0" layoutY="73.0" onAction="#search" prefHeight="49.0" prefWidth="113.0" style="-fx-background-color: #41e0d0;" text="Search">
          <font>
             <Font size="18.0" />
-         </font></JFXButton>
+         </font>
+      </JFXButton>
       <Pane fx:id="InfoPane" layoutX="686.0" layoutY="198.0" prefHeight="610.0" prefWidth="600.0" visible="false">
          <children>
             <Text fx:id="ResultInfo" layoutX="61.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Info" wrappingWidth="477.13671875">
@@ -72,14 +77,17 @@
               </columns>
             </TableView>
             <JFXButton fx:id="EditButton" layoutX="74.0" layoutY="547.0" onAction="#callEdit" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Edit" />
+            <JFXButton fx:id="RemoveButton" layoutX="250.0" layoutY="547.0" onAction="#callRemove" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Remove" />
             <JFXButton fx:id="BuyButton" layoutX="435.0" layoutY="547.0" onAction="#openBuyWindodw" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Buy" visible="false" />
          </children>
       </Pane>
       <ImageView fx:id="MapImage" fitHeight="600.0" fitWidth="600.0" layoutX="686.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../../Pics/No_Image.png" />
-         </image></ImageView>
+         </image>
+      </ImageView>
       <JFXButton fx:id="ShowMapButton" layoutX="1116.0" layoutY="745.0" onAction="#showMapImage" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Show Map" visible="false" />
+      <JFXButton fx:id="AddPOILocButton" layoutX="760.0" layoutY="745.0" onAction="#addPOILoc" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Add POI" visible="false" />
       <JFXDatePicker fx:id="FirstDate" layoutX="724.0" layoutY="231.0" visible="false" />
       <JFXDatePicker fx:id="LastDate" layoutX="927.0" layoutY="231.0" visible="false" />
       <JFXButton fx:id="WatchButton" layoutX="1150.0" layoutY="230.0" onAction="#watch" prefHeight="28.0" prefWidth="79.0" style="-fx-background-color: #41e0d0;" text="Watch" visible="false">
@@ -141,5 +149,6 @@
             </JFXButton>
          </children>
       </Pane>
+      <ImageView fx:id="LoadingGif" fitHeight="343.0" fitWidth="477.0" layoutX="511.0" layoutY="229.0" pickOnBounds="true" preserveRatio="true" visible="false" />
    </children>
 </AnchorPane>

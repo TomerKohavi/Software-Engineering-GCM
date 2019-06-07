@@ -22,6 +22,8 @@ public class Connector {
 	
 	public static List<ImageView> imageList = new ArrayList<ImageView> ();
 	
+	public static boolean unpublished = false;
+	
 //	static void loadPage(AnchorPane pane, String FXMLpage) throws IOException
 //	{
 //		FXMLLoader loader = new FXMLLoader(getClass().getResource("Sample2Scene.fxml"));  
