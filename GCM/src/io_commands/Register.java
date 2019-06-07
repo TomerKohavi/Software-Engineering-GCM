@@ -1,6 +1,7 @@
 package io_commands;
 
 import classes.Employee.Role;
+import classes.User;
 
 public class Register extends Command {
 	public Register(String username, String password, String firstName, String lastName, String email, String phone, Role role, boolean isEmployee)
@@ -11,7 +12,7 @@ public class Register extends Command {
 		this.lastName = lastName;
 		this.email = email;
 		this.phone = phone;
-		this.id = -1;
+		this.user = null;
 		this.role = role;
 		this.isEmployee = isEmployee;
 	}
@@ -24,7 +25,7 @@ public class Register extends Command {
 	}
 	
 	public String username, password, firstName, lastName, email, phone;
-	public int id;
+	public User user;
 	public Role role;
 	public Boolean isEmployee;
 }

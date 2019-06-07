@@ -23,6 +23,7 @@ extends Application {
 //        catch (Exception e) {
 //            e.printStackTrace();
 //        }
+
     	Connector.client = new ChatClient(Connector.LOCAL_HOST, Connector.PORT, new Console());
     	Connector.mainStage = primaryStage;
         FXMLLoader loader = new FXMLLoader(((Object)((Object)this)).getClass().getResource("HomePageScene.fxml"));

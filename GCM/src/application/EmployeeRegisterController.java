@@ -62,7 +62,7 @@ public class EmployeeRegisterController {
     }
 
     @FXML
-    void register(ActionEvent event) throws IOException {
+    void register(ActionEvent event) throws IOException, InterruptedException {
     	usr = Username.getText();
     	pass = Password.getText();
     	first = FirstName.getText();
@@ -78,7 +78,7 @@ public class EmployeeRegisterController {
     	else
     	{
     		IncorrectText.setOpacity(0);
-    		Connector.usr_id = Connector.client.register(usr, pass, first, last, emailAdd, phoneNumber, role, true);
+    		Connector.user = Connector.client.register(usr, pass, first, last, emailAdd, phoneNumber, role, true);
     		loadPage("HomePageScene.fxml");
     	}
 

@@ -43,15 +43,8 @@ public class EchoServer extends AbstractServer {
 	ChatIF serverUI;
 	// Constructors ****************************************************
 
-	/**
-	 * Constructs an instance of the echo server.
-	 *
-	 * @param port The port number to connect on.
-	 */
-	public EchoServer(int port) {
-		super(port);
-	}
-
+	ArrayList<Integer> loggedList;
+	
 	/**
 	 * Constructs an instance of the echo server.
 	 *
@@ -63,10 +56,61 @@ public class EchoServer extends AbstractServer {
 		super(port);
 		this.serverUI = serverUI;
 		Database.createConnection();
+		this.loggedList = new ArrayList<Integer>();
 	}
 
-	// Instance methods ************************************************
+	public Login handleLogin(Login login)
+	{
+		serverUI.display(login.name);
+		if (login.isEmployee) {
+			ArrayList<Integer> list = Database.searchEmployee(login.name, login.pass);
+			if (!list.isEmpty()) {
+				login.loggedUser = Database.getEmployeeById(list.get(0));
+				this.loggedList.add(login.loggedUser.getId());
+			}
+		} else {
+			ArrayList<Integer> list = Database.searchCustomer(login.name, login.pass);
+			if (!list.isEmpty()) {
+				login.loggedUser = Database.getCustomerById(list.get(0));
+				this.loggedList.add(login.loggedUser.getId());
+			}
+		}
+		login.delete();
+		return login;
+	}
+	
+	public void handleLogoff(Logoff logoff)
+	{
+		System.out.println("logoff " + logoff.logoffID + " " +this.loggedList.remove(logoff.logoffID));
+	}
 
+	public Register handleRegister(Register reg)
+	{
+		if (Database.searchCustomer(reg.username, null).isEmpty()
+				&& Database.searchEmployee(reg.username, null).isEmpty()) {
+			if (reg.isEmployee) {
+				Employee emp = new Employee(reg.username, reg.password, reg.email, reg.firstName, reg.lastName,
+						reg.phone, reg.role);
+				Database.saveEmployee(emp);
+				reg.user = emp;
+			} else {
+				Customer cust = new Customer(reg.username, reg.password, reg.email, reg.firstName, reg.lastName,
+						reg.phone);
+				Database.saveCustomer(cust);
+				reg.user = cust;
+			}
+		}
+		this.loggedList.add(reg.user.getId());
+		reg.delete();
+		return reg;
+	}
+	
+	public Search handleSearch(Search s)
+	{
+		s.searchResult = SearchCatalog.SearchCity(s.cityName, s.cityInfo, s.poiName, s.poiInfo);
+		return s;
+	}
+	
 	/**
 	 * This method handles any messages received from the client.
 	 *
@@ -75,44 +119,27 @@ public class EchoServer extends AbstractServer {
 	 */
 	public void handleMessageFromClient(Object msg, ConnectionToClient client) {
 		if (msg instanceof Login) {
-			Login login = (Login) msg;
-			if (login.isEmployee) {
-				ArrayList<Integer> list = Database.searchEmployee(login.name, login.pass);
-				if (!list.isEmpty()) {
-					login.id = list.get(0);
-					login.role = Database.getEmployeeById(login.id).getRole();
-				}
-			} else {
-				ArrayList<Integer> list = Database.searchCustomer(login.name, login.pass);
-				if (!list.isEmpty()) {
-					login.id = list.get(0);
-				}
-			}
-			login.delete();
 			try {
-				client.sendToClient(login);
+				System.out.println("login sending");
+				client.sendToClient(handleLogin((Login) msg));
+				System.out.println("login sent");
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if (msg instanceof Logoff) {
+			handleLogoff((Logoff) msg);
+			try {
+				client.sendToClient(msg);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else if (msg instanceof Register) {
-			Register reg = (Register) msg;
-			if (Database.searchCustomer(reg.username, null).isEmpty()
-					&& Database.searchEmployee(reg.username, null).isEmpty()) {
-				if (reg.isEmployee) {
-					Employee emp = new Employee(reg.username, reg.password, reg.email, reg.firstName, reg.lastName,
-							reg.phone, reg.role);
-					reg.id = emp.getId();
-					Database.saveEmployee(emp);
-				} else {
-					Customer cust = new Customer(reg.username, reg.password, reg.email, reg.firstName, reg.lastName,
-							reg.phone);
-					reg.id = cust.getId();
-					Database.saveCustomer(cust);
-				}
-			}
-			reg.delete();
 			try {
-				client.sendToClient(reg);
+				System.out.println("reg sending");
+				client.sendToClient(handleRegister((Register) msg));
+				System.out.println("reg sent");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -128,15 +155,13 @@ public class EchoServer extends AbstractServer {
 				}
 			} else
 				imTr.saveImage("C:\\Users\\yonat\\Pictures\\mememe.png");
-		} else if (msg.toString().startsWith("#login ")) {
-			if (client.getInfo("loginID") != null) {
-				try {
-					client.sendToClient("You are already logged in.");
-				} catch (IOException e) {
-				}
-				return;
+		} else if (msg instanceof Search) {
+			try {
+				client.sendToClient(handleSearch((Search) msg));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			client.setInfo("loginID", msg.toString().substring(7));
 		}
 	}
 
@@ -163,41 +188,10 @@ public class EchoServer extends AbstractServer {
 	private void runCommand(String message) {
 		// run commands
 		// a series of if statements
-
-		if (message.equalsIgnoreCase("#quit")) {
+		if (message.equalsIgnoreCase("#display"))
+			this.serverUI.display(loggedList);
+		else if (message.equalsIgnoreCase("#quit")) {
 			quit();
-		} else if (message.equalsIgnoreCase("#stop")) {
-			stopListening();
-		} else if (message.equalsIgnoreCase("#close")) {
-			try {
-				close();
-			} catch (IOException e) {
-			}
-		} else if (message.toLowerCase().startsWith("#setport")) {
-			if (getNumberOfClients() == 0 && !isListening()) {
-				// If there are no connected clients and we are not
-				// listening for new ones, assume server closed.
-				// A more exact way to determine this was not obvious and
-				// time was limited.
-				int newPort = Integer.parseInt(message.substring(9));
-				setPort(newPort);
-				// error checking should be added
-				serverUI.display("Server port changed to " + getPort());
-			} else {
-				serverUI.display("The server is not closed. Port cannot be changed.");
-			}
-		} else if (message.equalsIgnoreCase("#start")) {
-			if (!isListening()) {
-				try {
-					listen();
-				} catch (Exception ex) {
-					serverUI.display("Error - Could not listen for clients!");
-				}
-			} else {
-				serverUI.display("The server is already listening for clients.");
-			}
-		} else if (message.equalsIgnoreCase("#getport")) {
-			serverUI.display("Currently port: " + Integer.toString(getPort()));
 		}
 	}
 
@@ -267,34 +261,6 @@ public class EchoServer extends AbstractServer {
 		} catch (IOException e) {
 		}
 		System.exit(0);
-	}
-
-	// Class methods ***************************************************
-
-	/**
-	 * This method is responsible for the creation of the server instance (there is
-	 * no UI in this phase).
-	 *
-	 * @param args[0] The port number to listen on. Defaults to 5555 if no argument
-	 *                is entered.
-	 */
-	public static void main(String[] args) {
-		int port; // Port to listen on
-
-		try {
-			port = Integer.parseInt(args[0]); // Get port from command line
-		} catch (Throwable t) {
-			port = DEFAULT_PORT; // Set port to 5555
-		}
-
-		EchoServer sv = new EchoServer(port);
-
-		try {
-			sv.listen(); // Start listening for connections
-		} catch (Exception ex) {
-			System.out.println("ERROR - Could not listen for clients!");
-		}
-
 	}
 }
 // End of EchoServer class

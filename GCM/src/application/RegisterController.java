@@ -61,7 +61,7 @@ public class RegisterController {
     }
 
     @FXML
-    void register(ActionEvent event) throws IOException {
+    void register(ActionEvent event) throws IOException, InterruptedException {
     	usr = Username.getText();
     	pass = Password.getText();
     	first = FirstName.getText();
@@ -76,7 +76,7 @@ public class RegisterController {
     	else
     	{
     		IncorrectText.setOpacity(0);
-    		Connector.usr_id = Connector.client.register(usr, pass, first, last, emailAdd, phoneNumber, null, false);
+    		Connector.user = Connector.client.register(usr, pass, first, last, emailAdd, phoneNumber, null, false);
     		loadPage("HomePageScene.fxml");
     	}
     }
