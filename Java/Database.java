@@ -23,8 +23,8 @@ public class Database {
 	static Connection conn = null;
 
 	/**
-	 * @author tal20
-	 * This enum maps from integers to their entries on the counter table
+	 * @author tal20 This enum maps from integers to their entries on the counter
+	 *         table
 	 * 
 	 */
 	public enum Counter {
@@ -35,6 +35,7 @@ public class Database {
 
 		/**
 		 * Constructor.
+		 * 
 		 * @param nv: Integer that hold the value
 		 * @return: A Counter object.
 		 */
@@ -44,6 +45,7 @@ public class Database {
 
 		/**
 		 * Translate to int
+		 * 
 		 * @return: Returns the value
 		 */
 		public int getValue() {
@@ -52,8 +54,7 @@ public class Database {
 	}
 
 	/**
-	 * @author tal20
-	 * This enum maps from full table names and local names.
+	 * @author tal20 This enum maps from full table names and local names.
 	 */
 	public enum Table {
 		PlaceOfInterest("POIs"), Map("Maps"), Route("Routes"), City("Cities"), Customer("Customers"),
@@ -65,6 +66,7 @@ public class Database {
 
 		/**
 		 * Constructor.
+		 * 
 		 * @param envUrl
 		 */
 		Table(final String envUrl) {
@@ -79,7 +81,6 @@ public class Database {
 		}
 	}
 
-	
 	/**
 	 * Create a new database connection.
 	 */
@@ -101,11 +102,10 @@ public class Database {
 	 */
 	public static void closeConnection() {
 		try {
-			if (conn != null)
-				{
+			if (conn != null) {
 				conn.close();
 				System.out.println("connection closing");
-				}
+			}
 			return;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -119,8 +119,7 @@ public class Database {
 	 * @param type: the table find ID
 	 * @return: the ID of this table
 	 */
-	private static int generateId(int type)
-	{
+	private static int generateId(int type) {
 		try {
 			PreparedStatement gt = conn.prepareStatement("SELECT Counter FROM Counters WHERE Object=? ");
 			gt.setInt(1, type);
@@ -138,7 +137,7 @@ public class Database {
 			return -1;
 		}
 	}
-	
+
 	/**
 	 * @return the ID of the next user
 	 */
@@ -236,8 +235,7 @@ public class Database {
 	 * @param id: the id to search
 	 * @return: true if exists, false else.
 	 */
-	private static boolean exist(String table, int id)
-	{
+	private static boolean exist(String table, int id) {
 		try {
 			String sql = "SELECT ID FROM " + table + " WHERE ID=?";
 			PreparedStatement check = conn.prepareStatement(sql);
@@ -253,9 +251,10 @@ public class Database {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * checks if there is an entry on the table with this ID.
+	 * 
 	 * @param id: id to search for
 	 * @return: whether there is a POI with this ID.
 	 */
@@ -265,6 +264,7 @@ public class Database {
 
 	/**
 	 * checks if there is an entry on the table with this ID.
+	 * 
 	 * @param id: id to search for
 	 * @return: whether there is a map with this ID.
 	 */
@@ -274,6 +274,7 @@ public class Database {
 
 	/**
 	 * checks if there is an entry on the table with this ID.
+	 * 
 	 * @param id: id to search for
 	 * @return: whether there is a route with this ID.
 	 */
@@ -283,6 +284,7 @@ public class Database {
 
 	/**
 	 * checks if there is an entry on the table with this ID.
+	 * 
 	 * @param id: id to search for
 	 * @return: whether there is a city with this ID.
 	 */
@@ -292,6 +294,7 @@ public class Database {
 
 	/**
 	 * checks if there is an entry on the table with this ID.
+	 * 
 	 * @param id: id to search for
 	 * @return: whether there is a customer with this ID.
 	 */
@@ -301,6 +304,7 @@ public class Database {
 
 	/**
 	 * checks if there is an entry on the table with this ID.
+	 * 
 	 * @param id: id to search for
 	 * @return: whether there is a employee with this ID.
 	 */
@@ -310,6 +314,7 @@ public class Database {
 
 	/**
 	 * checks if there is an entry on the table with this ID.
+	 * 
 	 * @param id: id to search for
 	 * @return: whether there is a location with this ID.
 	 */
@@ -319,6 +324,7 @@ public class Database {
 
 	/**
 	 * checks if there is an entry on the table with this ID.
+	 * 
 	 * @param id: id to search for
 	 * @return: whether there is a route stop with this ID.
 	 */
@@ -328,6 +334,7 @@ public class Database {
 
 	/**
 	 * checks if there is an entry on the table with this ID.
+	 * 
 	 * @param id: id to search for
 	 * @return: whether there is a map sight with this ID.
 	 */
@@ -337,6 +344,7 @@ public class Database {
 
 	/**
 	 * checks if there is an entry on the table with this ID.
+	 * 
 	 * @param id: id to search for
 	 * @return: whether there is a POI sight with this ID.
 	 */
@@ -346,6 +354,7 @@ public class Database {
 
 	/**
 	 * checks if there is an entry on the table with this ID.
+	 * 
 	 * @param id: id to search for
 	 * @return: whether there is a route sight with this ID.
 	 */
@@ -355,6 +364,7 @@ public class Database {
 
 	/**
 	 * checks if there is an entry on the table with this ID.
+	 * 
 	 * @param id: id to search for
 	 * @return: whether there is a city data version with this ID.
 	 */
@@ -364,6 +374,7 @@ public class Database {
 
 	/**
 	 * checks if there is an entry on the table with this ID.
+	 * 
 	 * @param id: id to search for
 	 * @return: whether there is a subscription with this ID.
 	 */
@@ -373,6 +384,7 @@ public class Database {
 
 	/**
 	 * checks if there is an entry on the table with this ID.
+	 * 
 	 * @param id: id to search for
 	 * @return: whether there is a one time purchase with this ID.
 	 */
@@ -382,6 +394,7 @@ public class Database {
 
 	/**
 	 * checks if there is an entry on the table with this ID.
+	 * 
 	 * @param id: id to search for
 	 * @return: whether there is a statistic with this ID.
 	 */
@@ -391,11 +404,11 @@ public class Database {
 
 	/**
 	 * saves a new instance to the database.
+	 * 
 	 * @param p
 	 * @return true if an updated was made. false for new element.
 	 */
-	public static boolean savePlaceOfInterest(PlaceOfInterest p)
-	{
+	public static boolean savePlaceOfInterest(PlaceOfInterest p) {
 		try {
 			if (existPlaceOfInterest(p.getId())) {
 				String sql = "UPDATE " + Table.PlaceOfInterest.getValue()
@@ -431,6 +444,7 @@ public class Database {
 
 	/**
 	 * saves a new instance to the database.
+	 * 
 	 * @param p
 	 * @return true if an updated was made. false for new element.
 	 */
@@ -467,6 +481,7 @@ public class Database {
 
 	/**
 	 * saves a new instance to the database.
+	 * 
 	 * @param p
 	 * @return true if an updated was made. false for new element.
 	 */
@@ -501,6 +516,7 @@ public class Database {
 
 	/**
 	 * saves a new instance to the database.
+	 * 
 	 * @param p
 	 * @return true if an updated was made. false for new element.
 	 */
@@ -535,6 +551,7 @@ public class Database {
 
 	/**
 	 * saves a new instance to the database.
+	 * 
 	 * @param p
 	 * @return true if an updated was made. false for new element.
 	 */
@@ -584,6 +601,7 @@ public class Database {
 
 	/**
 	 * saves a new instance to the database.
+	 * 
 	 * @param p
 	 * @return true if an updated was made. false for new element.
 	 */
@@ -624,6 +642,7 @@ public class Database {
 
 	/**
 	 * saves a new instance to the database.
+	 * 
 	 * @param p
 	 * @return true if an updated was made. false for new element.
 	 */
@@ -661,6 +680,7 @@ public class Database {
 
 	/**
 	 * saves a new instance to the database.
+	 * 
 	 * @param p
 	 * @return true if an updated was made. false for new element.
 	 */
@@ -699,6 +719,7 @@ public class Database {
 
 	/**
 	 * saves a new instance to the database.
+	 * 
 	 * @param p
 	 * @return true if an updated was made. false for new element.
 	 */
@@ -732,6 +753,7 @@ public class Database {
 
 	/**
 	 * saves a new instance to the database.
+	 * 
 	 * @param p
 	 * @return true if an updated was made. false for new element.
 	 */
@@ -766,6 +788,7 @@ public class Database {
 
 	/**
 	 * saves a new instance to the database.
+	 * 
 	 * @param p
 	 * @return true if an updated was made. false for new element.
 	 */
@@ -802,6 +825,7 @@ public class Database {
 
 	/**
 	 * saves a new instance to the database.
+	 * 
 	 * @param p
 	 * @return true if an updated was made. false for new element.
 	 */
@@ -840,6 +864,7 @@ public class Database {
 
 	/**
 	 * saves a new instance to the database.
+	 * 
 	 * @param p
 	 * @return true if an updated was made. false for new element.
 	 */
@@ -882,6 +907,7 @@ public class Database {
 
 	/**
 	 * saves a new instance to the database.
+	 * 
 	 * @param p
 	 * @return true if an updated was made. false for new element.
 	 */
@@ -924,6 +950,7 @@ public class Database {
 
 	/**
 	 * saves a new instance to the database.
+	 * 
 	 * @param p
 	 * @return true if an updated was made. false for new element.
 	 */
@@ -968,8 +995,7 @@ public class Database {
 	 * @param id: the id to delete
 	 * @return: true if deleted, false else.
 	 */
-	private static boolean delete(String table, int id)
-	{
+	private static boolean delete(String table, int id) {
 		try {
 			String sql = "DELETE FROM " + table + " WHERE ID=?";
 			PreparedStatement gt = conn.prepareStatement(sql);
@@ -987,8 +1013,7 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean deletePlaceOfInterest(int id) 
-	{
+	public static boolean deletePlaceOfInterest(int id) {
 		return delete(Table.PlaceOfInterest.getValue(), id);
 	}
 
@@ -996,8 +1021,7 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean deleteMap(int id) 
-	{
+	public static boolean deleteMap(int id) {
 		return delete(Table.Map.getValue(), id);
 	}
 
@@ -1005,8 +1029,7 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean deleteRoute(int id) 
-	{
+	public static boolean deleteRoute(int id) {
 		return delete(Table.Route.getValue(), id);
 	}
 
@@ -1014,8 +1037,7 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean deleteCity(int id) 
-	{
+	public static boolean deleteCity(int id) {
 		return delete(Table.City.getValue(), id);
 	}
 
@@ -1023,8 +1045,7 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean deleteCustomer(int id) 
-	{
+	public static boolean deleteCustomer(int id) {
 		return delete(Table.Customer.getValue(), id);
 	}
 
@@ -1032,8 +1053,7 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean deleteEmployee(int id) 
-	{
+	public static boolean deleteEmployee(int id) {
 		return delete(Table.Employee.getValue(), id);
 	}
 
@@ -1041,8 +1061,7 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean _deleteLocation(int id) 
-	{
+	public static boolean _deleteLocation(int id) {
 		return delete(Table.Location.getValue(), id);
 	}
 
@@ -1050,8 +1069,7 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean _deleteRouteStop(int id) 
-	{
+	public static boolean _deleteRouteStop(int id) {
 		return delete(Table.RouteStop.getValue(), id);
 	}
 
@@ -1059,8 +1077,7 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean _deleteMapSight(int id) 
-	{
+	public static boolean _deleteMapSight(int id) {
 		return delete(Table.MapSight.getValue(), id);
 	}
 
@@ -1068,8 +1085,7 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean _deletePlaceOfInterestSight(int id) 
-	{
+	public static boolean _deletePlaceOfInterestSight(int id) {
 		return delete(Table.PlaceOfInterestSight.getValue(), id);
 	}
 
@@ -1077,8 +1093,7 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean _deleteRouteSight(int id) 
-	{
+	public static boolean _deleteRouteSight(int id) {
 		return delete(Table.RouteSight.getValue(), id);
 	}
 
@@ -1086,8 +1101,7 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean _deleteCityDataVersion(int id) 
-	{
+	public static boolean _deleteCityDataVersion(int id) {
 		return delete(Table.CityDataVersion.getValue(), id);
 	}
 
@@ -1095,8 +1109,7 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean _deleteSubscription(int id) 
-	{
+	public static boolean _deleteSubscription(int id) {
 		return delete(Table.Subscription.getValue(), id);
 	}
 
@@ -1104,8 +1117,7 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean _deleteOneTimePurchase(int id) 
-	{
+	public static boolean _deleteOneTimePurchase(int id) {
 		return delete(Table.OneTimePurchase.getValue(), id);
 	}
 
@@ -1121,11 +1133,11 @@ public class Database {
 	 * @param gt: A finished SQL query to run.
 	 * @return: returns the list of the results.
 	 */
-	private static ArrayList<Integer> queryToList(PreparedStatement gt){
+	private static ArrayList<Integer> queryToList(PreparedStatement gt) {
 		try {
 			ResultSet res = gt.executeQuery();
 			ArrayList<Integer> IDs = new ArrayList<>();
-			while (res.next()) 
+			while (res.next())
 				IDs.add(res.getInt("ID"));
 			return IDs;
 		} catch (Exception e) {
@@ -1137,6 +1149,7 @@ public class Database {
 
 	/**
 	 * search function. if a parameter is null, we ignore it.
+	 * 
 	 * @param placeName
 	 * @param placeDescription
 	 * @param cityId
@@ -1155,15 +1168,15 @@ public class Database {
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (placeName != null) 
+			if (placeName != null)
 				gt.setString(counter++, placeName);
-			
-			if (placeDescription != null) 
-				gt.setString(counter++, "%"+placeDescription+"%");
-				
-			if (cityId != null) 
+
+			if (placeDescription != null)
+				gt.setString(counter++, "%" + placeDescription + "%");
+
+			if (cityId != null)
 				gt.setInt(counter++, cityId);
-				
+
 			return queryToList(gt);
 		} catch (Exception e) {
 			closeConnection();
@@ -1174,6 +1187,7 @@ public class Database {
 
 	/**
 	 * search function. if a parameter is null, we ignore it.
+	 * 
 	 * @param cityId
 	 * @param name
 	 * @param info
@@ -1196,16 +1210,16 @@ public class Database {
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (cityId != null)
 				gt.setInt(counter++, cityId);
-			
-			if (name != null) 
+
+			if (name != null)
 				gt.setString(counter++, name);
-			
-			if (info != null) 
+
+			if (info != null)
 				gt.setString(counter++, info);
-			
-			if (imgURL != null) 
+
+			if (imgURL != null)
 				gt.setString(counter++, imgURL);
-			
+
 			return queryToList(gt);
 		} catch (Exception e) {
 			closeConnection();
@@ -1216,6 +1230,7 @@ public class Database {
 
 	/**
 	 * search function. if a parameter is null, we ignore it.
+	 * 
 	 * @param cityId
 	 * @param info
 	 * @return: the result list.
@@ -1230,12 +1245,12 @@ public class Database {
 				sql += "Info=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (cityId != null) 
+			if (cityId != null)
 				gt.setInt(counter++, cityId);
-			
-			if (info != null) 
+
+			if (info != null)
 				gt.setString(counter++, info);
-			
+
 			return queryToList(gt);
 
 		} catch (Exception e) {
@@ -1247,6 +1262,7 @@ public class Database {
 
 	/**
 	 * search function. if a parameter is null, we ignore it.
+	 * 
 	 * @param cityName
 	 * @param cityDescription
 	 * @return: the result list.
@@ -1258,16 +1274,16 @@ public class Database {
 			if (cityName != null)
 				sql += "Name=? AND ";
 			if (cityDescription != null)
-				sql += "Description=? AND ";
+				sql += "(Description LIKE ?) AND ";
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (cityName != null) 
+			if (cityName != null)
 				gt.setString(counter++, cityName);
 
 			if (cityDescription != null)
-				gt.setString(counter++, cityDescription);
-				
+				gt.setString(counter++, "%" + cityDescription + "%");
+
 			return queryToList(gt);
 
 		} catch (Exception e) {
@@ -1279,9 +1295,10 @@ public class Database {
 
 	/**
 	 * search function. if a parameter is null, we ignore it.
+	 * 
 	 * @param userName
 	 * @param password
-	 * @param table: user type
+	 * @param          table: user type
 	 * @return: the result list.
 	 */
 	private static ArrayList<Integer> searchUser(String userName, String password, String table) {
@@ -1295,12 +1312,12 @@ public class Database {
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (userName != null) 
+			if (userName != null)
 				gt.setString(counter++, userName);
-			
-			if (password != null) 
+
+			if (password != null)
 				gt.setString(counter++, password);
-			
+
 			return queryToList(gt);
 
 		} catch (Exception e) {
@@ -1312,6 +1329,7 @@ public class Database {
 
 	/**
 	 * search function. if a parameter is null, we ignore it.
+	 * 
 	 * @param userName
 	 * @param password
 	 * @return: the result list.
@@ -1322,6 +1340,7 @@ public class Database {
 
 	/**
 	 * search function. if a parameter is null, we ignore it.
+	 * 
 	 * @param userName
 	 * @param password
 	 * @return: the result list.
@@ -1332,6 +1351,7 @@ public class Database {
 
 	/**
 	 * search function. if a parameter is null, we ignore it.
+	 * 
 	 * @param mapId
 	 * @param placeId
 	 * @return: the result list.
@@ -1347,12 +1367,12 @@ public class Database {
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (mapId != null) 
+			if (mapId != null)
 				gt.setInt(counter++, mapId);
-			
-			if (placeId != null) 
+
+			if (placeId != null)
 				gt.setInt(counter++, placeId);
-			
+
 			return queryToList(gt);
 
 		} catch (Exception e) {
@@ -1364,6 +1384,7 @@ public class Database {
 
 	/**
 	 * search function. if a parameter is null, we ignore it.
+	 * 
 	 * @param routeId
 	 * @param placeId
 	 * @param numStop
@@ -1382,15 +1403,15 @@ public class Database {
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (routeId != null) 
+			if (routeId != null)
 				gt.setInt(counter++, routeId);
-			
-			if (placeId != null) 
+
+			if (placeId != null)
 				gt.setInt(counter++, placeId);
-		
-			if (numStop != null) 
+
+			if (numStop != null)
 				gt.setInt(counter++, numStop);
-			
+
 			return queryToList(gt);
 
 		} catch (Exception e) {
@@ -1402,6 +1423,7 @@ public class Database {
 
 	/**
 	 * search function. if a parameter is null, we ignore it.
+	 * 
 	 * @param cityDataVersionId
 	 * @param mapId
 	 * @return: the result list.
@@ -1417,12 +1439,12 @@ public class Database {
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (cityDataVersionId != null) 
+			if (cityDataVersionId != null)
 				gt.setInt(counter++, cityDataVersionId);
-			
-			if (mapId != null) 
+
+			if (mapId != null)
 				gt.setInt(counter++, mapId);
-			
+
 			return queryToList(gt);
 
 		} catch (Exception e) {
@@ -1434,6 +1456,7 @@ public class Database {
 
 	/**
 	 * search function. if a parameter is null, we ignore it.
+	 * 
 	 * @param cityDataVersionId
 	 * @param placeId
 	 * @return: the result list.
@@ -1449,12 +1472,12 @@ public class Database {
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (cityDataVersionId != null) 
+			if (cityDataVersionId != null)
 				gt.setInt(counter++, cityDataVersionId);
-			
-			if (placeId != null) 
+
+			if (placeId != null)
 				gt.setInt(counter++, placeId);
-			
+
 			return queryToList(gt);
 
 		} catch (Exception e) {
@@ -1466,6 +1489,7 @@ public class Database {
 
 	/**
 	 * search function. if a parameter is null, we ignore it.
+	 * 
 	 * @param cityDataVersionId
 	 * @param routeId
 	 * @param isFavorite
@@ -1484,15 +1508,15 @@ public class Database {
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (cityDataVersionId != null) 
+			if (cityDataVersionId != null)
 				gt.setInt(counter++, cityDataVersionId);
-			
-			if (routeId != null) 
+
+			if (routeId != null)
 				gt.setInt(counter++, routeId);
-			
-			if (isFavorite != null) 
+
+			if (isFavorite != null)
 				gt.setBoolean(counter++, isFavorite);
-			
+
 			return queryToList(gt);
 
 		} catch (Exception e) {
@@ -1504,6 +1528,7 @@ public class Database {
 
 	/**
 	 * search function. if a parameter is null, we ignore it.
+	 * 
 	 * @param cityId
 	 * @return: the result list.
 	 */
@@ -1516,9 +1541,9 @@ public class Database {
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (cityId != null) 
+			if (cityId != null)
 				gt.setInt(counter++, cityId);
-			
+
 			return queryToList(gt);
 
 		} catch (Exception e) {
@@ -1530,14 +1555,17 @@ public class Database {
 
 	/**
 	 * search function. if a parameter is null, we ignore it.
+	 * 
 	 * @param userId
 	 * @param cityId
 	 * @param date
 	 * @param active
 	 * @return: the result list.
 	 */
-	public static ArrayList<Integer> searchSubscription(Integer userId, Integer cityId, Date date,
-			Boolean active) // fix this - RON
+	public static ArrayList<Integer> searchSubscription(Integer userId, Integer cityId, Date date, Boolean active) // fix
+																													// this
+																													// -
+																													// RON
 	{
 		try {
 			int counter = 1;
@@ -1553,15 +1581,15 @@ public class Database {
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (userId != null) 
+			if (userId != null)
 				gt.setInt(counter++, userId);
-			
-			if (cityId != null) 
+
+			if (cityId != null)
 				gt.setInt(counter++, cityId);
-			
-			if (date != null) 
+
+			if (date != null)
 				gt.setDate(counter++, date);
-			
+
 			return queryToList(gt);
 
 		} catch (Exception e) {
@@ -1573,6 +1601,7 @@ public class Database {
 
 	/**
 	 * search function. if a parameter is null, we ignore it.
+	 * 
 	 * @param userId
 	 * @param cityId
 	 * @param purchaseDate
@@ -1594,18 +1623,18 @@ public class Database {
 				sql += "WasDownloaded=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
 			PreparedStatement gt = conn.prepareStatement(sql);
-			if (userId != null) 
+			if (userId != null)
 				gt.setInt(counter++, userId);
-			
-			if (cityId != null) 
+
+			if (cityId != null)
 				gt.setInt(counter++, cityId);
-			
-			if (purchaseDate != null) 
+
+			if (purchaseDate != null)
 				gt.setDate(counter++, purchaseDate);
-			
-			if (wasDownload != null) 
+
+			if (wasDownload != null)
 				gt.setBoolean(counter++, wasDownload);
-			
+
 			return queryToList(gt);
 
 		} catch (Exception e) {
@@ -1617,12 +1646,13 @@ public class Database {
 
 	/**
 	 * search function. if a parameter is null, we ignore it.
+	 * 
 	 * @param cityId
 	 * @param date
 	 * @param dateFrom
 	 * @param dateEnd
 	 * @return: the result list.
-
+	 * 
 	 */
 	public static ArrayList<Integer> searchStatistic(Integer cityId, Date date, Date dateFrom, Date dateEnd) {
 		try {
@@ -1660,12 +1690,12 @@ public class Database {
 
 	/**
 	 * returns the row with id=id on table.
+	 * 
 	 * @param table: where to look
 	 * @param id: target ID
 	 * @return: last element from resultset
 	 */
-	private static ResultSet get(String table, int id)
-	{
+	private static ResultSet get(String table, int id) {
 		try {
 			String sql = "SELECT * FROM " + table + " WHERE ID=?";
 			PreparedStatement gt = conn.prepareStatement(sql);
@@ -1681,16 +1711,18 @@ public class Database {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * builds an object from the entry with this id.
+	 * 
 	 * @param id
 	 * @return: the new object
 	 */
 	public static PlaceOfInterest getPlaceOfInterestById(int id) {
 		try {
 			ResultSet res = get(Table.PlaceOfInterest.getValue(), id);
-			if(res == null) return null;
+			if (res == null)
+				return null;
 			return PlaceOfInterest._createPlaceOfInterest(res.getInt("ID"), res.getInt("CityID"), res.getString("Name"),
 					PlaceOfInterest.PlaceType.values()[res.getInt("Type")], res.getString("Description"),
 					res.getInt("ATD") != 0);
@@ -1703,13 +1735,15 @@ public class Database {
 
 	/**
 	 * builds an object from the entry with this id.
+	 * 
 	 * @param id
 	 * @return: the new object
 	 */
 	public static Map getMapById(int id) {
 		try {
 			ResultSet res = get(Table.Map.getValue(), id);
-			if(res == null) return null;
+			if (res == null)
+				return null;
 			return Map._createMap(res.getInt("ID"), res.getInt("CityID"), res.getString("Name"), res.getString("Info"),
 					res.getString("imgURL"));
 		} catch (Exception e) {
@@ -1721,13 +1755,15 @@ public class Database {
 
 	/**
 	 * builds an object from the entry with this id.
+	 * 
 	 * @param id
 	 * @return: the new object
 	 */
 	public static Route getRouteById(int id) {
 		try {
 			ResultSet res = get(Table.Route.getValue(), id);
-			if(res == null) return null;
+			if (res == null)
+				return null;
 			return Route._createRoute(res.getInt("ID"), res.getInt("CityID"), res.getString("Info"));
 		} catch (Exception e) {
 			closeConnection();
@@ -1738,15 +1774,17 @@ public class Database {
 
 	/**
 	 * builds an object from the entry with this id.
+	 * 
 	 * @param id
 	 * @return: the new object
 	 */
 	public static City getCityById(int id) {
 		try {
 			ResultSet res = get(Table.City.getValue(), id);
-			if(res == null) return null;
+			if (res == null)
+				return null;
 			return City._createCity(res.getInt("ID"), res.getString("Name"), res.getString("Description"),
-					res.getInt("VersionID") == -1 ? null : res.getInt("VersionID") );
+					res.getInt("VersionID") == -1 ? null : res.getInt("VersionID"));
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
@@ -1756,13 +1794,15 @@ public class Database {
 
 	/**
 	 * builds an object from the entry with this id.
+	 * 
 	 * @param id
 	 * @return: the new object
 	 */
 	public static Customer getCustomerById(int id) {
 		try {
 			ResultSet res = get(Table.Customer.getValue(), id);
-			if(res == null) return null;
+			if (res == null)
+				return null;
 			return Customer._createCustomer(res.getInt("ID"), res.getString("Username"), res.getString("Password"),
 					res.getString("Email"), res.getString("FirstName"), res.getString("LastName"),
 					res.getString("PhoneNumber"));
@@ -1775,13 +1815,15 @@ public class Database {
 
 	/**
 	 * builds an object from the entry with this id.
+	 * 
 	 * @param id
 	 * @return: the new object
 	 */
 	public static Employee getEmployeeById(int id) {
 		try {
 			ResultSet res = get(Table.Employee.getValue(), id);
-			if(res == null) return null;
+			if (res == null)
+				return null;
 			return Employee._createEmployee(res.getInt("ID"), res.getString("Username"), res.getString("Password"),
 					res.getString("Email"), res.getString("FirstName"), res.getString("LastName"),
 					res.getString("PhoneNumber"), Employee.Role.values()[res.getInt("Role")]);
@@ -1794,13 +1836,15 @@ public class Database {
 
 	/**
 	 * builds an object from the entry with this id.
+	 * 
 	 * @param id
 	 * @return: the new object
 	 */
 	public static Location _getLocationById(int id) {
 		try {
 			ResultSet res = get(Table.Location.getValue(), id);
-			if(res == null) return null;
+			if (res == null)
+				return null;
 			double[] coordinates = { res.getInt("x"), res.getInt("y") };
 			return Location._createLocation(res.getInt("ID"), res.getInt("MapID"), res.getInt("POIID"), coordinates);
 		} catch (Exception e) {
@@ -1812,13 +1856,15 @@ public class Database {
 
 	/**
 	 * builds an object from the entry with this id.
+	 * 
 	 * @param id
 	 * @return: the new object
 	 */
 	public static RouteStop _getRouteStopById(int id) {
 		try {
 			ResultSet res = get(Table.PlaceOfInterest.getValue(), id);
-			if(res == null) return null;
+			if (res == null)
+				return null;
 			return RouteStop._createRouteStop(res.getInt("ID"), res.getInt("RouteID"), res.getInt("PlaceID"),
 					res.getInt("NumStops"), res.getTime("Time"));
 		} catch (Exception e) {
@@ -1830,13 +1876,15 @@ public class Database {
 
 	/**
 	 * builds an object from the entry with this id.
+	 * 
 	 * @param id
 	 * @return: the new object
 	 */
 	public static MapSight _getMapSightById(int id) {
 		try {
 			ResultSet res = get(Table.MapSight.getValue(), id);
-			if(res == null) return null;
+			if (res == null)
+				return null;
 			return MapSight._createMapSight(res.getInt("ID"), res.getInt("MapID"), res.getInt("CityDataVersionID"));
 		} catch (Exception e) {
 			closeConnection();
@@ -1847,13 +1895,15 @@ public class Database {
 
 	/**
 	 * builds an object from the entry with this id.
+	 * 
 	 * @param id
 	 * @return: the new object
 	 */
 	public static PlaceOfInterestSight _getPlaceOfInterestSightById(int id) {
 		try {
 			ResultSet res = get(Table.PlaceOfInterestSight.getValue(), id);
-			if(res == null) return null;
+			if (res == null)
+				return null;
 			return PlaceOfInterestSight._PlaceOfInterestSight(res.getInt("ID"), res.getInt("CityDataVersions"),
 					res.getInt("POIID"));
 		} catch (Exception e) {
@@ -1865,13 +1915,15 @@ public class Database {
 
 	/**
 	 * builds an object from the entry with this id.
+	 * 
 	 * @param id
 	 * @return: the new object
 	 */
 	public static RouteSight _getRouteSightById(int id) {
 		try {
 			ResultSet res = get(Table.RouteSight.getValue(), id);
-			if(res == null) return null;
+			if (res == null)
+				return null;
 			return RouteSight._createRouteSight(res.getInt("ID"), res.getInt("CityDataVersions"), res.getInt("RouteID"),
 					res.getBoolean("IsFavorite"));
 		} catch (Exception e) {
@@ -1883,6 +1935,7 @@ public class Database {
 
 	/**
 	 * builds an object from the entry with this id.
+	 * 
 	 * @param id
 	 * @return: the new object
 	 */
@@ -1900,6 +1953,7 @@ public class Database {
 
 	/**
 	 * builds an object from the entry with this id.
+	 * 
 	 * @param id
 	 * @return: the new object
 	 */
@@ -1918,6 +1972,7 @@ public class Database {
 
 	/**
 	 * builds an object from the entry with this id.
+	 * 
 	 * @param id
 	 * @return: the new object
 	 */
@@ -1936,6 +1991,7 @@ public class Database {
 
 	/**
 	 * builds an object from the entry with this id.
+	 * 
 	 * @param id
 	 * @return: the new object
 	 */
@@ -1951,9 +2007,10 @@ public class Database {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#finalize()
-	 * clean the connection when finished.
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#finalize() clean the connection when finished.
 	 */
 	@Override
 	protected void finalize() throws Throwable {
