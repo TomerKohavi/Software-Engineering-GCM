@@ -351,7 +351,6 @@ public class HomePageController {
     	    public void handle(MouseEvent click) {
     	    	if (!Connector.unpublished)
     	    		return;
-    	    	System.out.println(boundsInScene.getMinX() + " " + boundsInScene.getMinY());
     	    	if (AddPOILocButton.isVisible()) {
     	    		mainPane.getChildren().remove(mainPane.getChildren().size() - 1);
     	    	}
