@@ -41,7 +41,7 @@ public class HomePageController {
 	
 	static private boolean show_map = false;
 
-	 @FXML // fx:id="mainPane"
+	@FXML // fx:id="mainPane"
     private AnchorPane mainPane; // Value injected by FXMLLoader
 
     @FXML // fx:id="MapNotValid"
@@ -164,6 +164,9 @@ public class HomePageController {
     @FXML // fx:id="LoadingGif"
     private ImageView LoadingGif; // Value injected by FXMLLoader
 
+    
+    
+    
     void startLoad() throws FileNotFoundException {
     	mainPane.setDisable(true);
     	Random r = new Random();
@@ -293,9 +296,9 @@ public class HomePageController {
     	    public void handle(MouseEvent click) {
 
     	        if (click.getClickCount() == 2) {
-    	           String currentItemSelected = MainList.getSelectionModel()
-    	                                                    .getSelectedItem();
-    	           if (currentItemSelected != null) {
+    	           int selectedIndex = MainList.getSelectionModel().getSelectedIndex();
+                    if (selectedIndex >= 0) {
+                       City city = Connector.searchCityResult.get(selectedIndex);
     	        	   InfoPane.setVisible(true);
     	        	   if (Connector.listType.equals("City")) { // City 
     	        		   fillCityInfo(currentItemSelected);
@@ -338,7 +341,6 @@ public class HomePageController {
     	        		   ViewPurchaseHistoryButton.setVisible(true);
     	        		   EditButton.setDisable(false);
     	        		   RemoveButton.setDisable(false);
-    	        		   // add purchase history
     	        	   }
     	           }
     	        }
