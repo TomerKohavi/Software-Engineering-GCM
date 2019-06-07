@@ -964,7 +964,7 @@ public class Database {
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityId());
 				su.setDate(2, (Date) p.getDate());
-				su.setInt(3, p.getNumOneTimePurchases()); // fix here - RON
+				su.setInt(3, p.getNumOneTimePurchases());
 				su.setInt(4, p.getNumSubscriptions());
 				su.setInt(5, p.getNumSubscriptionsRenewal());
 				su.setInt(6, p.getNumVisited());
@@ -973,7 +973,7 @@ public class Database {
 				return true;
 			} else {
 				String sql = "INSERT INTO " + Table.OneTimePurchase.getValue()
-						+ " (ID,CityID, Date, NOTP, NS, NSR, NV) VALUES (?, ?, ?, ?, ?, ?, ?)";
+						+ " (ID, CityID, Date, NOTP, NS, NSR, NV) VALUES (?, ?, ?, ?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getId());
 				su.setInt(2, p.getCityId());
@@ -1151,7 +1151,7 @@ public class Database {
 
 	/**
 	 * search function. if a parameter is null, we ignore it.
-	 * 
+	 * When searching by description, we look for a POI such that every word from the query description is a substring of the POI description.
 	 * @param placeName
 	 * @param placeDescription
 	 * @param cityId
@@ -1160,11 +1160,14 @@ public class Database {
 	public static ArrayList<Integer> searchPlaceOfInterest(String placeName, String placeDescription, Integer cityId) {
 		try {
 			int counter = 1;
+			String[] words = placeDescription.split(" ");
+			int len = words.length;
 			String sql = "SELECT ID FROM " + Table.PlaceOfInterest.getValue() + " WHERE ";
 			if (placeName != null)
 				sql += "Name=? AND ";
 			if (placeDescription != null)
-				sql += "(Description LIKE ?) AND ";
+				for(int i=0 ; i<len ; i++)
+					sql += "(Description LIKE ?) AND";
 			if (cityId != null)
 				sql += "CityID=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
@@ -1174,7 +1177,8 @@ public class Database {
 				gt.setString(counter++, placeName);
 
 			if (placeDescription != null)
-				gt.setString(counter++, "%" + placeDescription + "%");
+				for(int i=0 ; i<len ; i++)
+					gt.setString(counter++, "%" + words[i] + "%");
 
 			if (cityId != null)
 				gt.setInt(counter++, cityId);
@@ -1264,7 +1268,7 @@ public class Database {
 
 	/**
 	 * search function. if a parameter is null, we ignore it.
-	 * 
+	 * When searching by description, we look for a city such that every word from the query description is in the city description.
 	 * @param cityName
 	 * @param cityDescription
 	 * @return: the result list.
@@ -1272,11 +1276,15 @@ public class Database {
 	public static ArrayList<Integer> searchCity(String cityName, String cityDescription) {
 		try {
 			int counter = 1;
+			String[] words = cityDescription.split(" ");
+			int len = words.length;
 			String sql = "SELECT ID FROM " + Table.City.getValue() + " WHERE ";
 			if (cityName != null)
 				sql += "Name=? AND ";
 			if (cityDescription != null)
-				sql += "(Description LIKE ?) AND ";
+				for(int i=0 ; i<len ; i++)
+					sql += "(Description LIKE ?) AND";
+			
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
@@ -1284,7 +1292,8 @@ public class Database {
 				gt.setString(counter++, cityName);
 
 			if (cityDescription != null)
-				gt.setString(counter++, "%" + cityDescription + "%");
+				for(int i=0 ; i<len ; i++)
+					gt.setString(counter++, "%" + words[i] + "%");
 
 			return queryToList(gt);
 
