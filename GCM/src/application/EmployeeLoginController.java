@@ -8,7 +8,6 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import classes.User;
-import classes.Employee.Role;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +18,6 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 
 
 public class EmployeeLoginController {

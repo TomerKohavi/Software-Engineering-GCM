@@ -7,8 +7,8 @@ public class Logoff extends Command {
 	}
 
 	public void delete() {
-		this.logoffID = -1;
+		this.logoffID = null;
 	}
 
-	public int logoffID;
+	public Integer logoffID;
 }

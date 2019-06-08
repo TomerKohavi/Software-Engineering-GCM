@@ -62,14 +62,14 @@ public class EmployeeRegisterController {
     }
 
     @FXML
-    void register(ActionEvent event) throws IOException, InterruptedException {
+    void register(ActionEvent event) throws IOException {
     	usr = Username.getText();
     	pass = Password.getText();
     	first = FirstName.getText();
     	last = LastName.getText();
     	emailAdd = Email.getText();
     	phoneNumber = Phone.getText();
-    	Role role = Role.REGULAR; // TODO GET FROM UI
+    	Role role = null; // kohaviGiveMe();
     	if (usr.equals("") || pass.equals("") || first.equals("") || last.equals("") || emailAdd.equals("") || phoneNumber.equals(""))
     	{
     		IncorrectText.setText("Please fill all of the above");

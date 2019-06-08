@@ -1,6 +1,5 @@
 package application;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 
@@ -8,7 +7,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
-import classes.Employee.Role;
 import classes.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,7 +17,6 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 
 public class LoginController {
 	
@@ -86,6 +83,7 @@ public class LoginController {
     		Username.setText("");
     		Password.setText("");
     		IncorrectText.setOpacity(1);
+    		
     	}
     }
     

@@ -12,7 +12,7 @@ public class Main {
 		Date today = new Date(Calendar.getInstance().getTime().getTime());
 		City c=new City("Haifa", "boring city");
 		CityDataVersion cdv=new CityDataVersion(c,"0.11",29.90,132);
-		PlaceOfInterest p=new PlaceOfInterest(c.getId(), "Haifa Universita", PlaceOfInterest.PlaceType.RESTURANT, "gaddddi", false);
+		PlaceOfInterest p=new PlaceOfInterest(c.getId(), "Haifa Universita", PlaceOfInterest.PlaceType.RESTAURANT, "gaddddi", false);
 		p.saveToDatabase();
 		PlaceOfInterestSight ps=new PlaceOfInterestSight(cdv, p);
 		cdv.addPlaceOfInterestSight(ps);

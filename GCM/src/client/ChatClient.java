@@ -29,7 +29,8 @@ import classes.User;
  * @author Fran&ccedil;ois B&eacute;langer
  * @version July 2000
  */
-public class ChatClient extends AbstractClient {
+public class ChatClient extends AbstractClient
+{
 	// Instance variables **********************************************
 
 	/**
@@ -51,14 +52,11 @@ public class ChatClient extends AbstractClient {
 
 	boolean imageReady;
 	ImageTransfer imTr;
-	// Constructors ****************************************************
-	private Role userRole;
 
 	boolean searchReady;
 	Search search;
 
 	Semaphore semaphore;
-	private boolean logoffReady;
 
 	/**
 	 * Constructs an instance of the chat client.
@@ -68,7 +66,8 @@ public class ChatClient extends AbstractClient {
 	 * @param clientUI The interface type variable.
 	 */
 
-	public ChatClient(String host, int port, ChatIF clientUI) throws IOException {
+	public ChatClient(String host, int port, ChatIF clientUI) throws IOException
+	{
 		super(host, port); // Call the superclass constructor
 		this.clientUI = clientUI;
 		openConnection();
@@ -78,7 +77,6 @@ public class ChatClient extends AbstractClient {
 		this.loginReady = false;
 		this.registerIDready = false;
 		this.searchReady = false;
-		this.logoffReady = false;
 		this.semaphore = new Semaphore(0);
 	}
 
@@ -91,18 +89,19 @@ public class ChatClient extends AbstractClient {
 	 * @param clientUI The interface type variable.
 	 */
 
-
-	public User login(String uname, String pass, boolean isEmployee) {
-		try {
+	public User login(String uname, String pass, boolean isEmployee) throws IOException
+	{
+		try
+		{
 			sendToServer(new Login(uname, pass, isEmployee));
 			this.semaphore.acquire();
 			this.user = this.login.loggedUser;
 			this.login = null;
+			System.out.println("login " + this.user);
 			return this.user;
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
-		catch (InterruptedException e) {
+		catch (InterruptedException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -110,68 +109,61 @@ public class ChatClient extends AbstractClient {
 	}
 
 	public User register(String username, String password, String firstName, String lastName, String email,
-			String phone, Role role, boolean isEmployee) throws IOException, InterruptedException {
+			String phone, Role role, boolean isEmployee) throws IOException
+	{
 		sendToServer(new Register(username, password, firstName, lastName, email, phone, role, isEmployee));
-		this.semaphore.acquire();
+		try
+		{
+			this.semaphore.acquire();
+		}
+		catch (InterruptedException e)
+		{
+			System.err.println("semaphore");
+			e.printStackTrace();
+		}
 		this.registerIDready = false;
 		this.user = this.reg.user;
 		return this.reg.user;
 	}
 
-	public void logoff() {
-//		try {
-//			sendToServer(new Logoff(this.user.getId()));
-//			for (int i = 0; !this.logoffReady; i++)
-//				clientUI.display("logoff " + i);
-//			clientUI.display("logoff recived");
-			this.user = null;
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+	public void logoff() throws IOException
+	{
+		sendToServer(new Logoff(this.user.getId()));
+		this.user = null;
 	}
 
-	public BufferedImage getImage(String pathname) {
-		try {
-			sendToServer(new ImageTransfer(pathname, true));
-			for (int i = 0; !this.imageReady; i++)
-				clientUI.display("image " + i);
-			this.imageReady = false;
-			BufferedImage im = this.imTr.getImage();
-			this.imTr = null;
-			return im;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+	public BufferedImage getImage(String pathname) throws IOException
+	{
+		sendToServer(new ImageTransfer(pathname, true));
+		for (int i = 0; !this.imageReady; i++)
+			clientUI.display("image " + i);
+		this.imageReady = false;
+		BufferedImage im = this.imTr.getImage();
+		this.imTr = null;
+		return im;
 	}
 
-	public void sendImage(String pathname) {
-		try {
-			ImageTransfer imTr = new ImageTransfer(pathname, false);
-			imTr.loadImage();
-			sendToServer(imTr);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void sendImage(String pathname) throws IOException
+	{
+		ImageTransfer imTr = new ImageTransfer(pathname, false);
+		imTr.loadImage();
+		sendToServer(imTr);
 	}
 
-	public ArrayList<City> search(String cityName, String cityInfo, String poiName, String poiInfo) {
-		try {
-			sendToServer(new Search(cityName, cityInfo, poiName, poiInfo));
-			for (int i = 0; !this.searchReady; i++)
-				clientUI.display("search " + i);
-			this.searchReady = false;
-			ArrayList<City> cityList = this.search.searchResult;
-			this.search = null;
-			return cityList;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+	public ArrayList<City> search(String cityName, String cityInfo, String poiName, String poiInfo) throws IOException
+	{
+		sendToServer(new Search(cityName, cityInfo, poiName, poiInfo));
+		for (int i = 0; !this.searchReady; i++)
+			clientUI.display("search " + i);
+		this.searchReady = false;
+		ArrayList<City> cityList = this.search.searchResult;
+		this.search = null;
+		return cityList;
+	}
+
+	public void updateUser(User user) throws IOException
+	{
+		sendToServer(user);
 	}
 
 	// Instance methods ***********************************************
@@ -180,21 +172,27 @@ public class ChatClient extends AbstractClient {
 	 *
 	 * @param msg The message from the server.
 	 */
-	public void handleMessageFromServer(Object msg) {
+	public void handleMessageFromServer(Object msg)
+	{
 
-		if (msg instanceof Login) {
+		if (msg instanceof Login)
+		{
 			this.login = (Login) msg;
 			clientUI.display(this.login.name);
 			this.semaphore.release();
-		} else if (msg instanceof Logoff) {
-			this.logoffReady = true;
-		} else if (msg instanceof Register) {
+		}
+		else if (msg instanceof Register)
+		{
 			this.reg = (Register) msg;
 			this.semaphore.release();
-		} else if (msg instanceof ImageTransfer) {
+		}
+		else if (msg instanceof ImageTransfer)
+		{
 			this.imTr = (ImageTransfer) msg;
 			this.imageReady = true;
-		} else if (msg instanceof Search) {
+		}
+		else if (msg instanceof Search)
+		{
 			this.search = (Search) msg;
 			this.searchReady = true;
 		}
@@ -206,10 +204,14 @@ public class ChatClient extends AbstractClient {
 	/**
 	 * This method terminates the client.
 	 */
-	public void quit() {
-		try {
+	public void quit()
+	{
+		try
+		{
 			closeConnection();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 		}
 		System.exit(0);
 	}
@@ -221,13 +223,17 @@ public class ChatClient extends AbstractClient {
 	 *
 	 * @param exception the exception raised.
 	 */
-	protected void connectionException(Exception exception) {
+	protected void connectionException(Exception exception)
+	{
 		exception.printStackTrace();
 		clientUI.display("The connection to the Server (" + getHost() + ", " + getPort() + ") has been disconnected");
 	}
 
-	public static void main(String[] args) throws IOException {
-//		ChatClient client = new ChatClient(Connector.LOCAL_HOST, Connector.PORT, new Console());
+	public static void main(String[] args) throws IOException
+	{
+		ChatClient client = new ChatClient(Connector.LOCAL_HOST, Connector.PORT, new Console());
+		System.out.println(client.login("a", "a", false).getId());
+		client.logoff();
 	}
 }
 // End of ChatClient class

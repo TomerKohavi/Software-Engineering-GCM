@@ -12,13 +12,13 @@ public class Login extends Command {
 		this.pass = pass;
 		this.isEmployee = isEmployee;
 		this.loggedUser = null;
-	}
-	
+	}	
 	
 	public void delete()
 	{
 		name = pass = null;
 		isEmployee = null;
+		
 	}
 	
 	public String name, pass;
