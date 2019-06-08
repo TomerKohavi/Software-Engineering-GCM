@@ -1702,9 +1702,9 @@ public class Database {
 			if (cityId != null)
 				sql += "CityID=? AND ";
 			if (active)
-				sql += "(? BETWEEN PurchaseDate AND ExpDate) AND";
+				sql += "(? BETWEEN PurchaseDate AND ExpDate) AND ";
 			else
-				sql += "(? NOT BETWEEN PurchaseDate AND ExpDate) AND";
+				sql += "(? NOT BETWEEN PurchaseDate AND ExpDate) AND ";
 			sql = sql.substring(0, sql.length() - 4);
 
 			PreparedStatement gt = conn.prepareStatement(sql);
@@ -1789,7 +1789,7 @@ public class Database {
 				sql += "CityDataVersionID=? AND ";
 
 			if (dateFrom != null && dateEnd != null)
-				sql += "(Date BETWEEN ? AND ?) AND";
+				sql += "(Date BETWEEN ? AND ?) AND ";
 
 			else if (date != null)
 				sql += "Date=? AND ";
