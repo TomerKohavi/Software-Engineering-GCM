@@ -1199,7 +1199,9 @@ public class Database {
 	public static ArrayList<Integer> searchPlaceOfInterest(String placeName, String placeDescription, Integer cityId) {
 		try {
 			int counter = 1;
-			String[] words = placeDescription.split(" ");
+			String[] words = {""};
+			if(placeDescription != null)
+				words = placeDescription.split(" ");
 			int len = words.length;
 			String sql = "SELECT ID FROM " + Table.PlaceOfInterest.getValue() + " WHERE ";
 			if (placeName != null)
@@ -1317,7 +1319,9 @@ public class Database {
 	public static ArrayList<Integer> searchCity(String cityName, String cityDescription) {
 		try {
 			int counter = 1;
-			String[] words = cityDescription.split(" ");
+			String[] words = {""};
+			if(cityDescription != null)
+				words = cityDescription.split(" ");
 			int len = words.length;
 			String sql = "SELECT ID FROM " + Table.City.getValue() + " WHERE ";
 			if (cityName != null)
