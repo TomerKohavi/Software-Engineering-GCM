@@ -1,9 +1,12 @@
 package application;
 
+import java.awt.Point;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -28,6 +31,10 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 public class MapEditController {
 
+	private boolean firstPOIAdded = true;
+	
+	private Image realPOI = null;
+	
 	@FXML // fx:id="mainPane"
     private AnchorPane mainPane; // Value injected by FXMLLoader
 
@@ -55,6 +62,9 @@ public class MapEditController {
     @FXML // fx:id="addPOILocButton"
     private JFXButton AddPOILocButton; // Value injected by FXMLLoader
     
+    @FXML // fx:id="RemoveSelectedButton"
+    private JFXButton RemoveSelectedButton; // Value injected by FXMLLoader
+    
     void openNewPage(String FXMLpage) throws IOException {
     	FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLpage));
         Stage stage = new Stage();
@@ -67,7 +77,9 @@ public class MapEditController {
         stage.showAndWait();
     }
     
-    public void initialize() {
+    public void initialize() throws FileNotFoundException {
+    	
+    	realPOI = new Image(new FileInputStream("Pics\\POI.png"));
     	
 //    	if ()  // if its edit, load the data
 //    	{
@@ -76,29 +88,39 @@ public class MapEditController {
 //    		MapImage.setImage();
 //    	}
     	
+    	Bounds boundsInScene = MapImage.localToScene(MapImage.getBoundsInLocal());
+    	
+		List<Point> posList = new ArrayList<Point> ();
+		posList.add(new Point((int) (50 + boundsInScene.getMinX()), (int) (50 + boundsInScene.getMinY())));
+		posList.add(new Point((int) (100 + boundsInScene.getMinX()), (int) (100 + boundsInScene.getMinY())));
+	    for (Point p : posList) {
+	    	POIImage poiImage = new POIImage(false);
+	    	poiImage.image.setX(p.getX());
+	    	poiImage.image.setY(p.getY());
+	        Connector.imageList.add(poiImage);
+	        mainPane.getChildren().add(poiImage.image);
+	    }
+    	
     	MapImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
     	    @Override
     	    public void handle(MouseEvent click) {
-    	    	if (!Connector.unpublished)
-    	    		return;
-    	    	if (AddPOILocButton.isVisible()) {
+    	    	if (!firstPOIAdded) {
     	    		mainPane.getChildren().remove(mainPane.getChildren().size() - 1);
+    	    		Connector.imageList.remove(Connector.imageList.size() - 1);
     	    	}
-        		AddPOILocButton.setVisible(true);
-        		Image image = null;
+    	    	firstPOIAdded = false;
+    	    	POIImage poiImage = null;
 				try {
-					image = new Image(new FileInputStream("Pics\\Add_POI.png"));
+					poiImage = new POIImage(true);
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-        	    ImageView img = new ImageView(image);
-    	    	Bounds boundsInScene = MapImage.localToScene(MapImage.getBoundsInLocal());
-    	    	img.setX(click.getX() + boundsInScene.getMinX() - 15);
-    	    	img.setY(click.getY() + boundsInScene.getMinY() - 32);
-    	        Connector.imageList.add(img);
-        	    mainPane.getChildren().add(img);
+    	    	poiImage.image.setX((click.getX() + boundsInScene.getMinX() - 15));
+    	    	poiImage.image.setY((click.getY() + boundsInScene.getMinY() - 32));
+    	        Connector.imageList.add(poiImage);
+        	    mainPane.getChildren().add(poiImage.image);
         	}
     	});
     	
@@ -116,8 +138,6 @@ public class MapEditController {
         	Image image = new Image(inputstream);
         	MapImage.setImage(image);
     	}
-    	
-    	
     }
 
     @FXML
@@ -125,16 +145,41 @@ public class MapEditController {
 //    	Name.getText();
 //		InfoBox.getText();
 //		MapImage.getImage();
+    	
+    	if (!firstPOIAdded) {
+    		mainPane.getChildren().remove(mainPane.getChildren().size() - 1);
+    		Connector.imageList.remove(Connector.imageList.size() - 1);
+    	}
+    	Connector.imageList.clear();
     	mainPane.getScene().getWindow().hide();
     }
     
     @FXML
     void addPOILoc(ActionEvent event) throws IOException {
     	openNewPage("ChoosePOIScene.fxml");
+    	if (true) { // didn't cancel
+    		Connector.imageList.get(Connector.imageList.size() - 1).image.setImage(realPOI);
+    		Connector.imageList.get(Connector.imageList.size() - 1).isNew = false;
+    		firstPOIAdded = true;
+    	}
+    }
+    
+    @FXML
+    void removeSelected(ActionEvent event) {
+    	for (POIImage img : Connector.removablePOIList) {
+	    	mainPane.getChildren().remove(img.image);
+	    	Connector.imageList.remove(img);
+    	}
+	    Connector.removablePOIList.clear();
     }
 
     @FXML
     void goBack(ActionEvent event) {
+    	if (!firstPOIAdded) {
+    		mainPane.getChildren().remove(mainPane.getChildren().size() - 1);
+    		Connector.imageList.remove(Connector.imageList.size() - 1);
+    	}
+    	Connector.imageList.clear();
     	mainPane.getScene().getWindow().hide();
     }
 
