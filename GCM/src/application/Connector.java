@@ -6,14 +6,18 @@ import java.util.List;
 import com.jfoenix.controls.JFXButton;
 
 import javafx.scene.image.ImageView;
+import classes.City;
 import classes.Employee.Role;
+import classes.MapSight;
+import classes.PlaceOfInterestSight;
+import classes.RouteSight;
+import classes.User;
 import javafx.stage.Stage;
 import client.ChatClient;
 
 public class Connector {
 	
-	public static int usr_id = -1;
-	public static Role usr_role;
+	public static User user;
 	
 	public static Stage mainStage;
 	
@@ -31,15 +35,9 @@ public class Connector {
 	
 	public static List<ImageView> imageList = new ArrayList<ImageView> ();
 	
-//	static void loadPage(AnchorPane pane, String FXMLpage) throws IOException
-//	{
-//		FXMLLoader loader = new FXMLLoader(getClass().getResource("Sample2Scene.fxml"));  
-//        Stage stage = new Stage();
-//        stage.initOwner(pane.getScene().getWindow());
-//        stage.setScene(new Scene((Parent) loader.load()));
-//
-//        // showAndWait will block execution until the window closes...
-//        stage.showAndWait();
-//	}
+	public static ArrayList<City> searchCityResult;
+	public static ArrayList<MapSight> searchMapResult;
+	public static ArrayList<PlaceOfInterestSight> searchPOIResult;
+	public static ArrayList<RouteSight> searchRouteResult;
 	
 }

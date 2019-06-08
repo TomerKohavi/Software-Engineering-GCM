@@ -995,7 +995,7 @@ public class Database {
 		try {
 			if (existStatistic(p.getId())) {
 				String sql = "UPDATE " + Table.OneTimePurchase.getValue()
-						+ " SET CityID=?, Date=?, NOTP=?, NS=?, NR=?, NV=? WHERE ID=?";
+						+ " SET CityID=?, Date=?, NOTP=?, NS=?, NR=?, NV=?, NSD=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityId());
 				su.setDate(2, (Date) p.getDate());
@@ -1003,12 +1003,13 @@ public class Database {
 				su.setInt(4, p.getNumSubscriptions());
 				su.setInt(5, p.getNumSubscriptionsRenewal());
 				su.setInt(6, p.getNumVisited());
-				su.setInt(7, p.getId());
+				su.setInt(7, p.getNumSubDownloads());
+				su.setInt(8, p.getId());
 				su.executeUpdate();
 				return true;
 			} else {
 				String sql = "INSERT INTO " + Table.OneTimePurchase.getValue()
-						+ " (ID, CityID, Date, NOTP, NS, NSR, NV) VALUES (?, ?, ?, ?, ?, ?, ?)";
+						+ " (ID, CityID, Date, NOTP, NS, NSR, NV, NSD) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getId());
 				su.setInt(2, p.getCityId());
@@ -1017,6 +1018,7 @@ public class Database {
 				su.setInt(5, p.getNumSubscriptions());
 				su.setInt(6, p.getNumSubscriptionsRenewal());
 				su.setInt(7, p.getNumVisited());
+				su.setInt(8, p.getNumSubDownloads());				
 				su.executeUpdate();
 				return false;
 			}
@@ -2057,7 +2059,7 @@ public class Database {
 		try {
 			ResultSet res = get(Table.Statistic.getValue(), id);
 			return Statistic._createStatistic(res.getInt("ID"), res.getInt("CityID"), res.getDate("Date"),
-					res.getInt("NOTP"), res.getInt("NS"), res.getInt("NSR"), res.getInt("NV"));
+					res.getInt("NOTP"), res.getInt("NS"), res.getInt("NSR"), res.getInt("NV"), res.getInt("NSD"));
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();

@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import classes.Employee.Role;
+import classes.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -74,11 +75,10 @@ public class LoginController {
     void login(ActionEvent event) throws IOException {
     	user = Username.getText();
     	pass = Password.getText();
-    	Pair<Integer, Role> login_ans = Connector.client.login(user, pass, false);
-    	if (login_ans.getKey() >= 0)
+    	User loggedUser = Connector.client.login(user, pass, false);
+    	if (loggedUser != null)
     	{
-    		Connector.usr_id = login_ans.getKey();
-    		Connector.usr_role = null;
+    		Connector.user = loggedUser;
     		loadPage("HomePageScene.fxml");
     	}
     	else

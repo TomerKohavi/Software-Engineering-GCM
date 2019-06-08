@@ -4,10 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public final class SearchCatalog {
-	private SearchCatalog() {
-	}
-
-	public ArrayList<City> SearchCity(String cityName, String cityDescription, String placeName,
+	public static ArrayList<City> SearchCity(String cityName, String cityDescription, String placeName,
 			String placeDescription) // they can be null
 	{
 		if (cityName == null && cityDescription == null && placeName == null && placeDescription == null)
@@ -20,8 +17,7 @@ public final class SearchCatalog {
 			for (int id : citiesIds) {
 				City c = Database.getCityById(id);
 				if (c != null)
-					;
-				result.add(c);
+					result.add(c);
 			}
 			return result;
 		}
@@ -37,8 +33,7 @@ public final class SearchCatalog {
 			for (int id : citiesIds) {
 				City c = Database.getCityById(id);
 				if (c != null)
-					;
-				result.add(c);
+					result.add(c);
 			}
 			return result;
 		}
@@ -52,8 +47,7 @@ public final class SearchCatalog {
 		for (int id : citiesIds) {
 			City c = Database.getCityById(id);
 			if (c != null)
-				;
-			result.add(c);
+				result.add(c);
 		}
 		return result;
 	}

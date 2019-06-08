@@ -1,23 +1,19 @@
 package io_commands;
 
-import classes.Employee.Role;
+import classes.User;
+import javafx.util.Pair;
 
 public class Login extends Command {
 
-	public Login(String name, String pass, boolean isEmployee)
+	public Login(String name, String pass, Boolean isEmployee)
 	{
 		super();
 		this.name = name;
 		this.pass = pass;
 		this.isEmployee = isEmployee;
-		this.id = -1;
-		this.role = null;
+		this.loggedUser = null;
 	}
 	
-	public String toString()
-	{
-		return name + '|' + pass + "--" + id;
-	}
 	
 	public void delete()
 	{
@@ -26,7 +22,6 @@ public class Login extends Command {
 	}
 	
 	public String name, pass;
-	public int id;
+	public User loggedUser;
 	public Boolean isEmployee;
-	public Role role;
 }
