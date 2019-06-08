@@ -45,3 +45,5 @@
 /mysql-connector-java-8.0.16.jar
 /ocsf/
 /TestExample.class
+/CitySearchTestSingle.class
+/CitySearchTestTable.class
