@@ -21,8 +21,6 @@ public class CitySearchTestSingle {
 			
 			private static PlaceOfInterest createAndAddPOI(City c,String name,String info,boolean publish)
             {
-            	Random rand = new Random();
-        		int randomNum=rand.nextInt(9999);
         		CityDataVersion cdv=new CityDataVersion(c, "1.0", 100, 200);
         		if(publish)
         			c.addPublishedCityDataVersion(cdv);
