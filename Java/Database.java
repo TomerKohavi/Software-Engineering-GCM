@@ -147,9 +147,27 @@ public class Database {
 			closeConnection();
 			e.printStackTrace();
 		}
-
 	}
-
+	
+	public static void initDataBase(String name, String pass) {
+        try { 
+        	Database.createConnection();
+        	//reset
+        	Database.resetAll(name, pass);
+        	//start insert
+        	
+  
+        }
+        catch (Exception e) {
+			closeConnection();
+			e.printStackTrace();
+		}
+        finally
+        { 
+            Database.closeConnection();
+        }
+	}
+	
 	// generate ID's
 
 	/**
