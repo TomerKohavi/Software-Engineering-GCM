@@ -3,11 +3,14 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.security.MessageDigest;
 
 
 import javax.xml.bind.DatatypeConverter;
+
+import PlaceOfInterest.PlaceType;
 
 /**
  * @author tal20
@@ -156,10 +159,48 @@ public class Database {
         	Database.resetAll(name, pass);
         	//start insert
         	
-  
+        	//create cities
+        	City c1=new City("haifa", "The third largest city in Israel. As of 2016, the city is a major seaport located on Israel's Mediterranean coastline in the Bay of Haifa covering 63.7 square kilometres.");
+        	CityDataVersion cdv=new CityDataVersion(c1, "1.0", 20, 100.9);
+        	PlaceOfInterest p=new PlaceOfInterest(c1.getId(),"University of Haifa", PlaceOfInterest.PlaceType.MUSEUM, "A public research university on the top of Mount Carmel in Haifa, Israel. The university was founded in 1963 by the mayor of its host city, Abba Hushi, to operate under the academic auspices of the Hebrew University of Jerusalem.", false);
+        	p.saveToDatabase();
+        	PlaceOfInterestSight ps=new PlaceOfInterestSight(cdv, p);
+        	cdv.addPlaceOfInterestSight(ps);
+        	Map m=new Map(c1.getId(), "central city", "large map", "example.url");
+        	double[] coords= {21.3,58.7};
+        	Location l=new Location(m, p,coords);
+        	m.addLocation(l);
+        	m.saveToDatabase();
+        	MapSight ms=new MapSight(cdv, m);
+        	cdv.addMapSight(ms);
+        	Route r=new Route(c1.getId(), "small route");
+        	RouteStop rstop1=new RouteStop(r, p, new Time(1, 2, 31));
+        	r.addRouteStop(rstop1);
+        	RouteStop rstop2=new RouteStop(r, p, new Time(3, 2, 31));
+        	r.addRouteStop(rstop2);
+        	r.saveToDatabase();
+        	RouteSight rs=new RouteSight(cdv, r, true);
+        	cdv.addRouteSight(rs);
+        	
+        	
+        	c1.addPublishedCityDataVersion(cdv);
+        	c1.saveToDatabase();
+        	
+        	//create Users
+        	Employee e=new Employee("Lior33", "12345", "lior@gmail.com", "lior", "vismun", "0521234567", Employee.Role.CEO);
+        	e.saveToDatabase();
+        	Customer cust=new Customer("yosi11", "67890", "yosi@gmail.com", "yosi", "ben asser", "052111111111");
+        	Subscription sub=new Subscription(cust, c1, new Date(119, 8, 6), 201.8, 199.9, new Date(119, 10,8));
+        	cust.addSubscription(sub);
+        	
+        	OneTimePurchase otp=new OneTimePurchase(cust, c1, new Date(119, 8, 6), 20, 19);
+        	otp.updateToWasDownload();
+        	cust.addOneTimePurchase(otp);
+        	cust.saveToDatabase();
+        	
+        	
         }
         catch (Exception e) {
-			closeConnection();
 			e.printStackTrace();
 		}
         finally
