@@ -1199,18 +1199,14 @@ public class Database {
 	public static ArrayList<Integer> searchPlaceOfInterest(String placeName, String placeDescription, Integer cityId) {
 		try {
 			int counter = 1;
-			String[] words = {};
-			int len = 0;
+			String[] words = placeDescription.split(" ");
+			int len = words.length;
 			String sql = "SELECT ID FROM " + Table.PlaceOfInterest.getValue() + " WHERE ";
 			if (placeName != null)
 				sql += "Name=? AND ";
 			if (placeDescription != null)
-				{
-					words = placeDescription.split(" ");
-					len = words.length;
-					for (int i = 0; i < len; i++)
-						sql += "(Description LIKE ?) AND ";
-				}
+				for (int i = 0; i < len; i++)
+					sql += "(Description LIKE ?) AND ";
 			if (cityId != null)
 				sql += "CityID=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
@@ -1321,18 +1317,14 @@ public class Database {
 	public static ArrayList<Integer> searchCity(String cityName, String cityDescription) {
 		try {
 			int counter = 1;
-			String[] words= {};
-			int len=0;
+			String[] words = cityDescription.split(" ");
+			int len = words.length;
 			String sql = "SELECT ID FROM " + Table.City.getValue() + " WHERE ";
 			if (cityName != null)
 				sql += "Name=? AND ";
 			if (cityDescription != null)
-				{
-				words = cityDescription.split(" ");
-				len = words.length;
-					for (int i = 0; i < len; i++)
-						sql += "(Description LIKE ?) AND";
-				}
+				for (int i = 0; i < len; i++)
+					sql += "(Description LIKE ?) AND ";
 
 			sql = sql.substring(0, sql.length() - 4);
 
