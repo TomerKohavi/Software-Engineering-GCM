@@ -20,7 +20,9 @@ public class Connector {
 	
 	public static boolean searchedCity = true;
 	
-	public static List<ImageView> imageList = new ArrayList<ImageView> ();
+	public static List<POIImage> imageList = new ArrayList<POIImage> ();
+	
+	public static List<POIImage> removablePOIList = new ArrayList<POIImage> ();
 	
 	public static boolean unpublished = false;
 	

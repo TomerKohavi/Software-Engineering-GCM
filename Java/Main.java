@@ -8,6 +8,7 @@ public class Main {
 	{
 		Database.createConnection();
 		try {
+			
 			Date today = new Date(Calendar.getInstance().getTime().getTime());
 			City c=new City("Haifa", "boring city");
 			CityDataVersion cdv=new CityDataVersion(c,"0.11",29.90,132);
@@ -56,7 +57,8 @@ public class Main {
 			rs.deleteFromDatabase();
 			cdv2.deleteFromDatabase();
 			
-			Database.resetAll("Tal", "11235813");
+			
+			//Database.resetAll("Tal", "11235813");
 			
 			System.out.println("Ss");
 

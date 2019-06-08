@@ -40,13 +40,15 @@ public final class SearchCatalog {
 			for (int id : placesIds) {
 				PlaceOfInterest p = Database.getPlaceOfInterestById(id);
 				if(p==null) continue;
+				int cityId=p.getCityId();
 				if(useUnpublished)
 				{
-					citiesIds.add(p.getCityId());
+					citiesIds.add(cityId);
 				}
 				else
 				{
-					City c=Database.getCityById(p.getCityId());
+					if(citiesIds.contains(cityId)) continue;
+					City c=Database.getCityById(cityId);
 					if(c==null) continue;
 					CityDataVersion cdv=c.getCopyPublishedVersion();
 					if(cdv==null) continue;

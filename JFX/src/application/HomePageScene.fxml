@@ -92,13 +92,12 @@
             <JFXButton fx:id="ReSubscribeButton" layoutX="250.0" layoutY="547.0" onAction="#callReSubscribe" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Re-Subscribe" visible="false" />
          </children>
       </Pane>
-      <ImageView fx:id="MapImage" fitHeight="600.0" fitWidth="600.0" layoutX="686.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true" visible="false">
+      <ImageView fx:id="MapImage" fitHeight="560.0" fitWidth="560.0" layoutX="706.0" layoutY="219.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../../Pics/No_Image.png" />
          </image>
       </ImageView>
       <JFXButton fx:id="ShowMapButton" layoutX="1116.0" layoutY="745.0" onAction="#showMapImage" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Show Map" visible="false" />
-      <JFXButton fx:id="AddPOILocButton" layoutX="760.0" layoutY="745.0" onAction="#addPOILoc" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Add POI" />
       <JFXDatePicker fx:id="FirstDate" layoutX="724.0" layoutY="231.0" visible="false" />
       <JFXDatePicker fx:id="LastDate" layoutX="927.0" layoutY="231.0" visible="false" />
       <JFXButton fx:id="WatchButton" layoutX="1150.0" layoutY="230.0" onAction="#watch" prefHeight="28.0" prefWidth="79.0" style="-fx-background-color: #41e0d0;" text="Watch" visible="false">
