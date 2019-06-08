@@ -2,6 +2,7 @@ package server;
 
 import classes.*;
 import classes.Employee.Role;
+import client.ChatClient;
 
 import java.awt.image.BufferedImage;
 
@@ -14,9 +15,12 @@ import java.util.ArrayList;
 
 import javax.imageio.*;
 
+import application.Connector;
 import ocsf.server.*;
 import common.*;
+import common.Console;
 import io_commands.*;
+import javafx.scene.chart.PieChart.Data;
 
 /**
  * This class overrides some of the methods in the abstract superclass in order
@@ -28,7 +32,8 @@ import io_commands.*;
  * @author Paul Holden
  * @version July 2000
  */
-public class EchoServer extends AbstractServer {
+public class EchoServer extends AbstractServer
+{
 	// Class variables *************************************************
 
 	/**
@@ -44,7 +49,7 @@ public class EchoServer extends AbstractServer {
 	// Constructors ****************************************************
 
 	ArrayList<Integer> loggedList;
-	
+
 	/**
 	 * Constructs an instance of the echo server.
 	 *
@@ -52,7 +57,8 @@ public class EchoServer extends AbstractServer {
 	 * @param serverUI The interface type variable.
 	 */
 
-	public EchoServer(int port, ChatIF serverUI) throws IOException {
+	public EchoServer(int port, ChatIF serverUI) throws IOException
+	{
 		super(port);
 		this.serverUI = serverUI;
 		Database.createConnection();
@@ -61,39 +67,51 @@ public class EchoServer extends AbstractServer {
 
 	public Login handleLogin(Login login)
 	{
-		serverUI.display(login.name);
-		if (login.isEmployee) {
-			ArrayList<Integer> list = Database.searchEmployee(login.name, login.pass);
-			if (!list.isEmpty()) {
-				login.loggedUser = Database.getEmployeeById(list.get(0));
+		System.out.print("login " + login.name + " ");
+		ArrayList<Integer> list;
+		if (login.isEmployee)
+			list = Database.searchEmployee(login.name, login.pass);
+		else
+			list = Database.searchCustomer(login.name, login.pass);
+		if (!list.isEmpty())
+		{
+			int id = list.get(0);
+			if (!this.loggedList.contains(id))
+			{
+				login.loggedUser = Database.getCustomerById(id);
 				this.loggedList.add(login.loggedUser.getId());
 			}
-		} else {
-			ArrayList<Integer> list = Database.searchCustomer(login.name, login.pass);
-			if (!list.isEmpty()) {
-				login.loggedUser = Database.getCustomerById(list.get(0));
-				this.loggedList.add(login.loggedUser.getId());
-			}
+			else
+				login.loggedUser = null;
 		}
+
+		if (login.loggedUser != null)
+			System.out.println("success");
+		else
+			System.out.println("failure");
 		login.delete();
 		return login;
 	}
-	
+
 	public void handleLogoff(Logoff logoff)
 	{
-		System.out.println("logoff " + logoff.logoffID + " " +this.loggedList.remove(logoff.logoffID));
+		System.out.println("logoff " + logoff.logoffID + " " + this.loggedList.remove(logoff.logoffID));
 	}
 
 	public Register handleRegister(Register reg)
 	{
 		if (Database.searchCustomer(reg.username, null).isEmpty()
-				&& Database.searchEmployee(reg.username, null).isEmpty()) {
-			if (reg.isEmployee) {
+				&& Database.searchEmployee(reg.username, null).isEmpty())
+		{
+			if (reg.isEmployee)
+			{
 				Employee emp = new Employee(reg.username, reg.password, reg.email, reg.firstName, reg.lastName,
 						reg.phone, reg.role);
 				Database.saveEmployee(emp);
 				reg.user = emp;
-			} else {
+			}
+			else
+			{
 				Customer cust = new Customer(reg.username, reg.password, reg.email, reg.firstName, reg.lastName,
 						reg.phone);
 				Database.saveCustomer(cust);
@@ -104,65 +122,75 @@ public class EchoServer extends AbstractServer {
 		reg.delete();
 		return reg;
 	}
-	
+
 	public Search handleSearch(Search s)
 	{
 		s.searchResult = SearchCatalog.SearchCity(s.cityName, s.cityInfo, s.poiName, s.poiInfo);
 		return s;
 	}
-	
+
+	public void handleUpdateUser(User user)
+	{
+		System.out.print("update " + user.getId());
+		if (user instanceof Customer)
+			Database.saveCustomer((Customer) user);
+		else
+			Database.saveEmployee((Employee) user);
+	}
+
 	/**
 	 * This method handles any messages received from the client.
 	 *
 	 * @param msg    The message received from the client.
 	 * @param client The connection from which the message originated.
 	 */
-	public void handleMessageFromClient(Object msg, ConnectionToClient client) {
-		if (msg instanceof Login) {
-			try {
+	public void handleMessageFromClient(Object msg, ConnectionToClient client)
+	{
+		try
+		{
+			if (msg instanceof Login)
+			{
 				System.out.println("login sending");
 				client.sendToClient(handleLogin((Login) msg));
 				System.out.println("login sent");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-		} else if (msg instanceof Logoff) {
-			handleLogoff((Logoff) msg);
-			try {
-				client.sendToClient(msg);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			else if (msg instanceof Logoff)
+			{
+				handleLogoff((Logoff) msg);
 			}
-		} else if (msg instanceof Register) {
-			try {
+			else if (msg instanceof Register)
+			{
 				System.out.println("reg sending");
 				client.sendToClient(handleRegister((Register) msg));
 				System.out.println("reg sent");
-			} catch (IOException e) {
-				e.printStackTrace();
+
 			}
-		} else if (msg instanceof ImageTransfer) {
-			ImageTransfer imTr = (ImageTransfer) msg;
-			if (imTr.requested) {
-				imTr.loadImage();
-				try {
+			else if (msg instanceof ImageTransfer)
+			{
+				ImageTransfer imTr = (ImageTransfer) msg;
+				if (imTr.requested)
+				{
+					imTr.loadImage();
 					client.sendToClient(imTr);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+
 				}
-			} else
-				imTr.saveImage("C:\\Users\\yonat\\Pictures\\mememe.png");
-		} else if (msg instanceof Search) {
-			try {
+				else
+					imTr.saveImage("C:\\Users\\yonat\\Pictures\\mememe.png");
+			}
+			else if (msg instanceof Search)
+			{
 				client.sendToClient(handleSearch((Search) msg));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			}
+			else if (msg instanceof User)
+			{
+				handleUpdateUser((User) msg);
 			}
 		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
 	}
 
 	/**
@@ -170,10 +198,14 @@ public class EchoServer extends AbstractServer {
 	 *
 	 * @param message The message from the UI
 	 */
-	public void handleMessageFromServerUI(String message) {
-		if (message.charAt(0) == '#') {
+	public void handleMessageFromServerUI(String message)
+	{
+		if (message.charAt(0) == '#')
+		{
 			runCommand(message);
-		} else {
+		}
+		else
+		{
 			// send message to clients
 			serverUI.display(message);
 			this.sendToAllClients("SERVER MSG> " + message);
@@ -185,12 +217,14 @@ public class EchoServer extends AbstractServer {
 	 *
 	 * @param message String from the server console.
 	 */
-	private void runCommand(String message) {
+	private void runCommand(String message)
+	{
 		// run commands
 		// a series of if statements
 		if (message.equalsIgnoreCase("#display"))
 			this.serverUI.display(loggedList);
-		else if (message.equalsIgnoreCase("#quit")) {
+		else if (message.equalsIgnoreCase("#quit"))
+		{
 			quit();
 		}
 	}
@@ -199,7 +233,8 @@ public class EchoServer extends AbstractServer {
 	 * This method overrides the one in the superclass. Called when the server
 	 * starts listening for connections.
 	 */
-	protected void serverStarted() {
+	protected void serverStarted()
+	{
 		System.out.println("Server listening for connections on port " + getPort());
 	}
 
@@ -207,7 +242,8 @@ public class EchoServer extends AbstractServer {
 	 * This method overrides the one in the superclass. Called when the server stops
 	 * listening for connections.
 	 */
-	protected void serverStopped() {
+	protected void serverStopped()
+	{
 		System.out.println("Server has stopped listening for connections.");
 	}
 
@@ -217,7 +253,8 @@ public class EchoServer extends AbstractServer {
 	 *
 	 * @param client the connection connected to the client
 	 */
-	protected void clientConnected(ConnectionToClient client) {
+	protected void clientConnected(ConnectionToClient client)
+	{
 		// display on server and clients that the client has connected.
 		String msg = "A Client has connected";
 		System.out.println(msg);
@@ -229,7 +266,8 @@ public class EchoServer extends AbstractServer {
 	 *
 	 * @param client the connection with the client
 	 */
-	synchronized protected void clientDisconnected(ConnectionToClient client) {
+	synchronized protected void clientDisconnected(ConnectionToClient client)
+	{
 		// display on server and clients when a user disconnects
 		String msg = client.getInfo("loginID").toString() + " has disconnected";
 
@@ -244,7 +282,8 @@ public class EchoServer extends AbstractServer {
 	 * @param client    the client that raised the exception
 	 * @param Throwable the exception thrown
 	 */
-	synchronized protected void clientException(ConnectionToClient client, Throwable exception) {
+	synchronized protected void clientException(ConnectionToClient client, Throwable exception)
+	{
 		String msg = client.getInfo("loginID").toString() + " has disconnected";
 
 		System.out.println(msg);
@@ -254,13 +293,24 @@ public class EchoServer extends AbstractServer {
 	/**
 	 * This method terminates the server.
 	 */
-	public void quit() {
-		try {
+	public void quit()
+	{
+		try
+		{
 			Database.closeConnection();
 			close();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 		}
 		System.exit(0);
+	}
+
+	public static void main(String[] args) throws IOException
+	{
+		Database.createConnection();
+		System.out.println(Database.searchCustomer(null, null));
+		Database.closeConnection();
 	}
 }
 // End of EchoServer class

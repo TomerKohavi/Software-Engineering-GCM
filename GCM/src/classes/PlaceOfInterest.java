@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class PlaceOfInterest implements ClassMustProperties, Serializable {
 	public enum PlaceType {
-		HISTORICAL(0), MUSIEM(1), HOTEL(2), RESTURANT(3), PUBLIC(4), PARK(5), STORE(6), CINEMA(7);
+		HISTORICAL(0), MUSIUM(1), HOTEL(2), RESTAURANT(3), PUBLIC(4), PARK(5), STORE(6), CINEMA(7);
 
 		private final int value;
 

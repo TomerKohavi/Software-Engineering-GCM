@@ -61,7 +61,7 @@ public class RegisterController {
     }
 
     @FXML
-    void register(ActionEvent event) throws IOException, InterruptedException {
+    void register(ActionEvent event) throws IOException {
     	usr = Username.getText();
     	pass = Password.getText();
     	first = FirstName.getText();

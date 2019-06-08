@@ -14,9 +14,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class Main
-extends Application {
-    public void start(Stage primaryStage) throws IOException {
+public class Main extends Application
+{
+	public void start(Stage primaryStage) throws IOException
+	{
 //        try {
 //            this.localHostPopUp();
 //        }
@@ -24,16 +25,16 @@ extends Application {
 //            e.printStackTrace();
 //        }
 
-    	Connector.client = new ChatClient(Connector.LOCAL_HOST, Connector.PORT, new Console());
-    	Connector.mainStage = primaryStage;
-        FXMLLoader loader = new FXMLLoader(((Object)((Object)this)).getClass().getResource("HomePageScene.fxml"));
-        AnchorPane pane = (AnchorPane)loader.load();
-        Scene scene = new Scene((Parent)pane);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("GCM");
-        primaryStage.setResizable(false);
-        primaryStage.show();
-    }
+		Connector.client = new ChatClient(Connector.LOCAL_HOST, Connector.PORT, new Console());
+		Connector.mainStage = primaryStage;
+		FXMLLoader loader = new FXMLLoader(((Object) ((Object) this)).getClass().getResource("HomePageScene.fxml"));
+		AnchorPane pane = (AnchorPane) loader.load();
+		Scene scene = new Scene((Parent) pane);
+		primaryStage.setScene(scene);
+		primaryStage.setTitle("GCM");
+		primaryStage.setResizable(false);
+		primaryStage.show();
+	}
 
 //    public void localHostPopUp() throws IOException {
 //        FXMLLoader fxmlLoader = new FXMLLoader(((Object)((Object)this)).getClass().getResource("HostPortScene.fxml"));
@@ -45,18 +46,21 @@ extends Application {
 //        stage.showAndWait();
 //    }
 
-    public static void main(String[] args) {
-        Main.launch((String[])args);
-    }
+	public static void main(String[] args)
+	{
+		Main.launch((String[]) args);
+	}
 
-    @FXML
-    public void exitApplication(ActionEvent event) {
-    	Connector.client.quit();
-        Platform.exit();
-    }
+	@FXML
+	public void exitApplication(ActionEvent event)
+	{
+		System.out.println("quitting");
+		Connector.client.quit();
+		Platform.exit();
+	}
 
-    public void stop() throws IOException {
-        
-    }
+	public void stop() throws IOException
+	{
+
+	}
 }
-
