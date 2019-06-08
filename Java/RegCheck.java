@@ -1,9 +1,7 @@
-package doc;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class RegCheck {
+public class RegCheck {
 
 	public enum Res {
 		UName("Illegal username"),
