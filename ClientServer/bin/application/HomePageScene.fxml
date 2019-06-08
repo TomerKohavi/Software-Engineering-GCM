@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.ListView?>
@@ -17,7 +18,12 @@
    <children>
       <JFXButton fx:id="LoginButton" layoutX="1125.0" layoutY="64.0" onAction="#login" prefHeight="45.0" prefWidth="113.0" style="-fx-background-color: #41e0d0;" text="Login">
          <font>
-            <Font size="21.0" />
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="UserInfoButton" layoutX="1125.0" layoutY="128.0" onAction="#editUser" prefHeight="45.0" prefWidth="113.0" style="-fx-background-color: #41e0d0;" text="User Info" visible="false">
+         <font>
+            <Font size="18.0" />
          </font>
       </JFXButton>
       <Text fill="#41e0d0" layoutX="199.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search">
@@ -28,16 +34,20 @@
       <Text fx:id="NotValid" fill="RED" layoutX="824.0" layoutY="158.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Can't find matching result">
          <font>
             <Font size="18.0" />
-         </font></Text>
+         </font>
+      </Text>
       <ListView fx:id="MainList" fixedCellSize="40.0" layoutX="163.0" layoutY="199.0" prefHeight="600.0" prefWidth="524.0" />
+      <JFXButton fx:id="CreateButton" layoutX="525.0" layoutY="745.0" onAction="#callCreate" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Create" visible="false" />
       <JFXTextField fx:id="CityNameBox" focusColor="#41e0d0" layoutX="315.0" layoutY="57.0" prefHeight="25.0" prefWidth="244.0" promptText="City Name" />
       <JFXTextField fx:id="CityInfoBox" focusColor="#41e0d0" layoutX="587.0" layoutY="58.0" prefHeight="25.0" prefWidth="244.0" promptText="City Info" />
       <JFXTextField fx:id="POINameBox" focusColor="#41e0d0" layoutX="315.0" layoutY="97.0" prefHeight="25.0" prefWidth="244.0" promptText="POI Name" />
       <JFXTextField fx:id="POIInfoBox" focusColor="#41e0d0" layoutX="587.0" layoutY="97.0" prefHeight="25.0" prefWidth="244.0" promptText="POI Info" />
+      <JFXCheckBox fx:id="UnpublishSearch" layoutX="315.0" layoutY="142.0" text="Unpublished Versions" />
       <JFXButton fx:id="SearchCityButton" layoutX="870.0" layoutY="73.0" onAction="#search" prefHeight="49.0" prefWidth="113.0" style="-fx-background-color: #41e0d0;" text="Search">
          <font>
             <Font size="18.0" />
-         </font></JFXButton>
+         </font>
+      </JFXButton>
       <Pane fx:id="InfoPane" layoutX="686.0" layoutY="198.0" prefHeight="610.0" prefWidth="600.0" visible="false">
          <children>
             <Text fx:id="ResultInfo" layoutX="61.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Info" wrappingWidth="477.13671875">
@@ -65,6 +75,11 @@
                   <Font size="18.0" />
                </font>
             </Text>
+            <JFXButton fx:id="ViewPurchaseHistoryButton" layoutX="214.0" layoutY="361.0" onAction="#viewPurchaseHistory" prefHeight="30.0" prefWidth="171.0" style="-fx-background-color: #41e0d0;" text="View Purchase History" visible="false">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXButton>
             <TableView fx:id="StopsTable" layoutX="74.0" layoutY="248.0" prefHeight="274.0" prefWidth="452.0" visible="false">
               <columns>
                 <TableColumn prefWidth="359.0" text="POI" />
@@ -72,13 +87,16 @@
               </columns>
             </TableView>
             <JFXButton fx:id="EditButton" layoutX="74.0" layoutY="547.0" onAction="#callEdit" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Edit" />
+            <JFXButton fx:id="RemoveButton" layoutX="250.0" layoutY="547.0" onAction="#callRemove" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Remove" />
             <JFXButton fx:id="BuyButton" layoutX="435.0" layoutY="547.0" onAction="#openBuyWindodw" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Buy" visible="false" />
+            <JFXButton fx:id="ReSubscribeButton" layoutX="250.0" layoutY="547.0" onAction="#callReSubscribe" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Re-Subscribe" visible="false" />
          </children>
       </Pane>
-      <ImageView fx:id="MapImage" fitHeight="600.0" fitWidth="600.0" layoutX="686.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true" visible="false">
+      <ImageView fx:id="MapImage" fitHeight="560.0" fitWidth="560.0" layoutX="706.0" layoutY="219.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../../Pics/No_Image.png" />
-         </image></ImageView>
+         </image>
+      </ImageView>
       <JFXButton fx:id="ShowMapButton" layoutX="1116.0" layoutY="745.0" onAction="#showMapImage" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Show Map" visible="false" />
       <JFXDatePicker fx:id="FirstDate" layoutX="724.0" layoutY="231.0" visible="false" />
       <JFXDatePicker fx:id="LastDate" layoutX="927.0" layoutY="231.0" visible="false" />
@@ -141,5 +159,6 @@
             </JFXButton>
          </children>
       </Pane>
+      <ImageView fx:id="LoadingGif" fitHeight="343.0" fitWidth="477.0" layoutX="511.0" layoutY="229.0" pickOnBounds="true" preserveRatio="true" visible="false" />
    </children>
 </AnchorPane>
