@@ -164,6 +164,8 @@ public class Database {
         	CityDataVersion cdv=new CityDataVersion(c1, "1.0", 20, 100.9);
         	PlaceOfInterest p=new PlaceOfInterest(c1.getId(),"University of Haifa", PlaceOfInterest.PlaceType.MUSEUM, "A public research university on the top of Mount Carmel in Haifa, Israel. The university was founded in 1963 by the mayor of its host city, Abba Hushi, to operate under the academic auspices of the Hebrew University of Jerusalem.", false);
         	p.saveToDatabase();
+        	PlaceOfInterest p1=new PlaceOfInterest(c1.getId(),"School of Haifa", PlaceOfInterest.PlaceType.PUBLIC, "the best shool in the city", false);
+        	p1.saveToDatabase();
         	PlaceOfInterestSight ps=new PlaceOfInterestSight(cdv, p);
         	cdv.addPlaceOfInterestSight(ps);
         	Map m=new Map(c1.getId(), "central city", "large map", "example.url");
@@ -176,7 +178,7 @@ public class Database {
         	Route r=new Route(c1.getId(), "small route");
         	RouteStop rstop1=new RouteStop(r, p, new Time(1, 2, 31));
         	r.addRouteStop(rstop1);
-        	RouteStop rstop2=new RouteStop(r, p, new Time(3, 2, 31));
+        	RouteStop rstop2=new RouteStop(r, p1, new Time(3, 2, 31));
         	r.addRouteStop(rstop2);
         	r.saveToDatabase();
         	RouteSight rs=new RouteSight(cdv, r, true);
