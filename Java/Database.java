@@ -10,7 +10,6 @@ import java.security.MessageDigest;
 
 import javax.xml.bind.DatatypeConverter;
 
-import PlaceOfInterest.PlaceType;
 
 /**
  * @author tal20
@@ -111,6 +110,7 @@ public class Database {
 		try {
 			if (conn != null) {
 				conn.close();
+				conn = null;
 				System.out.println("connection closing");
 			}
 			return;
@@ -124,7 +124,7 @@ public class Database {
 	 * Reset the entire database. Delete all inputs, set counters to 0.
 	 * Only Tal and Lior should use this method.
 	 */
-	public static void resetAll(String name, String pass) {
+	public static boolean resetAll(String name, String pass) {
 		try {
 			String sql = "SELECT Name FROM Team WHERE Name=? AND Password=?";
 			PreparedStatement check = conn.prepareStatement(sql);
@@ -133,7 +133,7 @@ public class Database {
 			ResultSet res = check.executeQuery();
 			// check if there is exciting row in table before insert
 			if (!res.next())
-				return;
+				return false;
 			for (Table table : Table.values()) {
 				sql = "DELETE FROM " + table.getValue() + " WHERE TRUE";
 				PreparedStatement gt = conn.prepareStatement(sql);
@@ -146,25 +146,33 @@ public class Database {
 				su.executeUpdate();
 			}
 			System.out.println("Finished reset");
+			return true;
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
 		}
+		return true;
 	}
 	
 	public static void initDataBase(String name, String pass) {
         try { 
         	Database.createConnection();
         	//reset
-        	Database.resetAll(name, pass);
+        	if(!Database.resetAll(name, pass))
+        		return;
         	//start insert
         	
         	//create cities
-        	City c1=new City("haifa", "The third largest city in Israel. As of 2016, the city is a major seaport located on Israel's Mediterranean coastline in the Bay of Haifa covering 63.7 square kilometres.");
+        	City c1=new City("haifa", "The third largest city in Israel. As of 2016, the city is a major seaport "
+        			+ "located on Israel's Mediterranean coastline in the Bay of Haifa covering 63.7 square kilometres.");
         	CityDataVersion cdv=new CityDataVersion(c1, "1.0", 20, 100.9);
-        	PlaceOfInterest p=new PlaceOfInterest(c1.getId(),"University of Haifa", PlaceOfInterest.PlaceType.MUSEUM, "A public research university on the top of Mount Carmel in Haifa, Israel. The university was founded in 1963 by the mayor of its host city, Abba Hushi, to operate under the academic auspices of the Hebrew University of Jerusalem.", false);
+        	PlaceOfInterest p=new PlaceOfInterest(c1.getId(),"University of Haifa", PlaceOfInterest.PlaceType.MUSEUM,
+        			"A public research university on the top of Mount Carmel in Haifa, Israel. "
+        			+ "The university was founded in 1963 by the mayor of its host city, Abba Hushi,"
+        			+ " to operate under the academic auspices of the Hebrew University of Jerusalem.", false);
         	p.saveToDatabase();
-        	PlaceOfInterest p1=new PlaceOfInterest(c1.getId(),"School of Haifa", PlaceOfInterest.PlaceType.PUBLIC, "the best shool in the city", false);
+        	PlaceOfInterest p1=new PlaceOfInterest(c1.getId(),"School of Haifa", PlaceOfInterest.PlaceType.PUBLIC, 
+        			"the best shool in the city", false);
         	p1.saveToDatabase();
         	PlaceOfInterestSight ps=new PlaceOfInterestSight(cdv, p);
         	cdv.addPlaceOfInterestSight(ps);
@@ -176,9 +184,9 @@ public class Database {
         	MapSight ms=new MapSight(cdv, m);
         	cdv.addMapSight(ms);
         	Route r=new Route(c1.getId(), "small route");
-        	RouteStop rstop1=new RouteStop(r, p, new Time(1, 2, 31));
+        	RouteStop rstop1=new RouteStop(r, p, new Time(1, 25, 0));
         	r.addRouteStop(rstop1);
-        	RouteStop rstop2=new RouteStop(r, p1, new Time(3, 2, 31));
+        	RouteStop rstop2=new RouteStop(r, p1, new Time(0, 43, 0));
         	r.addRouteStop(rstop2);
         	r.saveToDatabase();
         	RouteSight rs=new RouteSight(cdv, r, true);
@@ -191,7 +199,7 @@ public class Database {
         	//create Users
         	Employee e=new Employee("Lior33", "12345", "lior@gmail.com", "lior", "vismun", "0521234567", Employee.Role.CEO);
         	e.saveToDatabase();
-        	Customer cust=new Customer("yosi11", "67890", "yosi@gmail.com", "yosi", "ben asser", "052111111111");
+        	Customer cust=new Customer("yosi11", "67890", "yosi@gmail.com", "yosi", "ben asser", "0521111111");
         	Subscription sub=new Subscription(cust, c1, new Date(119, 8, 6), 201.8, 199.9, new Date(119, 10,8));
         	cust.addSubscription(sub);
         	
@@ -720,7 +728,7 @@ public class Database {
 				return true;
 			} else {
 				String sql = "INSERT INTO " + Table.Employee.getValue()
-						+ " (ID,Username, Password, Email, FirstName, LastName)" + " VALUES (?, ?, ?, ?, ?, ?)";
+						+ " (ID,Username, Password, Email, FirstName, LastName, PhoneNumber, Role)" + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getId());
 				su.setString(2, p.getUserName());
@@ -728,6 +736,8 @@ public class Database {
 				su.setString(4, p.getEmail());
 				su.setString(5, p.getFirstName());
 				su.setString(6, p.getLastName());
+				su.setString(7, p.getPhoneNumber());
+				su.setInt(8, p.getRole().getValue());
 				su.executeUpdate();
 				return false;
 			}
@@ -792,7 +802,7 @@ public class Database {
 				su.setInt(1, p.getRouteId());
 				su.setInt(2, p.getPlaceId());
 				su.setInt(3, p.getNumStop());
-				su.setLong(4, p.getRecommendedTime().getTime()); // fix here - RON
+				su.setTime(4, p.getRecommendedTime());
 				su.setInt(5, p.getId());
 				su.executeUpdate();
 				return true;
@@ -804,7 +814,7 @@ public class Database {
 				su.setInt(2, p.getRouteId());
 				su.setInt(3, p.getPlaceId());
 				su.setInt(4, p.getNumStop());
-				su.setLong(5, p.getRecommendedTime().getTime());// fix here - RON
+				su.setTime(5, p.getRecommendedTime());
 				su.executeUpdate();
 				return false;
 			}

@@ -25,7 +25,7 @@ public class Main {
 			CityDataVersion cdv2=c2.getPublishedVersion();
 			System.out.println(cdv2.getPlaceOfInterestSightByPlaceOfInterestId(p.getId())==null);
 			
-			Route r = new Route(c.getId(), "C",true);
+			Route r = new Route(c.getId(), "C");
 			RouteStop rs=new RouteStop(r, p, new Time(213123));
 			r.addRouteStop(rs);
 			rs.saveToDatabase();
@@ -56,12 +56,7 @@ public class Main {
 			p.deleteFromDatabase();
 			rs.deleteFromDatabase();
 			cdv2.deleteFromDatabase();
-			
-			
-			//Database.resetAll("Tal", "11235813");
-			
-			System.out.println("Ss");
-
+						
 			
 		}catch (Exception e) {
 			System.out.println(e);

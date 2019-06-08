@@ -158,7 +158,7 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 
 	public OneTimePurchase getActiveOneTimePurchaseByCity(int cityId) {
 		for (OneTimePurchase otp : temp_oneTimePurchase)
-			if (otp.getCityId() == cityId && !otp.wasDownload)
+			if (otp.getCityId() == cityId && !otp.getWasDownload())
 				return otp;
 		return null;
 	}
