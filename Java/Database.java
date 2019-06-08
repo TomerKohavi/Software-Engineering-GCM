@@ -1209,7 +1209,7 @@ public class Database {
 					words = placeDescription.split(" ");
 					len = words.length;
 					for (int i = 0; i < len; i++)
-						sql += "(Description LIKE ?) AND";
+						sql += "(Description LIKE ?) AND ";
 				}
 			if (cityId != null)
 				sql += "CityID=? AND ";
