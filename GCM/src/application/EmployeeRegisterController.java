@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
@@ -50,6 +51,13 @@ public class EmployeeRegisterController {
 
     @FXML // fx:id="Phone"
     private JFXTextField Phone; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="RoleBox"
+    private JFXComboBox<String> RoleBox; // Value injected by FXMLLoader
+    
+    public void initialize() {
+    	RoleBox.getItems().addAll("Regular", "Manager", "CEO");
+    }
 
     void loadPage(String FXMLpage) throws IOException {
         AnchorPane pane = (AnchorPane)FXMLLoader.load((URL)this.getClass().getResource(FXMLpage));
@@ -69,7 +77,7 @@ public class EmployeeRegisterController {
     	last = LastName.getText();
     	emailAdd = Email.getText();
     	phoneNumber = Phone.getText();
-    	Role role = null; // kohaviGiveMe();
+    	Role role = RoleBox.getValue().equals("Regular") ? Role.REGULAR : (RoleBox.getValue().equals("Manager") ? Role.MANAGER : Role.CEO);
     	if (usr.equals("") || pass.equals("") || first.equals("") || last.equals("") || emailAdd.equals("") || phoneNumber.equals(""))
     	{
     		IncorrectText.setText("Please fill all of the above");

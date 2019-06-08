@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.image.Image?>
@@ -31,7 +32,10 @@
       <JFXTextField fx:id="LastName" focusColor="#41e0d0" layoutX="792.0" layoutY="375.0" prefHeight="25.0" prefWidth="287.0" promptText="Last Name" />
       <JFXTextField fx:id="Email" focusColor="#41e0d0" layoutX="433.0" layoutY="449.0" prefHeight="25.0" prefWidth="287.0" promptText="Email" />
       <JFXTextField fx:id="Phone" focusColor="#41e0d0" layoutX="792.0" layoutY="449.0" prefHeight="25.0" prefWidth="287.0" promptText="Phone" />
-      <JFXButton fx:id="Register" layoutX="616.0" layoutY="535.0" onAction="#register" prefHeight="45.0" prefWidth="287.0" style="-fx-background-color: #41e0d0;" text="Register">
+      <JFXTextField fx:id="CreditCardNumber" focusColor="#41e0d0" layoutX="433.0" layoutY="517.0" prefHeight="25.0" prefWidth="287.0" promptText="Credit Card Number" />
+      <JFXComboBox fx:id="ExperationMonth" layoutX="792.0" layoutY="517.0" prefHeight="25.0" prefWidth="63.0" promptText="Month" />
+      <JFXTextField fx:id="CSV" focusColor="#41e0d0" layoutX="1016.0" layoutY="517.0" prefHeight="25.0" prefWidth="63.0" promptText="CSV" />
+      <JFXButton fx:id="Register" layoutX="616.0" layoutY="627.0" onAction="#register" prefHeight="45.0" prefWidth="287.0" style="-fx-background-color: #41e0d0;" text="Register">
          <font>
             <Font size="21.0" />
          </font>
@@ -41,6 +45,7 @@
             <Font size="21.0" />
          </font>
       </JFXButton>
-      <Text fx:id="IncorrectText" fill="RED" layoutX="674.0" layoutY="611.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect Username or Password" />
+      <Text fx:id="IncorrectText" fill="RED" layoutX="674.0" layoutY="594.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect Username or Password" />
+      <JFXComboBox fx:id="ExperationYear" layoutX="900.0" layoutY="517.0" prefHeight="25.0" prefWidth="71.0" promptText="Year" />
    </children>
 </AnchorPane>

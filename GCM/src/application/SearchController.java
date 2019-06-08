@@ -32,7 +32,7 @@ public class SearchController {
     private Text Text1; // Value injected by FXMLLoader
 
     @FXML // fx:id="NumOfPOI"
-    private Text Text2; // Value injected by FXMLLoader
+    private Text Text2; // VALUE INJECTED BY FXMLLOADER
 
     @FXML // fx:id="NumOfRoutes"
     private Text Text3; // Value injected by FXMLLoader

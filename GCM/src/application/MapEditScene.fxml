@@ -21,7 +21,7 @@
       <JFXTextField fx:id="Name" focusColor="#41e0d0" layoutX="217.0" layoutY="204.0" prefHeight="25.0" prefWidth="287.0" text="Name Here" />
       <Text layoutX="217.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Info:" underline="true" />
       <TextArea fx:id="InfoBox" layoutX="217.0" layoutY="283.0" prefHeight="278.0" prefWidth="288.0" text="Info Here" />
-      <ImageView fx:id="MapImage" fitHeight="551.0" fitWidth="559.0" layoutX="605.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="MapImage" fitHeight="560.0" fitWidth="560.0" layoutX="605.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Pics/No_Image.png" />
          </image>
@@ -50,5 +50,6 @@
                </image>
             </ImageView>
          </children></Pane>
+      <JFXButton fx:id="RemoveSelectedButton" layoutX="673.0" layoutY="733.0" onAction="#removeSelected" prefHeight="25.0" prefWidth="117.0" style="-fx-background-color: #41e0d0;" text="Remove Selected" />
    </children>
 </AnchorPane>

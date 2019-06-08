@@ -3,6 +3,7 @@ package application;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -37,6 +38,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -109,15 +111,15 @@ public class HomePageController
 
 	@FXML // fx:id="ReSubscribeButton"
 	private JFXButton ReSubscribeButton; // Value injected by FXMLLoader
+	
+    @FXML // fx:id="PublishButton"
+    private JFXButton PublishButton; // Value injected by FXMLLoader
 
 	@FXML // fx:id="StopsTable"
 	private TableView<String> StopsTable; // Value injected by FXMLLoader
 
 	@FXML // fx:id="ShowMapButton"
 	private JFXButton ShowMapButton; // Value injected by FXMLLoader
-
-	@FXML // fx:id="addPOILocButton"
-	private JFXButton AddPOILocButton; // Value injected by FXMLLoader
 
 	@FXML // fx:id="FirstDate"
 	private JFXDatePicker FirstDate; // Value injected by FXMLLoader
@@ -212,8 +214,7 @@ public class HomePageController
 		clearInfo(true);
 	}
 
-	void clearInfo(boolean clearList)
-	{
+	void clearInfo(boolean clearList) {
 		if (clearList)
 			MainList.getItems().clear();
 		ResultName.setText("");
@@ -227,13 +228,11 @@ public class HomePageController
 		ShowMapButton.setText("Show Map");
 		ShowMapButton.setVisible(false);
 		ViewPurchaseHistoryButton.setVisible(false);
-		AddPOILocButton.setVisible(false);
 		StopsTable.setVisible(false);
 		BuyButton.setVisible(false);
 		ReSubscribeButton.setVisible(false);
-		for (ImageView img : Connector.imageList)
-		{
-			mainPane.getChildren().remove(img);
+		for (POIImage img : Connector.imageList) {
+			mainPane.getChildren().remove(img.image);
 		}
 		Connector.imageList.clear();
 		ReportCityName.setVisible(false);
@@ -241,8 +240,8 @@ public class HomePageController
 		FirstDate.setVisible(false);
 		LastDate.setVisible(false);
 		WatchButton.setVisible(false);
-		if (Connector.unpublished)
-		{
+		PublishButton.setVisible(false);
+		if (Connector.unpublished) {
 			EditButton.setVisible(true);
 			RemoveButton.setVisible(true);
 			if (Connector.listType.equals("Map") || Connector.listType.equals("POI")
@@ -250,9 +249,7 @@ public class HomePageController
 				CreateButton.setVisible(true);
 			else
 				CreateButton.setVisible(false);
-		}
-		else
-		{
+		} else {
 			EditButton.setVisible(false);
 			RemoveButton.setVisible(false);
 		}
@@ -412,39 +409,6 @@ public class HomePageController
 				}
 			}
 		});
-
-		MapImage.setOnMouseClicked(new EventHandler<MouseEvent>()
-		{
-
-			@Override
-			public void handle(MouseEvent click)
-			{
-				if (!Connector.unpublished)
-					return;
-				if (AddPOILocButton.isVisible())
-				{
-					mainPane.getChildren().remove(mainPane.getChildren().size() - 1);
-				}
-				AddPOILocButton.setVisible(true);
-				Image image = null;
-				try
-				{
-					image = new Image(new FileInputStream("Pics\\Add_POI.png"));
-				}
-				catch (FileNotFoundException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				ImageView img = new ImageView(image);
-				Bounds boundsInScene = MapImage.localToScene(MapImage.getBoundsInLocal());
-				img.setX(click.getX() + boundsInScene.getMinX() - 15);
-				img.setY(click.getY() + boundsInScene.getMinY() - 32);
-				Connector.imageList.add(img);
-				mainPane.getChildren().add(img);
-			}
-		});
-
 	}
 
 	@FXML
@@ -508,35 +472,29 @@ public class HomePageController
 	}
 
 	@FXML
-	void showMapImage(ActionEvent event) throws FileNotFoundException
-	{
+	void showMapImage(ActionEvent event) throws FileNotFoundException {
 		show_map = !show_map;
-		if (show_map)
-		{
+		if (show_map) {
 			InfoPane.setVisible(false);
 			MapImage.setVisible(true);
 			ShowMapButton.setText("Hide Map");
-			Image image = new Image(new FileInputStream("Pics\\POI.png"));
 			List<Point> posList = new ArrayList<Point>();
-			posList.add(new Point(1211 - 334, 578 - 130));
-			posList.add(new Point(1211 - 334 + 50, 578 - 130 + 50));
-			for (Point p : posList)
-			{
-				ImageView img = new ImageView(image);
-				img.setX(p.getX());
-				img.setY(p.getY());
-				Connector.imageList.add(img);
+			Bounds boundsInScene = MapImage.localToScene(MapImage.getBoundsInLocal());
+			posList.add(new Point((int) (50 + boundsInScene.getMinX()), (int) (50 + boundsInScene.getMinY())));
+			posList.add(new Point((int) (100 + boundsInScene.getMinX()), (int) (100 + boundsInScene.getMinY())));
+			for (Point p : posList) {
+				POIImage poiImage = new POIImage(false);
+				poiImage.image.setX(p.getX());
+				poiImage.image.setY(p.getY());
+				Connector.imageList.add(poiImage);
+				mainPane.getChildren().add(poiImage.image);
 			}
-			mainPane.getChildren().addAll(Connector.imageList);
-		}
-		else
-		{
+		} else {
 			InfoPane.setVisible(true);
 			MapImage.setVisible(false);
-			AddPOILocButton.setVisible(false);
 			ShowMapButton.setText("Show Map");
-			for (ImageView img : Connector.imageList)
-				mainPane.getChildren().remove(img);
+			for (POIImage img : Connector.imageList)
+				mainPane.getChildren().remove(img.image);
 			Connector.imageList.clear();
 		}
 	}
@@ -635,15 +593,15 @@ public class HomePageController
 	}
 
 	@FXML
-	void addPOILoc(ActionEvent event) throws IOException
-	{
-		openNewPage("ChoosePOIScene.fxml");
-	}
-
-	@FXML
 	void callReSubscribe(ActionEvent event) throws IOException
 	{
 		openNewPage("ReSubscribeScene.fxml");
+	}
+	
+	@FXML
+	void callPublish(ActionEvent event) throws IOException {
+		// publish the unpublished version
+		System.out.println("Published");
 	}
 
 	@FXML
@@ -657,7 +615,12 @@ public class HomePageController
 				openNewPage("BuyScene.fxml");
 			else if (BuyButton.getText().equals("Download")) // TODO TOMER fetch path
 			{
-				String path = null;
+				DirectoryChooser chooser = new DirectoryChooser();
+		    	chooser.setTitle("Choose Download Location");
+		    	File defaultDirectory = new File("c:/");
+		    	chooser.setInitialDirectory(defaultDirectory);
+		    	File selectedDirectory = chooser.showDialog(null);
+		    	System.out.println(selectedDirectory.getPath()); // Path to folder
 			}
 			else if (BuyButton.getText().equals("Change Price"))
 				openNewPage("ChangePriceScene.fxml");
