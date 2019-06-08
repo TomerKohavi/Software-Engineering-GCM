@@ -324,6 +324,7 @@ public class HomePageController
 		if (Connector.user instanceof Employee)
 		{ // check if employee -> can edit
 			EditButton.setVisible(true);
+			UnpublishSearch.setVisible(true);
 		}
 
 		SideReport.setDisable(false);
@@ -430,12 +431,12 @@ public class HomePageController
 			if (UnpublishSearch.isSelected())
 			{// search unpublished
 				Connector.unpublished = true;
-				System.out.println();
+				System.out.println("search unpublished");
 			}
 			else
 			{// search published
 				Connector.unpublished = false;
-				System.out.println();
+				System.out.println("search published");
 			}
 
 			clearInfo(true);

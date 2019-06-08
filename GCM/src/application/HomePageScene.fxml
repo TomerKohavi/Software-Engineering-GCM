@@ -42,13 +42,13 @@
       <JFXTextField fx:id="CityInfoBox" focusColor="#41e0d0" layoutX="587.0" layoutY="58.0" prefHeight="25.0" prefWidth="244.0" promptText="City Info" />
       <JFXTextField fx:id="POINameBox" focusColor="#41e0d0" layoutX="315.0" layoutY="97.0" prefHeight="25.0" prefWidth="244.0" promptText="POI Name" />
       <JFXTextField fx:id="POIInfoBox" focusColor="#41e0d0" layoutX="587.0" layoutY="97.0" prefHeight="25.0" prefWidth="244.0" promptText="POI Info" />
-      <JFXCheckBox fx:id="UnpublishSearch" layoutX="315.0" layoutY="142.0" text="Unpublished Versions" />
+      <JFXCheckBox fx:id="UnpublishSearch" layoutX="315.0" layoutY="142.0" text="Unpublished Versions" visible="false" />
       <JFXButton fx:id="SearchCityButton" layoutX="870.0" layoutY="73.0" onAction="#search" prefHeight="49.0" prefWidth="113.0" style="-fx-background-color: #41e0d0;" text="Search">
          <font>
             <Font size="18.0" />
          </font>
       </JFXButton>
-      <Pane fx:id="InfoPane" layoutX="686.0" layoutY="198.0" prefHeight="610.0" prefWidth="600.0">
+      <Pane fx:id="InfoPane" layoutX="686.0" layoutY="198.0" prefHeight="610.0" prefWidth="600.0" visible="false">
          <children>
             <Text fx:id="ResultInfo" layoutX="61.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Info" wrappingWidth="477.13671875">
                <font>
