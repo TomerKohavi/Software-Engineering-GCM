@@ -2,6 +2,7 @@ package application;
 
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -32,8 +33,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class HomePageController {
 
@@ -103,6 +107,9 @@ public class HomePageController {
 
 	@FXML // fx:id="ReSubscribeButton"
 	private JFXButton ReSubscribeButton; // Value injected by FXMLLoader
+	
+    @FXML // fx:id="PublishButton"
+    private JFXButton PublishButton; // Value injected by FXMLLoader
 
 	@FXML // fx:id="StopsTable"
 	private TableView<String> StopsTable; // Value injected by FXMLLoader
@@ -224,6 +231,7 @@ public class HomePageController {
 		FirstDate.setVisible(false);
 		LastDate.setVisible(false);
 		WatchButton.setVisible(false);
+		PublishButton.setVisible(false);
 		if (Connector.unpublished) {
 			EditButton.setVisible(true);
 			RemoveButton.setVisible(true);
@@ -248,7 +256,7 @@ public class HomePageController {
 		BuyButton.setVisible(true);
 //	    if (user is director of content department)
 //		    BuyButton.setText("Change Price");
-//	    else if (user is regulsar employee or CEO)
+//	    else if (user is regular employee or CEO)
 //	 	    BuyButton.setVisible(false);
 //	    else if (Connector.user_id != -1  && subscribed to the map) {// check if the user is subscribed to the map
 //	    	BuyButton.setText("Download");
@@ -257,6 +265,8 @@ public class HomePageController {
 //    	}
 //	    else
 //		    BuyButton.setText("Buy");
+//		if () // if ceo and Connector.unpublished
+//			PublishButton.setVisible(true);
 		ShowMapButton.setVisible(false);
 		SideMap.setDisable(false);
 		SidePOI.setDisable(false);
@@ -463,17 +473,17 @@ public class HomePageController {
 	}
 
 	@FXML
-	void callEdit(ActionEvent event) throws IOException {
-		openNewPage(Connector.listType + "EditScene.fxml");
-	}
-
-	@FXML
 	void callRemove(ActionEvent event) {
 		int index = MainList.getSelectionModel().getSelectedIndex();
 		MainList.getItems().remove(index);
 		// call server to remove that thing -> can check which type it is by looking at
 		// the value of Connector.listType
 		clearInfo(false);
+	}
+	
+	@FXML
+	void callEdit(ActionEvent event) throws IOException {
+		openNewPage(Connector.listType + "EditScene.fxml");
 	}
 
 	@FXML
@@ -485,6 +495,12 @@ public class HomePageController {
 	void callReSubscribe(ActionEvent event) throws IOException {
 		openNewPage("ReSubscribeScene.fxml");
 	}
+	
+	@FXML
+	void callPublish(ActionEvent event) throws IOException {
+		// publish the unpublished version
+		System.out.println("Published");
+	}
 
 	@FXML
 	void openBuyWindodw(ActionEvent event) throws IOException {
@@ -493,9 +509,15 @@ public class HomePageController {
 		else {
 			if (BuyButton.getText().equals("Buy"))
 				openNewPage("BuyScene.fxml");
-			else if (BuyButton.getText().equals("Download"))
-				// download
-				System.out.println();
+			else if (BuyButton.getText().equals("Download")) {
+				DirectoryChooser chooser = new DirectoryChooser();
+		    	chooser.setTitle("Choose Download Location");
+		    	File defaultDirectory = new File("c:/");
+		    	chooser.setInitialDirectory(defaultDirectory);
+		    	File selectedDirectory = chooser.showDialog(null);
+		    	System.out.println(selectedDirectory.getPath()); // Path to folder
+		    	
+			}
 			else if (BuyButton.getText().equals("Change Price"))
 				openNewPage("ChangePriceScene.fxml");
 		}
