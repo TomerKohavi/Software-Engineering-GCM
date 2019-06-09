@@ -290,34 +290,81 @@ public class Database {
 			c1.addPublishedCityDataVersion(cdv);
 			c1.saveToDatabase();
 			}
-			{
 			// 2
+			{
 			City c1 = new City("Tel aviv",
 					"Tel Aviv-Yafo, is the second most populous city in Israel—after Jerusalem—and the most populous city in the conurbation of Gush Dan, Israel's largest metropolitan area. Located on the country's Mediterranean coastline and with a population of 443,939, it is the economic and technological center of the country.");
-			CityDataVersion cdv = new CityDataVersion(c1, "1.0", 10, 90.9);
-			PlaceOfInterest p = new PlaceOfInterest(c1.getId(), "Hummus Abu Hassan",
-					PlaceOfInterest.PlaceType.RESTAURANT, "The best restaurant in the city", false);
-			p.saveToDatabase();
-			PlaceOfInterest p1 = new PlaceOfInterest(c1.getId(), "Yes Planet", PlaceOfInterest.PlaceType.CINEMA,
-					"cinama in tel aviv", false);
+			CityDataVersion cdv = new CityDataVersion(c1, "1.0", 15, 100.9);
+			PlaceOfInterest p0 = new PlaceOfInterest(c1.getId(), "tel aviv carmel market", PlaceOfInterest.PlaceType.PUBLIC,
+					"The Carmel Market (the Shuk Hacarmel) is the largest market, or shuk, in Tel Aviv. A vibrant marketplace where traders sell everything from clothing to spices, and fruit to electronics, visiting the Carmel Market is a fascinating thing to do in Tel Aviv.",
+					false);
+			p0.saveToDatabase();
+			PlaceOfInterest p1 = new PlaceOfInterest(c1.getId(), "tel aviv port", PlaceOfInterest.PlaceType.PUBLIC,
+					"Namal Tel Aviv, the Tel Aviv Port has recently been restored and is now one of the hottest places in town. During the day, the cafes and stores at Namal Tel Aviv (the Tel Aviv Port) the host some of the city’s richest and trendiest", false);
 			p1.saveToDatabase();
-			PlaceOfInterestSight ps = new PlaceOfInterestSight(cdv, p);
-			cdv.addPlaceOfInterestSight(ps);
-			Map m = new Map(c1.getId(), "central city", "large map", "tel_aviv.png");
-			double[] coords = { 40.3, 32.7 };
-			Location l = new Location(m, p, coords);
-			m.addLocation(l);
-			m.saveToDatabase();
-			MapSight ms = new MapSight(cdv, m);
-			cdv.addMapSight(ms);
-			Route r = new Route(c1.getId(), "route");
-			RouteStop rstop1 = new RouteStop(r, p, new Time(1, 5, 0));
+			PlaceOfInterest p2 = new PlaceOfInterest(c1.getId(), "Tel Aviv Museum of Art", PlaceOfInterest.PlaceType.MUSEUM,
+					"Tel Aviv Museum of Art is a municipal museum, one of Israel's leading artistic and cultural institutions. The museum comprises various departments", false);
+			p2.saveToDatabase();
+			PlaceOfInterest p3 = new PlaceOfInterest(c1.getId(), "tel aviv university", PlaceOfInterest.PlaceType.PUBLIC,
+					"Tel Aviv University came into being through the dedicated efforts of visionaries who foresaw the need for an additional university in Israel’s rapidly growing central region. In the 1930s, the idea was promoted by then mayor of Tel Aviv, Meir Dizengoff", false);
+			p3.saveToDatabase();
+			PlaceOfInterest p4 = new PlaceOfInterest(c1.getId(), "Neve Tzedek", PlaceOfInterest.PlaceType.PUBLIC,
+					"The charming neighborhood of Neve Tzedek is one of the oldest in the city, filled with quaint buildings showcasing both the old Bauhaus buildings in their original form mixed with newer structures and homes.", false);
+			p4.saveToDatabase();
+			PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv, p0);
+			cdv.addPlaceOfInterestSight(ps0);
+			PlaceOfInterestSight ps1 = new PlaceOfInterestSight(cdv, p1);
+			cdv.addPlaceOfInterestSight(ps1);
+			PlaceOfInterestSight ps2 = new PlaceOfInterestSight(cdv, p2);
+			cdv.addPlaceOfInterestSight(ps2);
+			PlaceOfInterestSight ps3 = new PlaceOfInterestSight(cdv, p3);
+			cdv.addPlaceOfInterestSight(ps3);
+			PlaceOfInterestSight ps4 = new PlaceOfInterestSight(cdv, p4);
+			cdv.addPlaceOfInterestSight(ps4);
+			Map m0 = new Map(c1.getId(), "north city", "first map", "tel_aviv1.png");
+			double[] coords0 = { 23.3, 54.7 };
+			Location l0 = new Location(m0, p0, coords0);
+			m0.addLocation(l0);
+			double[] coords1 = { 17.3, 52.2 };
+			Location l1 = new Location(m0, p1, coords1);
+			m0.addLocation(l1);
+			m0.saveToDatabase();
+			MapSight ms0 = new MapSight(cdv, m0);
+			cdv.addMapSight(ms0);
+			
+			Map m1 = new Map(c1.getId(), "downtown", "second map", "tel_aviv2.png");
+			double[] coords2 = { 17.3, 35.7 };
+			Location l2 = new Location(m1, p2, coords2);
+			m1.addLocation(l2);
+			double[] coords3 = { 12.3, 6.2 };
+			Location l3 = new Location(m1, p3, coords3);
+			m1.addLocation(l3);
+			double[] coords4 = { 17.3, 13.2 };
+			Location l4 = new Location(m1, p4, coords4);
+			m1.addLocation(l4);
+			m1.saveToDatabase();
+			MapSight ms1 = new MapSight(cdv, m1);
+			cdv.addMapSight(ms1);
+			Route r = new Route(c1.getId(), "small route");
+			RouteStop rstop1 = new RouteStop(r, p0, new Time(1, 25, 0));
 			r.addRouteStop(rstop1);
-			RouteStop rstop2 = new RouteStop(r, p1, new Time(0, 13, 0));
+			RouteStop rstop2 = new RouteStop(r, p1, new Time(0, 43, 0));
 			r.addRouteStop(rstop2);
 			r.saveToDatabase();
 			RouteSight rs = new RouteSight(cdv, r, true);
 			cdv.addRouteSight(rs);
+			
+			
+			Route r1 = new Route(c1.getId(), "big route");
+			RouteStop rstop3 = new RouteStop(r1, p2, new Time(1, 12, 0));
+			r1.addRouteStop(rstop3);
+			RouteStop rstop4 = new RouteStop(r1, p3, new Time(0, 23, 0));
+			r1.addRouteStop(rstop4);
+			RouteStop rstop5 = new RouteStop(r1, p4, new Time(0, 23, 0));
+			r1.addRouteStop(rstop5);
+			r1.saveToDatabase();
+			RouteSight rs1 = new RouteSight(cdv, r1, true);
+			cdv.addRouteSight(rs1);
 
 			c1.addPublishedCityDataVersion(cdv);
 			c1.saveToDatabase();
@@ -326,32 +373,77 @@ public class Database {
 			
 			City c1 = new City("Jerusalem",
 					"Jerusalem is a city in the Middle East, located on a plateau in the Judaean Mountains between the Mediterranean and the Dead Sea. It is one of the oldest cities in the world, and is considered holy to the three major Abrahamic religions—Judaism, Christianity, and Islam.");
-			CityDataVersion cdv = new CityDataVersion(c1, "1.0", 100, 900.9);
-			PlaceOfInterest p = new PlaceOfInterest(c1.getId(), "Western Wall", PlaceOfInterest.PlaceType.HISTORICAL,
-					"Western Wall is an ancient limestone wall in the Old City of Jerusalem. It is a relatively small segment of a far longer ancient retaining wall, known also in its entirety as the Western Wall",
+			CityDataVersion cdv = new CityDataVersion(c1, "1.0", 10, 122.9);
+			PlaceOfInterest p0 = new PlaceOfInterest(c1.getId(), "Western Wall", PlaceOfInterest.PlaceType.HISTORICAL,
+					"The Western Wall, or “Wailing Wall”, is the most religious site in the world for the Jewish people. Located in the Old City of Jerusalem, it is the western support wall of the Temple Mount.",
 					false);
-			p.saveToDatabase();
-			PlaceOfInterest p1 = new PlaceOfInterest(c1.getId(), "Tower of David", PlaceOfInterest.PlaceType.HISTORICAL,
-					"The Tower of David known as the Jerusalem Citadel, is an ancient citadel located near the Jaffa Gate entrance to western edge of the Old City of Jerusalem.",
-					false);
+			p0.saveToDatabase();
+			PlaceOfInterest p1 = new PlaceOfInterest(c1.getId(), "Machane Yehuda Market", PlaceOfInterest.PlaceType.PUBLIC,
+					"The Machane Yehuda Market, or shuk, is the largest market in Jerusalem with over 250 vendors selling everything from fruit and vegetables to specialty foods, and clothing to Judaica. The market is the main ‘traditional’ marketplace of Jerusalem contrasting with the supermarkets that are found across this city, just as any other advanced city", false);
 			p1.saveToDatabase();
-			PlaceOfInterestSight ps = new PlaceOfInterestSight(cdv, p);
-			cdv.addPlaceOfInterestSight(ps);
-			Map m = new Map(c1.getId(), "central city", "map", "jerusalam.png");
-			double[] coords = { 42.3, 12.7 };
-			Location l = new Location(m, p, coords);
-			m.addLocation(l);
-			m.saveToDatabase();
-			MapSight ms = new MapSight(cdv, m);
-			cdv.addMapSight(ms);
-			Route r = new Route(c1.getId(), "route");
-			RouteStop rstop1 = new RouteStop(r, p, new Time(1, 3, 0));
+			PlaceOfInterest p2 = new PlaceOfInterest(c1.getId(), "Tower od David", PlaceOfInterest.PlaceType.HISTORICAL,
+					"The Tower of David also known as the Jerusalem Citadel, is an ancient citadel located near the Jaffa Gate entrance to western edge of the Old City of Jerusalem.", false);
+			p2.saveToDatabase();
+			PlaceOfInterest p3 = new PlaceOfInterest(c1.getId(), "Jewish Quarter", PlaceOfInterest.PlaceType.HISTORICAL,
+					"The Jewish Quarter of Jerusalem’s Old City is one of the four quarters of the walled city. The quarter is home to around 2,000 people and covers about 0.1 square kilometers. It is also the location of many tens of synagogues and yeshivas (places of the study of Jewish texts) and has been almost continually home to Jews since the century 8 BCE.", false);
+			p3.saveToDatabase();
+			PlaceOfInterest p4 = new PlaceOfInterest(c1.getId(), "Old City of Jerusalem", PlaceOfInterest.PlaceType.PUBLIC,
+					"The Old City of Jerusalem is one of the most intense places on Earth! At the heart of the Jewish, Islamic, and Christian religions, this walled one-kilometer area in the center of Jerusalem is beyond words and cannot be missed.", false);
+			p4.saveToDatabase();
+			PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv, p0);
+			cdv.addPlaceOfInterestSight(ps0);
+			PlaceOfInterestSight ps1 = new PlaceOfInterestSight(cdv, p1);
+			cdv.addPlaceOfInterestSight(ps1);
+			PlaceOfInterestSight ps2 = new PlaceOfInterestSight(cdv, p2);
+			cdv.addPlaceOfInterestSight(ps2);
+			PlaceOfInterestSight ps3 = new PlaceOfInterestSight(cdv, p3);
+			cdv.addPlaceOfInterestSight(ps3);
+			PlaceOfInterestSight ps4 = new PlaceOfInterestSight(cdv, p4);
+			cdv.addPlaceOfInterestSight(ps4);
+			Map m0 = new Map(c1.getId(), "west city", "first map", "jerusalem1.png");
+			double[] coords0 = { 33.3, 45.7 };
+			Location l0 = new Location(m0, p0, coords0);
+			m0.addLocation(l0);
+			double[] coords1 = { 17.3, 28.2 };
+			Location l1 = new Location(m0, p1, coords1);
+			m0.addLocation(l1);
+			m0.saveToDatabase();
+			MapSight ms0 = new MapSight(cdv, m0);
+			cdv.addMapSight(ms0);
+			
+			Map m1 = new Map(c1.getId(), "east city", "second map", "jerusalem2.png");
+			double[] coords2 = { 23.3, 49.7 };
+			Location l2 = new Location(m1, p2, coords2);
+			m1.addLocation(l2);
+			double[] coords3 = { 12.3, 16.2 };
+			Location l3 = new Location(m1, p3, coords3);
+			m1.addLocation(l3);
+			double[] coords4 = { 72.3, 13.2 };
+			Location l4 = new Location(m1, p4, coords4);
+			m1.addLocation(l4);
+			m1.saveToDatabase();
+			MapSight ms1 = new MapSight(cdv, m1);
+			cdv.addMapSight(ms1);
+			Route r = new Route(c1.getId(), "small route");
+			RouteStop rstop1 = new RouteStop(r, p0, new Time(1, 25, 0));
 			r.addRouteStop(rstop1);
-			RouteStop rstop2 = new RouteStop(r, p1, new Time(0, 10, 0));
+			RouteStop rstop2 = new RouteStop(r, p1, new Time(0, 43, 0));
 			r.addRouteStop(rstop2);
 			r.saveToDatabase();
 			RouteSight rs = new RouteSight(cdv, r, true);
 			cdv.addRouteSight(rs);
+			
+			
+			Route r1 = new Route(c1.getId(), "big route");
+			RouteStop rstop3 = new RouteStop(r1, p2, new Time(1, 12, 0));
+			r1.addRouteStop(rstop3);
+			RouteStop rstop4 = new RouteStop(r1, p3, new Time(0, 23, 0));
+			r1.addRouteStop(rstop4);
+			RouteStop rstop5 = new RouteStop(r1, p4, new Time(0, 23, 0));
+			r1.addRouteStop(rstop5);
+			r1.saveToDatabase();
+			RouteSight rs1 = new RouteSight(cdv, r1, true);
+			cdv.addRouteSight(rs1);
 
 			c1.addPublishedCityDataVersion(cdv);
 			c1.saveToDatabase();
@@ -399,6 +491,21 @@ public class Database {
 			cust.addSubscription(sub);
 
 			OneTimePurchase otp = new OneTimePurchase(cust, c1, new Date(119, 8, 6), 9, 8);
+			otp.updateToWasDownload();
+			cust.addOneTimePurchase(otp);
+			cust.saveToDatabase();
+			}
+			// 4
+			{
+			Employee e = new Employee("sigal", "sigalIsNoob!", "yonatan.sigal11@gmail.com", "yonatan", "sigal", "0508322126",
+					Employee.Role.REGULAR);
+			e.saveToDatabase();
+			Customer cust = new Customer("tomer", "IAmTomer*", "1234tomer@gmail.com", "tomer", "kohavi", "0524867726",
+					"5495123458612894", "02/25", "821");
+			Subscription sub = new Subscription(cust, c1, new Date(119, 7, 6), 63.2, 50.9, new Date(119, 9, 8));
+			cust.addSubscription(sub);
+
+			OneTimePurchase otp = new OneTimePurchase(cust, c1, new Date(119, 7, 6), 19, 8);
 			otp.updateToWasDownload();
 			cust.addOneTimePurchase(otp);
 			cust.saveToDatabase();
@@ -1184,10 +1291,10 @@ public class Database {
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityId());
 				su.setInt(2, p.getUserId());
-				su.setDate(3, (Date) p.getPurchaseDate());
+				su.setDate(3, (Date) p.getPurchaseDate()); // fix here - RON
 				su.setDouble(4, p.getFullPrice());
 				su.setDouble(5, p.getPricePayed());
-				su.setDate(6, (Date) p.getExpirationDate());
+				su.setDate(6, (Date) p.getExpirationDate()); // fix here - RON
 				su.setInt(7, p.getId());
 				su.executeUpdate();
 				return true;
@@ -1198,10 +1305,10 @@ public class Database {
 				su.setInt(1, p.getId());
 				su.setInt(2, p.getCityId());
 				su.setInt(3, p.getUserId());
-				su.setDate(4, (Date) p.getPurchaseDate()); 
+				su.setDate(4, (Date) p.getPurchaseDate()); // fix here - RON
 				su.setDouble(5, p.getFullPrice());
 				su.setDouble(6, p.getPricePayed());
-				su.setDate(7, (Date) p.getExpirationDate()); 
+				su.setDate(7, (Date) p.getExpirationDate()); // fix here - RON
 				su.executeUpdate();
 				return false;
 			}
@@ -1227,7 +1334,7 @@ public class Database {
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityId());
 				su.setInt(2, p.getUserId());
-				su.setDate(3, (Date) p.getPurchaseDate()); 
+				su.setDate(3, (Date) p.getPurchaseDate()); // fix here - RON
 				su.setDouble(4, p.getFullPrice());
 				su.setDouble(5, p.getPricePayed());
 				su.setBoolean(6, p.getWasDownload());
@@ -1241,7 +1348,7 @@ public class Database {
 				su.setInt(1, p.getId());
 				su.setInt(2, p.getCityId());
 				su.setInt(3, p.getUserId());
-				su.setDate(4, (Date) p.getPurchaseDate()); 
+				su.setDate(4, (Date) p.getPurchaseDate()); // fix here - RON
 				su.setDouble(5, p.getFullPrice());
 				su.setDouble(6, p.getPricePayed());
 				su.setBoolean(7, p.getWasDownload());
@@ -1285,7 +1392,7 @@ public class Database {
 				su.setInt(1, p.getId());
 				su.setInt(2, p.getCityId());
 				su.setDate(3, (Date) p.getDate());
-				su.setInt(4, p.getNumOneTimePurchases()); 
+				su.setInt(4, p.getNumOneTimePurchases()); // fix here - RON
 				su.setInt(5, p.getNumSubscriptions());
 				su.setInt(6, p.getNumSubscriptionsRenewal());
 				su.setInt(7, p.getNumVisited());
@@ -1897,7 +2004,10 @@ public class Database {
 	 * @param active if we want to search ative or not
 	 * @return the result list.
 	 */
-	public static ArrayList<Integer> searchSubscription(Integer userId, Integer cityId, Date date, Boolean active) 
+	public static ArrayList<Integer> searchSubscription(Integer userId, Integer cityId, Date date, Boolean active) // fix
+																													// this
+																													// -
+																													// RON
 	{
 		try {
 			int counter = 1;
@@ -1906,19 +2016,11 @@ public class Database {
 				sql += "UserID=? AND ";
 			if (cityId != null)
 				sql += "CityID=? AND ";
-			
-			if (active != null)
-			{
-				if (active)
-					sql += "(? BETWEEN PurchaseDate AND ExpDate) AND ";
-				else
-					sql += "(? NOT BETWEEN PurchaseDate AND ExpDate) AND ";
-			}
-				
+			if (active)
+				sql += "(? BETWEEN PurchaseDate AND ExpDate) AND ";
+			else
+				sql += "(? NOT BETWEEN PurchaseDate AND ExpDate) AND ";
 			sql = sql.substring(0, sql.length() - 4);
-			
-			if (userId == null && cityId == null && date == null && active == null)
-				sql += "True";
 
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (userId != null)
@@ -1999,8 +2101,6 @@ public class Database {
 		try {
 			int counter = 1;
 			String sql = "SELECT ID FROM " + Table.MapSight.getValue() + " WHERE ";
-			
-				
 			if (cityId != null)
 				sql += "CityDataVersionID=? AND ";
 
@@ -2014,10 +2114,6 @@ public class Database {
 				sql += "NVP=? AND ";
 
 			sql = sql.substring(0, sql.length() - 4);
-
-			if (cityId == null && dateFrom == null && date == null && dateEnd == null && newVersionPublished == null)
-				sql += "True";
-			
 			PreparedStatement gt = conn.prepareStatement(sql);
 
 			if (cityId != null)
