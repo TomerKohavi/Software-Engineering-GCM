@@ -64,7 +64,7 @@ public class EditUserController
     private JFXComboBox<Integer> ExperationYear; // Value injected by FXMLLoader
 
     @FXML // fx:id="CSV"
-    private JFXTextField CSV; // Value injected by FXMLLoader
+    private JFXTextField CVC; // Value injected by FXMLLoader
     
 
 	public void initialize()
@@ -86,7 +86,7 @@ public class EditUserController
 		CreditCardNumber.setText(""); // need to implement
     	ExperationMonth.setValue(1);
     	ExperationYear.setValue(2019);
-    	CSV.setText("");
+    	CVC.setText("");
 	}
 
 	void openNewPage(String FXMLpage) throws IOException

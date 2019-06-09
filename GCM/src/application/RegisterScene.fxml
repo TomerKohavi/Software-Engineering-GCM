@@ -34,7 +34,7 @@
       <JFXTextField fx:id="Phone" focusColor="#41e0d0" layoutX="792.0" layoutY="449.0" prefHeight="25.0" prefWidth="287.0" promptText="Phone" />
       <JFXTextField fx:id="CreditCardNumber" focusColor="#41e0d0" layoutX="433.0" layoutY="517.0" prefHeight="25.0" prefWidth="287.0" promptText="Credit Card Number" />
       <JFXComboBox fx:id="ExperationMonth" layoutX="792.0" layoutY="517.0" prefHeight="25.0" prefWidth="63.0" promptText="Month" />
-      <JFXTextField fx:id="CSV" focusColor="#41e0d0" layoutX="1016.0" layoutY="517.0" prefHeight="25.0" prefWidth="63.0" promptText="CSV" />
+      <JFXTextField fx:id="CSV" focusColor="#41e0d0" layoutX="1016.0" layoutY="517.0" prefHeight="25.0" prefWidth="63.0" promptText="CVC" />
       <JFXButton fx:id="Register" layoutX="616.0" layoutY="627.0" onAction="#register" prefHeight="45.0" prefWidth="287.0" style="-fx-background-color: #41e0d0;" text="Register">
          <font>
             <Font size="21.0" />

@@ -40,6 +40,6 @@
       <JFXTextField fx:id="CreditCardNumber" focusColor="#41e0d0" layoutX="152.0" layoutY="388.0" prefHeight="25.0" prefWidth="287.0" promptText="Credit Card Number" />
       <JFXComboBox fx:id="ExperationMonth" layoutX="511.0" layoutY="388.0" prefHeight="25.0" prefWidth="63.0" promptText="Month" />
       <JFXComboBox fx:id="ExperationYear" layoutX="612.0" layoutY="388.0" prefHeight="25.0" prefWidth="71.0" promptText="Year" />
-      <JFXTextField fx:id="CSV" focusColor="#41e0d0" layoutX="735.0" layoutY="388.0" prefHeight="25.0" prefWidth="63.0" promptText="CSV" />
+      <JFXTextField fx:id="CSV" focusColor="#41e0d0" layoutX="735.0" layoutY="388.0" prefHeight="25.0" prefWidth="63.0" promptText="CVC" />
    </children>
 </AnchorPane>

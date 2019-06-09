@@ -62,7 +62,7 @@ public class RegisterController {
     private JFXComboBox<Integer> ExperationYear; // Value injected by FXMLLoader
 
     @FXML // fx:id="CSV"
-    private JFXTextField CSV; // Value injected by FXMLLoader
+    private JFXTextField CVC; // Value injected by FXMLLoader
 
     public void initialize () {
     	ExperationMonth.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
@@ -95,7 +95,7 @@ public class RegisterController {
     	CreditCardNumber.getText(); // need to implement 
     	ExperationMonth.getValue();
     	ExperationYear.getValue();
-    	CSV.getText();
+    	CVC.getText();
     	if (usr.equals("") || pass.equals("") || first.equals("") || last.equals("") || emailAdd.equals("") || phoneNumber.equals("")) // need to check validity
     	{
     		IncorrectText.setText("Please fill all of the above");
