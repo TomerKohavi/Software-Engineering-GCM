@@ -2024,10 +2024,14 @@ public class Database {
 				sql += "UserID=? AND ";
 			if (cityId != null)
 				sql += "CityID=? AND ";
-			if (active)
-				sql += "(? BETWEEN PurchaseDate AND ExpDate) AND ";
-			else
-				sql += "(? NOT BETWEEN PurchaseDate AND ExpDate) AND ";
+			if (active != null)
+			{
+				if (active)
+					sql += "(? BETWEEN PurchaseDate AND ExpDate) AND ";
+				else
+					sql += "(? NOT BETWEEN PurchaseDate AND ExpDate) AND ";
+			}
+			
 			sql = sql.substring(0, sql.length() - 4);
 
 			if (userId == null && cityId == null && date == null && active == null)
