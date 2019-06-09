@@ -2012,7 +2012,7 @@ public class Database {
 	 */
 	public static RouteStop _getRouteStopById(int id) {
 		try {
-			ResultSet res = get(Table.PlaceOfInterest.getValue(), id);
+			ResultSet res = get(Table.RouteStop.getValue(), id);
 			if (res == null)
 				return null;
 			return RouteStop._createRouteStop(res.getInt("ID"), res.getInt("RouteID"), res.getInt("PlaceID"),
