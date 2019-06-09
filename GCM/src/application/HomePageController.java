@@ -453,8 +453,8 @@ public class HomePageController
 							ResultName.setText(Connector.selectedCustomer.getUserName()); // set name and type
 							ResultInfo.setText("Name: " + Connector.selectedCustomer.getFirstName() + " " + Connector.selectedCustomer.getLastName() + "\n" + "Email: "
 									+ Connector.selectedCustomer.getEmail() + "\n" + "Phone: " + Connector.selectedCustomer.getPhoneNumber());
-							EditButton.setDisable(false);
-							// add purchase history
+							ViewPurchaseHistoryButton.setVisible(true);
+
 						}
 					}
 				}
@@ -513,7 +513,8 @@ public class HomePageController
 		{
 			DateNotValid.setVisible(false);
 			MainList.getItems().clear();
-			MainList.getItems().addAll("All Cities", "city1", "city2");
+			MainList.getItems().add("All Cities");
+			MainList.getItems().addAll(Connector.getCitiesNames(Connector.allCities));
 		}
 
 	}
