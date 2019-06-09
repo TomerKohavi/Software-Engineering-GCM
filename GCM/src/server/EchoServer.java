@@ -72,7 +72,7 @@ public class EchoServer extends AbstractServer
 
 	public Login handleLogin(Login login)
 	{
-		System.out.print("login " + login.name + " ");
+		System.out.println("login " + login.name + " ");
 		ArrayList<Integer> list;
 		if (login.isEmployee)
 			list = Database.searchEmployee(login.name, login.pass);
@@ -83,13 +83,12 @@ public class EchoServer extends AbstractServer
 			int id = list.get(0);
 			if (!this.loggedList.contains(id))
 			{
-				login.loggedUser = Database.getCustomerById(id);
+				login.loggedUser = Database.getEmployeeById(id);
 				this.loggedList.add(login.loggedUser.getId());
 			}
 			else
 				login.loggedUser = null;
 		}
-
 		if (login.loggedUser != null)
 			System.out.println("success");
 		else
@@ -105,6 +104,7 @@ public class EchoServer extends AbstractServer
 
 	public Register handleRegister(Register reg)
 	{
+		System.out.println("register " + reg.username);
 		if (Database.searchCustomer(reg.username, null).isEmpty()
 				&& Database.searchEmployee(reg.username, null).isEmpty())
 		{
@@ -130,13 +130,14 @@ public class EchoServer extends AbstractServer
 
 	public Search handleSearch(Search s)
 	{
+		System.out.println("search: " + s.cityName + "|" + s.cityInfo + "|" + s.poiName + "|" + s.poiInfo);
 		s.searchResult = SearchCatalog.SearchCity(s.cityName, s.cityInfo, s.poiName, s.poiInfo);
 		return s;
 	}
 
 	public void handleUpdateUser(User user)
 	{
-		System.out.print("update " + user.getId());
+		System.out.print("update " + user.getUserName());
 		if (user instanceof Customer)
 			Database.saveCustomer((Customer) user);
 		else
@@ -145,6 +146,7 @@ public class EchoServer extends AbstractServer
 	
 	public CustomersRequest handleUsersRequest(CustomersRequest cr)
 	{
+		System.out.println("customers list request");
 		cr.custList = Database.getAllCustomers();
 		return cr;
 	}
@@ -161,9 +163,7 @@ public class EchoServer extends AbstractServer
 		{
 			if (msg instanceof Login)
 			{
-				System.out.println("login sending");
 				client.sendToClient(handleLogin((Login) msg));
-				System.out.println("login sent");
 			}
 			else if (msg instanceof Logoff)
 			{
@@ -299,6 +299,7 @@ public class EchoServer extends AbstractServer
 	 */
 	synchronized protected void clientException(ConnectionToClient client, Throwable exception)
 	{
+		System.err.println("EXCEPTION");
 		String msg = client.getInfo("loginID").toString() + " has disconnected";
 
 		System.out.println(msg);

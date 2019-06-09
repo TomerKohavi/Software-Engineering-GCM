@@ -1781,7 +1781,7 @@ public class Database {
 			sql = sql.substring(0, sql.length() - 4);
 
 			if (userName == null && password == null)
-				sql += "SELECT ID FROM " + table + "WHERE True";
+				sql = "SELECT ID FROM " + table + " WHERE True";
 
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (userName != null)

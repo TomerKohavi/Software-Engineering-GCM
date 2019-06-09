@@ -17,8 +17,7 @@ public class Login extends Command {
 	public void delete()
 	{
 		name = pass = null;
-		isEmployee = null;
-		
+		isEmployee = null;		
 	}
 	
 	public String name, pass;
