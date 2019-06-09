@@ -297,8 +297,8 @@ public class HomePageController
 					{
 						found = true;
 						BuyButton.setText("Download");
-						if (sub.isGoingToEnd(new Date()))
-							ReSubscribeButton.setVisible(true);
+//						if (sub.isGoingToEnd(new Date()))
+//							ReSubscribeButton.setVisible(true);
 						break;
 					}
 				if (!found)

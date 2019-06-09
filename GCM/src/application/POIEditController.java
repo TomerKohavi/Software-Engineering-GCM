@@ -50,10 +50,10 @@ public class POIEditController {
     	
     	if (Connector.isEdit)  // if its edit, load the data
     	{
-    		Name.setText("");
-    		InfoBox.setText("");
-    		TypeCombo.setValue("");
-//    		Accessibility.setSelected(true/false);
+    		Name.setText(Connector.selectedPOI.getName());
+    		InfoBox.setText(Connector.selectedPOI.getPlaceDescription());
+//    		TypeCombo.setValue();
+    		Accessibility.setSelected(Connector.selectedPOI.isAccessibilityToDisabled());
     	}
     	
     }
@@ -61,10 +61,11 @@ public class POIEditController {
 
     @FXML
     void apply(ActionEvent event) {
-//    	Name.getText();
-//		InfoBox.getText();
-//		TypeCombo.getValue();
-//    	Accessibility.selectedProperty();
+    	Connector.selectedPOI.setName(Name.getText());
+    	Connector.selectedPOI.setPlaceDescription(InfoBox.getText());
+//    	Connector.selectedPOI.setType(type);
+    	Connector.selectedPOI.setAccessibilityToDisabled(Accessibility.isSelected());
+    	// update server
     	mainPane.getScene().getWindow().hide();
     }
 

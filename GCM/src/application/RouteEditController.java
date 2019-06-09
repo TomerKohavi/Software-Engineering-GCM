@@ -22,7 +22,7 @@ public class RouteEditController {
 
     @FXML // fx:id="InfoBox"
     private TextArea InfoBox; // Value injected by FXMLLoader
-
+    
     @FXML // fx:id="Accessibility"
     private CheckBox Accessibility; // Value injected by FXMLLoader
 
@@ -50,14 +50,14 @@ public class RouteEditController {
     @FXML
     public void initialize() {
     	
-//    	if ()  // if its edit, load the data
-//    	{
-//    		Name.setText("");
-//    		InfoBox.setText("");
-//    		Accessability.setSelected(true/false)
-//			StopsBox.getItems().addAll("");
-			POIBox.getItems().addAll("0", "1", "2", "3", "4");
-//    	}
+    	if (Connector.isEdit) // if its edit, load the data
+    	{
+    		Name.setText("Route " + Connector.selectedRoute.getId());
+    		InfoBox.setText(Connector.selectedRoute.getInfo());
+    		Accessibility.setSelected(Connector.selectedRoute.isAcceptabilityToDisabled());
+			StopsBox.getItems().addAll(""); // add to table,  copy from HomePageController
+			POIBox.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
+    	}
     	
     }
     
@@ -70,10 +70,10 @@ public class RouteEditController {
     		int selectedIdx = POIBox.getSelectionModel().getSelectedIndex();
         	if (selectedIdx >= 0)
         	{
-        		POIBox.getItems().remove(selectedIdx);
-        		StopsBox.getItems().addAll("" + selectedIdx);
+        		StopsBox.getItems().addAll("" + selectedIdx); // need to implement
         		StopTime.setText("");
         		TimeError.setOpacity(0);
+        		Accessibility.setSelected(Connector.selectedRoute.isAcceptabilityToDisabled());
         	}
     	}
     	else
@@ -86,16 +86,13 @@ public class RouteEditController {
     	if (selectedIdx >= 0)
     	{
     		StopsBox.getItems().remove(selectedIdx);
-    		POIBox.getItems().addAll("" + selectedIdx);
     	}
     }
     
     @FXML
     void apply(ActionEvent event) {
-//    	Name.getText();
-//		InfoBox.getText();
-//		TypeCombo.getValue();
-//    	Accessability.selectedProperty();
+    	Connector.selectedRoute.setInfo(InfoBox.getText());
+//		update stop list
     	mainPane.getScene().getWindow().hide();
     }
 

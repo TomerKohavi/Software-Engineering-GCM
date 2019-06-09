@@ -144,8 +144,9 @@ public class MapEditController {
 
     @FXML
     void apply(ActionEvent event) {
-//    	Name.getText();
-//		InfoBox.getText();
+    	Connector.selectedMap.setName(Name.getText());
+    	Connector.selectedMap.setInfo(InfoBox.getText());
+//    	Connector.selectedMap.setImgURL(imgURL);
 //		MapImage.getImage();
     	
     	if (!firstPOIAdded) {
