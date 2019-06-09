@@ -1291,10 +1291,10 @@ public class Database {
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityId());
 				su.setInt(2, p.getUserId());
-				su.setDate(3, (Date) p.getPurchaseDate()); // fix here - RON
+				su.setDate(3, (Date) p.getPurchaseDate());
 				su.setDouble(4, p.getFullPrice());
 				su.setDouble(5, p.getPricePayed());
-				su.setDate(6, (Date) p.getExpirationDate()); // fix here - RON
+				su.setDate(6, (Date) p.getExpirationDate());
 				su.setInt(7, p.getId());
 				su.executeUpdate();
 				return true;
@@ -1305,10 +1305,10 @@ public class Database {
 				su.setInt(1, p.getId());
 				su.setInt(2, p.getCityId());
 				su.setInt(3, p.getUserId());
-				su.setDate(4, (Date) p.getPurchaseDate()); // fix here - RON
+				su.setDate(4, (Date) p.getPurchaseDate()); 
 				su.setDouble(5, p.getFullPrice());
 				su.setDouble(6, p.getPricePayed());
-				su.setDate(7, (Date) p.getExpirationDate()); // fix here - RON
+				su.setDate(7, (Date) p.getExpirationDate()); 
 				su.executeUpdate();
 				return false;
 			}
@@ -1334,7 +1334,7 @@ public class Database {
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityId());
 				su.setInt(2, p.getUserId());
-				su.setDate(3, (Date) p.getPurchaseDate()); // fix here - RON
+				su.setDate(3, (Date) p.getPurchaseDate()); 
 				su.setDouble(4, p.getFullPrice());
 				su.setDouble(5, p.getPricePayed());
 				su.setBoolean(6, p.getWasDownload());
@@ -1348,7 +1348,7 @@ public class Database {
 				su.setInt(1, p.getId());
 				su.setInt(2, p.getCityId());
 				su.setInt(3, p.getUserId());
-				su.setDate(4, (Date) p.getPurchaseDate()); // fix here - RON
+				su.setDate(4, (Date) p.getPurchaseDate()); 
 				su.setDouble(5, p.getFullPrice());
 				su.setDouble(6, p.getPricePayed());
 				su.setBoolean(7, p.getWasDownload());
@@ -1392,7 +1392,7 @@ public class Database {
 				su.setInt(1, p.getId());
 				su.setInt(2, p.getCityId());
 				su.setDate(3, (Date) p.getDate());
-				su.setInt(4, p.getNumOneTimePurchases()); // fix here - RON
+				su.setInt(4, p.getNumOneTimePurchases()); 
 				su.setInt(5, p.getNumSubscriptions());
 				su.setInt(6, p.getNumSubscriptionsRenewal());
 				su.setInt(7, p.getNumVisited());
@@ -1999,10 +1999,7 @@ public class Database {
 	 * @param active if we want to search ative or not
 	 * @return the result list.
 	 */
-	public static ArrayList<Integer> searchSubscription(Integer userId, Integer cityId, Date date, Boolean active) // fix
-																													// this
-																													// -
-																													// RON
+	public static ArrayList<Integer> searchSubscription(Integer userId, Integer cityId, Date date, Boolean active) 
 	{
 		try {
 			int counter = 1;
@@ -2011,11 +2008,19 @@ public class Database {
 				sql += "UserID=? AND ";
 			if (cityId != null)
 				sql += "CityID=? AND ";
-			if (active)
-				sql += "(? BETWEEN PurchaseDate AND ExpDate) AND ";
-			else
-				sql += "(? NOT BETWEEN PurchaseDate AND ExpDate) AND ";
+			
+			if (active != null)
+			{
+				if (active)
+					sql += "(? BETWEEN PurchaseDate AND ExpDate) AND ";
+				else
+					sql += "(? NOT BETWEEN PurchaseDate AND ExpDate) AND ";
+			}
+				
 			sql = sql.substring(0, sql.length() - 4);
+			
+			if (userId == null && cityId == null && date == null && active == null)
+				sql += "True";
 
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (userId != null)
@@ -2096,6 +2101,8 @@ public class Database {
 		try {
 			int counter = 1;
 			String sql = "SELECT ID FROM " + Table.MapSight.getValue() + " WHERE ";
+			
+				
 			if (cityId != null)
 				sql += "CityDataVersionID=? AND ";
 
@@ -2109,6 +2116,10 @@ public class Database {
 				sql += "NVP=? AND ";
 
 			sql = sql.substring(0, sql.length() - 4);
+
+			if (cityId == null && dateFrom == null && date == null && dateEnd == null && newVersionPublished == null)
+				sql += "True";
+			
 			PreparedStatement gt = conn.prepareStatement(sql);
 
 			if (cityId != null)
