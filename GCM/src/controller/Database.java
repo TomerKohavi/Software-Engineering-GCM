@@ -79,6 +79,11 @@ public class Database {
 		}
 	}
 	
+	/**
+	 * returns all the customers
+	 * 
+	 * @return List of all the customers
+	 */
 	public ArrayList<Customer> getAllCustomers(){
 		ArrayList<Integer> ids=searchCustomer(null, null);
 		ArrayList<Customer> custs=new ArrayList<Customer>();
@@ -199,9 +204,9 @@ public class Database {
 		try {
 			Database.createConnection();
 			// reset
-			//if (!Database.resetAll(name, pass))
-			//	return;
-			// start insert
+			if (!Database.resetAll(name, pass))
+				return;
+			//start insert
 
 			// create cities
 			// 1
@@ -952,13 +957,13 @@ public class Database {
 	{
 		try {
 			if (existLocation(p.getId())) {
-				String sql = "UPDATE " + Table.Location.getValue() + " SET ID=?, MapID=?, POIID=?, x=?, y=? WHERE ID=?";
+				String sql = "UPDATE " + Table.Location.getValue() + " SET MapID=?, POIID=?, x=?, y=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
-				su.setInt(1, p.getId());
-				su.setInt(2, p.getMapId());
-				su.setInt(3, p.getPlaceOfInterestId());
-				su.setDouble(4, p.getCoordinates()[0]);
-				su.setDouble(5, p.getCoordinates()[1]);
+				su.setInt(1, p.getMapId());
+				su.setInt(2, p.getPlaceOfInterestId());
+				su.setDouble(3, p.getCoordinates()[0]);
+				su.setDouble(4, p.getCoordinates()[1]);
+				su.setInt(5, p.getId());
 				su.executeUpdate();
 				return true;
 			} else {
