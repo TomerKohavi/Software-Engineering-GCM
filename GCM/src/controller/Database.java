@@ -94,24 +94,6 @@ public class Database {
 		}
 		return custs;
 	}
-	
-	/**
-     * returns all the Cities
-     * 
-     * @return List of all the cities
-     */
-    public static ArrayList<City> getAllCities()
-    {
-        ArrayList<Integer> ids = searchCity(null, null);
-        ArrayList<City> cities = new ArrayList<City>();
-        for (int id : ids)
-        {
-            City c = Database.getCityById(id);
-            if (c != null)
-                cities.add(c);
-        }
-        return cities;
-    }
 
 	/**
 	 * @author tal20 This enum maps from full table names and local names.
