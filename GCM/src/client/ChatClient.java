@@ -5,10 +5,10 @@
 package client;
 
 import ocsf.client.*;
+import otherClasses.Pair;
 import common.*;
 import common.Console;
 import io_commands.*;
-import javafx.util.Pair;
 import objectClasses.City;
 import objectClasses.Customer;
 import objectClasses.User;
@@ -58,8 +58,9 @@ public class ChatClient extends AbstractClient
 	Search search;
 
 	CustomersRequest custReq;
-	
+
 	Semaphore semaphore;
+	private AllCitiesRequest cityReq;
 
 	/**
 	 * Constructs an instance of the chat client.
@@ -185,6 +186,22 @@ public class ChatClient extends AbstractClient
 		return this.custReq.custList;
 	}
 
+	public ArrayList<Pair<String, Integer>> allCitiesRequest() throws IOException
+	{
+		sendToServer(new AllCitiesRequest());
+		try
+		{
+			this.semaphore.acquire();
+		}
+		catch (InterruptedException e)
+		{
+			System.err.println("semaphore");
+			e.printStackTrace();
+		}
+		return this.cityReq.cityList;
+
+	}
+
 	// Instance methods ***********************************************
 	/**
 	 * This method handles all data that comes in from the server.
@@ -217,6 +234,11 @@ public class ChatClient extends AbstractClient
 		else if (msg instanceof CustomersRequest)
 		{
 			this.custReq = (CustomersRequest) msg;
+			this.semaphore.release();
+		}
+		else if (msg instanceof AllCitiesRequest)
+		{
+			this.cityReq = (AllCitiesRequest) msg;
 			this.semaphore.release();
 		}
 		else

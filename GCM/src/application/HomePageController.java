@@ -630,7 +630,7 @@ public class HomePageController
 		LastDate.setVisible(true);
 		WatchButton.setVisible(true);
 		if (Connector.allCities == null)
-			Connector.allCities = Connector.client.search(null, null, null, null);
+			Connector.allCities = Connector.client.allCitiesRequest();
 	}
 
 	@FXML

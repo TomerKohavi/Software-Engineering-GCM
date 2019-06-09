@@ -150,6 +150,14 @@ public class EchoServer extends AbstractServer
 		cr.custList = Database.getAllCustomers();
 		return cr;
 	}
+	
+	public AllCitiesRequest handleCityRequest(AllCitiesRequest cityReq)
+	{
+		System.out.println("cities list request");
+		cityReq.cityList = Database.getAllCitiesNameId();
+		return cityReq;
+		
+	}
 
 	/**
 	 * This method handles any messages received from the client.
@@ -162,20 +170,11 @@ public class EchoServer extends AbstractServer
 		try
 		{
 			if (msg instanceof Login)
-			{
 				client.sendToClient(handleLogin((Login) msg));
-			}
 			else if (msg instanceof Logoff)
-			{
 				handleLogoff((Logoff) msg);
-			}
 			else if (msg instanceof Register)
-			{
-				System.out.println("reg sending");
 				client.sendToClient(handleRegister((Register) msg));
-				System.out.println("reg sent");
-
-			}
 			else if (msg instanceof ImageTransfer)
 			{
 				ImageTransfer imTr = (ImageTransfer) msg;
@@ -183,23 +182,19 @@ public class EchoServer extends AbstractServer
 				{
 					imTr.loadImage();
 					client.sendToClient(imTr);
-
 				}
 				else
 					imTr.saveImage("C:\\Users\\yonat\\Pictures\\mememe.png");
 			}
 			else if (msg instanceof Search)
-			{
 				client.sendToClient(handleSearch((Search) msg));
-			}
 			else if (msg instanceof User)
-			{
 				handleUpdateUser((User) msg);
-			}
 			else if (msg instanceof CustomersRequest)
-			{
 				client.sendToClient(handleUsersRequest((CustomersRequest) msg)); 
-			}
+			else if (msg instanceof CustomersRequest)
+				client.sendToClient(handleCityRequest((AllCitiesRequest) msg)); 
+			
 		}
 		catch (IOException e)
 		{

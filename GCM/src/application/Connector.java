@@ -16,6 +16,7 @@ import objectClasses.PlaceOfInterestSight;
 import objectClasses.Route;
 import objectClasses.RouteSight;
 import objectClasses.User;
+import otherClasses.Pair;
 import objectClasses.Employee.Role;
 import client.ChatClient;
 
@@ -55,7 +56,7 @@ public class Connector {
 	public static ArrayList<MapSight> searchMapResult;
 	public static ArrayList<PlaceOfInterestSight> searchPOIResult;
 	public static ArrayList<RouteSight> searchRouteResult;
-	public static ArrayList<City> allCities;
+	public static ArrayList<Pair<String, Integer>> allCities;
 	public static ArrayList<Customer> customerList;
 	
 	public static ArrayList<String> getCitiesNames(ArrayList<City> cityList)
