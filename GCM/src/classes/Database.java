@@ -9,9 +9,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.security.MessageDigest;
 
-
 //import javax.xml.bind.DatatypeConverter;
-
 
 /**
  * @author tal20
@@ -123,8 +121,9 @@ public class Database {
 	}
 
 	/**
-	 * Reset the entire database. Delete all inputs, set counters to 0.
-	 * Only Tal and Lior should use this method.
+	 * Reset the entire database. Delete all inputs, set counters to 0. Only Tal and
+	 * Lior should use this method.
+	 * 
 	 * @param name of the user
 	 * @param pass of the user
 	 * @return true if the data base is reset
@@ -158,77 +157,178 @@ public class Database {
 		}
 		return true;
 	}
+
 	/**
 	 * initialize the data base
-	 * @param name of the user permission 
-	 * @param pass of the user permission 
-	 */	
+	 * 
+	 * @param name of the user permission
+	 * @param pass of the user permission
+	 */
 	public static void initDatabase(String name, String pass) {
-        try { 
-        	Database.createConnection();
-        	//reset
-        	if(!Database.resetAll(name, pass))
-        		return;
-        	//start insert
-        	
-        	//create cities
-        	City c1=new City("haifa", "The third largest city in Israel. As of 2016, the city is a major seaport "
-        			+ "located on Israel's Mediterranean coastline in the Bay of Haifa covering 63.7 square kilometres.");
-        	CityDataVersion cdv=new CityDataVersion(c1, "1.0", 20, 100.9);
-        	PlaceOfInterest p=new PlaceOfInterest(c1.getId(),"University of Haifa", PlaceOfInterest.PlaceType.MUSEUM,
-        			"A public research university on the top of Mount Carmel in Haifa, Israel. "
-        			+ "The university was founded in 1963 by the mayor of its host city, Abba Hushi,"
-        			+ " to operate under the academic auspices of the Hebrew University of Jerusalem.", false);
-        	p.saveToDatabase();
-        	PlaceOfInterest p1=new PlaceOfInterest(c1.getId(),"School of Haifa", PlaceOfInterest.PlaceType.PUBLIC, 
-        			"the best shool in the city", false);
-        	p1.saveToDatabase();
-        	PlaceOfInterestSight ps=new PlaceOfInterestSight(cdv, p);
-        	cdv.addPlaceOfInterestSight(ps);
-        	Map m=new Map(c1.getId(), "central city", "large map", "example.url");
-        	double[] coords= {21.3,58.7};
-        	Location l=new Location(m, p,coords);
-        	m.addLocation(l);
-        	m.saveToDatabase();
-        	MapSight ms=new MapSight(cdv, m);
-        	cdv.addMapSight(ms);
-        	Route r=new Route(c1.getId(), "small route");
-        	RouteStop rstop1=new RouteStop(r, p, new Time(1, 25, 0));
-        	r.addRouteStop(rstop1);
-        	RouteStop rstop2=new RouteStop(r, p1, new Time(0, 43, 0));
-        	r.addRouteStop(rstop2);
-        	r.saveToDatabase();
-        	RouteSight rs=new RouteSight(cdv, r, true);
-        	cdv.addRouteSight(rs);
-        	
-        	
-        	c1.addPublishedCityDataVersion(cdv);
-        	c1.saveToDatabase();
-        	
-        	//create Users
-        	Employee e=new Employee("Lior33", "12345", "lior@gmail.com", "lior", "vismun", "0521234567", Employee.Role.CEO);
-        	e.saveToDatabase();
-        	Customer cust=new Customer("yosi11", "67890", "yosi@gmail.com", "yosi", "ben asser", "0521111111",
-        			"5495681338665894","07/24", "896");
-        	Subscription sub=new Subscription(cust, c1, new Date(119, 8, 6), 201.8, 199.9, new Date(119, 10,8));
-        	cust.addSubscription(sub);
-        	
-        	OneTimePurchase otp=new OneTimePurchase(cust, c1, new Date(119, 8, 6), 20, 19);
-        	otp.updateToWasDownload();
-        	cust.addOneTimePurchase(otp);
-        	cust.saveToDatabase();
-        	
-        	
-        }
-        catch (Exception e) {
+		try {
+			Database.createConnection();
+			// reset
+			if (!Database.resetAll(name, pass))
+				return;
+			// start insert
+
+			// create cities
+			// 1
+			{
+			City c1 = new City("haifa", "The third largest city in Israel. As of 2016, the city is a major seaport "
+					+ "located on Israel's Mediterranean coastline in the Bay of Haifa covering 63.7 square kilometres.");
+			CityDataVersion cdv = new CityDataVersion(c1, "1.0", 20, 100.9);
+			PlaceOfInterest p = new PlaceOfInterest(c1.getId(), "University of Haifa", PlaceOfInterest.PlaceType.MUSEUM,
+					"A public research university on the top of Mount Carmel in Haifa, Israel. "
+							+ "The university was founded in 1963 by the mayor of its host city, Abba Hushi,"
+							+ " to operate under the academic auspices of the Hebrew University of Jerusalem.",
+					false);
+			p.saveToDatabase();
+			PlaceOfInterest p1 = new PlaceOfInterest(c1.getId(), "School of Haifa", PlaceOfInterest.PlaceType.PUBLIC,
+					"the best shool in the city", false);
+			p1.saveToDatabase();
+			PlaceOfInterestSight ps = new PlaceOfInterestSight(cdv, p);
+			cdv.addPlaceOfInterestSight(ps);
+			Map m = new Map(c1.getId(), "central city", "large map", "haifa.url");
+			double[] coords = { 21.3, 58.7 };
+			Location l = new Location(m, p, coords);
+			m.addLocation(l);
+			m.saveToDatabase();
+			MapSight ms = new MapSight(cdv, m);
+			cdv.addMapSight(ms);
+			Route r = new Route(c1.getId(), "small route");
+			RouteStop rstop1 = new RouteStop(r, p, new Time(1, 25, 0));
+			r.addRouteStop(rstop1);
+			RouteStop rstop2 = new RouteStop(r, p1, new Time(0, 43, 0));
+			r.addRouteStop(rstop2);
+			r.saveToDatabase();
+			RouteSight rs = new RouteSight(cdv, r, true);
+			cdv.addRouteSight(rs);
+
+			c1.addPublishedCityDataVersion(cdv);
+			c1.saveToDatabase();
+			}
+			{
+			// 2
+			City c1 = new City("Tel aviv",
+					"Tel Aviv-Yafo, is the second most populous city in Israel—after Jerusalem—and the most populous city in the conurbation of Gush Dan, Israel's largest metropolitan area. Located on the country's Mediterranean coastline and with a population of 443,939, it is the economic and technological center of the country.");
+			CityDataVersion cdv = new CityDataVersion(c1, "1.0", 10, 90.9);
+			PlaceOfInterest p = new PlaceOfInterest(c1.getId(), "Hummus Abu Hassan",
+					PlaceOfInterest.PlaceType.RESTAURANT, "The best restaurant in the city", false);
+			p.saveToDatabase();
+			PlaceOfInterest p1 = new PlaceOfInterest(c1.getId(), "Yes Planet", PlaceOfInterest.PlaceType.CINEMA,
+					"cinama in tel aviv", false);
+			p1.saveToDatabase();
+			PlaceOfInterestSight ps = new PlaceOfInterestSight(cdv, p);
+			cdv.addPlaceOfInterestSight(ps);
+			Map m = new Map(c1.getId(), "central city", "large map", "tel_aviv.url");
+			double[] coords = { 40.3, 32.7 };
+			Location l = new Location(m, p, coords);
+			m.addLocation(l);
+			m.saveToDatabase();
+			MapSight ms = new MapSight(cdv, m);
+			cdv.addMapSight(ms);
+			Route r = new Route(c1.getId(), "route");
+			RouteStop rstop1 = new RouteStop(r, p, new Time(1, 5, 0));
+			r.addRouteStop(rstop1);
+			RouteStop rstop2 = new RouteStop(r, p1, new Time(0, 13, 0));
+			r.addRouteStop(rstop2);
+			r.saveToDatabase();
+			RouteSight rs = new RouteSight(cdv, r, true);
+			cdv.addRouteSight(rs);
+
+			c1.addPublishedCityDataVersion(cdv);
+			c1.saveToDatabase();
+			}
+			// 3
+			
+			City c1 = new City("Jerusalem",
+					"Jerusalem is a city in the Middle East, located on a plateau in the Judaean Mountains between the Mediterranean and the Dead Sea. It is one of the oldest cities in the world, and is considered holy to the three major Abrahamic religions—Judaism, Christianity, and Islam.");
+			CityDataVersion cdv = new CityDataVersion(c1, "1.0", 100, 900.9);
+			PlaceOfInterest p = new PlaceOfInterest(c1.getId(), "Western Wall", PlaceOfInterest.PlaceType.HISTORICAL,
+					"Western Wall is an ancient limestone wall in the Old City of Jerusalem. It is a relatively small segment of a far longer ancient retaining wall, known also in its entirety as the Western Wall",
+					false);
+			p.saveToDatabase();
+			PlaceOfInterest p1 = new PlaceOfInterest(c1.getId(), "Tower of David", PlaceOfInterest.PlaceType.HISTORICAL,
+					"The Tower of David known as the Jerusalem Citadel, is an ancient citadel located near the Jaffa Gate entrance to western edge of the Old City of Jerusalem.",
+					false);
+			p1.saveToDatabase();
+			PlaceOfInterestSight ps = new PlaceOfInterestSight(cdv, p);
+			cdv.addPlaceOfInterestSight(ps);
+			Map m = new Map(c1.getId(), "central city", "map", "jerusalam.url");
+			double[] coords = { 42.3, 12.7 };
+			Location l = new Location(m, p, coords);
+			m.addLocation(l);
+			m.saveToDatabase();
+			MapSight ms = new MapSight(cdv, m);
+			cdv.addMapSight(ms);
+			Route r = new Route(c1.getId(), "route");
+			RouteStop rstop1 = new RouteStop(r, p, new Time(1, 3, 0));
+			r.addRouteStop(rstop1);
+			RouteStop rstop2 = new RouteStop(r, p1, new Time(0, 10, 0));
+			r.addRouteStop(rstop2);
+			r.saveToDatabase();
+			RouteSight rs = new RouteSight(cdv, r, true);
+			cdv.addRouteSight(rs);
+
+			c1.addPublishedCityDataVersion(cdv);
+			c1.saveToDatabase();
+			
+			// create Users
+			// 1
+			{
+			Employee e = new Employee("Lior", "12345", "lior@gmail.com", "lior", "wiessman", "0523322726",
+					Employee.Role.CEO);
+			e.saveToDatabase();
+			Customer cust = new Customer("yosi11", "67890", "yosi@gmail.com", "yosi", "ben asser", "0521111111",
+					"5495681338665894", "07/24", "896");
+			Subscription sub = new Subscription(cust, c1, new Date(119, 8, 6), 201.8, 199.9, new Date(119, 10, 8));
+			cust.addSubscription(sub);
+
+			OneTimePurchase otp = new OneTimePurchase(cust, c1, new Date(119, 8, 6), 20, 19);
+			otp.updateToWasDownload();
+			cust.addOneTimePurchase(otp);
+			cust.saveToDatabase();
+			}
+			// 2
+			{
+			Employee e = new Employee("adiel", "adiel1", "statman.adiel@gmail.com", "lior", "statman", "0521234567",
+					Employee.Role.REGULAR);
+			e.saveToDatabase();
+			Customer cust = new Customer("dan", "12890", "dannyf.post@gmail.com", "dan", "feldman", "0521222221",
+					"549512321365894", "01/23", "354");
+			Subscription sub = new Subscription(cust, c1, new Date(119, 7, 6), 201.8, 199.9, new Date(119, 9, 8));
+			cust.addSubscription(sub);
+
+			OneTimePurchase otp = new OneTimePurchase(cust, c1, new Date(119, 8, 6), 19, 18);
+			otp.updateToWasDownload();
+			cust.addOneTimePurchase(otp);
+			cust.saveToDatabase();
+			}
+
+			// 3
+			{
+			Employee e = new Employee("ben", "benbon", "bengordoncshaifa@gmail.com", "ben", "musa", "0501234511",
+					Employee.Role.MANAGER);
+			e.saveToDatabase();
+			Customer cust = new Customer("gadi", "32890", "gadi@gmail.com", "gadi", "landau", "05213213221",
+					"54312413265894", "01/25", "891");
+			Subscription sub = new Subscription(cust, c1, new Date(119, 7, 6), 53.2, 50.9, new Date(119, 9, 8));
+			cust.addSubscription(sub);
+
+			OneTimePurchase otp = new OneTimePurchase(cust, c1, new Date(119, 8, 6), 9, 8);
+			otp.updateToWasDownload();
+			cust.addOneTimePurchase(otp);
+			cust.saveToDatabase();
+			}
+
+		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			Database.closeConnection();
 		}
-        finally
-        { 
-            Database.closeConnection();
-        }
 	}
-	
+
 	// generate ID's
 
 	/**
@@ -597,6 +697,7 @@ public class Database {
 
 	/**
 	 * saves a new instance to the database.
+	 * 
 	 * @param p the route we want to save
 	 * @return true if an updated was made. false for new element.
 	 */
@@ -743,7 +844,8 @@ public class Database {
 				return true;
 			} else {
 				String sql = "INSERT INTO " + Table.Employee.getValue()
-						+ " (ID,Username, Password, Email, FirstName, LastName, PhoneNumber, Role)" + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+						+ " (ID,Username, Password, Email, FirstName, LastName, PhoneNumber, Role)"
+						+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getId());
 				su.setString(2, p.getUserName());
@@ -1090,7 +1192,7 @@ public class Database {
 				su.setInt(5, p.getNumSubscriptionsRenewal());
 				su.setInt(6, p.getNumVisited());
 				su.setInt(7, p.getNumSubDownloads());
-				su.setBoolean(8,  p.isNewVersionPublished());
+				su.setBoolean(8, p.isNewVersionPublished());
 				su.setInt(9, p.getId());
 				su.executeUpdate();
 				return true;
@@ -1105,8 +1207,8 @@ public class Database {
 				su.setInt(5, p.getNumSubscriptions());
 				su.setInt(6, p.getNumSubscriptionsRenewal());
 				su.setInt(7, p.getNumVisited());
-				su.setInt(8, p.getNumSubDownloads());		
-				su.setBoolean(9,  p.isNewVersionPublished());
+				su.setInt(8, p.getNumSubDownloads());
+				su.setBoolean(9, p.isNewVersionPublished());
 				su.executeUpdate();
 				return false;
 			}
@@ -1279,16 +1381,16 @@ public class Database {
 	 * description, we look for a POI such that every word from the query
 	 * description is a substring of the POI description.
 	 * 
-	 * @param placeName the name of the place we want to search
+	 * @param placeName        the name of the place we want to search
 	 * @param placeDescription the place description we want to search
-	 * @param cityId the id of the city we want to search
+	 * @param cityId           the id of the city we want to search
 	 * @return the result list.
 	 */
 	public static ArrayList<Integer> searchPlaceOfInterest(String placeName, String placeDescription, Integer cityId) {
 		try {
 			int counter = 1;
-			String[] words = {""};
-			if(placeDescription != null)
+			String[] words = { "" };
+			if (placeDescription != null)
 				words = placeDescription.split(" ");
 			int len = words.length;
 			String sql = "SELECT ID FROM " + Table.PlaceOfInterest.getValue() + " WHERE ";
@@ -1324,8 +1426,8 @@ public class Database {
 	 * search function. if a parameter is null, we ignore it.
 	 * 
 	 * @param cityId the id of the city we want to search
-	 * @param name the name we want to search
-	 * @param info the info data we want to search
+	 * @param name   the name we want to search
+	 * @param info   the info data we want to search
 	 * @param imgURL the image url we want to search
 	 * @return : the result list.
 	 */
@@ -1367,7 +1469,7 @@ public class Database {
 	 * search function. if a parameter is null, we ignore it.
 	 * 
 	 * @param cityId the id of the city we want to search
-	 * @param info the info data we want to search
+	 * @param info   the info data we want to search
 	 * @return the result list.
 	 */
 	public static ArrayList<Integer> searchRoute(Integer cityId, String info) {
@@ -1400,15 +1502,15 @@ public class Database {
 	 * description, we look for a city such that every word from the query
 	 * description is in the city description.
 	 * 
-	 * @param cityName the city name we want to search
+	 * @param cityName        the city name we want to search
 	 * @param cityDescription the city description we want to search
 	 * @return the result list.
 	 */
 	public static ArrayList<Integer> searchCity(String cityName, String cityDescription) {
 		try {
 			int counter = 1;
-			String[] words = {""};
-			if(cityDescription != null)
+			String[] words = { "" };
+			if (cityDescription != null)
 				words = cityDescription.split(" ");
 			int len = words.length;
 			String sql = "SELECT ID FROM " + Table.City.getValue() + " WHERE ";
@@ -1496,7 +1598,7 @@ public class Database {
 	/**
 	 * search function. if a parameter is null, we ignore it.
 	 * 
-	 * @param mapId the map id we want to search
+	 * @param mapId   the map id we want to search
 	 * @param placeId the place id we want to search
 	 * @return the result list.
 	 */
@@ -1569,7 +1671,7 @@ public class Database {
 	 * search function. if a parameter is null, we ignore it.
 	 * 
 	 * @param cityDataVersionId the city data version id we want to search
-	 * @param mapId the map id we want to search
+	 * @param mapId             the map id we want to search
 	 * @return the result list.
 	 */
 	public static ArrayList<Integer> searchMapSight(Integer cityDataVersionId, Integer mapId) {
@@ -1602,7 +1704,7 @@ public class Database {
 	 * search function. if a parameter is null, we ignore it.
 	 * 
 	 * @param cityDataVersionId the city data version id we want to search
-	 * @param placeId the place id we want to search
+	 * @param placeId           the place id we want to search
 	 * @return the result list.
 	 */
 	public static ArrayList<Integer> searchPlaceOfInterestSight(Integer cityDataVersionId, Integer placeId) {
@@ -1635,8 +1737,8 @@ public class Database {
 	 * search function. if a parameter is null, we ignore it.
 	 * 
 	 * @param cityDataVersionId the city data version id we want to search
-	 * @param routeId the route id we want to search
-	 * @param isFavorite if we want to search favorite or not
+	 * @param routeId           the route id we want to search
+	 * @param isFavorite        if we want to search favorite or not
 	 * @return the result list.
 	 */
 	public static ArrayList<Integer> searchRouteSight(Integer cityDataVersionId, Integer routeId, Boolean isFavorite) {
@@ -1702,7 +1804,7 @@ public class Database {
 	 * 
 	 * @param userId the user id we want to search
 	 * @param cityId the city id we want to search
-	 * @param date the data we want to search
+	 * @param date   the data we want to search
 	 * @param active if we want to search ative or not
 	 * @return the result list.
 	 */
@@ -1746,10 +1848,10 @@ public class Database {
 	/**
 	 * search function. if a parameter is null, we ignore it.
 	 * 
-	 * @param userId the user id we want to search 
-	 * @param cityId the city id we want to search
+	 * @param userId       the user id we want to search
+	 * @param cityId       the city id we want to search
 	 * @param purchaseDate the purchase data we want to search
-	 * @param wasDownload if we want to search download or not
+	 * @param wasDownload  if we want to search download or not
 	 * @return the result list.
 	 */
 	public static ArrayList<Integer> searchOneTimePurchase(Integer userId, Integer cityId, Date purchaseDate,
@@ -1791,15 +1893,15 @@ public class Database {
 	/**
 	 * search function. if a parameter is null, we ignore it.
 	 * 
-	 * @param cityId the city id we want to search
-	 * @param date the data we want to search
+	 * @param cityId   the city id we want to search
+	 * @param date     the data we want to search
 	 * @param dateFrom the data from we want to search
-	 * @param dateEnd the data end we want to search
+	 * @param dateEnd  the data end we want to search
 	 * @return the result list.
 	 * 
 	 */
-	public static ArrayList<Integer> searchStatistic(Integer cityId, Date date, Date dateFrom,
-			Date dateEnd,Boolean newVersionPublished) {
+	public static ArrayList<Integer> searchStatistic(Integer cityId, Date date, Date dateFrom, Date dateEnd,
+			Boolean newVersionPublished) {
 		try {
 			int counter = 1;
 			String sql = "SELECT ID FROM " + Table.MapSight.getValue() + " WHERE ";
@@ -1811,7 +1913,7 @@ public class Database {
 
 			else if (date != null)
 				sql += "Date=? AND ";
-			
+
 			if (newVersionPublished != null)
 				sql += "NVP=? AND ";
 
@@ -1826,7 +1928,7 @@ public class Database {
 				gt.setDate(counter++, dateEnd);
 			} else if (date != null)
 				gt.setDate(counter++, date);
-			
+
 			if (newVersionPublished != null)
 				gt.setBoolean(counter++, newVersionPublished);
 
@@ -1907,7 +2009,7 @@ public class Database {
 	/**
 	 * builds an object from the entry with this id.
 	 * 
-	 * @param id the id of the route  we want to get
+	 * @param id the id of the route we want to get
 	 * @return the new object
 	 */
 	public static Route getRouteById(int id) {
@@ -1956,7 +2058,7 @@ public class Database {
 				return null;
 			return Customer._createCustomer(res.getInt("ID"), res.getString("Username"), res.getString("Password"),
 					res.getString("Email"), res.getString("FirstName"), res.getString("LastName"),
-					res.getString("PhoneNumber"), res.getString("CardNum"), res.getString("Exp"), res.getString("CVC")); 
+					res.getString("PhoneNumber"), res.getString("CardNum"), res.getString("Exp"), res.getString("CVC"));
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
@@ -2158,7 +2260,6 @@ public class Database {
 			return null;
 		}
 	}
-
 
 	/*
 	 * (non-Javadoc)
