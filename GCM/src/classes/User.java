@@ -1,7 +1,8 @@
 package classes;
 
+import java.io.Serializable;
 
-public abstract class User {
+public abstract class User implements Serializable {
 
 	private int id;
 	private String userName;

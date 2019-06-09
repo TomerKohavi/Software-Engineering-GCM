@@ -1,6 +1,8 @@
 package classes;
 
-public interface ClassMustProperties {
+import java.io.Serializable;
+
+public interface ClassMustProperties extends Serializable {
 	public void saveToDatabase();
 
 	public void deleteFromDatabase();
