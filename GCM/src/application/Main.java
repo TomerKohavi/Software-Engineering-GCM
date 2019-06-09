@@ -54,13 +54,14 @@ public class Main extends Application
 	@FXML
 	public void exitApplication(ActionEvent event)
 	{
-		System.out.println("quitting");
-		Connector.client.quit();
 		Platform.exit();
 	}
-
+	
+	@Override
 	public void stop() throws IOException
 	{
-
+		System.out.println("quitting");
+		Connector.client.logoff();
+		Connector.client.quit();
 	}
 }

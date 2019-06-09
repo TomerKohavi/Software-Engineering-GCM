@@ -675,6 +675,7 @@ public class Database {
 	private static boolean exist(String table, int id) {
 		try {
 			String sql = "SELECT ID FROM " + table + " WHERE ID=?";
+			System.out.println(conn);
 			PreparedStatement check = conn.prepareStatement(sql);
 			check.setInt(1, id);
 			ResultSet res = check.executeQuery();

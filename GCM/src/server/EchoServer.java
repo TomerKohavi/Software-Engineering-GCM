@@ -192,7 +192,7 @@ public class EchoServer extends AbstractServer
 				handleUpdateUser((User) msg);
 			else if (msg instanceof CustomersRequest)
 				client.sendToClient(handleUsersRequest((CustomersRequest) msg)); 
-			else if (msg instanceof CustomersRequest)
+			else if (msg instanceof AllCitiesRequest)
 				client.sendToClient(handleCityRequest((AllCitiesRequest) msg)); 
 			
 		}
