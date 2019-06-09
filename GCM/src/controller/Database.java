@@ -317,30 +317,11 @@ public class Database
 			c1.addPublishedCityDataVersion(cdv);
 			c1.saveToDatabase();
 			}
-			{
 			// 2
 			City c1 = new City("Tel aviv",
 					"Tel Aviv-Yafo, is the second most populous city in Israel—after Jerusalem—and the most populous city in the conurbation of Gush Dan, Israel's largest metropolitan area. Located on the country's Mediterranean coastline and with a population of 443,939, it is the economic and technological center of the country.");
-			CityDataVersion cdv = new CityDataVersion(c1, "1.0", 10, 90.9);
-			PlaceOfInterest p = new PlaceOfInterest(c1.getId(), "Hummus Abu Hassan",
-					PlaceOfInterest.PlaceType.RESTAURANT, "The best restaurant in the city", false);
-			p.saveToDatabase();
-			PlaceOfInterest p1 = new PlaceOfInterest(c1.getId(), "Yes Planet", PlaceOfInterest.PlaceType.CINEMA,
-					"cinama in tel aviv", false);
 			p1.saveToDatabase();
-			PlaceOfInterestSight ps = new PlaceOfInterestSight(cdv, p);
-			cdv.addPlaceOfInterestSight(ps);
-			Map m = new Map(c1.getId(), "central city", "large map", "tel_aviv.png");
-			double[] coords = { 40.3, 32.7 };
-			Location l = new Location(m, p, coords);
-			m.addLocation(l);
-			m.saveToDatabase();
-			MapSight ms = new MapSight(cdv, m);
-			cdv.addMapSight(ms);
-			Route r = new Route(c1.getId(), "route");
-			RouteStop rstop1 = new RouteStop(r, p, new Time(1, 5, 0));
 			r.addRouteStop(rstop1);
-			RouteStop rstop2 = new RouteStop(r, p1, new Time(0, 13, 0));
 			r.addRouteStop(rstop2);
 			r.saveToDatabase();
 			RouteSight rs = new RouteSight(cdv, r, true);
@@ -351,30 +332,12 @@ public class Database
 			}
 			// 3
 
+			{
 			City c1 = new City("Jerusalem",
 					"Jerusalem is a city in the Middle East, located on a plateau in the Judaean Mountains between the Mediterranean and the Dead Sea. It is one of the oldest cities in the world, and is considered holy to the three major Abrahamic religions—Judaism, Christianity, and Islam.");
-			CityDataVersion cdv = new CityDataVersion(c1, "1.0", 100, 900.9);
-			PlaceOfInterest p = new PlaceOfInterest(c1.getId(), "Western Wall", PlaceOfInterest.PlaceType.HISTORICAL,
-					"Western Wall is an ancient limestone wall in the Old City of Jerusalem. It is a relatively small segment of a far longer ancient retaining wall, known also in its entirety as the Western Wall",
-					false);
-			p.saveToDatabase();
-			PlaceOfInterest p1 = new PlaceOfInterest(c1.getId(), "Tower of David", PlaceOfInterest.PlaceType.HISTORICAL,
-					"The Tower of David known as the Jerusalem Citadel, is an ancient citadel located near the Jaffa Gate entrance to western edge of the Old City of Jerusalem.",
 					false);
 			p1.saveToDatabase();
-			PlaceOfInterestSight ps = new PlaceOfInterestSight(cdv, p);
-			cdv.addPlaceOfInterestSight(ps);
-			Map m = new Map(c1.getId(), "central city", "map", "jerusalam.png");
-			double[] coords = { 42.3, 12.7 };
-			Location l = new Location(m, p, coords);
-			m.addLocation(l);
-			m.saveToDatabase();
-			MapSight ms = new MapSight(cdv, m);
-			cdv.addMapSight(ms);
-			Route r = new Route(c1.getId(), "route");
-			RouteStop rstop1 = new RouteStop(r, p, new Time(1, 3, 0));
 			r.addRouteStop(rstop1);
-			RouteStop rstop2 = new RouteStop(r, p1, new Time(0, 10, 0));
 			r.addRouteStop(rstop2);
 			r.saveToDatabase();
 			RouteSight rs = new RouteSight(cdv, r, true);
@@ -383,6 +346,7 @@ public class Database
 			c1.addPublishedCityDataVersion(cdv);
 			c1.saveToDatabase();
 
+			}
 			// create Users
 			// 1
 			{
@@ -429,6 +393,21 @@ public class Database
 				otp.updateToWasDownload();
 				cust.addOneTimePurchase(otp);
 				cust.saveToDatabase();
+			}
+			// 4
+			{
+			Employee e = new Employee("sigal", "sigalIsNoob!", "yonatan.sigal11@gmail.com", "yonatan", "sigal", "0508322126",
+					Employee.Role.REGULAR);
+			e.saveToDatabase();
+			Customer cust = new Customer("tomer", "IAmTomer*", "1234tomer@gmail.com", "tomer", "kohavi", "0524867726",
+					"5495123458612894", "02/25", "821");
+			Subscription sub = new Subscription(cust, c1, new Date(119, 7, 6), 63.2, 50.9, new Date(119, 9, 8));
+			cust.addSubscription(sub);
+
+			OneTimePurchase otp = new OneTimePurchase(cust, c1, new Date(119, 7, 6), 19, 8);
+			otp.updateToWasDownload();
+			cust.addOneTimePurchase(otp);
+			cust.saveToDatabase();
 			}
 
 		}
