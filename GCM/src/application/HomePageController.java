@@ -111,9 +111,9 @@ public class HomePageController
 
 	@FXML // fx:id="ReSubscribeButton"
 	private JFXButton ReSubscribeButton; // Value injected by FXMLLoader
-	
-    @FXML // fx:id="PublishButton"
-    private JFXButton PublishButton; // Value injected by FXMLLoader
+
+	@FXML // fx:id="PublishButton"
+	private JFXButton PublishButton; // Value injected by FXMLLoader
 
 	@FXML // fx:id="StopsTable"
 	private TableView<String> StopsTable; // Value injected by FXMLLoader
@@ -214,7 +214,8 @@ public class HomePageController
 		clearInfo(true);
 	}
 
-	void clearInfo(boolean clearList) {
+	void clearInfo(boolean clearList)
+	{
 		if (clearList)
 			MainList.getItems().clear();
 		ResultName.setText("");
@@ -231,7 +232,8 @@ public class HomePageController
 		StopsTable.setVisible(false);
 		BuyButton.setVisible(false);
 		ReSubscribeButton.setVisible(false);
-		for (POIImage img : Connector.imageList) {
+		for (POIImage img : Connector.imageList)
+		{
 			mainPane.getChildren().remove(img.image);
 		}
 		Connector.imageList.clear();
@@ -241,7 +243,8 @@ public class HomePageController
 		LastDate.setVisible(false);
 		WatchButton.setVisible(false);
 		PublishButton.setVisible(false);
-		if (Connector.unpublished) {
+		if (Connector.unpublished)
+		{
 			EditButton.setVisible(true);
 			RemoveButton.setVisible(true);
 			if (Connector.listType.equals("Map") || Connector.listType.equals("POI")
@@ -249,7 +252,9 @@ public class HomePageController
 				CreateButton.setVisible(true);
 			else
 				CreateButton.setVisible(false);
-		} else {
+		}
+		else
+		{
 			EditButton.setVisible(false);
 			RemoveButton.setVisible(false);
 		}
@@ -352,7 +357,9 @@ public class HomePageController
 							Connector.selctedPOI = poi;
 							ResultName.setText(poi.getName() + ", " + poi.getType());// set name and type
 							ResultInfo.setText(poi.getPlaceDescription()); // set info
-							Text1.setText((poi.isAccessibilityToDisabled() ? "" : "Not") + "Accessible to Disabled"); // Accessible or not
+							Text1.setText((poi.isAccessibilityToDisabled() ? "" : "Not") + "Accessible to Disabled"); // Accessible
+																														// or
+																														// not
 						}
 						else if (Connector.listType.equals("Map"))
 						{ // map
@@ -362,7 +369,7 @@ public class HomePageController
 								Connector.selctedMap = map;
 								ResultName.setText(map.getName());// set name and type
 								ResultInfo.setText(map.getInfo());// set info
-								BufferedImage bufIm =  Connector.client.getImage(map.getImgURL());
+								BufferedImage bufIm = Connector.client.getImage(map.getImgURL());
 								Image image = SwingFXUtils.toFXImage(bufIm, null);
 								MapImage.setImage(image);
 								ShowMapButton.setVisible(true);
@@ -385,7 +392,7 @@ public class HomePageController
 							StopsTable.setVisible(true);
 							ObservableList<String> stops = FXCollections.observableArrayList();
 							StopsTable.setItems(stops);
-							
+
 						}
 //						else if (Connector.listType.equals("Report"))
 //						{ // users
@@ -472,9 +479,11 @@ public class HomePageController
 	}
 
 	@FXML
-	void showMapImage(ActionEvent event) throws FileNotFoundException {
+	void showMapImage(ActionEvent event) throws FileNotFoundException
+	{
 		show_map = !show_map;
-		if (show_map) {
+		if (show_map)
+		{
 			InfoPane.setVisible(false);
 			MapImage.setVisible(true);
 			ShowMapButton.setText("Hide Map");
@@ -482,14 +491,17 @@ public class HomePageController
 			Bounds boundsInScene = MapImage.localToScene(MapImage.getBoundsInLocal());
 			posList.add(new Point((int) (50 + boundsInScene.getMinX()), (int) (50 + boundsInScene.getMinY())));
 			posList.add(new Point((int) (100 + boundsInScene.getMinX()), (int) (100 + boundsInScene.getMinY())));
-			for (Point p : posList) {
+			for (Point p : posList)
+			{
 				POIImage poiImage = new POIImage(false);
 				poiImage.image.setX(p.getX());
 				poiImage.image.setY(p.getY());
 				Connector.imageList.add(poiImage);
 				mainPane.getChildren().add(poiImage.image);
 			}
-		} else {
+		}
+		else
+		{
 			InfoPane.setVisible(true);
 			MapImage.setVisible(false);
 			ShowMapButton.setText("Show Map");
@@ -597,9 +609,10 @@ public class HomePageController
 	{
 		openNewPage("ReSubscribeScene.fxml");
 	}
-	
+
 	@FXML
-	void callPublish(ActionEvent event) throws IOException {
+	void callPublish(ActionEvent event) throws IOException
+	{
 		// publish the unpublished version
 		System.out.println("Published");
 	}
@@ -616,11 +629,11 @@ public class HomePageController
 			else if (BuyButton.getText().equals("Download")) // TODO TOMER fetch path
 			{
 				DirectoryChooser chooser = new DirectoryChooser();
-		    	chooser.setTitle("Choose Download Location");
-		    	File defaultDirectory = new File("c:/");
-		    	chooser.setInitialDirectory(defaultDirectory);
-		    	File selectedDirectory = chooser.showDialog(null);
-		    	System.out.println(selectedDirectory.getPath()); // Path to folder
+				chooser.setTitle("Choose Download Location");
+				File defaultDirectory = new File("c:/");
+				chooser.setInitialDirectory(defaultDirectory);
+				File selectedDirectory = chooser.showDialog(null);
+				System.out.println(selectedDirectory.getPath()); // Path to folder
 			}
 			else if (BuyButton.getText().equals("Change Price"))
 				openNewPage("ChangePriceScene.fxml");
