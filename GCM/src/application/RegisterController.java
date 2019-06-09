@@ -106,7 +106,7 @@ public class RegisterController {
     	}
     	else
     	{
-    		String expires = expM + "/" + (expY-2000);
+    		String expires = (expM < 10 ? "0" : "") + expM + "/" + (expY-2000);
     		IncorrectText.setOpacity(0);
     		Connector.user = Connector.client.register(usr, pass, first, last, emailAdd, phoneNumber, null, creditCard, expires, cvv, false);
     		loadPage("HomePageScene.fxml");

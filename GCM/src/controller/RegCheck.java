@@ -60,7 +60,7 @@ public class RegCheck {
 	 * @return boolean result
 	 */
 	private static boolean isValidPassword(String pass) {
-		String passRegex = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
+		String passRegex = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=])(?=\\S+$).{8,}";
 
 		Pattern pat = Pattern.compile(passRegex);
 		if (pass == null)
