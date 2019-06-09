@@ -1,6 +1,5 @@
 package application;
 
-import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -255,9 +254,8 @@ public class HomePageController
 		}
 	}
 
-	private void fillCityInfo(int selectedIndex)
+	private void fillCityInfo(City city)
 	{
-		City city = Connector.searchCityResult.get(selectedIndex);
 		Connector.selctedCity = city;
 		ResultName.setText(city.getCityName()); // set name
 		ResultInfo.setText(city.getCityDescription()); // set info
@@ -345,7 +343,7 @@ public class HomePageController
 						InfoPane.setVisible(true);
 						if (Connector.listType.equals("City"))
 						{ // City
-							fillCityInfo(selectedIndex);
+							fillCityInfo(Connector.searchCityResult.get(selectedIndex));
 						}
 						else if (Connector.listType.equals("POI"))
 						{ // POI
@@ -506,7 +504,7 @@ public class HomePageController
 		Connector.listType = "City";
 		setMainSideButton(SideSearch);
 		MainList.getItems().addAll(Connector.getCitiesNames(Connector.searchCityResult));
-		fillCityInfo(1); // the index of the chosen city
+		fillCityInfo(Connector.selctedCity); // the index of the chosen city
 	}
 
 	@FXML
@@ -614,7 +612,7 @@ public class HomePageController
 		{
 			if (BuyButton.getText().equals("Buy"))
 				openNewPage("BuyScene.fxml");
-			else if (BuyButton.getText().equals("Download")) // TODO TOMER fetch path
+			else if (BuyButton.getText().equals("Download"))
 			{
 				DirectoryChooser chooser = new DirectoryChooser();
 		    	chooser.setTitle("Choose Download Location");
