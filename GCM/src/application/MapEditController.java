@@ -11,6 +11,7 @@ import java.util.List;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 
+import classes.Location;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -81,22 +82,23 @@ public class MapEditController {
     	
     	realPOI = new Image(new FileInputStream("Pics\\POI.png"));
     	
-//    	if ()  // if its edit, load the data
-//    	{
-//    		Name.setText("");
-//    		InfoBox.setText("");
-//    		MapImage.setImage();
-//    	}
+    	if (Connector.isEdit)  // if its edit, load the data
+    	{
+    		Name.setText(Connector.selectedMap.getName());
+    		InfoBox.setText(Connector.selectedMap.getInfo());
+//    		MapImage.setImage(); // set image
+    	}
     	
     	Bounds boundsInScene = MapImage.localToScene(MapImage.getBoundsInLocal());
     	
-		List<Point> posList = new ArrayList<Point> ();
-		posList.add(new Point((int) (50 + boundsInScene.getMinX()), (int) (50 + boundsInScene.getMinY())));
-		posList.add(new Point((int) (100 + boundsInScene.getMinX()), (int) (100 + boundsInScene.getMinY())));
-	    for (Point p : posList) {
+    	List<Location> locList = Connector.selectedMap.getCopyLocations();
+//		List<Point> posList = new ArrayList<Point> ();
+//		posList.add(new Point((int) (50 + boundsInScene.getMinX()), (int) (50 + boundsInScene.getMinY())));
+//		posList.add(new Point((int) (100 + boundsInScene.getMinX()), (int) (100 + boundsInScene.getMinY())));
+	    for (Location loc : locList) {
 	    	POIImage poiImage = new POIImage(false);
-	    	poiImage.image.setX(p.getX());
-	    	poiImage.image.setY(p.getY());
+	    	poiImage.image.setX(loc.getCoordinates()[0]);
+	    	poiImage.image.setY(loc.getCoordinates()[1]);
 	        Connector.imageList.add(poiImage);
 	        mainPane.getChildren().add(poiImage.image);
 	    }

@@ -48,13 +48,13 @@ public class POIEditController {
     	        "Cinema"
     		);
     	
-//    	if ()  // if its edit, load the data
-//    	{
-//    		Name.setText("");
-//    		InfoBox.setText("");
-//    		TypeCombo.setValue("");
-//    		Accessibility.setSelected(true/false);
-//    	}
+    	if (Connector.isEdit)  // if its edit, load the data
+    	{
+    		Name.setText("");
+    		InfoBox.setText("");
+    		TypeCombo.setValue("");
+    		Accessibility.setSelected(true/false);
+    	}
     	
     }
     

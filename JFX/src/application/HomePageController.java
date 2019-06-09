@@ -369,7 +369,6 @@ public class HomePageController {
 
 	@FXML
 	void watch(ActionEvent event) {
-		System.out.println(FirstDate.getValue().compareTo(LastDate.getValue()));
 		if (FirstDate.getValue() == null || LastDate.getValue() == null || 0 <= LastDate.getValue().compareTo(FirstDate.getValue())) { // date not valid
 			DateNotValid.setVisible(true);
 		} else {
