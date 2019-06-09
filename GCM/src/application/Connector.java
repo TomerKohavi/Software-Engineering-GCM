@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXButton;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import objectClasses.City;
+import objectClasses.Customer;
 import objectClasses.Map;
 import objectClasses.MapSight;
 import objectClasses.PlaceOfInterest;
@@ -48,7 +49,7 @@ public class Connector {
 	public static Map selectedMap;
 	public static PlaceOfInterest selectedPOI;
 	public static Route selectedRoute;
-	public static User selectedUser;
+	public static Customer selectedCustomer;
 	
 	public static ArrayList<City> searchCityResult;
 	public static ArrayList<MapSight> searchMapResult;
