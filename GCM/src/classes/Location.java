@@ -1,4 +1,5 @@
 package classes;
+
 import java.io.Serializable;
 
 public class Location implements ClassMustProperties, Serializable {

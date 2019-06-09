@@ -1,4 +1,5 @@
 package classes;
+
 import java.io.Serializable;
 
 public class Pair<T1, T2> implements Serializable {

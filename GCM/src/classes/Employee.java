@@ -1,4 +1,5 @@
 package classes;
+
 import java.io.Serializable;
 
 public class Employee extends User implements ClassMustProperties, Serializable {

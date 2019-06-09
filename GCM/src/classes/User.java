@@ -1,10 +1,8 @@
 package classes;
 
-import java.io.Serializable;
 
-public abstract class User implements Serializable {
+public abstract class User {
 
-	private static final long serialVersionUID = 1L;
 	private int id;
 	private String userName;
 	private String password;

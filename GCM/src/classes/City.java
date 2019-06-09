@@ -93,7 +93,7 @@ public class City implements ClassMustProperties, Serializable {
 		if (temp_publishedVersion != null)
 			temp_publishedVersion.deleteFromDatabase();
 		// remove statistics
-		ArrayList<Integer> ids = Database.searchStatistic(this.id, null, null, null);
+		ArrayList<Integer> ids = Database.searchStatistic(this.id, null, null, null, null);
 		for (int id : ids) {
 			Statistic s = Database._getStatisticById(id);
 			if (s != null)
@@ -126,7 +126,7 @@ public class City implements ClassMustProperties, Serializable {
 		ArrayList<CityDataVersion> arrList = new ArrayList<CityDataVersion>();
 		for (int id : ids) {
 			CityDataVersion o = Database._getCityDataVersionById(id);
-			if (o != null && id != this.publishedVersionId)
+			if (o != null && (Integer)id != this.publishedVersionId)
 				arrList.add(o);
 		}
 		return arrList;
@@ -240,7 +240,7 @@ public class City implements ClassMustProperties, Serializable {
 		   * @param the id of the city
 		   * @return city data version
 		   */
-		if (cdvId == publishedVersionId) {
+		if ((Integer)cdvId == publishedVersionId) {
 			CityDataVersion cdv = temp_publishedVersion;
 			publishedVersionId = null;
 			temp_removeVersions.add(cdv);
