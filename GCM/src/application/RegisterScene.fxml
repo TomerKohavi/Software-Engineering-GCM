@@ -46,6 +46,6 @@
             <Font size="21.0" />
          </font>
       </JFXButton>
-      <Text fx:id="IncorrectText" fill="RED" layoutX="674.0" layoutY="594.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect Username or Password" />
+      <Text fx:id="IncorrectText" fill="RED" layoutX="674.0" layoutY="594.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect Username or Password" textAlignment="CENTER" />
    </children>
 </AnchorPane>
