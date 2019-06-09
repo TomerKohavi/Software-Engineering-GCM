@@ -53,6 +53,7 @@ import objectClasses.RouteStop;
 import objectClasses.Statistic;
 import objectClasses.Subscription;
 import objectClasses.Employee.Role;
+import objectClasses.Location;
 import otherClasses.*;
 
 public class HomePageController
@@ -309,7 +310,7 @@ public class HomePageController
 					{
 						found = true;
 						BuyButton.setText("Download");
-						if (sub.isGoingToEnd(new java.util.Date()))
+						if (sub.isGoingToEnd(new Date()))
 							ReSubscribeButton.setVisible(true);
 						break;
 					}
@@ -452,8 +453,8 @@ public class HomePageController
 							ResultName.setText(Connector.selectedCustomer.getUserName()); // set name and type
 							ResultInfo.setText("Name: " + Connector.selectedCustomer.getFirstName() + " " + Connector.selectedCustomer.getLastName() + "\n" + "Email: "
 									+ Connector.selectedCustomer.getEmail() + "\n" + "Phone: " + Connector.selectedCustomer.getPhoneNumber());
-							EditButton.setDisable(false);
-							// add purchase history
+							ViewPurchaseHistoryButton.setVisible(true);
+
 						}
 					}
 				}
@@ -512,7 +513,8 @@ public class HomePageController
 		{
 			DateNotValid.setVisible(false);
 			MainList.getItems().clear();
-			MainList.getItems().addAll("All Cities", "city1", "city2");
+			MainList.getItems().add("All Cities");
+			MainList.getItems().addAll(Connector.getCitiesNames(Connector.allCities));
 		}
 
 	}
@@ -532,15 +534,16 @@ public class HomePageController
 			InfoPane.setVisible(false);
 			MapImage.setVisible(true);
 			ShowMapButton.setText("Hide Map");
-			List<Point> posList = new ArrayList<Point>();
 			Bounds boundsInScene = MapImage.localToScene(MapImage.getBoundsInLocal());
-			posList.add(new Point((int) (50 + boundsInScene.getMinX()), (int) (50 + boundsInScene.getMinY())));
-			posList.add(new Point((int) (100 + boundsInScene.getMinX()), (int) (100 + boundsInScene.getMinY())));
-			for (Point p : posList)
+//			List<Point> posList = new ArrayList<Point>();
+//			posList.add(new Point((int) (50 + boundsInScene.getMinX()), (int) (50 + boundsInScene.getMinY())));
+//			posList.add(new Point((int) (100 + boundsInScene.getMinX()), (int) (100 + boundsInScene.getMinY())));
+			List<Location> locList = Connector.selectedMap.getCopyLocations();
+			for (Location loc : locList)
 			{
 				POIImage poiImage = new POIImage(false);
-				poiImage.image.setX(p.getX());
-				poiImage.image.setY(p.getY());
+				poiImage.image.setX(loc.getCoordinates()[0] + boundsInScene.getMinX());
+				poiImage.image.setY(loc.getCoordinates()[1] + boundsInScene.getMinY());
 				Connector.imageList.add(poiImage);
 				mainPane.getChildren().add(poiImage.image);
 			}
@@ -613,15 +616,15 @@ public class HomePageController
 	}
 
 	@FXML
-	void showReport(ActionEvent event)
+	void showReport(ActionEvent event) throws IOException
 	{
 		Connector.listType = "Report";
 		setMainSideButton(SideReport);
 		FirstDate.setVisible(true);
 		LastDate.setVisible(true);
 		WatchButton.setVisible(true);
-//		if (Connector.allCities == null)
-//			Connector.allCities
+		if (Connector.allCities == null)
+			Connector.allCities = Connector.client.search(null, null, null, null);
 	}
 
 	@FXML
