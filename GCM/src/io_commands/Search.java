@@ -2,7 +2,7 @@ package io_commands;
 
 import java.util.ArrayList;
 
-import classes.City;
+import objectClasses.City;
 
 public class Search extends Command
 {

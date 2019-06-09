@@ -1,4 +1,4 @@
-package classes;
+package controller;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -7,6 +7,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Time;
 import java.util.ArrayList;
+
+import objectClasses.City;
+import objectClasses.CityDataVersion;
+import objectClasses.Customer;
+import objectClasses.Employee;
+import objectClasses.Location;
+import objectClasses.Map;
+import objectClasses.MapSight;
+import objectClasses.OneTimePurchase;
+import objectClasses.PlaceOfInterest;
+import objectClasses.PlaceOfInterestSight;
+import objectClasses.Route;
+import objectClasses.RouteSight;
+import objectClasses.RouteStop;
+import objectClasses.Statistic;
+import objectClasses.Subscription;
+import objectClasses.Employee.Role;
+import objectClasses.PlaceOfInterest.PlaceType;
+
 import java.security.MessageDigest;
 
 //import javax.xml.bind.DatatypeConverter;

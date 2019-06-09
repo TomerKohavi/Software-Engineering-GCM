@@ -1,4 +1,4 @@
-package classes;
+package controller;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -8,6 +8,14 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
+
+import objectClasses.City;
+import objectClasses.CityDataVersion;
+import objectClasses.Customer;
+import objectClasses.PlaceOfInterest;
+import objectClasses.PlaceOfInterestSight;
+import objectClasses.Subscription;
+import otherClasses.Pair;
 
 public final class Downloader
 {

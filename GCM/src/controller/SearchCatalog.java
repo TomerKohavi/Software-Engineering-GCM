@@ -1,8 +1,13 @@
-package classes;
+package controller;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+
+import objectClasses.City;
+import objectClasses.CityDataVersion;
+import objectClasses.PlaceOfInterest;
+import objectClasses.PlaceOfInterestSight;
 
 public final class SearchCatalog {
 	private SearchCatalog() {

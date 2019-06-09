@@ -1,6 +1,8 @@
-package classes;
+package objectClasses;
 
 import java.io.Serializable;
+
+import controller.Database;
 
 public abstract class User implements Serializable {
 

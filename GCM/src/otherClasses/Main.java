@@ -1,8 +1,10 @@
-package classes;
+package otherClasses;
 
 import java.sql.Date;
 import java.sql.Time;
 import java.util.Calendar;
+
+import controller.Database;
 
 public class Main {
 

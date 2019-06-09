@@ -1,9 +1,12 @@
-package classes;
+package objectClasses;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.Calendar;
+
+import controller.Database;
+import otherClasses.ClassMustProperties;
 
 public class Customer extends User implements ClassMustProperties, Serializable {
 	

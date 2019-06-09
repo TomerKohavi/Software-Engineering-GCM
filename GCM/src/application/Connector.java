@@ -6,16 +6,16 @@ import java.util.List;
 import com.jfoenix.controls.JFXButton;
 
 import javafx.scene.image.ImageView;
-import classes.City;
-import classes.Map;
-import classes.Employee.Role;
-import classes.MapSight;
-import classes.PlaceOfInterest;
-import classes.PlaceOfInterestSight;
-import classes.Route;
-import classes.RouteSight;
-import classes.User;
 import javafx.stage.Stage;
+import objectClasses.City;
+import objectClasses.Map;
+import objectClasses.MapSight;
+import objectClasses.PlaceOfInterest;
+import objectClasses.PlaceOfInterestSight;
+import objectClasses.Route;
+import objectClasses.RouteSight;
+import objectClasses.User;
+import objectClasses.Employee.Role;
 import client.ChatClient;
 
 public class Connector {

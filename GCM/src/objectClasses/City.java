@@ -1,6 +1,9 @@
-package classes;
+package objectClasses;
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import controller.Database;
+import otherClasses.ClassMustProperties;
 
 public class City implements ClassMustProperties, Serializable {
 	private int id;

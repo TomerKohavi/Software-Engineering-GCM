@@ -1,7 +1,9 @@
 
-package classes;
+package objectClasses;
 import java.io.Serializable;
 import java.sql.Date;
+
+import controller.Database;
 
 public abstract class CityPurchase implements Comparable<CityPurchase>, Serializable {
 	private int id;

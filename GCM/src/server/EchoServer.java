@@ -1,7 +1,5 @@
 package server;
 
-import classes.*;
-import classes.Employee.Role;
 import client.ChatClient;
 
 import java.awt.image.BufferedImage;
@@ -17,10 +15,17 @@ import javax.imageio.*;
 
 import application.Connector;
 import ocsf.server.*;
+import otherClasses.*;
 import common.*;
 import common.Console;
+import controller.Database;
+import controller.SearchCatalog;
 import io_commands.*;
 import javafx.scene.chart.PieChart.Data;
+import objectClasses.Customer;
+import objectClasses.Employee;
+import objectClasses.User;
+import objectClasses.Employee.Role;
 
 /**
  * This class overrides some of the methods in the abstract superclass in order

@@ -1,7 +1,11 @@
-package classes;
+package objectClasses;
 
 import java.io.Serializable;
 import java.sql.Time;
+
+import controller.Database;
+import otherClasses.ClassMustProperties;
+
 import java.sql.Date;
 
 public class Subscription extends CityPurchase implements ClassMustProperties, Serializable {

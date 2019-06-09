@@ -18,8 +18,6 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 
-import classes.*;
-import classes.Employee.Role;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -43,6 +41,17 @@ import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import objectClasses.City;
+import objectClasses.CityDataVersion;
+import objectClasses.Customer;
+import objectClasses.Employee;
+import objectClasses.Map;
+import objectClasses.PlaceOfInterest;
+import objectClasses.Route;
+import objectClasses.RouteStop;
+import objectClasses.Subscription;
+import objectClasses.Employee.Role;
+import otherClasses.*;
 
 public class HomePageController
 {

@@ -14,12 +14,12 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
-import classes.City;
-import classes.CityDataVersion;
-import classes.Database;
-import classes.PlaceOfInterest;
-import classes.PlaceOfInterestSight;
-import classes.SearchCatalog;
+import controller.Database;
+import controller.SearchCatalog;
+import objectClasses.City;
+import objectClasses.CityDataVersion;
+import objectClasses.PlaceOfInterest;
+import objectClasses.PlaceOfInterestSight;
  
 @RunWith(Parameterized.class)
 public class CitySearchTestTable {

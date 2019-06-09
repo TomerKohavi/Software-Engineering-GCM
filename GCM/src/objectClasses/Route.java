@@ -1,8 +1,11 @@
-package classes;
+package objectClasses;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import controller.Database;
+import otherClasses.ClassMustProperties;
 
 public class Route implements ClassMustProperties, Serializable {
 	private int id;
