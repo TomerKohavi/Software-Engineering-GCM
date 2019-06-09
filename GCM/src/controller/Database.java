@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.Time;
 import java.util.ArrayList;
 
+import javafx.scene.chart.PieChart.Data;
 import objectClasses.City;
 import objectClasses.CityDataVersion;
 import objectClasses.Customer;
@@ -76,6 +77,17 @@ public class Database {
 		public int getValue() {
 			return value;
 		}
+	}
+	
+	public ArrayList<Customer> getAllCustomers(){
+		ArrayList<Integer> ids=searchCustomer(null, null);
+		ArrayList<Customer> custs=new ArrayList<Customer>();
+		for(int id:ids) {
+			Customer c=Database.getCustomerById(id);
+			if(c!=null)
+				custs.add(c);
+		}
+		return custs;
 	}
 
 	/**

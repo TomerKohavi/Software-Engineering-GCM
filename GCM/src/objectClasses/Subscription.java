@@ -52,6 +52,8 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 	public void setExpirationDate(Date expirationDate) {
 		this.expirationDate = expirationDate;
 	}
+	
+	
 
 	@Override
 	public boolean equals(Object o) {
