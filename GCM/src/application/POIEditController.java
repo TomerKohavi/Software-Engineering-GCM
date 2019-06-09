@@ -53,7 +53,7 @@ public class POIEditController {
     		Name.setText("");
     		InfoBox.setText("");
     		TypeCombo.setValue("");
-    		Accessibility.setSelected(true/false);
+//    		Accessibility.setSelected(true/false);
     	}
     	
     }

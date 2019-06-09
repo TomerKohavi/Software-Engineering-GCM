@@ -37,8 +37,8 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 	public void reloadTempsFromDatabase() {
 	}
 
-	public boolean isGoingToEnd(Date currentDate) {
-		return expirationDate.getTime() - currentDate.getTime() < closeTime.getTime();
+	public boolean isGoingToEnd(java.util.Date date) {
+		return expirationDate.getTime() - date.getTime() < closeTime.getTime();
 	}
 
 	public Date getExpirationDate() {
