@@ -674,7 +674,7 @@ public class Database {
 			if (existCustomer(p.getId())) {
 				String sql = "UPDATE " + Table.Customer.getValue()
 						+ " SET Username=?, Password=?, Email=?, FirstName=?, LastName=?,"
-						+ " PhoneNumber=? WHERE ID=?";
+						+ " PhoneNumber=?, CardNum=?, CVC=?, Exp=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setString(1, p.getUserName());
 				su.setString(2, p.getPassword());
@@ -682,7 +682,10 @@ public class Database {
 				su.setString(4, p.getFirstName());
 				su.setString(5, p.getLastName());
 				su.setString(6, p.getPhoneNumber());
-				su.setInt(7, p.getId());
+				su.setString(7, p.getCreditCardNum());
+				su.setString(8, p.getCvc());
+				su.setString(9, p.getCreditCardExpires());
+				su.setInt(10, p.getId());
 				su.executeUpdate();
 				return true;
 			}
@@ -693,8 +696,8 @@ public class Database {
 //			}
 			else {
 				String sql = "INSERT INTO " + Table.Customer.getValue() + " "
-						+ "(ID,Username, Password, Email, FirstName, LastName, PhoneNumber) VALUES "
-						+ "(?, ?, ?, ?, ?, ?, ?)";
+						+ "(ID,Username, Password, Email, FirstName, LastName, PhoneNumber, CardNum, CVC, Exp) VALUES "
+						+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getId());
 				su.setString(2, p.getUserName());
@@ -703,6 +706,9 @@ public class Database {
 				su.setString(5, p.getFirstName());
 				su.setString(6, p.getLastName());
 				su.setString(7, p.getPhoneNumber());
+				su.setString(8, p.getCreditCardNum());
+				su.setString(9, p.getCvc());
+				su.setString(10, p.getCreditCardExpires());
 				su.executeUpdate();
 				return false;
 			}
@@ -1074,7 +1080,7 @@ public class Database {
 		try {
 			if (existStatistic(p.getId())) {
 				String sql = "UPDATE " + Table.OneTimePurchase.getValue()
-						+ " SET CityID=?, Date=?, NOTP=?, NS=?, NR=?, NV=?, NSD=? WHERE ID=?";
+						+ " SET CityID=?, Date=?, NOTP=?, NS=?, NR=?, NV=?, NSD=?, NVP=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityId());
 				su.setDate(2, (Date) p.getDate());
@@ -1083,12 +1089,13 @@ public class Database {
 				su.setInt(5, p.getNumSubscriptionsRenewal());
 				su.setInt(6, p.getNumVisited());
 				su.setInt(7, p.getNumSubDownloads());
-				su.setInt(8, p.getId());
+				su.setBoolean(8,  p.isNewVersionPublished());
+				su.setInt(9, p.getId());
 				su.executeUpdate();
 				return true;
 			} else {
 				String sql = "INSERT INTO " + Table.OneTimePurchase.getValue()
-						+ " (ID, CityID, Date, NOTP, NS, NSR, NV, NSD) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+						+ " (ID, CityID, Date, NOTP, NS, NSR, NV, NSD, NVP) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getId());
 				su.setInt(2, p.getCityId());
@@ -1097,7 +1104,8 @@ public class Database {
 				su.setInt(5, p.getNumSubscriptions());
 				su.setInt(6, p.getNumSubscriptionsRenewal());
 				su.setInt(7, p.getNumVisited());
-				su.setInt(8, p.getNumSubDownloads());				
+				su.setInt(8, p.getNumSubDownloads());		
+				su.setBoolean(9,  p.isNewVersionPublished());
 				su.executeUpdate();
 				return false;
 			}
@@ -1791,7 +1799,6 @@ public class Database {
 	 */
 	public static ArrayList<Integer> searchStatistic(Integer cityId, Date date, Date dateFrom,
 			Date dateEnd,Boolean newVersionPublished) {
-		//TODO: fix newVersionPublished
 		try {
 			int counter = 1;
 			String sql = "SELECT ID FROM " + Table.MapSight.getValue() + " WHERE ";
@@ -1803,6 +1810,9 @@ public class Database {
 
 			else if (date != null)
 				sql += "Date=? AND ";
+			
+			if (newVersionPublished != null)
+				sql += "NVP=? AND ";
 
 			sql = sql.substring(0, sql.length() - 4);
 			PreparedStatement gt = conn.prepareStatement(sql);
@@ -1815,6 +1825,9 @@ public class Database {
 				gt.setDate(counter++, dateEnd);
 			} else if (date != null)
 				gt.setDate(counter++, date);
+			
+			if (newVersionPublished != null)
+				gt.setBoolean(counter++, newVersionPublished);
 
 			return queryToList(gt);
 
@@ -1942,7 +1955,7 @@ public class Database {
 				return null;
 			return Customer._createCustomer(res.getInt("ID"), res.getString("Username"), res.getString("Password"),
 					res.getString("Email"), res.getString("FirstName"), res.getString("LastName"),
-					res.getString("PhoneNumber"), "Gadi", "Is the", "King"); // TODO: fix
+					res.getString("PhoneNumber"), res.getString("CardNum"), res.getString("Exp"), res.getString("CVC")); 
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
@@ -1999,7 +2012,7 @@ public class Database {
 	 */
 	public static RouteStop _getRouteStopById(int id) {
 		try {
-			ResultSet res = get(Table.PlaceOfInterest.getValue(), id);
+			ResultSet res = get(Table.RouteStop.getValue(), id);
 			if (res == null)
 				return null;
 			return RouteStop._createRouteStop(res.getInt("ID"), res.getInt("RouteID"), res.getInt("PlaceID"),
@@ -2136,7 +2149,8 @@ public class Database {
 		try {
 			ResultSet res = get(Table.Statistic.getValue(), id);
 			return Statistic._createStatistic(res.getInt("ID"), res.getInt("CityID"), res.getDate("Date"),
-					res.getInt("NOTP"), res.getInt("NS"), res.getInt("NSR"), res.getInt("NV"), res.getInt("NSD"), false); // TODO: fix
+					res.getInt("NOTP"), res.getInt("NS"), res.getInt("NSR"), res.getInt("NV"), res.getInt("NSD"),
+					res.getBoolean("NVP"));
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
