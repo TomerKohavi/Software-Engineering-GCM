@@ -1,3 +1,5 @@
+package tests;
+
 import static org.junit.Assert.*;
 
 import java.sql.Date;
@@ -11,6 +13,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
+
+import classes.City;
+import classes.CityDataVersion;
+import classes.Database;
+import classes.PlaceOfInterest;
+import classes.PlaceOfInterestSight;
+import classes.SearchCatalog;
  
 @RunWith(Parameterized.class)
 public class CitySearchTestTable {
@@ -20,7 +29,7 @@ public class CitySearchTestTable {
 		        return Arrays.asList(new Object[][] { 
 		        		//cityName, cityDescription, placeName, placeDescription, useUnpublished,		expectedC1, expectedC2, expectedC3, expectedC4
 		                 { "Haifa",null , null ,null , false ,		true , false, false, false },
-		                 { null ,"the second most populous city in Israel" , null ,null , false ,		false , true, false, false },
+		                 /*{ null ,"the second most populous city in Israel" , null ,null , false ,		false , true, false, false },
 		                 { null ,null , null ,"One of the biggest" , true ,		false , false, true, true },
 		                 { null ,null , null ,"One of the biggest" , false ,		false , false, true, false },
 		                 { "Tel Aviv" ,null , "Dizengoff Circle" ,null , false ,		false , true, false, false },
@@ -31,7 +40,7 @@ public class CitySearchTestTable {
 		                 { "Jerusalem" ,null , null ,"wall" , false ,		false , false, false, true },
 		                 { null ,"popular" , null ,"river" , false ,		false , false, true, false },
 		                 { "Tel Aviv" ,null , "Jaffa" ,null , true ,		 false , true, false, false },
-		                 { "Tel Aviv" ,null , "Jaffa" ,null , false ,		false , false, false, false },
+		                 { "Tel Aviv" ,null , "Jaffa" ,null , false ,		false , false, false, false },*/
 		                
 		           });
 		    }

@@ -1,3 +1,5 @@
+package tests;
+
 import static org.junit.Assert.*;
 
 import java.sql.Date;
@@ -5,6 +7,12 @@ import java.util.Calendar;
 import java.util.Random;
 
 import org.junit.*;
+
+import classes.City;
+import classes.Customer;
+import classes.Database;
+import classes.OneTimePurchase;
+import classes.Subscription;
  
 public class CustomerTest {
           
