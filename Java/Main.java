@@ -38,7 +38,8 @@ public class Main {
 			System.out.println(cdv2.getRouteSightByRouteId(r.getId()).getCopyRoute().getCopyRouteStops().get(0).getCopyPlace().equals(p));
 		
 			
-			Customer cust = Customer._createCustomer(-1,"Tal20", "11235", "a@a.com", "Tal", "Shahnov", "055");
+			Customer cust = Customer._createCustomer(-1,"Tal20", "11235", "a@a.com", "Tal",
+					"Shahnov", "055","5495681338665894","07/2024", "896");
 			Subscription sub=new Subscription(cust, c, today, 2000, 1999.99, new Date(2028,5,12));
 			cust.addSubscription(sub);
 			cust.saveToDatabase();
