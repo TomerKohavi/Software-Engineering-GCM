@@ -4,6 +4,10 @@ import java.sql.Date;
 import java.util.Calendar;
 
 public class Customer extends User implements ClassMustProperties, Serializable {
+	
+	private String creditCardNum;
+	private String creditCardExpires;
+	private String cvc;
 
 	ArrayList<Subscription> temp_activeSubscription;
 	ArrayList<Subscription> temp_unactiveSubscription;
@@ -12,19 +16,25 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 	ArrayList<OneTimePurchase> temp_removeOneTimePurchase;
 
 	private Customer(int id, String userName, String password, String email, String firstName, String lastName,
-			String phoneNumber) {
+			String phoneNumber,String creditCardNum,String creditCardExpires,String cvc) {
 		super(id, userName, password, email, firstName, lastName, phoneNumber);
+		this.creditCardNum=creditCardNum;
+		this.creditCardExpires=creditCardExpires;
+		this.cvc=cvc;
 		reloadTempsFromDatabase();
 	}
 
 	public static Customer _createCustomer(int id, String userName, String password, String email, String firstName,
-			String lastName, String phoneNumber) { // friend to Database
-		return new Customer(id, userName, password, email, firstName, lastName, phoneNumber);
+			String lastName, String phoneNumber,String creditCardNum,String creditCardExpires,String cvc) { // friend to Database
+		return new Customer(id, userName, password, email, firstName, lastName, phoneNumber,creditCardNum,creditCardExpires,cvc);
 	}
 
 	public Customer(String userName, String password, String email, String firstName, String lastName,
-			String phoneNumber) {
+			String phoneNumber,String creditCardNum,String creditCardExpires,String cvc) {
 		super(userName, password, email, firstName, lastName, phoneNumber);
+		this.creditCardNum=creditCardNum;
+		this.creditCardExpires=creditCardExpires;
+		this.cvc=cvc;
 		this.temp_activeSubscription = new ArrayList<>();
 		this.temp_unactiveSubscription = new ArrayList<>();
 		this.temp_oneTimePurchase = new ArrayList<>();
@@ -221,6 +231,30 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 		return new ArrayList<>(temp_oneTimePurchase);
 	}
 
+	public String getCreditCardNum() {
+		return creditCardNum;
+	}
+
+	public void setCreditCardNum(String creditCardNum) {
+		this.creditCardNum = creditCardNum;
+	}
+
+	public String getCreditCardExpires() {
+		return creditCardExpires;
+	}
+
+	public void setCreditCardExpires(String creditCardExpires) {
+		this.creditCardExpires = creditCardExpires;
+	}
+
+	public String getCvc() {
+		return cvc;
+	}
+
+	public void setCvc(String cvc) {
+		this.cvc = cvc;
+	}
+	
 	@Override
 	public boolean equals(Object o) {
 		return o instanceof Customer && ((Customer) o).getId() == this.getId();

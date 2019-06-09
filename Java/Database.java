@@ -1787,7 +1787,7 @@ public class Database {
 	 * @return the result list.
 	 * 
 	 */
-	public static ArrayList<Integer> searchStatistic(Integer cityId, Date date, Date dateFrom, Date dateEnd) {
+	public static ArrayList<Integer> searchStatistic(Integer cityId, Date date, Date dateFrom, Date dateEnd,Boolean newVersionPublished) {
 		try {
 			int counter = 1;
 			String sql = "SELECT ID FROM " + Table.MapSight.getValue() + " WHERE ";
