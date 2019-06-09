@@ -1,3 +1,5 @@
+package tests;
+
 import static org.junit.Assert.*;
 
 import java.sql.Date;
@@ -11,6 +13,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
+
+import classes.City;
+import classes.CityDataVersion;
+import classes.Database;
+import classes.PlaceOfInterest;
+import classes.PlaceOfInterestSight;
+import classes.SearchCatalog;
  
 @RunWith(Parameterized.class)
 public class CitySearchTestTable {

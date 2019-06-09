@@ -264,7 +264,7 @@ public class HomePageController
 
 	private void fillCityInfo(City city)
 	{
-		Connector.selctedCity = city;
+		Connector.selectedCity = city;
 		ResultName.setText(city.getCityName()); // set name
 		ResultInfo.setText(city.getCityDescription()); // set info
 		// get QUERIES
@@ -351,13 +351,13 @@ public class HomePageController
 						InfoPane.setVisible(true);
 						if (Connector.listType.equals("City"))
 						{ // City
-							Connector.selctedCity = Connector.searchCityResult.get(selectedIndex);
-							fillCityInfo(Connector.selctedCity);
+							Connector.selectedCity = Connector.searchCityResult.get(selectedIndex);
+							fillCityInfo(Connector.selectedCity);
 						}
 						else if (Connector.listType.equals("POI"))
 						{ // POI
 							PlaceOfInterest poi = Connector.searchPOIResult.get(selectedIndex).getCopyPlace();
-							Connector.selctedPOI = poi;
+							Connector.selectedPOI = poi;
 							ResultName.setText(poi.getName() + ", " + poi.getType());// set name and type
 							ResultInfo.setText(poi.getPlaceDescription()); // set info
 							Text1.setText((poi.isAccessibilityToDisabled() ? "" : "Not") + "Accessible to Disabled"); // Accessible
@@ -369,7 +369,7 @@ public class HomePageController
 							try
 							{
 								Map map = Connector.searchMapResult.get(selectedIndex).getCopyMap();
-								Connector.selctedMap = map;
+								Connector.selectedMap = map;
 								ResultName.setText(map.getName());// set name and type
 								ResultInfo.setText(map.getInfo());// set info
 								BufferedImage bufIm = Connector.client.getImage(map.getImgURL());
@@ -385,7 +385,7 @@ public class HomePageController
 						else if (Connector.listType.equals("Route"))
 						{ // route
 							Route route = Connector.searchRouteResult.get(selectedIndex).getCopyRoute();
-							Connector.selctedRoute = route;
+							Connector.selectedRoute = route;
 							ResultName.setText("Route " + route.getId());// set name and type
 							ResultInfo.setText(route.getInfo()); // set info
 							Text1.setText((route.isAcceptabilityToDisabled() ? "" : "Not") + "Accessible to Disabled");
@@ -542,7 +542,7 @@ public class HomePageController
 		Connector.listType = "City";
 		setMainSideButton(SideSearch);
 		MainList.getItems().addAll(Connector.getCitiesNames(Connector.searchCityResult));
-		fillCityInfo(Connector.selctedCity); // the index of the chosen city
+		fillCityInfo(Connector.selectedCity); // the index of the chosen city
 	}
 
 	@FXML
