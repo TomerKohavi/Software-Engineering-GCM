@@ -6,6 +6,7 @@ package client;
 
 import ocsf.client.*;
 import otherClasses.Pair;
+import server.EchoServer.LoginRegisterResult;
 import common.*;
 import common.Console;
 import io_commands.*;
@@ -93,16 +94,15 @@ public class ChatClient extends AbstractClient
 	 * @param clientUI The interface type variable.
 	 */
 
-	public User login(String uname, String pass, boolean isEmployee) throws IOException
+	public Pair<User, LoginRegisterResult> login(String uname, String pass, boolean isEmployee) throws IOException
 	{
 		try
 		{
 			sendToServer(new Login(uname, pass, isEmployee));
 			this.semaphore.acquire();
 			this.user = this.login.loggedUser;
-			this.login = null;
-			System.out.println("login " + this.user);
-			return this.user;
+			System.out.println("login " + this.user.getUserName());
+			return new Pair<User, LoginRegisterResult>(this.user, this.login.loginResult);
 		}
 		catch (InterruptedException e)
 		{
@@ -112,7 +112,7 @@ public class ChatClient extends AbstractClient
 		return null;
 	}
 
-	public User register(String username, String password, String firstName, String lastName, String email,
+	public Pair<User, LoginRegisterResult> register(String username, String password, String firstName, String lastName, String email,
 			String phone, Role role, String ccard, String expires, String cvv, boolean isEmployee) throws IOException
 	{
 		sendToServer(new Register(username, password, firstName, lastName, email, phone, role, ccard, expires, cvv,
@@ -128,7 +128,7 @@ public class ChatClient extends AbstractClient
 		}
 		this.registerIDready = false;
 		this.user = this.reg.user;
-		return this.reg.user;
+		return new Pair<User, LoginRegisterResult>(this.reg.user, this.reg.regResult);
 	}
 
 	public void logoff() throws IOException
@@ -276,7 +276,7 @@ public class ChatClient extends AbstractClient
 	public static void main(String[] args) throws IOException
 	{
 		ChatClient client = new ChatClient(Connector.LOCAL_HOST, Connector.PORT, new Console());
-		System.out.println(client.login("a", "a", false).getId());
+		System.out.println(client.login("a", "a", false).a.getId());
 		client.logoff();
 	}
 }

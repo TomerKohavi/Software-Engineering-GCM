@@ -17,85 +17,93 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import objectClasses.User;
+import otherClasses.Pair;
+import server.EchoServer.LoginRegisterResult;
 
-public class LoginController {
-	
+public class LoginController
+{
+
 	private String user = "";
 	private String pass = "";
-	
 
-	 @FXML // fx:id="mainPane"
-    private AnchorPane mainPane; // Value injected by FXMLLoader
+	@FXML // fx:id="mainPane"
+	private AnchorPane mainPane; // Value injected by FXMLLoader
 
-    @FXML // fx:id="Username"
-    private JFXTextField Username; // Value injected by FXMLLoader
+	@FXML // fx:id="Username"
+	private JFXTextField Username; // Value injected by FXMLLoader
 
-    @FXML // fx:id="Password"
-    private JFXPasswordField Password; // Value injected by FXMLLoader
+	@FXML // fx:id="Password"
+	private JFXPasswordField Password; // Value injected by FXMLLoader
 
-    @FXML // fx:id="LoginButton"
-    private JFXButton LoginButton; // Value injected by FXMLLoader
+	@FXML // fx:id="LoginButton"
+	private JFXButton LoginButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="EmployeeAccess"
-    private JFXButton EmployeeAccess; // Value injected by FXMLLoader
+	@FXML // fx:id="EmployeeAccess"
+	private JFXButton EmployeeAccess; // Value injected by FXMLLoader
 
-    @FXML // fx:id="IncorrectText"
-    private Text IncorrectText; // Value injected by FXMLLoader
-    
-    @FXML // fx:id="RegisterHL"
-    private Hyperlink RegisterHL; // Value injected by FXMLLoader
-    
-    @FXML // fx:id="Back"
-    private JFXButton Back; // Value injected by FXMLLoader
+	@FXML // fx:id="IncorrectText"
+	private Text IncorrectText; // Value injected by FXMLLoader
 
-    void loadPage(String FXMLpage) throws IOException {
-        AnchorPane pane = (AnchorPane)FXMLLoader.load((URL)this.getClass().getResource(FXMLpage));
-        mainPane.getChildren().setAll(pane);
-    }
-    
-    @FXML
-    void employeeAcessScene(ActionEvent event) throws IOException {
-    	loadPage("EmployeeLoginScene.fxml");
-    }
+	@FXML // fx:id="RegisterHL"
+	private Hyperlink RegisterHL; // Value injected by FXMLLoader
 
-    @FXML
-    void getPassword(ActionEvent event) {
-    	pass = Password.getText();
-    }
+	@FXML // fx:id="Back"
+	private JFXButton Back; // Value injected by FXMLLoader
 
-    @FXML
-    void getUsername(ActionEvent event) {
-    	user = Username.getText();
-    }
+	void loadPage(String FXMLpage) throws IOException
+	{
+		AnchorPane pane = (AnchorPane) FXMLLoader.load((URL) this.getClass().getResource(FXMLpage));
+		mainPane.getChildren().setAll(pane);
+	}
 
-    @FXML
-    void login(ActionEvent event) throws IOException {
-    	user = Username.getText();
-    	pass = Password.getText();
-    	User loggedUser = Connector.client.login(user, pass, false);
-    	if (loggedUser != null)
-    	{
-    		Connector.user = loggedUser;
-    		loadPage("HomePageScene.fxml");
-    	}
-    	else
-    	{
-    		Username.setText("");
-    		Password.setText("");
-    		IncorrectText.setOpacity(1);
-    		
-    	}
-    }
-    
-    @FXML
-    void goBack(ActionEvent event) throws IOException {
-    	loadPage("HomePageScene.fxml");
-    }
-    
+	@FXML
+	void employeeAcessScene(ActionEvent event) throws IOException
+	{
+		loadPage("EmployeeLoginScene.fxml");
+	}
 
-    @FXML
-    void register(ActionEvent event) throws IOException {
-    	loadPage("RegisterScene.fxml");
-    }
+	@FXML
+	void getPassword(ActionEvent event)
+	{
+		pass = Password.getText();
+	}
+
+	@FXML
+	void getUsername(ActionEvent event)
+	{
+		user = Username.getText();
+	}
+
+	@FXML
+	void login(ActionEvent event) throws IOException
+	{
+		user = Username.getText();
+		pass = Password.getText();
+		Pair<User, LoginRegisterResult> loginResult = Connector.client.login(user, pass, false);
+		if (loginResult.b != LoginRegisterResult.Success && loginResult.a != null)
+		{
+			Connector.user = loginResult.a;
+			loadPage("HomePageScene.fxml");
+		}
+		else
+		{
+			Username.setText("");
+			Password.setText("");
+			IncorrectText.setText(loginResult.b.getValue());
+			IncorrectText.setOpacity(1);
+		}
+	}
+
+	@FXML
+	void goBack(ActionEvent event) throws IOException
+	{
+		loadPage("HomePageScene.fxml");
+	}
+
+	@FXML
+	void register(ActionEvent event) throws IOException
+	{
+		loadPage("RegisterScene.fxml");
+	}
 
 }

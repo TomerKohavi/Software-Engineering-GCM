@@ -40,6 +40,23 @@ import objectClasses.Employee.Role;
 public class EchoServer extends AbstractServer
 {
 	// Class variables *************************************************
+	public enum LoginRegisterResult
+	{
+		unameOrPass("Wrong username or password"), alredyLogged("User already logged in"), Success("Success"),
+		usernameTaken("Username already in use");
+
+		LoginRegisterResult(String res)
+		{
+			this.res = res;
+		}
+
+		public String getValue()
+		{
+			return this.res;
+		}
+
+		String res;
+	}
 
 	/**
 	 * The default port to listen on.
@@ -85,9 +102,17 @@ public class EchoServer extends AbstractServer
 			{
 				login.loggedUser = Database.getEmployeeById(id);
 				this.loggedList.add(login.loggedUser.getId());
+				login.loginResult = LoginRegisterResult.Success;
 			}
 			else
+			{
 				login.loggedUser = null;
+				login.loginResult = LoginRegisterResult.alredyLogged;
+			}
+		}
+		else
+		{
+			login.loginResult = LoginRegisterResult.unameOrPass;
 		}
 		if (login.loggedUser != null)
 			System.out.println("success");
@@ -122,8 +147,13 @@ public class EchoServer extends AbstractServer
 				Database.saveCustomer(cust);
 				reg.user = cust;
 			}
+			this.loggedList.add(reg.user.getId());
+			reg.regResult = LoginRegisterResult.Success;
 		}
-		this.loggedList.add(reg.user.getId());
+		else
+		{
+			reg.regResult = LoginRegisterResult.usernameTaken;
+		}
 		reg.delete();
 		return reg;
 	}
@@ -143,20 +173,20 @@ public class EchoServer extends AbstractServer
 		else
 			Database.saveEmployee((Employee) user);
 	}
-	
+
 	public CustomersRequest handleUsersRequest(CustomersRequest cr)
 	{
 		System.out.println("customers list request");
 		cr.custList = Database.getAllCustomers();
 		return cr;
 	}
-	
+
 	public AllCitiesRequest handleCityRequest(AllCitiesRequest cityReq)
 	{
 		System.out.println("cities list request");
 		cityReq.cityList = Database.getAllCitiesNameId();
 		return cityReq;
-		
+
 	}
 
 	/**
@@ -191,10 +221,10 @@ public class EchoServer extends AbstractServer
 			else if (msg instanceof User)
 				handleUpdateUser((User) msg);
 			else if (msg instanceof CustomersRequest)
-				client.sendToClient(handleUsersRequest((CustomersRequest) msg)); 
-			else if (msg instanceof CustomersRequest)
-				client.sendToClient(handleCityRequest((AllCitiesRequest) msg)); 
-			
+				client.sendToClient(handleUsersRequest((CustomersRequest) msg));
+			else if (msg instanceof AllCitiesRequest)
+				client.sendToClient(handleCityRequest((AllCitiesRequest) msg));
+
 		}
 		catch (IOException e)
 		{

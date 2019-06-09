@@ -2,6 +2,7 @@ package io_commands;
 
 import objectClasses.User;
 import objectClasses.Employee.Role;
+import server.EchoServer.LoginRegisterResult;
 
 public class Register extends Command {
 	public Register(String username, String password, String firstName, String lastName, String email, String phone, Role role, String ccard, String expires, String cvv, boolean isEmployee)
@@ -31,4 +32,5 @@ public class Register extends Command {
 	public User user;
 	public Role role;
 	public Boolean isEmployee;
+	public LoginRegisterResult regResult;
 }
