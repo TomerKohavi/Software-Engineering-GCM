@@ -9,9 +9,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
+import objectClasses.PlaceOfInterest;
 
 public class POIEditController {
 
+	private PlaceOfInterest poi;
 
     @FXML // fx:id="mainPane"
     private AnchorPane mainPane; // Value injected by FXMLLoader
@@ -50,22 +52,25 @@ public class POIEditController {
     	
     	if (Connector.isEdit)  // if its edit, load the data
     	{
-    		Name.setText(Connector.selectedPOI.getName());
-    		InfoBox.setText(Connector.selectedPOI.getPlaceDescription());
+    		poi = Connector.selectedPOI;
+    		Name.setText(poi.getName());
+    		InfoBox.setText(poi.getPlaceDescription());
 //    		TypeCombo.setValue();
-    		Accessibility.setSelected(Connector.selectedPOI.isAccessibilityToDisabled());
+    		Accessibility.setSelected(poi.isAccessibilityToDisabled());
     	}
+    	else
+    		poi = new PlaceOfInterest(Connector.selectedCity.getId(), null, null, null, false);
     	
     }
     
 
     @FXML
     void apply(ActionEvent event) {
-    	Connector.selectedPOI.setName(Name.getText());
-    	Connector.selectedPOI.setPlaceDescription(InfoBox.getText());
-//    	Connector.selectedPOI.setType(type);
-    	Connector.selectedPOI.setAccessibilityToDisabled(Accessibility.isSelected());
-    	// update server
+    	poi.setName(Name.getText());
+    	poi.setPlaceDescription(InfoBox.getText());
+//    	poi.setType(type);
+    	poi.setAccessibilityToDisabled(Accessibility.isSelected());
+    	poi.saveToDatabase();
     	mainPane.getScene().getWindow().hide();
     }
 
