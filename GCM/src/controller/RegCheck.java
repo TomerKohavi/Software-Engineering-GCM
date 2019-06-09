@@ -173,7 +173,7 @@ public class RegCheck {
 	 * @param phone phone number 
 	 * @return returns error type. Please use .getValue() in order to get the error massage.
 	 */
-	public static Res isValidEmployee(String uname, String pass, String fName, String lName, String eMail, String phone) {
+	public static Res isValidUser(String uname, String pass, String fName, String lName, String eMail, String phone) {
 		if (!isValidUsername(uname))
 			return Res.UName;
 		if (!isValidPassword(pass))

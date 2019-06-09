@@ -79,7 +79,7 @@ public class EmployeeRegisterController {
     	emailAdd = Email.getText();
     	phoneNumber = Phone.getText();
     	Role role = RoleBox.getValue().equals("Regular") ? Role.REGULAR : (RoleBox.getValue().equals("Manager") ? Role.MANAGER : Role.CEO);
-    	String errorMsg = RegCheck.isValidEmployee(usr, pass, first, last, emailAdd, phoneNumber).getValue();
+    	String errorMsg = RegCheck.isValidUser(usr, pass, first, last, emailAdd, phoneNumber).getValue();
     	if (!errorMsg.equals("All Good"))
     	{
     		IncorrectText.setText(errorMsg);
