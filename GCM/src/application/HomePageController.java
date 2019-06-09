@@ -359,13 +359,13 @@ public class HomePageController
 					if (selectedIndex >= 0)
 					{
 						InfoPane.setVisible(true);
-						if (Connector.listType.equals("City"))
-						{ // City
+						if (Connector.listType.equals("City")) // City
+						{ 
 							Connector.selectedCity = Connector.searchCityResult.get(selectedIndex);
 							fillCityInfo(Connector.selectedCity);
 						}
-						else if (Connector.listType.equals("POI"))
-						{ // POI
+						else if (Connector.listType.equals("POI")) // POI
+						{ 
 							PlaceOfInterest poi = Connector.searchPOIResult.get(selectedIndex).getCopyPlace();
 							Connector.selectedPOI = poi;
 							ResultName.setText(poi.getName() + ", " + poi.getType());// set name and type
@@ -380,8 +380,8 @@ public class HomePageController
 							{
 								Map map = Connector.searchMapResult.get(selectedIndex).getCopyMap();
 								Connector.selectedMap = map;
-								ResultName.setText(map.getName());// set name and type
-								ResultInfo.setText(map.getInfo());// set info
+								ResultName.setText(map.getName()); // set name and type
+								ResultInfo.setText(map.getInfo()); // set info
 								BufferedImage bufIm = Connector.client.getImage(map.getImgURL());
 								Image image = SwingFXUtils.toFXImage(bufIm, null);
 								MapImage.setImage(image);

@@ -11,8 +11,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import objectClasses.Route;
 
 public class RouteEditController {
+	
+	private Route route;
 	
 	@FXML // fx:id="mainPane"
     private AnchorPane mainPane; // Value injected by FXMLLoader
@@ -52,12 +55,15 @@ public class RouteEditController {
     	
     	if (Connector.isEdit) // if its edit, load the data
     	{
-    		Name.setText("Route " + Connector.selectedRoute.getId());
-    		InfoBox.setText(Connector.selectedRoute.getInfo());
-    		Accessibility.setSelected(Connector.selectedRoute.isAcceptabilityToDisabled());
+    		route = Connector.selectedRoute;
+    		Name.setText("Route " + route.getId());
+    		InfoBox.setText(route.getInfo());
+    		Accessibility.setSelected(route.isAcceptabilityToDisabled());
 			StopsBox.getItems().addAll(""); // add to table,  copy from HomePageController
 			POIBox.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
     	}
+    	else
+    		route = new Route(Connector.selectedCity.getId(), null);
     	
     }
     
@@ -73,7 +79,7 @@ public class RouteEditController {
         		StopsBox.getItems().addAll("" + selectedIdx); // need to implement
         		StopTime.setText("");
         		TimeError.setOpacity(0);
-        		Accessibility.setSelected(Connector.selectedRoute.isAcceptabilityToDisabled());
+        		Accessibility.setSelected(route.isAcceptabilityToDisabled());
         	}
     	}
     	else
@@ -91,8 +97,8 @@ public class RouteEditController {
     
     @FXML
     void apply(ActionEvent event) {
-    	Connector.selectedRoute.setInfo(InfoBox.getText());
-//		update stop list
+    	route.setInfo(InfoBox.getText());
+    	route.saveToDatabase();
     	mainPane.getScene().getWindow().hide();
     }
 
