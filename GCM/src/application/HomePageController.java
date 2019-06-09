@@ -195,7 +195,7 @@ public class HomePageController
 	void endLoad()
 	{
 		LoadingGif.setVisible(false);
-		mainPane.setDisable(true);
+		mainPane.setDisable(false);
 	}
 
 	void openNewPage(String FXMLpage) throws IOException
@@ -460,10 +460,10 @@ public class HomePageController
 		cityInfo = CityInfoBox.getText();
 		poiName = POINameBox.getText();
 		poiInfo = POIInfoBox.getText();
-
+//		startLoad();
 		Connector.searchCityResult = Connector.client.search(cityName, cityInfo, poiName, poiInfo);
-
-		if (!Connector.searchCityResult.isEmpty())
+//		endLoad();
+		if (Connector.searchCityResult != null && !Connector.searchCityResult.isEmpty())
 		{
 
 			if (UnpublishSearch.isSelected())
