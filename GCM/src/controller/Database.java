@@ -1604,6 +1604,11 @@ public class Database {
 
 			sql = sql.substring(0, sql.length() - 4);
 
+			if (cityName == null && cityDescription == null)
+			{
+				sql += "True";
+			}
+			
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (cityName != null)
 				gt.setString(counter++, cityName);
