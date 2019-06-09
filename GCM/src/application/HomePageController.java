@@ -437,13 +437,13 @@ public class HomePageController
 							Statistic statboi;
 							if (selectedIndex == 0) // All
 							{
-								statboi = InformationSystem.getRangeSumStatistics(null, Date.valueOf(FirstDate.getValue()), Date.valueOf(LastDate.getValue()));
+								statboi = InformationSystem.getRangeSumStatistics(null, new java.sql.Date(Date.valueOf(FirstDate.getValue()).getTime()), new java.sql.Date(Date.valueOf(LastDate.getValue()).getTime()));
 								ReportCityName.setText("All Cities");
 							}
 							else
 							{
-								statboi = InformationSystem.getRangeSumStatistics(Connector.allCities.get(selectedIndex - 1).getId(), Date.valueOf(FirstDate.getValue()), Date.valueOf(LastDate.getValue()));
-								ReportCityName.setText(Connector.allCities.get(selectedIndex - 1).getCityName());
+								statboi = InformationSystem.getRangeSumStatistics(Connector.allCities.get(selectedIndex - 1).b, new java.sql.Date(Date.valueOf(FirstDate.getValue()).getTime()), new java.sql.Date(Date.valueOf(LastDate.getValue()).getTime()));
+								ReportCityName.setText(Connector.allCities.get(selectedIndex - 1).a);
 								
 							}
 							ReportInfo.setText("Number of Maps: " + 100 + "\n" + "Number of One Time Purchases: " + statboi.getNumOneTimePurchases()
@@ -520,7 +520,8 @@ public class HomePageController
 			DateNotValid.setVisible(false);
 			MainList.getItems().clear();
 			MainList.getItems().add("All Cities");
-			MainList.getItems().addAll(Connector.getCitiesNames(Connector.allCities));
+			for (Pair<String, Integer> pair : Connector.allCities)
+				MainList.getItems().add(pair.a);
 		}
 
 	}
