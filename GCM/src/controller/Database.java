@@ -242,7 +242,7 @@ public class Database {
 			cdv.addPlaceOfInterestSight(ps3);
 			PlaceOfInterestSight ps4 = new PlaceOfInterestSight(cdv, p4);
 			cdv.addPlaceOfInterestSight(ps4);
-			Map m0 = new Map(c1.getId(), "central city", "large map", "haifa1.url");
+			Map m0 = new Map(c1.getId(), "central city", "first map", "haifa1.png");
 			double[] coords0 = { 21.3, 58.7 };
 			Location l0 = new Location(m0, p0, coords0);
 			m0.addLocation(l0);
@@ -253,7 +253,7 @@ public class Database {
 			MapSight ms0 = new MapSight(cdv, m0);
 			cdv.addMapSight(ms0);
 			
-			Map m1 = new Map(c1.getId(), "central city", "large map", "haifa2.url");
+			Map m1 = new Map(c1.getId(), "Mount Carmel", "second map", "haifa2.png");
 			double[] coords2 = { 12.3, 85.7 };
 			Location l2 = new Location(m1, p2, coords2);
 			m1.addLocation(l2);
@@ -276,7 +276,7 @@ public class Database {
 			cdv.addRouteSight(rs);
 			
 			
-			Route r1 = new Route(c1.getId(), "small route");
+			Route r1 = new Route(c1.getId(), "big route");
 			RouteStop rstop3 = new RouteStop(r1, p2, new Time(1, 12, 0));
 			r1.addRouteStop(rstop3);
 			RouteStop rstop4 = new RouteStop(r1, p3, new Time(0, 23, 0));
@@ -303,7 +303,7 @@ public class Database {
 			p1.saveToDatabase();
 			PlaceOfInterestSight ps = new PlaceOfInterestSight(cdv, p);
 			cdv.addPlaceOfInterestSight(ps);
-			Map m = new Map(c1.getId(), "central city", "large map", "tel_aviv.url");
+			Map m = new Map(c1.getId(), "central city", "large map", "tel_aviv.png");
 			double[] coords = { 40.3, 32.7 };
 			Location l = new Location(m, p, coords);
 			m.addLocation(l);
@@ -337,7 +337,7 @@ public class Database {
 			p1.saveToDatabase();
 			PlaceOfInterestSight ps = new PlaceOfInterestSight(cdv, p);
 			cdv.addPlaceOfInterestSight(ps);
-			Map m = new Map(c1.getId(), "central city", "map", "jerusalam.url");
+			Map m = new Map(c1.getId(), "central city", "map", "jerusalam.png");
 			double[] coords = { 42.3, 12.7 };
 			Location l = new Location(m, p, coords);
 			m.addLocation(l);
