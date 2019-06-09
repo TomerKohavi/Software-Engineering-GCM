@@ -1,3 +1,5 @@
+package classes;
+
 import java.util.Date;
 
 public class Statistic implements Comparable<Statistic>, ClassMustProperties {

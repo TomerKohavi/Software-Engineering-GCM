@@ -1,3 +1,5 @@
+package classes;
+
 import java.io.Serializable;
 
 public class MapSight implements ClassMustProperties, Serializable {
