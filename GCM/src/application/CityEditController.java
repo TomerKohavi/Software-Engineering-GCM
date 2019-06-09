@@ -31,19 +31,20 @@ public class CityEditController {
     @FXML
     public void initialize() {
     	
-//    	if ()  // if its edit, load the data
-//    	{
-//    		Name.setText("");
-//    		InfoBox.setText("");
-//    	}
+    	if (Connector.isEdit)
+    	{
+    		Name.setText(Connector.selctedCity.getCityName());
+    		InfoBox.setText(Connector.selctedCity.getCityDescription());
+    	}
     	
     }
     
 
     @FXML
     void apply(ActionEvent event) {
-//    	Name.getText();
-//		InfoBox.getText();
+    	Connector.selctedCity.setCityName(Name.getText());
+    	Connector.selctedCity.setCityDescription(InfoBox.getText());
+    	// update city in server
     	mainPane.getScene().getWindow().hide();
     }
 

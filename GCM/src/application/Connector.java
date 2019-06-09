@@ -31,6 +31,8 @@ public class Connector {
 	public static final int PORT = 5555;
 	public static final String LOCAL_HOST = "localhost";
 	
+	public static boolean isEdit = true;
+	
 	
 	public static String listType = "City";
 	
@@ -42,10 +44,11 @@ public class Connector {
 
 	public static boolean unpublished = false;
 	
-	public static City selctedCity;
-	public static Map selctedMap;
-	public static PlaceOfInterest selctedPOI;
-	public static Route selctedRoute;
+	public static City selectedCity;
+	public static Map selectedMap;
+	public static PlaceOfInterest selectedPOI;
+	public static Route selectedRoute;
+	public static User selectedUser;
 	
 	public static ArrayList<City> searchCityResult;
 	public static ArrayList<MapSight> searchMapResult;

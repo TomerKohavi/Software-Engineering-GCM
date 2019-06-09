@@ -351,7 +351,8 @@ public class HomePageController
 						InfoPane.setVisible(true);
 						if (Connector.listType.equals("City"))
 						{ // City
-							fillCityInfo(Connector.searchCityResult.get(selectedIndex));
+							Connector.selctedCity = Connector.searchCityResult.get(selectedIndex);
+							fillCityInfo(Connector.selctedCity);
 						}
 						else if (Connector.listType.equals("POI"))
 						{ // POI
@@ -396,7 +397,7 @@ public class HomePageController
 							
 							TableColumn<RouteStop, Integer> poiColumn = new TableColumn<>("POI");
 //							poiColumn.setMinWidth(200);
-							poiColumn.setCellValueFactory(new PropertyValueFactory<>("placeId"));
+							poiColumn.setCellValueFactory(new PropertyValueFactory<>("temp_placeNam"));
 							
 							TableColumn<RouteStop, Time> timeColumn = new TableColumn<>("Time");
 //							poiColumn.setMinWidth(200);
@@ -425,8 +426,8 @@ public class HomePageController
 							ReportInfo.setVisible(true);
 							InfoPane.setVisible(false);
 						}
-//						else if (Connector.listType.equals("Users"))
-//						{ // users
+//						else if (Connector.listType.equals("Users")) // users
+//						{ 
 //							ResultName.setText(currentItemSelected); // set name and type
 //							ResultInfo.setText("Name: " + "first" + " " + "last" + "\n" + "Email: "
 //									+ "coreset@sigal.is.gay" + "\n" + "Phone: " + "0544444444");
@@ -607,12 +608,6 @@ public class HomePageController
 	}
 
 	@FXML
-	void callEdit(ActionEvent event) throws IOException
-	{
-		openNewPage(Connector.listType + "EditScene.fxml");
-	}
-
-	@FXML
 	void callRemove(ActionEvent event)
 	{
 		int index = MainList.getSelectionModel().getSelectedIndex();
@@ -625,6 +620,14 @@ public class HomePageController
 	@FXML
 	void callCreate(ActionEvent event) throws IOException
 	{
+		Connector.isEdit = false;
+		openNewPage(Connector.listType + "EditScene.fxml");
+	}
+	
+	@FXML
+	void callEdit(ActionEvent event) throws IOException
+	{
+		Connector.isEdit = true;
 		openNewPage(Connector.listType + "EditScene.fxml");
 	}
 
