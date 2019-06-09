@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
+
 public final class Downloader
 {
     public static boolean downloadPOIs(CityDataVersion cdv,String path)
