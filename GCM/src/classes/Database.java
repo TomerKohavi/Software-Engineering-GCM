@@ -208,7 +208,8 @@ public class Database {
         	//create Users
         	Employee e=new Employee("Lior33", "12345", "lior@gmail.com", "lior", "vismun", "0521234567", Employee.Role.CEO);
         	e.saveToDatabase();
-        	Customer cust=new Customer("yosi11", "67890", "yosi@gmail.com", "yosi", "ben asser", "0521111111","5495681338665894","07/2024", "896");
+        	Customer cust=new Customer("yosi11", "67890", "yosi@gmail.com", "yosi", "ben asser", "0521111111",
+        			"5495681338665894","07/24", "896");
         	Subscription sub=new Subscription(cust, c1, new Date(119, 8, 6), 201.8, 199.9, new Date(119, 10,8));
         	cust.addSubscription(sub);
         	
