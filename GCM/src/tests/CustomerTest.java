@@ -8,11 +8,11 @@ import java.util.Random;
 
 import org.junit.*;
 
-import classes.City;
-import classes.Customer;
-import classes.Database;
-import classes.OneTimePurchase;
-import classes.Subscription;
+import controller.Database;
+import objectClasses.City;
+import objectClasses.Customer;
+import objectClasses.OneTimePurchase;
+import objectClasses.Subscription;
  
 public class CustomerTest {
           

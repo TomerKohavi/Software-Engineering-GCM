@@ -1,7 +1,10 @@
-package classes;
+package objectClasses;
 
 import java.io.Serializable;
 import java.sql.Time;
+
+import controller.Database;
+import otherClasses.ClassMustProperties;
 
 public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Serializable {
 	private int id;

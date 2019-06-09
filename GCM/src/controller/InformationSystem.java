@@ -1,7 +1,10 @@
-package classes;
+package controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import objectClasses.Statistic;
+
 import java.sql.Date;
 import java.util.Calendar;
 

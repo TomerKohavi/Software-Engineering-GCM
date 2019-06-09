@@ -1,7 +1,10 @@
-package classes;
+package objectClasses;
 
 import java.io.Serializable;
 import java.sql.Date;
+
+import controller.Database;
+import otherClasses.ClassMustProperties;
 
 public class OneTimePurchase extends CityPurchase implements ClassMustProperties, Serializable
 {

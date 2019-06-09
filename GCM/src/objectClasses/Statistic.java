@@ -1,6 +1,9 @@
-package classes;
+package objectClasses;
 
 import java.util.Date;
+
+import controller.Database;
+import otherClasses.ClassMustProperties;
 
 public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 	private int id;

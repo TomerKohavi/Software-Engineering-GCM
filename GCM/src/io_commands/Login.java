@@ -1,7 +1,7 @@
 package io_commands;
 
-import classes.User;
 import javafx.util.Pair;
+import objectClasses.User;
 
 public class Login extends Command {
 

@@ -1,7 +1,7 @@
 package io_commands;
 
-import classes.Employee.Role;
-import classes.User;
+import objectClasses.User;
+import objectClasses.Employee.Role;
 
 public class Register extends Command {
 	public Register(String username, String password, String firstName, String lastName, String email, String phone, Role role, boolean isEmployee)

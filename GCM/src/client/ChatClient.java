@@ -9,6 +9,9 @@ import common.*;
 import common.Console;
 import io_commands.*;
 import javafx.util.Pair;
+import objectClasses.City;
+import objectClasses.User;
+import objectClasses.Employee.Role;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -16,9 +19,6 @@ import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
 import application.Connector;
-import classes.City;
-import classes.Employee.Role;
-import classes.User;
 
 /**
  * This class overrides some of the methods defined in the abstract superclass

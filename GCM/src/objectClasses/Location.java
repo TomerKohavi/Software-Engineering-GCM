@@ -1,6 +1,9 @@
-package classes;
+package objectClasses;
 
 import java.io.Serializable;
+
+import controller.Database;
+import otherClasses.ClassMustProperties;
 
 public class Location implements ClassMustProperties, Serializable {
 	private int id;

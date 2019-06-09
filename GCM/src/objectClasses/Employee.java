@@ -1,6 +1,9 @@
-package classes;
+package objectClasses;
 
 import java.io.Serializable;
+
+import controller.Database;
+import otherClasses.ClassMustProperties;
 
 public class Employee extends User implements ClassMustProperties, Serializable {
 	public enum Role {
