@@ -7,7 +7,7 @@ public class RegCheck {
 
 	public enum Res {
 		UName("Illegal username."),
-		Pass("Illegal password- " + "it must be at least 8 char long, " + "with lower case and upper case letters, "
+		Pass("Illegal password- " + "it must be at least 8 char long, " + "with lower case and upper case letters, " + "\n"
 				+ "at least one digit and at least one special character."),
 		FName("Illegal first name"), LName("Illegal last name"), Email("Illegal Email"), Phone("Illegal phone number"),
 		CardNum("The credit card is illegal. Please insert 16 digits, without spaces."),
@@ -52,7 +52,7 @@ public class RegCheck {
 	/**
 	 * Check if the password is legal and safe. (?=.*[0-9]) a digit must occur at
 	 * least once (?=.*[a-z]) a lower case letter must occur at least once
-	 * (?=.*[A-Z]) an upper case letter must occur at least once (?=.*[@#$%^&+=]) a
+	 * (?=.*[A-Z]) an upper case letter must occur at least once (?=.*[!@#$%^&+=]) a
 	 * special character must occur at least once (?=\\S+$) no whitespace allowed in
 	 * the entire string .{8,} at least 8 characters.
 	 * 

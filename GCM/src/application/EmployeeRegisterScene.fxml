@@ -32,8 +32,8 @@
       <JFXTextField fx:id="LastName" focusColor="#41e0d0" layoutX="792.0" layoutY="375.0" prefHeight="25.0" prefWidth="287.0" promptText="Last Name" />
       <JFXTextField fx:id="Email" focusColor="#41e0d0" layoutX="433.0" layoutY="449.0" prefHeight="25.0" prefWidth="287.0" promptText="Email" />
       <JFXTextField fx:id="Phone" focusColor="#41e0d0" layoutX="792.0" layoutY="449.0" prefHeight="25.0" prefWidth="287.0" promptText="Phone" />
-      <JFXComboBox fx:id="RoleBox" layoutX="936.0" layoutY="545.0" promptText="Role" />
-      <JFXButton fx:id="Register" layoutX="616.0" layoutY="535.0" onAction="#register" prefHeight="45.0" prefWidth="287.0" style="-fx-background-color: #41e0d0;" text="Register">
+      <JFXComboBox fx:id="RoleBox" layoutX="936.0" layoutY="579.0" promptText="Role" />
+      <JFXButton fx:id="Register" layoutX="616.0" layoutY="569.0" onAction="#register" prefHeight="45.0" prefWidth="287.0" style="-fx-background-color: #41e0d0;" text="Register">
          <font>
             <Font size="21.0" />
          </font>
@@ -43,6 +43,6 @@
             <Font size="21.0" />
          </font>
       </JFXButton>
-      <Text fx:id="IncorrectText" fill="RED" layoutX="674.0" layoutY="611.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect Username or Password" />
+      <Text fx:id="IncorrectText" fill="RED" layoutX="674.0" layoutY="521.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect Username or Password" textAlignment="CENTER" />
    </children>
 </AnchorPane>
