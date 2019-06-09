@@ -309,7 +309,7 @@ public class HomePageController
 					{
 						found = true;
 						BuyButton.setText("Download");
-						if (sub.isGoingToEnd(new Date()))
+						if (sub.isGoingToEnd(new java.util.Date()))
 							ReSubscribeButton.setVisible(true);
 						break;
 					}
@@ -448,7 +448,7 @@ public class HomePageController
 						}
 						else if (Connector.listType.equals("Users")) // users
 						{
-							Connector.selectedCustomer = Connector.custList.get(selectedIndex);
+							Connector.selectedCustomer = Connector.customerList.get(selectedIndex);
 							ResultName.setText(Connector.selectedCustomer.getUserName()); // set name and type
 							ResultInfo.setText("Name: " + Connector.selectedCustomer.getFirstName() + " " + Connector.selectedCustomer.getLastName() + "\n" + "Email: "
 									+ Connector.selectedCustomer.getEmail() + "\n" + "Phone: " + Connector.selectedCustomer.getPhoneNumber());
@@ -631,13 +631,13 @@ public class HomePageController
 		setMainSideButton(SideUsers);
 		try
 		{
-			Connector.custList = Connector.client.customersRquest();
+			Connector.customerList = Connector.client.customersRquest();
 		}
 		catch (IOException e)
 		{
 			e.printStackTrace();
 		}
-		for (Customer cust : Connector.custList)
+		for (Customer cust : Connector.customerList)
 			MainList.getItems().add(cust.getUserName());
 	}
 

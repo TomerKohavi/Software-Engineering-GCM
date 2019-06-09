@@ -370,7 +370,7 @@ public class Database {
 			c1.saveToDatabase();
 			}
 			// 3
-			{
+			
 			City c1 = new City("Jerusalem",
 					"Jerusalem is a city in the Middle East, located on a plateau in the Judaean Mountains between the Mediterranean and the Dead Sea. It is one of the oldest cities in the world, and is considered holy to the three major Abrahamic religions—Judaism, Christianity, and Islam.");
 			CityDataVersion cdv = new CityDataVersion(c1, "1.0", 10, 122.9);
@@ -447,7 +447,7 @@ public class Database {
 
 			c1.addPublishedCityDataVersion(cdv);
 			c1.saveToDatabase();
-			}
+			
 			// create Users
 			// 1
 			{

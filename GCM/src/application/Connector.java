@@ -56,6 +56,7 @@ public class Connector {
 	public static ArrayList<PlaceOfInterestSight> searchPOIResult;
 	public static ArrayList<RouteSight> searchRouteResult;
 	public static ArrayList<City> allCities;
+	public static ArrayList<Customer> customerList;
 	
 	public static ArrayList<String> getCitiesNames(ArrayList<City> cityList)
 	{
