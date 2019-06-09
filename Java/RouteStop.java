@@ -2,13 +2,14 @@ import java.io.Serializable;
 import java.sql.Time;
 
 public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Serializable {
-	int id;
-	int routeId;
-	int placeId;
-	int numStop;
-	Time recommendedTime;
+	private int id;
+	private int routeId;
+	private int placeId;
+	private int numStop;
+	public Time recommendedTime;
 
-	PlaceOfInterest temp_place;
+	private PlaceOfInterest temp_place;
+	public String temp_placeName;
 
 	private RouteStop(int id, int routeId, int placeId, int numStop, Time recommendedTime) {
 		this.id = id;
@@ -32,6 +33,7 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 		this.recommendedTime = recommendedTime;
 		this.numStop = -1;
 		this.temp_place = p;
+		this.temp_placeName=p.getName();
 	}
 
 	public void saveToDatabase() {
@@ -44,6 +46,7 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 
 	public void reloadTempsFromDatabase() {
 		this.temp_place = Database.getPlaceOfInterestById(placeId);
+		this.temp_placeName=temp_place.getName();
 	}
 
 	public PlaceOfInterest getCopyPlaceOfInterest() {

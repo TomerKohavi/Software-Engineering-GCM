@@ -1,9 +1,9 @@
 import java.io.Serializable;
 
 public class MapSight implements ClassMustProperties, Serializable {
-	int id;
-	int mapId;
-	int cityDataVersionId;
+	private int id;
+	private int mapId;
+	private int cityDataVersionId;
 
 	Map temp_map;
 

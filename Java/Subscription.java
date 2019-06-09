@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Subscription extends CityPurchase implements ClassMustProperties, Serializable {
 
 	@SuppressWarnings("deprecation")
-	private static final Time closeTime = new Time(3 * 24, 0, 0);
+	public static final Time closeTime = new Time(3 * 24, 0, 0);
 	private Date expirationDate;
 
 	private Subscription(int id, int cityId, int userId, Date purchaseDate, double fullPrice, double pricePayed,
