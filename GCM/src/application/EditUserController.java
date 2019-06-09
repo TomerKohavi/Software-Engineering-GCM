@@ -9,6 +9,8 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
+import controller.RegCheck;
+import controller.RegCheck.Res;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -88,7 +90,7 @@ public class EditUserController
 			Customer cust = (Customer) Connector.user;
 			CreditCardNumber.setText(cust.getCreditCardNum()); // need to implement
 			ExperationMonth.setValue(Integer.valueOf(cust.getCreditCardExpires().substring(0, 2)));
-			ExperationYear.setValue(Integer.valueOf(cust.getCreditCardExpires().substring(3, 5)));
+			ExperationYear.setValue(Integer.valueOf(cust.getCreditCardExpires().substring(3, 5)) + 2000);
 			CVC.setText(cust.getCvc());
 		}
 	}
@@ -109,20 +111,62 @@ public class EditUserController
 	@FXML
 	void applyChanges(ActionEvent event) throws IOException
 	{
-		if (true)
+		String uname = Username.getText();
+		String pass = Password.getText();
+		String fname = FirstName.getText();
+		String lname = LastName.getText();
+		String email = Email.getText();
+		String phone = Phone.getText();
+		String check = RegCheck.isValidUser(uname, pass, fname, lname, email, phone).getValue();
+		if (check.equals("All Good"))
 		{ // check that all of the inputs are valid
-			Connector.user.setUserName(Username.getText());
-			Connector.user.setPassword(Password.getText());
-			Connector.user.setFirstName(FirstName.getText());
-			Connector.user.setLastName(LastName.getText());
-			Connector.user.setEmail(Email.getText());
-			Connector.user.setPhoneNumber(Phone.getText());
-			Connector.client.updateUser(Connector.user);
-			mainPane.getScene().getWindow().hide();
+			if (Connector.user instanceof Customer)
+			{
+				Customer cust = (Customer) Connector.user;
+				String ccard = CreditCardNumber.getText();
+				String cvc = CVC.getText();
+
+				Integer expM = ExperationMonth.getValue();
+				Integer expY = ExperationYear.getValue();
+
+				check = RegCheck.isValidCustomer(uname, pass, fname, lname, email, phone, ccard, cvc).getValue();
+				if (check.equals("All Good"))
+				{
+					Connector.user.setUserName(uname);
+					Connector.user.setPassword(pass);
+					Connector.user.setFirstName(fname);
+					Connector.user.setLastName(lname);
+					Connector.user.setEmail(email);
+					Connector.user.setPhoneNumber(phone);
+					cust.setCreditCardNum(ccard);
+					cust.setCreditCardExpires((expM < 10 ? "0" : "") + expM + "/" + (expY - 2000));
+					cust.setCvc(cvc);
+					Connector.client.updateUser(Connector.user);
+					mainPane.getScene().getWindow().hide();
+				}
+				else
+				{
+					IncorrectText.setText(check);
+					IncorrectText.setVisible(true);
+				}
+			}
+			else
+			{
+				Connector.user.setUserName(uname);
+				Connector.user.setPassword(pass);
+				Connector.user.setFirstName(fname);
+				Connector.user.setLastName(lname);
+				Connector.user.setEmail(email);
+				Connector.user.setPhoneNumber(phone);
+				Connector.client.updateUser(Connector.user);
+				mainPane.getScene().getWindow().hide();
+			}
 		}
 		else
+		{
+			IncorrectText.setText(check);
 			IncorrectText.setVisible(true);
-
+		}
 	}
 
 	@FXML

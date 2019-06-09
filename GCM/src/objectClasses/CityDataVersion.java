@@ -324,6 +324,10 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 	public double getPricePeriod() {
 		return pricePeriod;
 	}
+	
+	public double getPricePeriodWithDiscount() {
+		return pricePeriod*0.9;
+	}
 
 	public void setVersionName(String versionName) {
 		this.versionName = versionName;
