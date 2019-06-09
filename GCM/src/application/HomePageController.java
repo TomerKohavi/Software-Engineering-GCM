@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Time;
-import java.sql.Date;
+import java.sql.Date
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -310,7 +310,7 @@ public class HomePageController
 					{
 						found = true;
 						BuyButton.setText("Download");
-						if (sub.isGoingToEnd(new Date()))
+						if (sub.isGoingToEnd(new Date(new java.util.Date().getTime())))
 							ReSubscribeButton.setVisible(true);
 						break;
 					}
