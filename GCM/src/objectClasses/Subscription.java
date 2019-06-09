@@ -53,7 +53,10 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 		this.expirationDate = expirationDate;
 	}
 	
-	
+	public int getNumMonths() {
+		Time t=new Time(this.expirationDate.getTime()-super.getPurchaseDate().getTime());
+		return t.getMonth();
+	}
 
 	@Override
 	public boolean equals(Object o) {
