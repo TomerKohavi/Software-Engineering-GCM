@@ -93,7 +93,7 @@ public class City implements ClassMustProperties, Serializable {
 		if (temp_publishedVersion != null)
 			temp_publishedVersion.deleteFromDatabase();
 		// remove statistics
-		ArrayList<Integer> ids = Database.searchStatistic(this.id, null, null, null);
+		ArrayList<Integer> ids = Database.searchStatistic(this.id, null, null, null, null);
 		for (int id : ids) {
 			Statistic s = Database._getStatisticById(id);
 			if (s != null)

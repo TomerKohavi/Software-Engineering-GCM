@@ -1789,7 +1789,8 @@ public class Database {
 	 * @return the result list.
 	 * 
 	 */
-	public static ArrayList<Integer> searchStatistic(Integer cityId, Date date, Date dateFrom, Date dateEnd,Boolean newVersionPublished) {
+	public static ArrayList<Integer> searchStatistic(Integer cityId, Date date, Date dateFrom,
+			Date dateEnd,Boolean newVersionPublished) {
 		//TODO: fix newVersionPublished
 		try {
 			int counter = 1;
@@ -1941,7 +1942,7 @@ public class Database {
 				return null;
 			return Customer._createCustomer(res.getInt("ID"), res.getString("Username"), res.getString("Password"),
 					res.getString("Email"), res.getString("FirstName"), res.getString("LastName"),
-					res.getString("PhoneNumber"));
+					res.getString("PhoneNumber"), "Gadi", "Is the", "King"); // TODO: fix
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
@@ -2135,7 +2136,7 @@ public class Database {
 		try {
 			ResultSet res = get(Table.Statistic.getValue(), id);
 			return Statistic._createStatistic(res.getInt("ID"), res.getInt("CityID"), res.getDate("Date"),
-					res.getInt("NOTP"), res.getInt("NS"), res.getInt("NSR"), res.getInt("NV"), res.getInt("NSD"));
+					res.getInt("NOTP"), res.getInt("NS"), res.getInt("NSR"), res.getInt("NV"), res.getInt("NSD"), false); // TODO: fix
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
@@ -2143,25 +2144,6 @@ public class Database {
 		}
 	}
 
-	/**
-	 * Hashing with SHA1
-	 *
-	 * @param input String to hash
-	 * @return String hashed
-	 */
-	public static String sha1(String input) {
-
-		MessageDigest msdDigest;
-		try {
-			msdDigest = MessageDigest.getInstance("SHA-1");
-			msdDigest.update(input.getBytes("UTF-8"), 0, input.length());
-			return DatatypeConverter.printHexBinary(msdDigest.digest());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
 
 	/*
 	 * (non-Javadoc)
