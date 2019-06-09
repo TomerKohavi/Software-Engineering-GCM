@@ -24,6 +24,7 @@ import objectClasses.RouteSight;
 import objectClasses.RouteStop;
 import objectClasses.Statistic;
 import objectClasses.Subscription;
+import otherClasses.Pair;
 import objectClasses.Employee.Role;
 import objectClasses.PlaceOfInterest.PlaceType;
 
@@ -100,17 +101,17 @@ public class Database {
      * 
      * @return List of all the cities
      */
-    public static ArrayList<City> getAllCities()
+    public static ArrayList<Pair<String,Integer>> getAllCitiesNameId()
     {
         ArrayList<Integer> ids = searchCity(null, null);
-        ArrayList<City> cities = new ArrayList<City>();
+        ArrayList<Pair<String,Integer>> list = new ArrayList<Pair<String,Integer>>();
         for (int id : ids)
         {
-            City c = Database.getCityById(id);
-            if (c != null)
-                cities.add(c);
+            String cName = Database.getCityNameById(id);
+            if (cName == null) continue;
+            list.add(new Pair<>(cName,id));
         }
-        return cities;
+        return list;
     }
 
 	/**
@@ -2251,6 +2252,25 @@ public class Database {
 			if (res == null)
 				return null;
 			return Route._createRoute(res.getInt("ID"), res.getInt("CityID"), res.getString("Info"));
+		} catch (Exception e) {
+			closeConnection();
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/**
+	 * return the city name with the corresponding id
+	 * 
+	 * @param id the id of the city we want to get
+	 * @return the name of the city
+	 */
+	public static String getCityNameById(int id) {
+		try {
+			ResultSet res = get(Table.City.getValue(), id);
+			if (res == null)
+				return null;
+			return res.getString("Name");
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();

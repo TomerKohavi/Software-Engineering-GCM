@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Time;
-import java.sql.Date
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -393,6 +393,12 @@ public class HomePageController
 								Image image = SwingFXUtils.toFXImage(bufIm, null);
 								MapImage.setImage(image);
 								ShowMapButton.setVisible(true);
+								InfoPane.setVisible(true);
+								MapImage.setVisible(false);
+								ShowMapButton.setText("Show Map");
+								for (POIImage img : Connector.imageList)
+									mainPane.getChildren().remove(img.image);
+								Connector.imageList.clear();
 							}
 							catch (IOException e)
 							{
