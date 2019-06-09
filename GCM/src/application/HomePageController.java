@@ -1,6 +1,5 @@
 package application;
 
-import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -260,9 +259,8 @@ public class HomePageController
 		}
 	}
 
-	private void fillCityInfo(int selectedIndex)
+	private void fillCityInfo(City city)
 	{
-		City city = Connector.searchCityResult.get(selectedIndex);
 		Connector.selctedCity = city;
 		ResultName.setText(city.getCityName()); // set name
 		ResultInfo.setText(city.getCityDescription()); // set info
@@ -329,6 +327,7 @@ public class HomePageController
 		if (Connector.user instanceof Employee)
 		{ // check if employee -> can edit
 			EditButton.setVisible(true);
+			UnpublishSearch.setVisible(true);
 		}
 
 		SideReport.setDisable(false);
@@ -349,7 +348,7 @@ public class HomePageController
 						InfoPane.setVisible(true);
 						if (Connector.listType.equals("City"))
 						{ // City
-							fillCityInfo(selectedIndex);
+							fillCityInfo(Connector.searchCityResult.get(selectedIndex));
 						}
 						else if (Connector.listType.equals("POI"))
 						{ // POI
@@ -437,12 +436,12 @@ public class HomePageController
 			if (UnpublishSearch.isSelected())
 			{// search unpublished
 				Connector.unpublished = true;
-				System.out.println();
+				System.out.println("search unpublished");
 			}
 			else
 			{// search published
 				Connector.unpublished = false;
-				System.out.println();
+				System.out.println("search published");
 			}
 
 			clearInfo(true);
@@ -517,7 +516,7 @@ public class HomePageController
 		Connector.listType = "City";
 		setMainSideButton(SideSearch);
 		MainList.getItems().addAll(Connector.getCitiesNames(Connector.searchCityResult));
-		fillCityInfo(1); // the index of the chosen city
+		fillCityInfo(Connector.selctedCity); // the index of the chosen city
 	}
 
 	@FXML
@@ -626,7 +625,7 @@ public class HomePageController
 		{
 			if (BuyButton.getText().equals("Buy"))
 				openNewPage("BuyScene.fxml");
-			else if (BuyButton.getText().equals("Download")) // TODO TOMER fetch path
+			else if (BuyButton.getText().equals("Download"))
 			{
 				DirectoryChooser chooser = new DirectoryChooser();
 				chooser.setTitle("Choose Download Location");
