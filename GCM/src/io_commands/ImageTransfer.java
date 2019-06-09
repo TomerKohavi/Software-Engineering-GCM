@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 
@@ -51,4 +52,11 @@ public class ImageTransfer extends Command{
 	private SerializableImage SrIm;
 	private String pathname;
 	public boolean requested;
+	
+	public static void main(String[] args)
+	{
+		File file = new File("Pics\\haifa.png");
+		System.out.println(file.exists());
+		System.out.println(file.getAbsolutePath());
+	}
 }

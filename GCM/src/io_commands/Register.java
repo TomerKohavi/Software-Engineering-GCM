@@ -4,7 +4,7 @@ import objectClasses.User;
 import objectClasses.Employee.Role;
 
 public class Register extends Command {
-	public Register(String username, String password, String firstName, String lastName, String email, String phone, Role role, boolean isEmployee)
+	public Register(String username, String password, String firstName, String lastName, String email, String phone, Role role, String ccard, String expires, String cvv, boolean isEmployee)
 	{
 		this.username = username;
 		this.password = password;
@@ -14,6 +14,9 @@ public class Register extends Command {
 		this.phone = phone;
 		this.user = null;
 		this.role = role;
+		this.ccard = ccard;
+		this.expires = expires;
+		this.cvv = cvv;
 		this.isEmployee = isEmployee;
 	}
 	
@@ -24,7 +27,7 @@ public class Register extends Command {
 		role = null;
 	}
 	
-	public String username, password, firstName, lastName, email, phone;
+	public String username, password, firstName, lastName, email, phone, ccard, expires, cvv;
 	public User user;
 	public Role role;
 	public Boolean isEmployee;

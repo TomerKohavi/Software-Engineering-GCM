@@ -381,7 +381,7 @@ public class HomePageController
 								Connector.selectedMap = map;
 								ResultName.setText(map.getName());// set name and type
 								ResultInfo.setText(map.getInfo());// set info
-								BufferedImage bufIm = Connector.client.getImage(map.getImgURL());
+								BufferedImage bufIm = Connector.client.getImage("Pics\\" + map.getImgURL());
 								Image image = SwingFXUtils.toFXImage(bufIm, null);
 								MapImage.setImage(image);
 								ShowMapButton.setVisible(true);

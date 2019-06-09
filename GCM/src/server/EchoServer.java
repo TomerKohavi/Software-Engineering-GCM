@@ -118,7 +118,7 @@ public class EchoServer extends AbstractServer
 			else
 			{
 				Customer cust = new Customer(reg.username, reg.password, reg.email, reg.firstName, reg.lastName,
-						reg.phone, "foo", "bar", "baz");
+						reg.phone, reg.ccard, reg.expires, reg.cvv);
 				Database.saveCustomer(cust);
 				reg.user = cust;
 			}
