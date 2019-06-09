@@ -1,8 +1,9 @@
 
 package classes;
+import java.io.Serializable;
 import java.sql.Date;
 
-public abstract class CityPurchase implements Comparable<CityPurchase> {
+public abstract class CityPurchase implements Comparable<CityPurchase>, Serializable {
 	private int id;
 	private int cityId;
 	private int userId;
