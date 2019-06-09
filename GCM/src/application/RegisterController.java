@@ -18,6 +18,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import controller.RegCheck;
+
 public class RegisterController {
 	
 	String usr, pass, first, last, emailAdd, phoneNumber;
@@ -96,10 +98,10 @@ public class RegisterController {
     	Integer expM = ExperationMonth.getValue();
     	Integer expY = ExperationYear.getValue();
     	String cvv = CVC.getText();
-
-    	if (usr.equals("") || pass.equals("") || first.equals("") || last.equals("") || emailAdd.equals("") || phoneNumber.equals("") || creditCard.equals("") || expM == null || expY == null || cvv.equals(""))  // need to check validity
+    	String errorMsg = RegCheck.isValidCustomer(usr, pass, first, last, emailAdd, phoneNumber, creditCard, cvv).getValue();
+    	if (!errorMsg.equals("All Good"))
     	{
-    		IncorrectText.setText("Please fill all the fields above");
+    		IncorrectText.setText(errorMsg);
     		IncorrectText.setOpacity(1);
     	}
     	else

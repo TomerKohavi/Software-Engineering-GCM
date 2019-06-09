@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
+import controller.RegCheck;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -78,9 +79,10 @@ public class EmployeeRegisterController {
     	emailAdd = Email.getText();
     	phoneNumber = Phone.getText();
     	Role role = RoleBox.getValue().equals("Regular") ? Role.REGULAR : (RoleBox.getValue().equals("Manager") ? Role.MANAGER : Role.CEO);
-    	if (usr.equals("") || pass.equals("") || first.equals("") || last.equals("") || emailAdd.equals("") || phoneNumber.equals(""))
+    	String errorMsg = RegCheck.isValidEmployee(usr, pass, first, last, emailAdd, phoneNumber).getValue();
+    	if (!errorMsg.equals("All Good"))
     	{
-    		IncorrectText.setText("Please fill all of the above");
+    		IncorrectText.setText(errorMsg);
     		IncorrectText.setOpacity(1);
     	}
     	else
