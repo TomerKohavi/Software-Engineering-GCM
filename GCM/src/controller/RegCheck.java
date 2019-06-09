@@ -141,7 +141,7 @@ public class RegCheck {
 	 * @param cvv the cvv value.
 	 * @return returns error type. Please use .getValue() in order to get the error massage.
 	 */
-	public static Res isValid(String uname, String pass, String fName, String lName, String eMail, String phone,
+	public static Res isValidCustomer(String uname, String pass, String fName, String lName, String eMail, String phone,
 			String cardNum, String cvv) {
 		if (!isValidUsername(uname))
 			return Res.UName;
@@ -159,6 +159,33 @@ public class RegCheck {
 			return Res.CardNum;
 		if (!isValidCreditCard(cvv))
 			return Res.CVV;
+		return Res.AllGood;
+	}
+	
+	/**
+	 * combine all tests to check result, without credit card checks.
+	 * 
+	 * @param uname user name
+	 * @param pass password
+	 * @param fName first name
+	 * @param lName last name
+	 * @param eMail e mail
+	 * @param phone phone number 
+	 * @return returns error type. Please use .getValue() in order to get the error massage.
+	 */
+	public static Res isValidEmployee(String uname, String pass, String fName, String lName, String eMail, String phone) {
+		if (!isValidUsername(uname))
+			return Res.UName;
+		if (!isValidPassword(pass))
+			return Res.Pass;
+		if (!isValidName(fName))
+			return Res.FName;
+		if (!isValidName(lName))
+			return Res.LName;
+		if (!isValidEmail(eMail))
+			return Res.Email;
+		if (!isValidPhone(phone))
+			return Res.Phone;
 		return Res.AllGood;
 	}
 
