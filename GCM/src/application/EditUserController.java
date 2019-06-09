@@ -89,7 +89,7 @@ public class EditUserController
 			CreditCardNumber.setText(cust.getCreditCardNum()); // need to implement
 			ExperationMonth.setValue(Integer.valueOf(cust.getCreditCardExpires().substring(0, 2)));
 			ExperationYear.setValue(Integer.valueOf(cust.getCreditCardExpires().substring(3, 5)));
-			CVC.setText("");
+			CVC.setText(cust.getCvc());
 		}
 	}
 
