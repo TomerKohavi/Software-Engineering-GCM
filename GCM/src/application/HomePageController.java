@@ -274,6 +274,7 @@ public class HomePageController
 	private void fillCityInfo(City city)
 	{
 		Connector.selectedCity = city;
+		InfoPane.setVisible(true);
 		ResultName.setText(city.getCityName()); // set name
 		ResultInfo.setText(city.getCityDescription()); // set info
 		// get QUERIES
@@ -369,12 +370,12 @@ public class HomePageController
 							Connector.selectedPOI = poi;
 							ResultName.setText(poi.getName() + ", " + poi.getType());// set name and type
 							ResultInfo.setText(poi.getPlaceDescription()); // set info
-							Text1.setText((poi.isAccessibilityToDisabled() ? "" : "Not") + "Accessible to Disabled"); // Accessible
+							Text1.setText((poi.isAccessibilityToDisabled() ? "" : "Not ") + "Accessible to Disabled"); // Accessible
 																														// or
 																														// not
 						}
-						else if (Connector.listType.equals("Map"))
-						{ // map
+						else if (Connector.listType.equals("Map")) // map
+						{ 
 							try
 							{
 								Map map = Connector.searchMapResult.get(selectedIndex).getCopyMap();
@@ -492,8 +493,7 @@ public class HomePageController
 	@FXML
 	void watch(ActionEvent event)
 	{
-		System.out.println(FirstDate.getValue().compareTo(LastDate.getValue()));
-		if (FirstDate.getValue() == null || LastDate.getValue() == null || 0 <= LastDate.getValue().compareTo(FirstDate.getValue())) // date not valid
+		if (FirstDate.getValue() == null || LastDate.getValue() == null || 0 <= FirstDate.getValue().compareTo(LastDate.getValue())) // date not valid
 		{ // date not valid
 			DateNotValid.setVisible(true);
 		}
@@ -550,8 +550,11 @@ public class HomePageController
 	{
 		Connector.listType = "City";
 		setMainSideButton(SideSearch);
-		MainList.getItems().addAll(Connector.getCitiesNames(Connector.searchCityResult));
-		fillCityInfo(Connector.selectedCity); // the index of the chosen city
+		if (Connector.searchCityResult != null && Connector.searchCityResult.size() != 0) {
+			MainList.getItems().addAll(Connector.getCitiesNames(Connector.searchCityResult));
+			if (Connector.selectedCity != null)
+				fillCityInfo(Connector.selectedCity); // the index of the chosen city
+		}
 	}
 
 	@FXML
