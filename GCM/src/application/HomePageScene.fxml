@@ -152,12 +152,12 @@
                   <Font size="21.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="SideReport" disable="true" layoutY="387.0" onAction="#showReport" opacity="0.5" prefHeight="49.0" prefWidth="163.0" style="-fx-border-width: 2 0 2 0; -fx-border-color: #000000;" text="Report">
+            <JFXButton fx:id="SideReport" layoutY="387.0" onAction="#showReport" opacity="0.5" prefHeight="49.0" prefWidth="163.0" style="-fx-border-width: 2 0 2 0; -fx-border-color: #000000;" text="Report">
                <font>
                   <Font size="21.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="SideUsers" disable="true" layoutY="434.0" onAction="#showUsers" opacity="0.5" prefHeight="49.0" prefWidth="163.0" style="-fx-border-width: 2 0 2 0; -fx-border-color: #000000;" text="Users">
+            <JFXButton fx:id="SideUsers" layoutY="434.0" onAction="#showUsers" opacity="0.5" prefHeight="49.0" prefWidth="163.0" style="-fx-border-width: 2 0 2 0; -fx-border-color: #000000;" text="Users">
                <font>
                   <Font size="21.0" />
                </font>

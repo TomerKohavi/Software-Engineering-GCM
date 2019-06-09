@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Time;
-import java.util.Date;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -18,6 +18,7 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 
+import controller.InformationSystem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -49,6 +50,7 @@ import objectClasses.Map;
 import objectClasses.PlaceOfInterest;
 import objectClasses.Route;
 import objectClasses.RouteStop;
+import objectClasses.Statistic;
 import objectClasses.Subscription;
 import objectClasses.Employee.Role;
 import otherClasses.*;
@@ -341,10 +343,14 @@ public class HomePageController
 		{ // check if employee -> can edit
 			EditButton.setVisible(true);
 			UnpublishSearch.setVisible(true);
+			SideReport.setVisible(true);
+			SideUsers.setVisible(true);
 		}
-
-		SideReport.setDisable(false);
-		SideUsers.setDisable(false);
+		else
+		{
+			SideReport.setVisible(false);
+			SideUsers.setVisible(false);
+		}
 
 		MainList.setOnMouseClicked(new EventHandler<MouseEvent>()
 		{
@@ -421,17 +427,21 @@ public class HomePageController
 						}
 						else if (Connector.listType.equals("Report")) // reports
 						{ 
+							Statistic statboi;
 							if (selectedIndex == 0) // All
 							{
+								statboi = InformationSystem.getRangeSumStatistics(null, Date.valueOf(FirstDate.getValue()), Date.valueOf(LastDate.getValue()));
+								ReportCityName.setText("All Cities");
 							}
 							else
 							{
-								City city = Connector.searchCityResult.get(selectedIndex - 1);
-								ReportCityName.setText(city.getCityName()); // set name and type
-								ReportInfo.setText("Number of Maps: " + 6 + "\n" + "Number of One Time Purchases: " + 6
-										+ "\n" + "Number of Subscriptions: " + 6 + "\n" + "Number of Re-Subscriptions: " + 6
-										+ "\n" + "Number of Views: " + 6 + "\n" + "Number of Downloads: " + 6);
+								statboi = InformationSystem.getRangeSumStatistics(Connector.allCities.get(selectedIndex - 1).getId(), Date.valueOf(FirstDate.getValue()), Date.valueOf(LastDate.getValue()));
+								ReportCityName.setText(Connector.allCities.get(selectedIndex - 1).getCityName());
+								
 							}
+							ReportInfo.setText("Number of Maps: " + 100 + "\n" + "Number of One Time Purchases: " + statboi.getNumOneTimePurchases()
+										+ "\n" + "Number of Subscriptions: " + statboi.getNumSubscriptions() + "\n" + "Number of Re-Subscriptions: " + statboi.getNumSubscriptionsRenewal()
+										+ "\n" + "Number of Views: " + statboi.getNumVisited() + "\n" + "Number of Downloads: " + statboi.getNumSubDownloads());
 							ReportCityName.setVisible(true);
 							ReportInfo.setVisible(true);
 							InfoPane.setVisible(false);
@@ -609,6 +619,8 @@ public class HomePageController
 		FirstDate.setVisible(true);
 		LastDate.setVisible(true);
 		WatchButton.setVisible(true);
+//		if (Connector.allCities == null)
+//			Connector.allCities
 	}
 
 	@FXML
