@@ -26,7 +26,7 @@
       <Text layoutX="217.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Info:" underline="true" />
       <TextArea fx:id="InfoBox" layoutX="215.0" layoutY="290.0" prefHeight="286.0" prefWidth="287.0" text="Info Here" />
       <Text layoutX="217.0" layoutY="616.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Aceessibility to Disabled:" underline="true" />
-      <CheckBox fx:id="Accessibility" layoutX="362.0" layoutY="603.0" mnemonicParsing="false" underline="true" />
+      <CheckBox fx:id="Accessibility" disable="true" layoutX="362.0" layoutY="603.0" mnemonicParsing="false" underline="true" />
       <Text layoutX="602.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stops:" underline="true" />
       <JFXTextField fx:id="StopTime" focusColor="#41e0d0" layoutX="935.0" layoutY="733.0" prefHeight="25.0" prefWidth="80.0" promptText="Time" />
       <JFXListView fx:id="POIBox" layoutX="935.0" layoutY="238.0" prefHeight="464.0" prefWidth="297.0" style="-fx-border-color: #41e0d0;" />
