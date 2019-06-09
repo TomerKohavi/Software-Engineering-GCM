@@ -84,7 +84,7 @@ public class Database {
 	 * 
 	 * @return List of all the customers
 	 */
-	public ArrayList<Customer> getAllCustomers(){
+	public static ArrayList<Customer> getAllCustomers(){
 		ArrayList<Integer> ids=searchCustomer(null, null);
 		ArrayList<Customer> custs=new ArrayList<Customer>();
 		for(int id:ids) {
@@ -1638,7 +1638,9 @@ public class Database {
 			if (password != null)
 				sql += "Password=? AND ";
 			sql = sql.substring(0, sql.length() - 4);
-
+			
+			if(userName==null && password==null)
+				sql+="True";
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (userName != null)
 				gt.setString(counter++, userName);
