@@ -1,4 +1,3 @@
-package classes;
 import java.io.Serializable;
 
 public class PlaceOfInterestSight implements ClassMustProperties, Serializable {

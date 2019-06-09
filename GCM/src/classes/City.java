@@ -1,4 +1,3 @@
-package classes;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -126,7 +125,7 @@ public class City implements ClassMustProperties, Serializable {
 		ArrayList<CityDataVersion> arrList = new ArrayList<CityDataVersion>();
 		for (int id : ids) {
 			CityDataVersion o = Database._getCityDataVersionById(id);
-			if (o != null && id != this.publishedVersionId)
+			if (o != null && (Integer)id != this.publishedVersionId)
 				arrList.add(o);
 		}
 		return arrList;
@@ -240,7 +239,7 @@ public class City implements ClassMustProperties, Serializable {
 		   * @param the id of the city
 		   * @return city data version
 		   */
-		if (cdvId == publishedVersionId) {
+		if ((Integer)cdvId == publishedVersionId) {
 			CityDataVersion cdv = temp_publishedVersion;
 			publishedVersionId = null;
 			temp_removeVersions.add(cdv);

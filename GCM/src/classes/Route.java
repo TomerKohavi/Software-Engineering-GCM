@@ -1,4 +1,3 @@
-package classes;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,7 +23,7 @@ public class Route implements ClassMustProperties, Serializable {
 		return new Route(id, cityId, info);
 	}
 
-	public Route(int cityId, String info, boolean acceptabilityToDisabled) {
+	public Route(int cityId, String info) {
 		this.id = Database.generateIdRoute();
 		this.cityId = cityId;
 		this.info = info;

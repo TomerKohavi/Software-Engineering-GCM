@@ -1,4 +1,3 @@
-package classes;
 import java.sql.Date;
 
 public abstract class CityPurchase implements Comparable<CityPurchase> {

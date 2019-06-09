@@ -1,4 +1,3 @@
-package classes;
 import java.io.Serializable;
 
 public class RouteSight implements ClassMustProperties, Serializable {

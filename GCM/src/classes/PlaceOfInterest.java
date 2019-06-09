@@ -1,10 +1,9 @@
-package classes;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class PlaceOfInterest implements ClassMustProperties, Serializable {
 	public enum PlaceType {
-		HISTORICAL(0), MUSIUM(1), HOTEL(2), RESTAURANT(3), PUBLIC(4), PARK(5), STORE(6), CINEMA(7);
+		HISTORICAL(0), MUSEUM(1), HOTEL(2), RESTAURANT(3), PUBLIC(4), PARK(5), STORE(6), CINEMA(7);
 
 		private final int value;
 
@@ -14,6 +13,23 @@ public class PlaceOfInterest implements ClassMustProperties, Serializable {
 
 		public int getValue() {
 			return value;
+		}
+
+
+		@Override
+		public String toString() {
+			switch (this)
+			{
+				case HISTORICAL: return "Historical";
+				case MUSEUM: return "Museum";
+				case HOTEL: return "HOTEL";
+				case RESTAURANT: return "Restaurant";
+				case PUBLIC: return "Public";
+				case PARK: return "Park";
+				case STORE: return "Store";
+				case CINEMA: return "Cinema";
+				default: return "unknown type";
+			}
 		}
 	}
 
@@ -123,5 +139,11 @@ public class PlaceOfInterest implements ClassMustProperties, Serializable {
 	@Override
 	public boolean equals(Object o) {
 		return o instanceof PlaceOfInterest && ((PlaceOfInterest) o).getId() == this.getId();
+	}
+
+	@Override
+	public String toString() {
+		return this.name+":\n- id: "+this.id+"\n- type: "+this.type+"\n- description: "+this.placeDescription+
+				"- accessibility to disabled: "+this.accessibilityToDisabled+"\n";
 	}
 }

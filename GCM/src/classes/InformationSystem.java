@@ -1,4 +1,3 @@
-package classes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.sql.Date;
@@ -10,7 +9,7 @@ public final class InformationSystem
 
     //list of Statistic
     public static Statistic getStatistic(int cityId, Date d){
-        ArrayList<Integer> ids=Database.searchStatistic((Integer) cityId, d, null, null);
+        ArrayList<Integer> ids=Database.searchStatistic((Integer) cityId, d, null, null,null);
         if(ids.size()!=1)
             return null;
         Statistic s=Database._getStatisticById(ids.get(0));
@@ -26,7 +25,7 @@ public final class InformationSystem
 
     public static Statistic getRangeSumStatistics(Integer cityId,Date from,Date end)
     {
-        ArrayList<Integer> ids=Database.searchStatistic((Integer) cityId, null, from, end);
+        ArrayList<Integer> ids=Database.searchStatistic((Integer) cityId, null, from, end,null);
         Statistic sum=Statistic.createBlankStatistic();
         for(int id:ids)
         {
@@ -37,56 +36,88 @@ public final class InformationSystem
         return sum;
     }
 
-    public void addOneTimePurchase(int cityId) {
+    public static void addOneTimePurchase(int cityId) {
         addOneTimePurchase(cityId,new Date(Calendar.getInstance().getTime().getTime()));
     }
 
-    public void addOneTimePurchase(int cityId,Date d) {
+    public static void addOneTimePurchase(int cityId,Date d) {
         Statistic s = getStatistic(cityId,d);
         if(s == null)
             s = new Statistic(cityId,d);
         s.addOneTimePurchase();
-        Database._saveStatistic(s);
+        s.saveToDatabase();
     }
 
-    public void addVisit(int cityId){
+    public static void addVisit(int cityId){
         addVisit(cityId,new Date(Calendar.getInstance().getTime().getTime()));
     }
 
-    public void addVisit(int cityId,Date d) {
+    public static void addVisit(int cityId,Date d) {
         Statistic s = getStatistic(cityId,d);
         if(s == null)
             s = new Statistic(cityId,d);
         s.addVisit();
-        Database._saveStatistic(s);
+        s.saveToDatabase();
     }
 
-    public void addSubscription(int cityId) {
+    public static void addSubscription(int cityId) {
         addSubscription(cityId,new Date(Calendar.getInstance().getTime().getTime()));
     }
 
-    public void addSubscription(int cityId,Date d) {
+    public static void addSubscription(int cityId,Date d) {
         Statistic s=getStatistic(cityId,d);
         if(s==null)
             s=new Statistic(cityId,d);
         s.addSubscription();
-        Database._saveStatistic(s);
+        s.saveToDatabase();
     }
 
-    public void addSubscriptionRenewal(int cityId) {
+    public static void addSubscriptionRenewal(int cityId) {
         addSubscriptionRenewal(cityId,new Date(Calendar.getInstance().getTime().getTime()));
     }
 
-    public void addSubscriptionRenewal(int cityId,Date d) {
+    public static void addSubscriptionRenewal(int cityId,Date d) {
         Statistic s=getStatistic(cityId,d);
         if(s==null)
             s=new Statistic(cityId,d);
         s.addSubscriptionRenewal();
-        Database._saveStatistic(s);
+        s.saveToDatabase();
     }
 
-    public ArrayList<Statistic> getAllStatistics() {
-        ArrayList<Integer> ids= Database.searchMapSight(null,null);
+    public static void addSubDownload(int cityId) {
+        addSubDownload(cityId,new Date(Calendar.getInstance().getTime().getTime()));
+    }
+
+    public static void addSubDownload(int cityId,Date d) {
+        Statistic s=getStatistic(cityId,d);
+        if(s==null)
+            s=new Statistic(cityId,d);
+        s.addSubDownload();
+        s.saveToDatabase();
+    }
+    
+    public static void newVersionWasPublished(int cityId) {
+    	newVersionWasPublished(cityId,new Date(Calendar.getInstance().getTime().getTime()));
+    }
+    
+    public static void newVersionWasPublished(int cityId,Date d) {
+    	Statistic s=getStatistic(cityId,d);
+        if(s==null)
+            s=new Statistic(cityId,d);
+        s.newVersionWasPublished();
+        s.saveToDatabase();
+    }
+    
+    public static ArrayList<Integer> getCitiesWithNewPublishedVersion() {
+		return getCitiesWithNewPublishedVersion(new Date(Calendar.getInstance().getTime().getTime()));
+    }
+    
+    public static ArrayList<Integer> getCitiesWithNewPublishedVersion(Date d) {
+    	return Database.searchStatistic(null, d, null, null, true);
+    }
+    
+    public static ArrayList<Statistic> getAllStatistics() {
+        ArrayList<Integer> ids= Database.searchStatistic(null, null, null, null,null);
         ArrayList<Statistic> arrList=new ArrayList<Statistic>();
         for(int id : ids)
         {

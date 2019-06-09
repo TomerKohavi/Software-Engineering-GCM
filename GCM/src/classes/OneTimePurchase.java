@@ -1,10 +1,9 @@
-package classes;
 import java.io.Serializable;
 import java.sql.Date;
 
 public class OneTimePurchase extends CityPurchase implements ClassMustProperties, Serializable
 {
-    boolean wasDownload;
+    private boolean wasDownload;
 
     private OneTimePurchase(int id, int cityId, int userId, Date purchaseDate, double fullPrice, double pricePayed, boolean wasDownload) {
         super(id, cityId, userId, purchaseDate, fullPrice, pricePayed);
