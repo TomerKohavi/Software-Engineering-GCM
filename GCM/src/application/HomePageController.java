@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Time;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,9 @@ import javafx.geometry.Bounds;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -115,7 +118,7 @@ public class HomePageController
     private JFXButton PublishButton; // Value injected by FXMLLoader
 
 	@FXML // fx:id="StopsTable"
-	private TableView<String> StopsTable; // Value injected by FXMLLoader
+	private TableView<RouteStop> StopsTable; // Value injected by FXMLLoader
 
 	@FXML // fx:id="ShowMapButton"
 	private JFXButton ShowMapButton; // Value injected by FXMLLoader
@@ -382,20 +385,38 @@ public class HomePageController
 							// TODO KOHAVI IMPLEMENTS
 							ArrayList<RouteStop> list = route.getCopyRouteStops();
 							StopsTable.setVisible(true);
-							ObservableList<String> stops = FXCollections.observableArrayList();
+							ObservableList<RouteStop> stops = FXCollections.observableArrayList(list);
+							
+							TableColumn<RouteStop, Integer> poiColumn = new TableColumn<>("POI");
+//							poiColumn.setMinWidth(200);
+							poiColumn.setCellValueFactory(new PropertyValueFactory<>("placeId"));
+							
+							TableColumn<RouteStop, Time> timeColumn = new TableColumn<>("Time");
+//							poiColumn.setMinWidth(200);
+							poiColumn.setCellValueFactory(new PropertyValueFactory<>("recommendedTime"));
+							
 							StopsTable.setItems(stops);
+							StopsTable.getColumns().clear();
+							StopsTable.getColumns().addAll(poiColumn, timeColumn);
 							
 						}
-//						else if (Connector.listType.equals("Report"))
-//						{ // users
-//							ReportCityName.setVisible(true);
-//							ReportInfo.setVisible(true);
-//							InfoPane.setVisible(false);
-//							ReportCityName.setText(currentItemSelected); // set name and type
-//							ReportInfo.setText("Number of Maps: " + 6 + "\n" + "Number of One Time Purchases: " + 6
-//									+ "\n" + "Number of Subscriptions: " + 6 + "\n" + "Number of Re-Subscriptions: " + 6
-//									+ "\n" + "Number of Views: " + 6 + "\n" + "Number of Downloads: " + 6);
-//						}
+						else if (Connector.listType.equals("Report")) // reports
+						{ 
+							if (selectedIndex == 0) // All
+							{
+							}
+							else
+							{
+								City city = Connector.searchCityResult.get(selectedIndex - 1);
+								ReportCityName.setText(city.getCityName()); // set name and type
+								ReportInfo.setText("Number of Maps: " + 6 + "\n" + "Number of One Time Purchases: " + 6
+										+ "\n" + "Number of Subscriptions: " + 6 + "\n" + "Number of Re-Subscriptions: " + 6
+										+ "\n" + "Number of Views: " + 6 + "\n" + "Number of Downloads: " + 6);
+							}
+							ReportCityName.setVisible(true);
+							ReportInfo.setVisible(true);
+							InfoPane.setVisible(false);
+						}
 //						else if (Connector.listType.equals("Users"))
 //						{ // users
 //							ResultName.setText(currentItemSelected); // set name and type
@@ -453,13 +474,16 @@ public class HomePageController
 	@FXML
 	void watch(ActionEvent event)
 	{
-		if (FirstDate.getValue() == null || LastDate.getValue() == null)
+		System.out.println(FirstDate.getValue().compareTo(LastDate.getValue()));
+		if (FirstDate.getValue() == null || LastDate.getValue() == null || 0 <= LastDate.getValue().compareTo(FirstDate.getValue())) // date not valid
 		{ // date not valid
 			DateNotValid.setVisible(true);
 		}
 		else
 		{
-			MainList.getItems().addAll("city1", "city2");
+			DateNotValid.setVisible(false);
+			MainList.getItems().clear();
+			MainList.getItems().addAll("All Cities", "city1", "city2");
 		}
 
 	}
