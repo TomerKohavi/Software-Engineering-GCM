@@ -29,12 +29,15 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 import objectClasses.Location;
+import objectClasses.Map;
 
 public class MapEditController {
 
 	private boolean firstPOIAdded = true;
 	
 	private Image realPOI = null;
+	
+	private Map map;
 	
 	@FXML // fx:id="mainPane"
     private AnchorPane mainPane; // Value injected by FXMLLoader
@@ -84,14 +87,17 @@ public class MapEditController {
     	
     	if (Connector.isEdit)  // if its edit, load the data
     	{
-    		Name.setText(Connector.selectedMap.getName());
-    		InfoBox.setText(Connector.selectedMap.getInfo());
+    		map = Connector.selectedMap;
+    		Name.setText(map.getName());
+    		InfoBox.setText(map.getInfo());
 //    		MapImage.setImage(); // set image
     	}
+    	else
+    		map = new Map(Connector.selectedCity.getId(), null, null, null);
     	
     	Bounds boundsInScene = MapImage.localToScene(MapImage.getBoundsInLocal());
     	
-    	List<Location> locList = Connector.selectedMap.getCopyLocations();
+    	List<Location> locList = map.getCopyLocations();
 //		List<Point> posList = new ArrayList<Point> ();
 //		posList.add(new Point((int) (50 + boundsInScene.getMinX()), (int) (50 + boundsInScene.getMinY())));
 //		posList.add(new Point((int) (100 + boundsInScene.getMinX()), (int) (100 + boundsInScene.getMinY())));
@@ -144,10 +150,11 @@ public class MapEditController {
 
     @FXML
     void apply(ActionEvent event) {
-    	Connector.selectedMap.setName(Name.getText());
-    	Connector.selectedMap.setInfo(InfoBox.getText());
-//    	Connector.selectedMap.setImgURL(imgURL);
+    	map.setName(Name.getText());
+    	map.setInfo(InfoBox.getText());
+//    	map.setImgURL(imgURL);
 //		MapImage.getImage();
+    	map.saveToDatabase();
     	
     	if (!firstPOIAdded) {
     		mainPane.getChildren().remove(mainPane.getChildren().size() - 1);
