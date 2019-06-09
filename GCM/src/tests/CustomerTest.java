@@ -1,3 +1,5 @@
+package tests;
+
 import static org.junit.Assert.*;
 
 import java.sql.Date;
@@ -5,6 +7,12 @@ import java.util.Calendar;
 import java.util.Random;
 
 import org.junit.*;
+
+import classes.City;
+import classes.Customer;
+import classes.Database;
+import classes.OneTimePurchase;
+import classes.Subscription;
  
 public class CustomerTest {
           
@@ -24,7 +32,7 @@ public class CustomerTest {
         		City c2=new City("TelAviv"+randomNum, "less boring city");
         		c2.saveToDatabase();
         		//create customer
-        		Customer cust = new Customer("Tal"+randomNum, "11235", "a@a.com"+randomNum, "Tal", "Shahnov", "055","5495681338665894","07/2024", "896");
+        		Customer cust = new Customer("Tal"+randomNum, "11235", "a@a.com"+randomNum, "Tal", "Shahnov", "055","5495681338665894","07/24", "896");
         		cust.saveToDatabase();
         		//check not exist subscription
         		assertFalse(cust.canViewCityWithSubscription(c.getId()));
@@ -58,7 +66,7 @@ public class CustomerTest {
         		c.saveToDatabase();
         		//create customer
         		int randomNum=rand.nextInt(9999);
-        		Customer cust = new Customer("Tal"+randomNum, "11235", "a@a.com"+randomNum, "Tal", "Shahnov", "055","5495681338665894","07/2024", "896");
+        		Customer cust = new Customer("Tal"+randomNum, "11235", "a@a.com"+randomNum, "Tal", "Shahnov", "055","5495681338665894","07/24", "896");
         		cust.saveToDatabase();
         		//check not exist subscription
         		assertEquals(null, cust.getActiveOneTimePurchaseByCity(c.getId()));

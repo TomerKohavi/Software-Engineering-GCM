@@ -142,7 +142,7 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 	public int getNumSubDownloads() {
 		return numSubDownloads;
 	}
-
+	
 	@Override
 	public int compareTo(Statistic o) {
 		return this.date.compareTo(o.date);

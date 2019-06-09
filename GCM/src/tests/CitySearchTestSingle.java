@@ -1,9 +1,18 @@
+package tests;
+
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import org.junit.*;
+
+import classes.City;
+import classes.CityDataVersion;
+import classes.Database;
+import classes.PlaceOfInterest;
+import classes.PlaceOfInterestSight;
+import classes.SearchCatalog;
  
 public class CitySearchTestSingle {
 	

@@ -33,8 +33,8 @@ public class CityEditController {
     	
     	if (Connector.isEdit)
     	{
-    		Name.setText(Connector.selctedCity.getCityName());
-    		InfoBox.setText(Connector.selctedCity.getCityDescription());
+    		Name.setText(Connector.selectedCity.getCityName());
+    		InfoBox.setText(Connector.selectedCity.getCityDescription());
     	}
     	
     }
@@ -42,8 +42,8 @@ public class CityEditController {
 
     @FXML
     void apply(ActionEvent event) {
-    	Connector.selctedCity.setCityName(Name.getText());
-    	Connector.selctedCity.setCityDescription(InfoBox.getText());
+    	Connector.selectedCity.setCityName(Name.getText());
+    	Connector.selectedCity.setCityDescription(InfoBox.getText());
     	// update city in server
     	mainPane.getScene().getWindow().hide();
     }
