@@ -89,7 +89,7 @@ public class RegCheck {
 	 * @return the result, as boolean value.
 	 */
 	private static boolean isValidName(String name) {
-		return name.matches("[a-zA-Z]+");
+		return name.matches("[a-zA-Z]{2,}");
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class RegCheck {
 	 * @return The result, a boolean value.
 	 */
 	private static boolean isValidUsername(String name) {
-		return name.matches("[a-zA-Z0-9]+");
+		return name.matches("[a-zA-Z0-9]{2,}");
 	}
 
 	/**
@@ -157,7 +157,7 @@ public class RegCheck {
 			return Res.Phone;
 		if (!isValidCreditCard(cardNum))
 			return Res.CardNum;
-		if (!isValidCreditCard(cvv))
+		if (!isValidCVV(cvv))
 			return Res.CVV;
 		return Res.AllGood;
 	}
