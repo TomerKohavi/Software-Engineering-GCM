@@ -93,6 +93,13 @@ public class EditUserController
 			ExperationYear.setValue(Integer.valueOf(cust.getCreditCardExpires().substring(3, 5)) + 2000);
 			CVC.setText(cust.getCvc());
 		}
+		else
+		{
+			CreditCardNumber.setVisible(false);
+			ExperationMonth.setVisible(false);
+			ExperationYear.setVisible(false);
+			CVC.setVisible(false);
+		}
 	}
 
 	void openNewPage(String FXMLpage) throws IOException
