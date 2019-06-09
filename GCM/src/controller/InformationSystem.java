@@ -35,8 +35,8 @@ public final class InformationSystem
         for(int id:ids)
         {
             Statistic s=Database._getStatisticById(id);
-            if(s!=null);
-            sum=Statistic.addStatistics(sum,s);
+            if(s!=null)
+            	sum=Statistic.addStatistics(sum,s);
         }
         return sum;
     }

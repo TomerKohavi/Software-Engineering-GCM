@@ -47,11 +47,11 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 		this.newVersionPublished=false;
 	}
 
-	static Statistic createBlankStatistic() {
+	public static Statistic createBlankStatistic() {
 		return new Statistic(-1, -1, null, 0, 0, 0, 0,0,false);
 	}
 
-	static Statistic addStatistics(Statistic s1, Statistic s2) {
+	public static Statistic addStatistics(Statistic s1, Statistic s2) {
 		Statistic s = createBlankStatistic();
 		s.setNumOneTimePurchases(s1.numOneTimePurchases + s2.numOneTimePurchases);
 		s.setNumSubscriptions(s1.numSubscriptions + s2.numSubscriptions);
