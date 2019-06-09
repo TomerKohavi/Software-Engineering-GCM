@@ -72,10 +72,7 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 			Subscription o = Database._getSubscriptionById(id);
 			if (o == null)
 				continue;
-			if (Database.getCityById(o.getCityId()) == null)
-				Database._deleteSubscription(id);
-			else
-				arrList.add(o);
+			arrList.add(o);
 		}
 		return arrList;
 	}
@@ -91,10 +88,7 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 			OneTimePurchase o = Database._getOneTimePurchaseById(id);
 			if (o == null)
 				continue;
-			if (Database.getCityById(o.getCityId()) == null)
-				Database._deleteOneTimePurchase(id);
-			else
-				arrList.add(o);
+			arrList.add(o);
 		}
 		return arrList;
 	}

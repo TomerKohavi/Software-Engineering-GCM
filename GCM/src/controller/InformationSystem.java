@@ -18,13 +18,6 @@ public final class InformationSystem
         if(ids.size()!=1)
             return null;
         Statistic s=Database._getStatisticById(ids.get(0));
-        if(s==null)
-            return null;
-        if(Database.getCityById(s.getCityId())==null)
-        {
-            Database._deleteStatistic(s.getId());
-            return null;
-        }
         return s;
     }
 
@@ -129,10 +122,7 @@ public final class InformationSystem
             Statistic o=Database._getStatisticById(id);
             if(o==null)
                 continue;
-            if(Database.getCityById(o.getCityId())==null)
-                Database._deleteStatistic(id);
-            else
-                arrList.add(o);
+            arrList.add(o);
         }
         Collections.sort(arrList,Collections.reverseOrder());
         return arrList;

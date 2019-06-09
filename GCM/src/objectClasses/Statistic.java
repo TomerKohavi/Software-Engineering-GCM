@@ -57,6 +57,7 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 		s.setNumSubscriptions(s1.numSubscriptions + s2.numSubscriptions);
 		s.setNumSubscriptionsRenewal(s1.numSubscriptionsRenewal + s2.numSubscriptionsRenewal);
 		s.setNumVisited(s1.numVisited + s2.numVisited);
+		s.setNumSubDownloads(s1.numSubDownloads + s2.numSubDownloads);
 		s.setNewVersionPublished(s1.newVersionPublished | s2.newVersionPublished);
 		return s;
 	}
@@ -100,6 +101,14 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 	
 	public void newVersionWasPublished() {
 		this.newVersionPublished=true;
+	}
+	
+	public void setNumSubDownloads(int numSubDownloads) {
+		this.numSubDownloads = numSubDownloads;
+	}
+	
+	public int getNumSubDownload(int numSubDownloads) {
+		return this.numSubDownloads;
 	}
 
 	public void setNumOneTimePurchases(int numOneTimePurchases) {
