@@ -199,8 +199,8 @@ public class Database {
 		try {
 			Database.createConnection();
 			// reset
-			if (!Database.resetAll(name, pass))
-				return;
+			//if (!Database.resetAll(name, pass))
+			//	return;
 			// start insert
 
 			// create cities
@@ -209,32 +209,78 @@ public class Database {
 			City c1 = new City("haifa", "The third largest city in Israel. As of 2016, the city is a major seaport "
 					+ "located on Israel's Mediterranean coastline in the Bay of Haifa covering 63.7 square kilometres.");
 			CityDataVersion cdv = new CityDataVersion(c1, "1.0", 20, 100.9);
-			PlaceOfInterest p = new PlaceOfInterest(c1.getId(), "University of Haifa", PlaceOfInterest.PlaceType.MUSEUM,
+			PlaceOfInterest p0 = new PlaceOfInterest(c1.getId(), "University of Haifa", PlaceOfInterest.PlaceType.MUSEUM,
 					"A public research university on the top of Mount Carmel in Haifa, Israel. "
 							+ "The university was founded in 1963 by the mayor of its host city, Abba Hushi,"
 							+ " to operate under the academic auspices of the Hebrew University of Jerusalem.",
 					false);
-			p.saveToDatabase();
+			p0.saveToDatabase();
 			PlaceOfInterest p1 = new PlaceOfInterest(c1.getId(), "School of Haifa", PlaceOfInterest.PlaceType.PUBLIC,
 					"the best shool in the city", false);
 			p1.saveToDatabase();
-			PlaceOfInterestSight ps = new PlaceOfInterestSight(cdv, p);
-			cdv.addPlaceOfInterestSight(ps);
-			Map m = new Map(c1.getId(), "central city", "large map", "haifa.url");
-			double[] coords = { 21.3, 58.7 };
-			Location l = new Location(m, p, coords);
-			m.addLocation(l);
-			m.saveToDatabase();
-			MapSight ms = new MapSight(cdv, m);
-			cdv.addMapSight(ms);
+			PlaceOfInterest p2 = new PlaceOfInterest(c1.getId(), "haifa museum of art", PlaceOfInterest.PlaceType.MUSEUM,
+					"the biggest meseum in the city", false);
+			p2.saveToDatabase();
+			PlaceOfInterest p3 = new PlaceOfInterest(c1.getId(), "vivino", PlaceOfInterest.PlaceType.RESTAURANT,
+					"Vivino Haifa is located in a magical pine grove in the heart of the city, far from the city’s hustle and bustle. At Vivino Haifa you’ll find a piece of Italian tranquility under the sky in a beautiful courtyard, in our indoor garden or in an interior combining modern design with touches of the rich culture of the boot country.", false);
+			p3.saveToDatabase();
+			PlaceOfInterest p4 = new PlaceOfInterest(c1.getId(), "Hecht Park", PlaceOfInterest.PlaceType.PARK,
+					"Hecht Park is the largest stretch of greenery within the urban area of the City of Haifa. Though distinct from its surroundings, it is a continuous layer among the landscape of beaches and municipal open areas stretching between Dado Beach", false);
+			p4.saveToDatabase();
+			PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv, p0);
+			cdv.addPlaceOfInterestSight(ps0);
+			PlaceOfInterestSight ps1 = new PlaceOfInterestSight(cdv, p1);
+			cdv.addPlaceOfInterestSight(ps1);
+			PlaceOfInterestSight ps2 = new PlaceOfInterestSight(cdv, p2);
+			cdv.addPlaceOfInterestSight(ps2);
+			PlaceOfInterestSight ps3 = new PlaceOfInterestSight(cdv, p3);
+			cdv.addPlaceOfInterestSight(ps3);
+			PlaceOfInterestSight ps4 = new PlaceOfInterestSight(cdv, p4);
+			cdv.addPlaceOfInterestSight(ps4);
+			Map m0 = new Map(c1.getId(), "central city", "large map", "haifa1.url");
+			double[] coords0 = { 21.3, 58.7 };
+			Location l0 = new Location(m0, p0, coords0);
+			m0.addLocation(l0);
+			double[] coords1 = { 11.3, 50.2 };
+			Location l1 = new Location(m0, p1, coords1);
+			m0.addLocation(l1);
+			m0.saveToDatabase();
+			MapSight ms0 = new MapSight(cdv, m0);
+			cdv.addMapSight(ms0);
+			
+			Map m1 = new Map(c1.getId(), "central city", "large map", "haifa2.url");
+			double[] coords2 = { 12.3, 85.7 };
+			Location l2 = new Location(m1, p2, coords2);
+			m1.addLocation(l2);
+			double[] coords3 = { 11.3, 9.2 };
+			Location l3 = new Location(m1, p3, coords3);
+			m1.addLocation(l3);
+			double[] coords4 = { 12.3, 19.2 };
+			Location l4 = new Location(m1, p4, coords4);
+			m1.addLocation(l4);
+			m1.saveToDatabase();
+			MapSight ms1 = new MapSight(cdv, m1);
+			cdv.addMapSight(ms1);
 			Route r = new Route(c1.getId(), "small route");
-			RouteStop rstop1 = new RouteStop(r, p, new Time(1, 25, 0));
+			RouteStop rstop1 = new RouteStop(r, p0, new Time(1, 25, 0));
 			r.addRouteStop(rstop1);
 			RouteStop rstop2 = new RouteStop(r, p1, new Time(0, 43, 0));
 			r.addRouteStop(rstop2);
 			r.saveToDatabase();
 			RouteSight rs = new RouteSight(cdv, r, true);
 			cdv.addRouteSight(rs);
+			
+			
+			Route r1 = new Route(c1.getId(), "small route");
+			RouteStop rstop3 = new RouteStop(r1, p2, new Time(1, 12, 0));
+			r1.addRouteStop(rstop3);
+			RouteStop rstop4 = new RouteStop(r1, p3, new Time(0, 23, 0));
+			r1.addRouteStop(rstop4);
+			RouteStop rstop5 = new RouteStop(r1, p4, new Time(0, 23, 0));
+			r1.addRouteStop(rstop5);
+			r1.saveToDatabase();
+			RouteSight rs1 = new RouteSight(cdv, r1, true);
+			cdv.addRouteSight(rs1);
 
 			c1.addPublishedCityDataVersion(cdv);
 			c1.saveToDatabase();
@@ -308,10 +354,10 @@ public class Database {
 			// create Users
 			// 1
 			{
-			Employee e = new Employee("Lior", "12345", "lior@gmail.com", "lior", "wiessman", "0523322726",
+			Employee e = new Employee("Lior", "Lior_strong1!", "lior@gmail.com", "lior", "wiessman", "0523322726",
 					Employee.Role.CEO);
 			e.saveToDatabase();
-			Customer cust = new Customer("yosi11", "67890", "yosi@gmail.com", "yosi", "ben asser", "0521111111",
+			Customer cust = new Customer("yosi11", "LDCyosiiii!", "yosi@gmail.com", "yosi", "ben asser", "0523322123",
 					"5495681338665894", "07/24", "896");
 			Subscription sub = new Subscription(cust, c1, new Date(119, 8, 6), 201.8, 199.9, new Date(119, 10, 8));
 			cust.addSubscription(sub);
@@ -323,11 +369,11 @@ public class Database {
 			}
 			// 2
 			{
-			Employee e = new Employee("adiel", "adiel1", "statman.adiel@gmail.com", "lior", "statman", "0521234567",
+			Employee e = new Employee("adiel", "adiel1", "statman.adiel@gmail.com", "lior", "statman", "0525952726",
 					Employee.Role.REGULAR);
 			e.saveToDatabase();
-			Customer cust = new Customer("dan", "12890", "dannyf.post@gmail.com", "dan", "feldman", "0521222221",
-					"549512321365894", "01/23", "354");
+			Customer cust = new Customer("dan", "masterDan%", "dannyf.post@gmail.com", "dan", "feldman", "0523325686",
+					"5495655558665894", "01/23", "354");
 			Subscription sub = new Subscription(cust, c1, new Date(119, 7, 6), 201.8, 199.9, new Date(119, 9, 8));
 			cust.addSubscription(sub);
 
@@ -339,11 +385,11 @@ public class Database {
 
 			// 3
 			{
-			Employee e = new Employee("ben", "benbon", "bengordoncshaifa@gmail.com", "ben", "musa", "0501234511",
+			Employee e = new Employee("ben", "benbon&ALAA", "bengordoncshaifa@gmail.com", "ben", "musa", "0508322726",
 					Employee.Role.MANAGER);
 			e.saveToDatabase();
-			Customer cust = new Customer("gadi", "32890", "gadi@gmail.com", "gadi", "landau", "05213213221",
-					"54312413265894", "01/25", "891");
+			Customer cust = new Customer("gadi", "gadiHAVIV!@", "gadi@gmail.com", "gadi", "landau", "0524867726",
+					"5495123458665894", "01/25", "891");
 			Subscription sub = new Subscription(cust, c1, new Date(119, 7, 6), 53.2, 50.9, new Date(119, 9, 8));
 			cust.addSubscription(sub);
 
