@@ -10,6 +10,7 @@ import common.Console;
 import io_commands.*;
 import javafx.util.Pair;
 import objectClasses.City;
+import objectClasses.Customer;
 import objectClasses.User;
 import objectClasses.Employee.Role;
 
@@ -56,6 +57,8 @@ public class ChatClient extends AbstractClient
 	boolean searchReady;
 	Search search;
 
+	CustomersRequest custReq;
+	
 	Semaphore semaphore;
 
 	/**
@@ -111,7 +114,8 @@ public class ChatClient extends AbstractClient
 	public User register(String username, String password, String firstName, String lastName, String email,
 			String phone, Role role, String ccard, String expires, String cvv, boolean isEmployee) throws IOException
 	{
-		sendToServer(new Register(username, password, firstName, lastName, email, phone, role, ccard, expires, cvv, isEmployee));
+		sendToServer(new Register(username, password, firstName, lastName, email, phone, role, ccard, expires, cvv,
+				isEmployee));
 		try
 		{
 			this.semaphore.acquire();
@@ -166,6 +170,21 @@ public class ChatClient extends AbstractClient
 		sendToServer(user);
 	}
 
+	public ArrayList<Customer> customersRquest() throws IOException
+	{
+		sendToServer(new CustomersRequest());
+		try
+		{
+			this.semaphore.acquire();
+		}
+		catch (InterruptedException e)
+		{
+			System.err.println("semaphore");
+			e.printStackTrace();
+		}
+		return this.custReq.custList;
+	}
+
 	// Instance methods ***********************************************
 	/**
 	 * This method handles all data that comes in from the server.
@@ -178,7 +197,6 @@ public class ChatClient extends AbstractClient
 		if (msg instanceof Login)
 		{
 			this.login = (Login) msg;
-			clientUI.display(this.login.name);
 			this.semaphore.release();
 		}
 		else if (msg instanceof Register)
@@ -196,7 +214,11 @@ public class ChatClient extends AbstractClient
 			this.search = (Search) msg;
 			this.searchReady = true;
 		}
-
+		else if (msg instanceof CustomersRequest)
+		{
+			this.custReq = (CustomersRequest) msg;
+			this.semaphore.release();
+		}
 		else
 			clientUI.display(msg.toString());
 	}

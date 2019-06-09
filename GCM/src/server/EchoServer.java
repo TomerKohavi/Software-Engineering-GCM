@@ -142,6 +142,12 @@ public class EchoServer extends AbstractServer
 		else
 			Database.saveEmployee((Employee) user);
 	}
+	
+	public CustomersRequest handleUsersRequest(CustomersRequest cr)
+	{
+		cr.custList = Database.getAllCustomers();
+		return cr;
+	}
 
 	/**
 	 * This method handles any messages received from the client.
@@ -189,6 +195,10 @@ public class EchoServer extends AbstractServer
 			else if (msg instanceof User)
 			{
 				handleUpdateUser((User) msg);
+			}
+			else if (msg instanceof CustomersRequest)
+			{
+				client.sendToClient(handleUsersRequest((CustomersRequest) msg)); 
 			}
 		}
 		catch (IOException e)

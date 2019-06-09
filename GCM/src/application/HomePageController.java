@@ -436,14 +436,15 @@ public class HomePageController
 							ReportInfo.setVisible(true);
 							InfoPane.setVisible(false);
 						}
-//						else if (Connector.listType.equals("Users")) // users
-//						{ 
-//							ResultName.setText(currentItemSelected); // set name and type
-//							ResultInfo.setText("Name: " + "first" + " " + "last" + "\n" + "Email: "
-//									+ "coreset@sigal.is.gay" + "\n" + "Phone: " + "0544444444");
-//							EditButton.setDisable(false);
-//							// add purchase history
-//						}
+						else if (Connector.listType.equals("Users")) // users
+						{
+							Connector.selectedCustomer = Connector.custList.get(selectedIndex);
+							ResultName.setText(Connector.selectedCustomer.getUserName()); // set name and type
+							ResultInfo.setText("Name: " + Connector.selectedCustomer.getFirstName() + " " + Connector.selectedCustomer.getLastName() + "\n" + "Email: "
+									+ Connector.selectedCustomer.getEmail() + "\n" + "Phone: " + Connector.selectedCustomer.getPhoneNumber());
+							EditButton.setDisable(false);
+							// add purchase history
+						}
 					}
 				}
 			}
@@ -616,7 +617,16 @@ public class HomePageController
 	{
 		Connector.listType = "Users";
 		setMainSideButton(SideUsers);
-		MainList.getItems().addAll("user1", "user2");
+		try
+		{
+			Connector.custList = Connector.client.customersRquest();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		for (Customer cust : Connector.custList)
+			MainList.getItems().add(cust.getUserName());
 	}
 
 	@FXML
