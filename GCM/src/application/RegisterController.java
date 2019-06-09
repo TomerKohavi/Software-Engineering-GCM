@@ -92,19 +92,21 @@ public class RegisterController {
     	last = LastName.getText();
     	emailAdd = Email.getText();
     	phoneNumber = Phone.getText();
-    	CreditCardNumber.getText(); // need to implement 
-    	ExperationMonth.getValue();
-    	ExperationYear.getValue();
-    	CVC.getText();
-    	if (usr.equals("") || pass.equals("") || first.equals("") || last.equals("") || emailAdd.equals("") || phoneNumber.equals("")) // need to check validity
+    	String creditCard = CreditCardNumber.getText(); // need to implement 
+    	Integer expM = ExperationMonth.getValue();
+    	Integer expY = ExperationYear.getValue();
+    	String cvv = CVC.getText();
+
+    	if (usr.equals("") || pass.equals("") || first.equals("") || last.equals("") || emailAdd.equals("") || phoneNumber.equals("") || creditCard.equals("") || expM == null || expY == null || cvv.equals(""))  // need to check validity
     	{
-    		IncorrectText.setText("Please fill all of the above");
+    		IncorrectText.setText("Please fill all the fields above");
     		IncorrectText.setOpacity(1);
     	}
     	else
     	{
+    		String expires = expM + "/" + (expY-2000);
     		IncorrectText.setOpacity(0);
-    		Connector.user = Connector.client.register(usr, pass, first, last, emailAdd, phoneNumber, null, false);
+    		Connector.user = Connector.client.register(usr, pass, first, last, emailAdd, phoneNumber, null, creditCard, expires, cvv, false);
     		loadPage("HomePageScene.fxml");
     	}
     }

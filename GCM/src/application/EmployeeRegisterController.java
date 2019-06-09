@@ -86,7 +86,7 @@ public class EmployeeRegisterController {
     	else
     	{
     		IncorrectText.setOpacity(0);
-    		Connector.user = Connector.client.register(usr, pass, first, last, emailAdd, phoneNumber, role, true);
+    		Connector.user = Connector.client.register(usr, pass, first, last, emailAdd, phoneNumber, role, null, null, null, true);
     		loadPage("HomePageScene.fxml");
     	}
 

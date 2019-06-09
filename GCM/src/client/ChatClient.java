@@ -109,9 +109,9 @@ public class ChatClient extends AbstractClient
 	}
 
 	public User register(String username, String password, String firstName, String lastName, String email,
-			String phone, Role role, boolean isEmployee) throws IOException
+			String phone, Role role, String ccard, String expires, String cvv, boolean isEmployee) throws IOException
 	{
-		sendToServer(new Register(username, password, firstName, lastName, email, phone, role, isEmployee));
+		sendToServer(new Register(username, password, firstName, lastName, email, phone, role, ccard, expires, cvv, isEmployee));
 		try
 		{
 			this.semaphore.acquire();
