@@ -59,6 +59,7 @@ public class Main {
 			p.deleteFromDatabase();
 			rs.deleteFromDatabase();
 			cdv2.deleteFromDatabase();
+			//Database.resetAll("Tal", "11235813");
 						
 			
 		}catch (Exception e) {
