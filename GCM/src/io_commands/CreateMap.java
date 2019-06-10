@@ -23,4 +23,5 @@ public class CreateMap extends Command
 	public Integer cityId, cdvId;
 	public String name, info, imgURL;
 	public MapSight mapS;
+	//
 }

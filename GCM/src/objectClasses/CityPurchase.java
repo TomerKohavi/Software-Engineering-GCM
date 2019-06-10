@@ -12,6 +12,8 @@ public abstract class CityPurchase implements Comparable<CityPurchase>, Serializ
 	private Date purchaseDate;
 	private double fullPrice;
 	private double pricePayed;
+	
+	protected String temp_cityName;
 
 	protected CityPurchase(int id, int cityId, int userId, Date purchaseDate, double fullPrice, double pricePayed) {
 		this.id = id;
@@ -20,6 +22,7 @@ public abstract class CityPurchase implements Comparable<CityPurchase>, Serializ
 		this.purchaseDate = purchaseDate;
 		this.fullPrice = fullPrice;
 		this.pricePayed = pricePayed;
+		reloadTempsFromDatabase();
 	}
 
 	public CityPurchase(int userId, int cityId, Date purchaseDate, double fullPrice, double pricePayed) {
@@ -29,7 +32,12 @@ public abstract class CityPurchase implements Comparable<CityPurchase>, Serializ
 		this.purchaseDate = purchaseDate;
 		this.fullPrice = fullPrice;
 		this.pricePayed = pricePayed;
+		reloadTempsFromDatabase();
 	}
+	
+	public void reloadTempsFromDatabase(){
+		this.temp_cityName=Database.getCityNameById(cityId);
+    }
 
 	public int getUserId() {
 		return userId;
@@ -69,6 +77,10 @@ public abstract class CityPurchase implements Comparable<CityPurchase>, Serializ
 
 	public void setPurchaseDate(Date purchaseDate) {
 		this.purchaseDate = purchaseDate;
+	}
+	
+	public String getCityName() {
+		return this.temp_cityName;
 	}
 
 	@Override
