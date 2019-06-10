@@ -32,11 +32,7 @@ import objectClasses.Employee.Role;
  * This class overrides some of the methods in the abstract superclass in order
  * to give more functionality to the server.
  *
- * @author Dr Timothy C. Lethbridge
- * @author Dr Robert Lagani&egrave;re
- * @author Fran&ccedil;ois B&eacute;langer
- * @author Paul Holden
- * @version July 2000
+ * @author sigal
  */
 public class EchoServer extends AbstractServer
 {
@@ -88,6 +84,10 @@ public class EchoServer extends AbstractServer
 		this.loggedList = new ArrayList<Integer>();
 	}
 
+	/**
+	 * @param login login request 
+	 * @return login result
+	 */
 	public Login handleLogin(Login login)
 	{
 		System.out.println("login " + login.name + " ");
@@ -123,11 +123,18 @@ public class EchoServer extends AbstractServer
 		return login;
 	}
 
+	/**
+	 * @param logoff the log off request
+	 */
 	public void handleLogoff(Logoff logoff)
 	{
 		System.out.println("logoff " + logoff.logoffID + " " + this.loggedList.remove(logoff.logoffID));
 	}
 
+	/**
+	 * @param reg the register request
+	 * @return the register result
+	 */
 	public Register handleRegister(Register reg)
 	{
 		System.out.println("register " + reg.username);
@@ -159,6 +166,10 @@ public class EchoServer extends AbstractServer
 		return reg;
 	}
 
+	/**
+	 * @param s the search request
+	 * @return the search result
+	 */
 	public Search handleSearch(Search s)
 	{
 		System.out.println("search: " + s.cityName + "|" + s.cityInfo + "|" + s.poiName + "|" + s.poiInfo);
@@ -166,6 +177,9 @@ public class EchoServer extends AbstractServer
 		return s;
 	}
 
+	/**
+	 * @param user the user request we want to handle
+	 */
 	public void handleUpdateUser(User user)
 	{
 		System.out.print("update " + user.getUserName());
@@ -175,6 +189,10 @@ public class EchoServer extends AbstractServer
 			Database.saveEmployee((Employee) user);
 	}
 
+	/**
+	 * @param cr the customer request we want to handle
+	 * @return the result of the request
+	 */
 	public CustomersRequest handleUsersRequest(CustomersRequest cr)
 	{
 		System.out.println("customers list request");
@@ -182,6 +200,10 @@ public class EchoServer extends AbstractServer
 		return cr;
 	}
 
+	/**
+	 * @param cityReq the get all city request
+	 * @return the result of the request
+	 */
 	public AllCitiesRequest handleCityRequest(AllCitiesRequest cityReq)
 	{
 		System.out.println("cities list request");
@@ -190,6 +212,9 @@ public class EchoServer extends AbstractServer
 
 	}
 
+	/**
+	 * @param update update request handle
+	 */
 	public void handleUpdate(Update update)
 	{
 		System.out.println("update " + update.toUpdate.getClass().toString());
@@ -355,13 +380,6 @@ public class EchoServer extends AbstractServer
 		{
 		}
 		System.exit(0);
-	}
-
-	public static void main(String[] args) throws IOException
-	{
-		Database.createConnection();
-		System.out.println(Database.searchCustomer(null, null));
-		Database.closeConnection();
 	}
 }
 // End of EchoServer class
