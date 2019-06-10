@@ -153,7 +153,7 @@ public class Database {
 				System.out.println("connection opening");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 
 	}
@@ -170,7 +170,8 @@ public class Database {
 			}
 			return;
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println(e.getClass().toString());
 		}
 		return;
 	}
@@ -207,8 +208,8 @@ public class Database {
 			System.out.println("Finished reset");
 			return true;
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 		}
 		return true;
 	}
@@ -544,9 +545,9 @@ public class Database {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} finally {
-			Database.closeConnection();
+			//Database.closeConnection();
 		}
 	}
 
@@ -569,8 +570,8 @@ public class Database {
 			su.executeUpdate();
 			return counter;
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return -1;
 		}
 	}
@@ -683,8 +684,8 @@ public class Database {
 				return false;
 			return true;
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 		}
 		return true;
 	}
@@ -873,8 +874,8 @@ public class Database {
 				return false;
 			}
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 		}
 		return false;
 	}
@@ -910,8 +911,8 @@ public class Database {
 				return false;
 			}
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 		}
 		return false;
 	}
@@ -945,8 +946,8 @@ public class Database {
 				return false;
 			}
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 		}
 		return false;
 	}
@@ -980,8 +981,8 @@ public class Database {
 				return false;
 			}
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			
 		}
 		return false;
@@ -1037,8 +1038,8 @@ public class Database {
 				return false;
 			}
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 		}
 		return false;
 	}
@@ -1081,8 +1082,8 @@ public class Database {
 				return false;
 			}
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 		}
 		return false;
 	}
@@ -1119,8 +1120,8 @@ public class Database {
 				return false;
 			}
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 		}
 		return false;
 	}
@@ -1158,8 +1159,8 @@ public class Database {
 				return false;
 			}
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 		}
 		return false;
 	}
@@ -1192,8 +1193,8 @@ public class Database {
 				return false;
 			}
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 		}
 		return false;
 	}
@@ -1227,8 +1228,8 @@ public class Database {
 				return false;
 			}
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 		}
 		return false;
 	}
@@ -1264,8 +1265,8 @@ public class Database {
 				return false;
 			}
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 		}
 		return false;
 	}
@@ -1303,8 +1304,8 @@ public class Database {
 				return false;
 			}
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 		}
 		return false;
 	}
@@ -1346,8 +1347,8 @@ public class Database {
 				return false;
 			}
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 		}
 		return false;
 	}
@@ -1389,8 +1390,8 @@ public class Database {
 				return false;
 			}
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 		}
 		return false;
 	}
@@ -1435,8 +1436,8 @@ public class Database {
 				return false;
 			}
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 		}
 		return false;
 	}
@@ -1454,8 +1455,8 @@ public class Database {
 			int count = gt.executeUpdate();
 			return count != 0;
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return false;
 		}
 	}
@@ -1592,8 +1593,8 @@ public class Database {
 				IDs.add(res.getInt("ID"));
 			return IDs;
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -1638,8 +1639,8 @@ public class Database {
 
 			return queryToList(gt);
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -1681,8 +1682,8 @@ public class Database {
 
 			return queryToList(gt);
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -1713,8 +1714,8 @@ public class Database {
 			return queryToList(gt);
 
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -1758,8 +1759,8 @@ public class Database {
 			return queryToList(gt);
 
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -1795,8 +1796,8 @@ public class Database {
 			return queryToList(gt);
 
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -1850,8 +1851,8 @@ public class Database {
 			return queryToList(gt);
 
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -1889,8 +1890,8 @@ public class Database {
 			return queryToList(gt);
 
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -1922,8 +1923,8 @@ public class Database {
 			return queryToList(gt);
 
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -1955,8 +1956,8 @@ public class Database {
 			return queryToList(gt);
 
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -1994,8 +1995,8 @@ public class Database {
 			return queryToList(gt);
 
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -2021,8 +2022,8 @@ public class Database {
 			return queryToList(gt);
 
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -2033,7 +2034,7 @@ public class Database {
 	 * @param userId the user id we want to search
 	 * @param cityId the city id we want to search
 	 * @param date   the data we want to search
-	 * @param active if we want to search ative or not
+	 * @param active if we want to search active or not
 	 * @return the result list.
 	 */
 	public static ArrayList<Integer> searchSubscription(Integer userId, Integer cityId, Date date, Boolean active) {
@@ -2070,8 +2071,8 @@ public class Database {
 			return queryToList(gt);
 
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -2115,8 +2116,8 @@ public class Database {
 			return queryToList(gt);
 
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -2170,8 +2171,8 @@ public class Database {
 			return queryToList(gt);
 
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -2181,7 +2182,7 @@ public class Database {
 	 * 
 	 * @param table: where to look
 	 * @param id: target ID
-	 * @return last element from resultset
+	 * @return last element from result set
 	 */
 	private static ResultSet get(String table, int id) {
 		try {
@@ -2194,8 +2195,8 @@ public class Database {
 			res.last();
 			return res;
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return null;
 		}
 	}
@@ -2215,8 +2216,8 @@ public class Database {
 					PlaceOfInterest.PlaceType.values()[res.getInt("Type")], res.getString("Description"),
 					res.getInt("ATD") != 0);
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return null;
 		}
 	}
@@ -2235,8 +2236,8 @@ public class Database {
 			return Map._createMap(res.getInt("ID"), res.getInt("CityID"), res.getString("Name"), res.getString("Info"),
 					res.getString("imgURL"));
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return null;
 		}
 	}
@@ -2254,8 +2255,8 @@ public class Database {
 				return null;
 			return Route._createRoute(res.getInt("ID"), res.getInt("CityID"), res.getString("Info"));
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return null;
 		}
 	}
@@ -2273,8 +2274,8 @@ public class Database {
 				return null;
 			return res.getString("Name");
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return null;
 		}
 	}
@@ -2293,8 +2294,8 @@ public class Database {
 			return City._createCity(res.getInt("ID"), res.getString("Name"), res.getString("Description"),
 					res.getInt("VersionID") == -1 ? null : res.getInt("VersionID"));
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return null;
 		}
 	}
@@ -2315,8 +2316,8 @@ public class Database {
 					res.getString("PhoneNumber"), res.getString("CardNum"), res.getString("Exp"), res.getString("CVC"));
 			
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return null;
 		}
 	}
@@ -2336,8 +2337,8 @@ public class Database {
 					res.getString("Email"), res.getString("FirstName"), res.getString("LastName"),
 					res.getString("PhoneNumber"), Employee.Role.values()[res.getInt("Role")]);
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return null;
 		}
 	}
@@ -2356,8 +2357,8 @@ public class Database {
 			double[] coordinates = { res.getInt("x"), res.getInt("y") };
 			return Location._createLocation(res.getInt("ID"), res.getInt("MapID"), res.getInt("POIID"), coordinates);
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return null;
 		}
 	}
@@ -2376,8 +2377,8 @@ public class Database {
 			return RouteStop._createRouteStop(res.getInt("ID"), res.getInt("RouteID"), res.getInt("PlaceID"),
 					res.getInt("NumStops"), res.getTime("Time"));
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return null;
 		}
 	}
@@ -2395,8 +2396,8 @@ public class Database {
 				return null;
 			return MapSight._createMapSight(res.getInt("ID"), res.getInt("MapID"), res.getInt("CityDataVersionID"));
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return null;
 		}
 	}
@@ -2415,8 +2416,8 @@ public class Database {
 			return PlaceOfInterestSight._PlaceOfInterestSight(res.getInt("ID"), res.getInt("CityDataVersions"),
 					res.getInt("POIID"));
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return null;
 		}
 	}
@@ -2435,8 +2436,8 @@ public class Database {
 			return RouteSight._createRouteSight(res.getInt("ID"), res.getInt("CityDataVersions"), res.getInt("RouteID"),
 					res.getBoolean("IsFavorite"));
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return null;
 		}
 	}
@@ -2453,8 +2454,8 @@ public class Database {
 			return CityDataVersion._createCityDataVersion(res.getInt("ID"), res.getInt("CityID"),
 					res.getString("VersionName"), res.getDouble("PriceOneTime"), res.getDouble("PricePeriod"));
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return null;
 		}
 	}
@@ -2472,8 +2473,8 @@ public class Database {
 					res.getDate("PurchaseDate"), res.getDouble("FullPrice"), res.getDouble("PricePayed"),
 					res.getDate("ExpDate"));
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return null;
 		}
 	}
@@ -2491,8 +2492,8 @@ public class Database {
 					res.getDate("PurchaseDate"), res.getDouble("FullPrice"), res.getDouble("PricePayed"),
 					res.getBoolean("WasDownloaded"));
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return null;
 		}
 	}
@@ -2510,8 +2511,8 @@ public class Database {
 					res.getInt("NOTP"), res.getInt("NS"), res.getInt("NSR"), res.getInt("NV"), res.getInt("NSD"),
 					res.getBoolean("NVP"));
 		} catch (Exception e) {
-			closeConnection();
-			e.printStackTrace();
+			//closeConnection();
+			//e.printStackTrace();
 			return null;
 		}
 	}
