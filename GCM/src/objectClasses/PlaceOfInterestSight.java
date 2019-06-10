@@ -25,9 +25,9 @@ public class PlaceOfInterestSight implements ClassMustProperties, Serializable {
 		return new PlaceOfInterestSight(id, cityDataVersionId, placeOfInterestId);
 	}
 
-	public PlaceOfInterestSight(CityDataVersion cdv, PlaceOfInterest p) {
+	public PlaceOfInterestSight(int cdvId, PlaceOfInterest p) {
 		this.id = Database.generateIdPlaceOfInterestSight();
-		this.cityDataVersionId = cdv.getId();
+		this.cityDataVersionId = cdvId;
 		this.placeOfInterestId = p.getId();
 		this.temp_place = p;
 	}

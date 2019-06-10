@@ -27,6 +27,8 @@ import objectClasses.Customer;
 import objectClasses.Employee;
 import objectClasses.User;
 import objectClasses.Employee.Role;
+import objectClasses.Map;
+import objectClasses.MapSight;
 
 /**
  * This class overrides some of the methods in the abstract superclass in order
@@ -222,6 +224,19 @@ public class EchoServer extends AbstractServer
 	{
 		System.out.println("update " + update.toUpdate.getClass().toString());
 		update.toUpdate.saveToDatabase();
+	}
+	
+	
+	public CreateMap handleMapCreation(CreateMap cmap)
+	{
+		Map map = new Map(cmap.cityId, cmap.name, cmap.info, cmap.imgURL);
+		map.saveToDatabase();
+		
+		MapSight mapS = new MapSight(cmap.cdvId, map);
+		mapS.saveToDatabase();
+		
+		cmap.mapS = mapS;
+		return cmap;
 	}
 	
 	/**

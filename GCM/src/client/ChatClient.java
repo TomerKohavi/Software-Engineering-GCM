@@ -15,6 +15,7 @@ import objectClasses.City;
 import objectClasses.Customer;
 import objectClasses.User;
 import objectClasses.Employee.Role;
+import objectClasses.MapSight;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -47,23 +48,23 @@ public class ChatClient extends AbstractClient
 	 */
 	String loginID;
 
-	boolean loginReady;
-	Login login;
 	User user;
 
-	boolean registerIDready;
+	Login login;
+
 	Register reg;
 
-	boolean imageReady;
 	ImageTransfer imTr;
 
-	boolean searchReady;
 	Search search;
 
 	CustomersRequest custReq;
 
+	AllCitiesRequest cityReq;
+
+	CreateMap cmap;
+
 	Semaphore semaphore;
-	private AllCitiesRequest cityReq;
 
 	/**
 	 * Constructs an instance of the chat client.
@@ -81,10 +82,20 @@ public class ChatClient extends AbstractClient
 		this.loginID = "USER";
 		sendToServer("#login USER");
 
-		this.loginReady = false;
-		this.registerIDready = false;
-		this.searchReady = false;
 		this.semaphore = new Semaphore(0);
+	}
+
+	public void semAcquire()
+	{
+		try
+		{
+			this.semaphore.acquire();
+		}
+		catch (InterruptedException e)
+		{
+			System.err.println("semaphore");
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -98,23 +109,14 @@ public class ChatClient extends AbstractClient
 
 	public Pair<User, LoginRegisterResult> login(String uname, String pass, boolean isEmployee) throws IOException
 	{
-		try
-		{
-			sendToServer(new Login(uname, pass, isEmployee));
-			this.semaphore.acquire();
-			this.user = this.login.loggedUser;
-			if (this.user != null)
-				System.out.println("login " + this.user.getUserName());
-			else
-				System.out.println("login null");
-			return new Pair<User, LoginRegisterResult>(this.user, this.login.loginResult);
-		}
-		catch (InterruptedException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		sendToServer(new Login(uname, pass, isEmployee));
+		this.semAcquire();
+		this.user = this.login.loggedUser;
+		if (this.user != null)
+			System.out.println("login " + this.user.getUserName());
+		else
+			System.out.println("login null");
+		return new Pair<User, LoginRegisterResult>(this.user, this.login.loginResult);
 	}
 
 	/**
@@ -138,16 +140,7 @@ public class ChatClient extends AbstractClient
 	{
 		sendToServer(new Register(username, password, firstName, lastName, email, phone, role, ccard, expires, cvv,
 				isEmployee));
-		try
-		{
-			this.semaphore.acquire();
-		}
-		catch (InterruptedException e)
-		{
-			System.err.println("semaphore");
-			e.printStackTrace();
-		}
-		this.registerIDready = false;
+		this.semAcquire();
 		this.user = this.reg.user;
 		return new Pair<User, LoginRegisterResult>(this.reg.user, this.reg.regResult);
 	}
@@ -174,9 +167,6 @@ public class ChatClient extends AbstractClient
 	public BufferedImage getImage(String pathname) throws IOException
 	{
 		sendToServer(new ImageTransfer(pathname, true));
-		for (int i = 0; !this.imageReady; i++)
-			clientUI.display("image " + i);
-		this.imageReady = false;
 		BufferedImage im = this.imTr.getImage();
 		this.imTr = null;
 		return im;
@@ -189,6 +179,7 @@ public class ChatClient extends AbstractClient
 	public void sendImage(String pathname) throws IOException
 	{
 		ImageTransfer imTr = new ImageTransfer(pathname, false);
+		this.semAcquire();
 		imTr.readImageFromFile();
 		sendToServer(imTr);
 	}
@@ -204,9 +195,7 @@ public class ChatClient extends AbstractClient
 	public ArrayList<City> search(String cityName, String cityInfo, String poiName, String poiInfo) throws IOException
 	{
 		sendToServer(new Search(cityName, cityInfo, poiName, poiInfo));
-		for (int i = 0; !this.searchReady; i++)
-			clientUI.display("search " + i);
-		this.searchReady = false;
+		this.semAcquire();
 		ArrayList<City> cityList = this.search.searchResult;
 		this.search = null;
 		return cityList;
@@ -248,7 +237,21 @@ public class ChatClient extends AbstractClient
 			e.printStackTrace();
 		}
 		return this.cityReq.cityList;
+	}
 
+	public MapSight createMap(int cityId, String name, String info, String imgURL, int cdvId) throws IOException
+	{
+		sendToServer(new CreateMap(cityId, name, info, imgURL, cdvId));
+		try
+		{
+			this.semaphore.acquire();
+		}
+		catch (InterruptedException e)
+		{
+			System.err.println("semaphore");
+			e.printStackTrace();
+		}
+		return this.cmap.mapS;
 	}
 
 	/**
@@ -279,35 +282,22 @@ public class ChatClient extends AbstractClient
 	{
 
 		if (msg instanceof Login)
-		{
 			this.login = (Login) msg;
-			this.semaphore.release();
-		}
 		else if (msg instanceof Register)
-		{
 			this.reg = (Register) msg;
-			this.semaphore.release();
-		}
 		else if (msg instanceof ImageTransfer)
-		{
 			this.imTr = (ImageTransfer) msg;
-			this.imageReady = true;
-		}
 		else if (msg instanceof Search)
-		{
 			this.search = (Search) msg;
-			this.searchReady = true;
-		}
 		else if (msg instanceof CustomersRequest)
-		{
 			this.custReq = (CustomersRequest) msg;
-			this.semaphore.release();
-		}
 		else if (msg instanceof AllCitiesRequest)
-		{
 			this.cityReq = (AllCitiesRequest) msg;
+		else if (msg instanceof CreateMap)
+			this.cmap = (CreateMap) msg;
+
+		if (msg instanceof Command)
 			this.semaphore.release();
-		}
 		else
 			clientUI.display(msg.toString());
 	}

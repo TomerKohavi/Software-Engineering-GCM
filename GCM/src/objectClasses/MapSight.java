@@ -23,10 +23,10 @@ public class MapSight implements ClassMustProperties, Serializable {
 		return new MapSight(id, mapId, cityDataVersionId);
 	}
 
-	public MapSight(CityDataVersion cdv, Map m) {
+	public MapSight(int cdvId, Map m) {
 		this.id = Database.generateIdMapSight();
 		this.mapId = m.getId();
-		this.cityDataVersionId = cdv.getId();
+		this.cityDataVersionId = cdvId;
 		this.temp_map = m;
 	}
 
