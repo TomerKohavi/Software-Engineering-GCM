@@ -54,11 +54,13 @@ public final class Downloader
         	if(c==null) continue;
         	cities.add(c);
         }
+        System.out.println("citiesIds size:"+citiesIds.size());
         ArrayList<Integer> subsIds=new ArrayList<Integer>();
         //find relevant subs
         for(int cityId:citiesIds) {
         	subsIds.addAll(Database.searchSubscription(null, cityId, today, true));
         }
+        System.out.println("subsIds size: "+subsIds.size());
         //find relevant users
         Set<Integer> customersIds=new HashSet<Integer>(); 
         for(int subsId:subsIds) {
@@ -66,6 +68,7 @@ public final class Downloader
         	if(s==null) continue;
         	customersIds.add(s.getUserId());
         }
+        System.out.println("customersIds size: "+customersIds.size());
         //find which cities for each customer
         ArrayList<Pair<Customer,ArrayList<City>>> custCities=new ArrayList<>();
         for(int custId:customersIds) {
@@ -80,6 +83,7 @@ public final class Downloader
         	if(citiesOfCust.size()==0) continue;
         	Pair<Customer,ArrayList<City>> p=new Pair<Customer, ArrayList<City>>(cust, citiesOfCust);
         	custCities.add(p);
+        	System.out.println("custCities size: "+custCities.size());
         }
         //write the report
         try{
