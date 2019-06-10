@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -33,8 +33,8 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <JFXTreeTableView fx:id="PastSub" layoutX="468.0" layoutY="167.0" prefHeight="378.0" prefWidth="360.0" />
-      <JFXTreeTableView fx:id="PastOneTime" layoutX="862.0" layoutY="167.0" prefHeight="378.0" prefWidth="360.0" />
-      <JFXTreeTableView fx:id="Active" layoutX="72.0" layoutY="167.0" prefHeight="378.0" prefWidth="360.0" />
+      <TableView fx:id="Active" layoutX="72.0" layoutY="167.0" prefHeight="378.0" prefWidth="360.0" />
+      <TableView fx:id="PastSub" layoutX="468.0" layoutY="167.0" prefHeight="378.0" prefWidth="360.0" />
+      <TableView fx:id="PastOneTime" layoutX="862.0" layoutY="167.0" prefHeight="378.0" prefWidth="360.0" />
    </children>
 </AnchorPane>

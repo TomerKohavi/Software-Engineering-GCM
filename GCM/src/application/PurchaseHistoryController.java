@@ -1,10 +1,8 @@
 package application;
 
-import java.sql.Time;
 import java.util.ArrayList;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXListView;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,7 +13,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import objectClasses.OneTimePurchase;
-import objectClasses.RouteStop;
 import objectClasses.Subscription;
 
 public class PurchaseHistoryController {
@@ -37,59 +34,62 @@ public class PurchaseHistoryController {
 
 
     public void initialize()
-    {
-    	ArrayList<OneTimePurchase> otpL = Connector.selectedCustomer.getCopyOneTimePurchase();
-    	ArrayList<Subscription> acL = Connector.selectedCustomer.getCopyActiveSubscription();
-    	ArrayList<Subscription> usL = Connector.selectedCustomer.getCopyUnactiveSubscription();
-    	
-//		ObservableList<Subscription> subs = FXCollections.observableArrayList(acL);
-//		
-//		TableColumn<Subscription, String> cityColumn = new TableColumn<>("City");
-//		cityColumn.setMinWidth(100);
-//		cityColumn.setCellValueFactory(new PropertyValueFactory<>("tempPlaceName"));
-//		
-//		TableColumn<Subscription, Double> priceColumn = new TableColumn<>("Price");
-//		priceColumn.setMinWidth(100);
-//		priceColumn.setCellValueFactory(new PropertyValueFactory<>("pricePayed"));
-//		
-//		TableColumn<Subscription, Double> dateColumn = new TableColumn<>("Date");
-//		dateColumn.setMinWidth(100);
-//		dateColumn.setCellValueFactory(new PropertyValueFactory<>("expirationDate"));
-//		
-//		TableColumn<Subscription, Integer> monthColumn = new TableColumn<>("Months");
-//		monthColumn.setMinWidth(60);
-//		monthColumn.setCellValueFactory(new PropertyValueFactory<>("numMonth"));
-//		
-//		Active.setItems(subs);
-//		
-//		Active.getColumns().clear();
-//		Active.getColumns().addAll(cityColumn, priceColumn, dateColumn, monthColumn);
+    {	
+		ObservableList<OneTimePurchase> otpL = FXCollections.observableArrayList(Connector.selectedCustomer.getCopyOneTimePurchase());
+		ObservableList<Subscription> acL = FXCollections.observableArrayList(Connector.selectedCustomer.getCopyActiveSubscription());
+		ObservableList<Subscription> usL = FXCollections.observableArrayList(Connector.selectedCustomer.getCopyUnactiveSubscription());
 		
 		
-		ObservableList<OneTimePurchase> otp = FXCollections.observableArrayList(otpL);
+		TableColumn<OneTimePurchase, String> oneCityColumn = new TableColumn<>("City");
+		oneCityColumn.setMinWidth(150);
+		oneCityColumn.setCellValueFactory(new PropertyValueFactory<>("cityName"));
 		
-		TableColumn<OneTimePurchase, String> cityColumn = new TableColumn<>("City");
-		cityColumn.setMinWidth(100);
-		cityColumn.setCellValueFactory(new PropertyValueFactory<>("tempPlaceName"));
+		TableColumn<OneTimePurchase, Double> onePriceColumn = new TableColumn<>("Price");
+		onePriceColumn.setMinWidth(50);
+		onePriceColumn.setCellValueFactory(new PropertyValueFactory<>("pricePayed"));
 		
-		TableColumn<OneTimePurchase, Double> priceColumn = new TableColumn<>("Price");
-		priceColumn.setMinWidth(100);
-		priceColumn.setCellValueFactory(new PropertyValueFactory<>("pricePayed"));
+		TableColumn<OneTimePurchase, Double> oneDateColumn = new TableColumn<>("Date");
+		oneDateColumn.setMinWidth(100);
+		oneDateColumn.setCellValueFactory(new PropertyValueFactory<>("purchaseDate"));
 		
-		TableColumn<OneTimePurchase, Double> dateColumn = new TableColumn<>("Date");
+		
+		TableColumn<Subscription, String> cityColumn = new TableColumn<>("City");
+		oneCityColumn.setMinWidth(150);
+		oneCityColumn.setCellValueFactory(new PropertyValueFactory<>("cityName"));
+		
+		TableColumn<Subscription, Double> priceColumn = new TableColumn<>("Price");
+		onePriceColumn.setMinWidth(50);
+		onePriceColumn.setCellValueFactory(new PropertyValueFactory<>("pricePayed"));
+		
+		TableColumn<Subscription, Double> dateColumn = new TableColumn<>("Date");
 		dateColumn.setMinWidth(100);
 		dateColumn.setCellValueFactory(new PropertyValueFactory<>("expirationDate"));
+		
+		TableColumn<Subscription, Integer> monthColumn = new TableColumn<>("Months");
+		monthColumn.setMinWidth(60);
+		monthColumn.setCellValueFactory(new PropertyValueFactory<>("numMonth"));
 
-		Active.setItems(subs);
+		
+		Active.setItems(acL);
 		
 		Active.getColumns().clear();
 		Active.getColumns().addAll(cityColumn, priceColumn, dateColumn, monthColumn);
+		
+		PastSub.setItems(usL);
+		
+		PastSub.getColumns().clear();
+		PastSub.getColumns().addAll(cityColumn, priceColumn, dateColumn, monthColumn);
+		
+		PastOneTime.setItems(otpL);
+		
+		PastOneTime.getColumns().clear();
+		PastOneTime.getColumns().addAll(oneCityColumn, onePriceColumn, oneDateColumn);
     	
 //    	for (OneTimePurchase otp : otpL)
 //    	{
 //    		otp.getPricePayed();
 //    		otp.getPurchaseDate();
-//    		otp.getId();
+//    		otp.getCityName();
 //    	}
 //    	
 //    	for (Subscription sub : acL)
@@ -97,7 +97,7 @@ public class PurchaseHistoryController {
 //    		sub.getExpirationDate();
 //    		sub.getPricePayed();
 //    		sub.getNumMonths();
-//    		sub.getCityId();
+//    		sub.getCityName();
 //    	}
 //    	
 //    	for (Subscription sub : usL)
@@ -105,13 +105,13 @@ public class PurchaseHistoryController {
 //    		sub.getExpirationDate();
 //    		sub.getPricePayed();
 //    		sub.getNumMonths();
-//    		sub.getCityId();
+//    		sub.getCityName();
 //    	}
     }
     
     @FXML
     void goBack(ActionEvent event) {
-    	
+    	mainPane.getScene().getWindow().hide();
     }
 
 }
