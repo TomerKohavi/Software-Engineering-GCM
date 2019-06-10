@@ -20,10 +20,10 @@ public class Main2 {
 			
 			Customer c=Database.getCustomerById(2);
 			System.out.println(c.getCopyActiveSubscription().size());
-			ArrayList<Integer> ids = Database.searchSubscription(null, null, today, false);
+			ArrayList<Integer> ids = Database.searchSubscription(null, null, today, true);
 			System.out.println(ids.size());
-			//InformationSystem.newVersionWasPublished(3);
-			//Downloader.downloadReportsUpdateVersions("downloadReportsUpdateVersions.txt");
+			InformationSystem.newVersionWasPublished(3);
+			Downloader.downloadReportsUpdateVersions("downloadReportsUpdateVersions.txt");
 			
 			
 			long finish = System.currentTimeMillis();

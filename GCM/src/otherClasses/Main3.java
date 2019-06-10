@@ -18,10 +18,10 @@ public class Main3 {
 			
 			
 			
-			City c=Database.getCityById(1);
+			/*City c=Database.getCityById(1);
 			Route r=c.getCopyPublishedVersion().getRouteSightById(1).getCopyRoute();
 			System.out.println(r==null);
-			System.out.println(r.isAcceptabilityToDisabled());
+			System.out.println(r.isAcceptabilityToDisabled());*/
 			
 			
 			long finish = System.currentTimeMillis();

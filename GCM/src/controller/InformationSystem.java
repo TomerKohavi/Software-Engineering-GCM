@@ -49,6 +49,7 @@ public final class InformationSystem
         }
         Collections.sort(statistics);
     	java.util.Map<Integer,Integer> map=new HashMap<Integer,Integer>(); 
+    	int lastNumMaps=-1;
         for(int i=0;i<statistics.size();i++) {
         	Date fromRange=statistics.get(i).getDate();
         	Date toRange;
@@ -59,7 +60,12 @@ public final class InformationSystem
         	Pair<Date,Date> datesRange=new Pair<Date,Date>(fromRange,toRange);
         	map.put(statistics.get(i).getCityId(), statistics.get(i).getNumMaps());
         	int numMaps=sumMapList(map);
-        	ans.add(new Pair<Pair<Date,Date>,Integer>(datesRange,numMaps));
+        	if(lastNumMaps==numMaps) {
+        		ans.get(ans.size()-1).a.b=toRange;
+        	}
+        	else
+        		ans.add(new Pair<Pair<Date,Date>,Integer>(datesRange,numMaps));
+        	lastNumMaps=numMaps;
         }
         return ans;
     }
@@ -81,6 +87,18 @@ public final class InformationSystem
         if(s == null)
             s = new Statistic(cityId,d);
         s.addOneTimePurchase();
+        s.saveToDatabase();
+    }
+    
+    public static void setNumMaps(int cityId,int numMaps) {
+    	setNumMaps(cityId,numMaps,new Date(Calendar.getInstance().getTime().getTime()));
+    }
+
+    public static void setNumMaps(int cityId,int numMaps,Date d) {
+        Statistic s = getStatistic(cityId,d);
+        if(s == null)
+            s = new Statistic(cityId,d);
+        s.setNumMaps(numMaps);
         s.saveToDatabase();
     }
 
