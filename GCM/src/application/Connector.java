@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.jfoenix.controls.JFXButton;
 
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import objectClasses.City;
 import objectClasses.Customer;
@@ -17,7 +16,6 @@ import objectClasses.Route;
 import objectClasses.RouteSight;
 import objectClasses.User;
 import otherClasses.Pair;
-import objectClasses.Employee.Role;
 import client.ChatClient;
 
 public class Connector {
@@ -34,8 +32,6 @@ public class Connector {
 	public static final String LOCAL_HOST = "localhost";
 	
 	public static boolean isEdit = true;
-	
-	public static boolean applied;
 	
 	
 	public static String listType = "City";

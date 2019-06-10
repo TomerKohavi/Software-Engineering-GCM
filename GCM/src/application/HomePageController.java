@@ -541,13 +541,10 @@ public class HomePageController
 			MapImage.setVisible(true);
 			ShowMapButton.setText("Hide Map");
 			Bounds boundsInScene = MapImage.localToScene(MapImage.getBoundsInLocal());
-//			List<Point> posList = new ArrayList<Point>();
-//			posList.add(new Point((int) (50 + boundsInScene.getMinX()), (int) (50 + boundsInScene.getMinY())));
-//			posList.add(new Point((int) (100 + boundsInScene.getMinX()), (int) (100 + boundsInScene.getMinY())));
 			List<Location> locList = Connector.selectedMap.getCopyLocations();
 			for (Location loc : locList)
 			{
-				POIImage poiImage = new POIImage(false);
+				POIImage poiImage = new POIImage(false, true);
 				poiImage.image.setX(loc.getCoordinates()[0] + boundsInScene.getMinX());
 				poiImage.image.setY(loc.getCoordinates()[1] + boundsInScene.getMinY());
 				Connector.imageList.add(poiImage);
@@ -668,36 +665,33 @@ public class HomePageController
 	@FXML
 	void callCreate(ActionEvent event) throws IOException
 	{
-		Connector.applied = false;
 		Connector.isEdit = false;
 		openNewPage(Connector.listType + "EditScene.fxml");
-		if (Connector.applied) {
-			MainList.getItems().clear();
-			if (Connector.listType.equals("Map"))
-				MainList.getItems().addAll(Connector.getMapsNames(Connector.searchMapResult));
-			else if (Connector.listType.equals("POI"))
-				MainList.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
-			else if (Connector.listType.equals("Route"))
-				MainList.getItems().addAll(Connector.getRoutesNames(Connector.searchRouteResult));
-		}
+		MainList.getItems().clear();
+		if (Connector.listType.equals("City"))
+			MainList.getItems().addAll(Connector.getCitiesNames(Connector.searchCityResult));
+		else if (Connector.listType.equals("Map"))
+			MainList.getItems().addAll(Connector.getMapsNames(Connector.searchMapResult));
+		else if (Connector.listType.equals("POI"))
+			MainList.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
+		else if (Connector.listType.equals("Route"))
+			MainList.getItems().addAll(Connector.getRoutesNames(Connector.searchRouteResult));
 	}
 	
 	@FXML
 	void callEdit(ActionEvent event) throws IOException
 	{
-		Connector.applied = false;
 		Connector.isEdit = true;
 		openNewPage(Connector.listType + "EditScene.fxml");
-		if (Connector.applied) {
-			MainList.getItems().clear();
-			if (Connector.listType.equals("Map"))
-				MainList.getItems().addAll(Connector.getMapsNames(Connector.searchMapResult));
-			else if (Connector.listType.equals("POI"))
-				MainList.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
-			else if (Connector.listType.equals("Route"))
-				MainList.getItems().addAll(Connector.getRoutesNames(Connector.searchRouteResult));
-				
-		}
+		MainList.getItems().clear();
+		if (Connector.listType.equals("City"))
+			MainList.getItems().addAll(Connector.getCitiesNames(Connector.searchCityResult));
+		else if (Connector.listType.equals("Map"))
+			MainList.getItems().addAll(Connector.getMapsNames(Connector.searchMapResult));
+		else if (Connector.listType.equals("POI"))
+			MainList.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
+		else if (Connector.listType.equals("Route"))
+			MainList.getItems().addAll(Connector.getRoutesNames(Connector.searchRouteResult));
 	}
 
 	@FXML
