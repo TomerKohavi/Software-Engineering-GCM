@@ -13,6 +13,7 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 	@SuppressWarnings("deprecation")
 	public static final Time closeTime = new Time(3 * 24, 0, 0);
 	private Date expirationDate;
+	public int numMonths = 1;
 
 	private Subscription(int id, int cityId, int userId, Date purchaseDate, double fullPrice, double pricePayed,
 			Date expirationDate) {
@@ -53,6 +54,10 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 	public int getNumMonths() {
 		Time t=new Time(this.expirationDate.getTime()-super.getPurchaseDate().getTime());
 		return t.getMonth();
+	}
+	
+	public void setNumMonths(int months) {
+		numMonths = months;
 	}
 
 	@Override
