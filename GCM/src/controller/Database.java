@@ -2313,6 +2313,7 @@ public class Database {
 			return Customer._createCustomer(res.getInt("ID"), res.getString("Username"), res.getString("Password"),
 					res.getString("Email"), res.getString("FirstName"), res.getString("LastName"),
 					res.getString("PhoneNumber"), res.getString("CardNum"), res.getString("Exp"), res.getString("CVC"));
+			
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
