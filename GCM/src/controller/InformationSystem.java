@@ -48,31 +48,28 @@ public final class InformationSystem
             	statistics.add(s);
         }
         Collections.sort(statistics);
-        if(cityId!=null)
-        {
-        	int i;
-            for(i=0;i<statistics.size()-1;i++) {
-            	Date fromRange=statistics.get(i).getDate();
-            	Date toRange=statistics.get(i+1).getDate();
-            	Pair<Date,Date> datesRange=new Pair<Date,Date>(fromRange,toRange);
-            	ans.add(new Pair<Pair<Date,Date>,Integer>(datesRange,statistics.get(i).getNumMaps()));
-            }
-            if(i<statistics.size())
-            {
-            	Date fromRange=statistics.get(i).getDate();
-            	Date toRange=new Date(Calendar.getInstance().getTime().getTime());
-            	Pair<Date,Date> datesRange=new Pair<Date,Date>(fromRange,toRange);
-            	ans.add(new Pair<Pair<Date,Date>,Integer>(datesRange,statistics.get(i).getNumMaps()));
-            }
+    	java.util.Map<Integer,Integer> map=new HashMap<Integer,Integer>(); 
+        for(int i=0;i<statistics.size();i++) {
+        	Date fromRange=statistics.get(i).getDate();
+        	Date toRange;
+        	if(i<statistics.size()-1)
+        		toRange=statistics.get(i+1).getDate();
+        	else
+        		toRange=new Date(Calendar.getInstance().getTime().getTime());
+        	Pair<Date,Date> datesRange=new Pair<Date,Date>(fromRange,toRange);
+        	map.put(statistics.get(i).getCityId(), statistics.get(i).getNumMaps());
+        	int numMaps=sumMapList(map);
+        	ans.add(new Pair<Pair<Date,Date>,Integer>(datesRange,numMaps));
         }
-        else
-        {
-        	java.util.Map<Integer,String> map=new HashMap<Integer,String>(); 
-        	//ToDo:finish
-        }
-        
-        
         return ans;
+    }
+    
+    private static int sumMapList(java.util.Map<Integer,Integer> map) {
+    	int sum=0;
+    	 for(int val: map.values()) {
+    		 sum+=val;
+    	    }
+    	 return sum;
     }
 
     public static void addOneTimePurchase(int cityId) {
