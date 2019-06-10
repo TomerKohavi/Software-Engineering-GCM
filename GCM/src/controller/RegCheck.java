@@ -7,7 +7,7 @@ public class RegCheck {
 
 	public enum Res {
 		UName("Illegal username. Username should contain only letters and numbers, at least 2 chars long, and less than 32 chars long."),
-		Pass("Illegal password- " + "it must be at least 8 char long, less than 32 char long " + "with lower case and upper case letters, " + "\n"
+		Pass("Illegal password- " + "it must be at least 8 char long, less than 32 char long " + "with lower case and upper case letters, "
 				+ "at least one digit and at least one special character."),
 		FName("Illegal first name. It should have at least two letters, and only letters."),
 		LName("Illegal last name.  It should have at least two letters, and only letters."), 

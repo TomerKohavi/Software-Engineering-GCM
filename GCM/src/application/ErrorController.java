@@ -18,7 +18,7 @@ public class ErrorController {
     @FXML // fx:id="Back"
     private JFXButton Back; // Value injected by FXMLLoader
 
-    public void initialze ()
+    public void initialize ()
     {
     	ErrorMsg.setText(Connector.errorMsg);
     }
