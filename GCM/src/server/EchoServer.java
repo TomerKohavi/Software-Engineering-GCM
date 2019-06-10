@@ -276,8 +276,10 @@ public class EchoServer extends AbstractServer
 				handleUpdateUser((User) msg);
 			else if (msg instanceof Update)
 				handleUpdate((Update) msg);
+			else if (msg instanceof CreateMap)
+				handleMapCreation((CreateMap) msg);
 			else
-				System.out.println(msg.getClass().toString());
+				System.out.println(msg.getClass().toString() + '\n' + msg.toString());
 		}
 		catch (IOException e)
 		{

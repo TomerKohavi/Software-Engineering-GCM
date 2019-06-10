@@ -36,7 +36,7 @@ public class CitySearchTestSingle {
         		else
         			c.addUnpublishedCityDataVersion(cdv);
         		PlaceOfInterest p=new PlaceOfInterest(c.getId(), name, PlaceOfInterest.PlaceType.HISTORICAL, info, true);
-        		PlaceOfInterestSight ps=new PlaceOfInterestSight(cdv, p);
+        		PlaceOfInterestSight ps=new PlaceOfInterestSight(cdv.getId(), p);
         		cdv.addPlaceOfInterestSight(ps);
         		p.saveToDatabase();
         		return p;

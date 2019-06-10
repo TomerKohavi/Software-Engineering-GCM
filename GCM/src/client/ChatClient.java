@@ -167,6 +167,7 @@ public class ChatClient extends AbstractClient
 	public BufferedImage getImage(String pathname) throws IOException
 	{
 		sendToServer(new ImageTransfer(pathname, true));
+		this.semAcquire();
 		BufferedImage im = this.imTr.getImage();
 		this.imTr = null;
 		return im;
@@ -179,7 +180,6 @@ public class ChatClient extends AbstractClient
 	public void sendImage(String pathname) throws IOException
 	{
 		ImageTransfer imTr = new ImageTransfer(pathname, false);
-		this.semAcquire();
 		imTr.readImageFromFile();
 		sendToServer(imTr);
 	}
@@ -260,7 +260,7 @@ public class ChatClient extends AbstractClient
 	 */
 	public void update(ClassMustProperties object) throws IOException
 	{
-		sendToServer(object);
+		sendToServer(new Update(object));
 	}
 
 	/**

@@ -283,15 +283,15 @@ public class Database
 						"Hecht Park is the largest stretch of greenery within the urban area of the City of Haifa. Though distinct from its surroundings, it is a continuous layer among the landscape of beaches and municipal open areas stretching between Dado Beach",
 						false);
 				p4.saveToDatabase();
-				PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv, p0);
+				PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv.getId(), p0);
 				cdv.addPlaceOfInterestSight(ps0);
-				PlaceOfInterestSight ps1 = new PlaceOfInterestSight(cdv, p1);
+				PlaceOfInterestSight ps1 = new PlaceOfInterestSight(cdv.getId(), p1);
 				cdv.addPlaceOfInterestSight(ps1);
-				PlaceOfInterestSight ps2 = new PlaceOfInterestSight(cdv, p2);
+				PlaceOfInterestSight ps2 = new PlaceOfInterestSight(cdv.getId(), p2);
 				cdv.addPlaceOfInterestSight(ps2);
-				PlaceOfInterestSight ps3 = new PlaceOfInterestSight(cdv, p3);
+				PlaceOfInterestSight ps3 = new PlaceOfInterestSight(cdv.getId(), p3);
 				cdv.addPlaceOfInterestSight(ps3);
-				PlaceOfInterestSight ps4 = new PlaceOfInterestSight(cdv, p4);
+				PlaceOfInterestSight ps4 = new PlaceOfInterestSight(cdv.getId(), p4);
 				cdv.addPlaceOfInterestSight(ps4);
 				Map m0 = new Map(c1.getId(), "Central city", "First map", "haifa1.png");
 				double[] coords0 = { 121.3, 518.7 };
@@ -301,7 +301,7 @@ public class Database
 				Location l1 = new Location(m0, p1, coords1);
 				m0.addLocation(l1);
 				m0.saveToDatabase();
-				MapSight ms0 = new MapSight(cdv, m0);
+				MapSight ms0 = new MapSight(cdv.getId(), m0);
 				cdv.addMapSight(ms0);
 
 				Map m1 = new Map(c1.getId(), "Mount Carmel", "Second map", "haifa2.png");
@@ -315,7 +315,7 @@ public class Database
 				Location l4 = new Location(m1, p4, coords4);
 				m1.addLocation(l4);
 				m1.saveToDatabase();
-				MapSight ms1 = new MapSight(cdv, m1);
+				MapSight ms1 = new MapSight(cdv.getId(), m1);
 				cdv.addMapSight(ms1);
 				Route r = new Route(c1.getId(), "Small route");
 				RouteStop rstop1 = new RouteStop(r, p0, new Time(1, 25, 0));
@@ -323,7 +323,7 @@ public class Database
 				RouteStop rstop2 = new RouteStop(r, p1, new Time(0, 43, 0));
 				r.addRouteStop(rstop2);
 				r.saveToDatabase();
-				RouteSight rs = new RouteSight(cdv, r, true);
+				RouteSight rs = new RouteSight(cdv.getId(), r, true);
 				cdv.addRouteSight(rs);
 
 				Route r1 = new Route(c1.getId(), "Big route");
@@ -334,7 +334,7 @@ public class Database
 				RouteStop rstop5 = new RouteStop(r1, p4, new Time(0, 23, 0));
 				r1.addRouteStop(rstop5);
 				r1.saveToDatabase();
-				RouteSight rs1 = new RouteSight(cdv, r1, true);
+				RouteSight rs1 = new RouteSight(cdv.getId(), r1, true);
 				cdv.addRouteSight(rs1);
 
 				c1.addPublishedCityDataVersion(cdv);
@@ -368,15 +368,15 @@ public class Database
 						"The charming neighborhood of Neve Tzedek is one of the oldest in the city, filled with quaint buildings showcasing both the old Bauhaus buildings in their original form mixed with newer structures and homes.",
 						false);
 				p4.saveToDatabase();
-				PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv, p0);
+				PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv.getId(), p0);
 				cdv.addPlaceOfInterestSight(ps0);
-				PlaceOfInterestSight ps1 = new PlaceOfInterestSight(cdv, p1);
+				PlaceOfInterestSight ps1 = new PlaceOfInterestSight(cdv.getId(), p1);
 				cdv.addPlaceOfInterestSight(ps1);
-				PlaceOfInterestSight ps2 = new PlaceOfInterestSight(cdv, p2);
+				PlaceOfInterestSight ps2 = new PlaceOfInterestSight(cdv.getId(), p2);
 				cdv.addPlaceOfInterestSight(ps2);
-				PlaceOfInterestSight ps3 = new PlaceOfInterestSight(cdv, p3);
+				PlaceOfInterestSight ps3 = new PlaceOfInterestSight(cdv.getId(), p3);
 				cdv.addPlaceOfInterestSight(ps3);
-				PlaceOfInterestSight ps4 = new PlaceOfInterestSight(cdv, p4);
+				PlaceOfInterestSight ps4 = new PlaceOfInterestSight(cdv.getId(), p4);
 				cdv.addPlaceOfInterestSight(ps4);
 				Map m0 = new Map(c1.getId(), "North city", "First map", "tel_aviv1.png");
 				double[] coords0 = { 123.3, 354.7 };
@@ -386,7 +386,7 @@ public class Database
 				Location l1 = new Location(m0, p1, coords1);
 				m0.addLocation(l1);
 				m0.saveToDatabase();
-				MapSight ms0 = new MapSight(cdv, m0);
+				MapSight ms0 = new MapSight(cdv.getId(), m0);
 				cdv.addMapSight(ms0);
 
 				Map m1 = new Map(c1.getId(), "Downtown", "Second map", "tel_aviv2.png");
@@ -400,7 +400,7 @@ public class Database
 				Location l4 = new Location(m1, p4, coords4);
 				m1.addLocation(l4);
 				m1.saveToDatabase();
-				MapSight ms1 = new MapSight(cdv, m1);
+				MapSight ms1 = new MapSight(cdv.getId(), m1);
 				cdv.addMapSight(ms1);
 				Route r = new Route(c1.getId(), "Small route");
 				RouteStop rstop1 = new RouteStop(r, p0, new Time(1, 25, 0));
@@ -408,7 +408,7 @@ public class Database
 				RouteStop rstop2 = new RouteStop(r, p1, new Time(0, 43, 0));
 				r.addRouteStop(rstop2);
 				r.saveToDatabase();
-				RouteSight rs = new RouteSight(cdv, r, true);
+				RouteSight rs = new RouteSight(cdv.getId(), r, true);
 				cdv.addRouteSight(rs);
 
 				Route r1 = new Route(c1.getId(), "Big route");
@@ -419,7 +419,7 @@ public class Database
 				RouteStop rstop5 = new RouteStop(r1, p4, new Time(0, 23, 0));
 				r1.addRouteStop(rstop5);
 				r1.saveToDatabase();
-				RouteSight rs1 = new RouteSight(cdv, r1, true);
+				RouteSight rs1 = new RouteSight(cdv.getId(), r1, true);
 				cdv.addRouteSight(rs1);
 
 				c1.addPublishedCityDataVersion(cdv);
@@ -452,15 +452,15 @@ public class Database
 					"The Old City of Jerusalem is one of the most intense places on Earth! At the heart of the Jewish, Islamic, and Christian religions, this walled one-kilometer area in the center of Jerusalem is beyond words and cannot be missed.",
 					false);
 			p4.saveToDatabase();
-			PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv, p0);
+			PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv.getId(), p0);
 			cdv.addPlaceOfInterestSight(ps0);
-			PlaceOfInterestSight ps1 = new PlaceOfInterestSight(cdv, p1);
+			PlaceOfInterestSight ps1 = new PlaceOfInterestSight(cdv.getId(), p1);
 			cdv.addPlaceOfInterestSight(ps1);
-			PlaceOfInterestSight ps2 = new PlaceOfInterestSight(cdv, p2);
+			PlaceOfInterestSight ps2 = new PlaceOfInterestSight(cdv.getId(), p2);
 			cdv.addPlaceOfInterestSight(ps2);
-			PlaceOfInterestSight ps3 = new PlaceOfInterestSight(cdv, p3);
+			PlaceOfInterestSight ps3 = new PlaceOfInterestSight(cdv.getId(), p3);
 			cdv.addPlaceOfInterestSight(ps3);
-			PlaceOfInterestSight ps4 = new PlaceOfInterestSight(cdv, p4);
+			PlaceOfInterestSight ps4 = new PlaceOfInterestSight(cdv.getId(), p4);
 			cdv.addPlaceOfInterestSight(ps4);
 			Map m0 = new Map(c1.getId(), "West city", "First map", "jerusalem1.png");
 			double[] coords0 = { 233.3, 445.7 };
@@ -470,7 +470,7 @@ public class Database
 			Location l1 = new Location(m0, p1, coords1);
 			m0.addLocation(l1);
 			m0.saveToDatabase();
-			MapSight ms0 = new MapSight(cdv, m0);
+			MapSight ms0 = new MapSight(cdv.getId(), m0);
 			cdv.addMapSight(ms0);
 
 			Map m1 = new Map(c1.getId(), "East city", "Second map", "jerusalem2.png");
@@ -484,7 +484,7 @@ public class Database
 			Location l4 = new Location(m1, p4, coords4);
 			m1.addLocation(l4);
 			m1.saveToDatabase();
-			MapSight ms1 = new MapSight(cdv, m1);
+			MapSight ms1 = new MapSight(cdv.getId(), m1);
 			cdv.addMapSight(ms1);
 			Route r = new Route(c1.getId(), "Small route");
 			RouteStop rstop1 = new RouteStop(r, p0, new Time(1, 25, 0));
@@ -492,7 +492,7 @@ public class Database
 			RouteStop rstop2 = new RouteStop(r, p1, new Time(0, 43, 0));
 			r.addRouteStop(rstop2);
 			r.saveToDatabase();
-			RouteSight rs = new RouteSight(cdv, r, true);
+			RouteSight rs = new RouteSight(cdv.getId(), r, true);
 			cdv.addRouteSight(rs);
 
 			Route r1 = new Route(c1.getId(), "Big route");
@@ -503,7 +503,7 @@ public class Database
 			RouteStop rstop5 = new RouteStop(r1, p4, new Time(0, 23, 0));
 			r1.addRouteStop(rstop5);
 			r1.saveToDatabase();
-			RouteSight rs1 = new RouteSight(cdv, r1, true);
+			RouteSight rs1 = new RouteSight(cdv.getId(), r1, true);
 			cdv.addRouteSight(rs1);
 
 			c1.addPublishedCityDataVersion(cdv);
