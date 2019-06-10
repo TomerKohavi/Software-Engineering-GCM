@@ -27,12 +27,13 @@ public final class Downloader
         try{
             FileWriter fileWriter = new FileWriter(path);
             PrintWriter printWriter = new PrintWriter(fileWriter);
-            printWriter.print("-----Places Of Interest-----\n");
+            printWriter.println("-----Places Of Interest-----");
+            printWriter.println("");
             for(PlaceOfInterestSight ps: listPS)
             {
                 PlaceOfInterest p=ps.getCopyPlace();
                 if(p==null) continue;
-                printWriter.print(p);
+                printWriter.println(p);
             }
             printWriter.close();
             return true;
@@ -84,28 +85,30 @@ public final class Downloader
         try{
             FileWriter fileWriter = new FileWriter(path);
             PrintWriter printWriter = new PrintWriter(fileWriter);
-            printWriter.print("-----Reports of Update Version (for customers)-----\n");
+            printWriter.println("-----Reports of Update Version (for customers)-----");
+            printWriter.println("");
             for(Pair<Customer,ArrayList<City>> p:custCities)
             {
             	Customer c=p.a;
-            	printWriter.print("The Customer:");
-            	printWriter.print("- Id: "+p.a.getId());
-            	printWriter.print("- Full name: "+p.a.getFirstName()+" "+p.a.getLastName());
-            	printWriter.print("- Phone number: "+p.a.getPhoneNumber());
-            	printWriter.print("- Email: "+p.a.getEmail());
-            	printWriter.print("The Message:");
+            	printWriter.println("The Customer:");
+            	printWriter.println("- Id: "+p.a.getId());
+            	printWriter.println("- Full name: "+p.a.getFirstName()+" "+p.a.getLastName());
+            	printWriter.println("- Phone number: "+p.a.getPhoneNumber());
+            	printWriter.println("- Email: "+p.a.getEmail());
+            	printWriter.println("The Message:");
             	String space="   ";
-            	printWriter.print(space+"Hello loyal customer,");
-            	printWriter.print(space+"Our dedicated crew works hard everyday just to improve your viewing content.");
-            	printWriter.print(space+"After many hours we finally managed to create new versions of several cities.");
-            	printWriter.print(space+"As of today the following cities will be updated:");
+            	printWriter.println(space+"Hello loyal customer,");
+            	printWriter.println(space+"Our dedicated crew works hard everyday just to improve your viewing content.");
+            	printWriter.println(space+"After many hours we finally managed to create new versions of several cities.");
+            	printWriter.println(space+"As of today the following cities will be updated:");
             	for(City city:p.b)
             	{
-            		printWriter.print(space+"- The city: \""+city.getCityName()+"\", version: \""+city.getCopyPublishedVersion().getVersionName()+"\".");
+            		printWriter.println(space+"- The city: \""+city.getCityName()+"\", version: \""+city.getCopyPublishedVersion().getVersionName()+"\".");
             	}
-            	printWriter.print(space+"That is all for now,");
-            	printWriter.print(space+"Thanks again for your hard support.");
-            	printWriter.print("\n");
+            	printWriter.println(space+"That is all for now,");
+            	printWriter.println(space+"Thanks again for your hard support.");
+            	printWriter.println("");
+            	printWriter.println("");
             }
             printWriter.close();
             return true;

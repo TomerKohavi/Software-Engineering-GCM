@@ -39,6 +39,8 @@ public class MapEditController {
 	
 	private Map map;
 	
+	private Bounds boundsInScene;
+	
 	@FXML // fx:id="mainPane"
     private AnchorPane mainPane; // Value injected by FXMLLoader
 
@@ -95,16 +97,13 @@ public class MapEditController {
     	else
     		map = new Map(Connector.selectedCity.getId(), null, null, null);
     	
-    	Bounds boundsInScene = MapImage.localToScene(MapImage.getBoundsInLocal());
+    	boundsInScene = MapImage.localToScene(MapImage.getBoundsInLocal());
     	
     	List<Location> locList = map.getCopyLocations();
-//		List<Point> posList = new ArrayList<Point> ();
-//		posList.add(new Point((int) (50 + boundsInScene.getMinX()), (int) (50 + boundsInScene.getMinY())));
-//		posList.add(new Point((int) (100 + boundsInScene.getMinX()), (int) (100 + boundsInScene.getMinY())));
 	    for (Location loc : locList) {
 	    	POIImage poiImage = new POIImage(false);
-	    	poiImage.image.setX(loc.getCoordinates()[0]);
-	    	poiImage.image.setY(loc.getCoordinates()[1]);
+	    	poiImage.image.setX(loc.getCoordinates()[0] + boundsInScene.getMinX());
+	    	poiImage.image.setY(loc.getCoordinates()[1] + boundsInScene.getMinY());
 	        Connector.imageList.add(poiImage);
 	        mainPane.getChildren().add(poiImage.image);
 	    }
@@ -166,10 +165,17 @@ public class MapEditController {
     
     @FXML
     void addPOILoc(ActionEvent event) throws IOException {
+    	Connector.choosenPOIInLoc = null;
     	openNewPage("ChoosePOIScene.fxml");
-    	if (true) { // didn't cancel
-    		Connector.imageList.get(Connector.imageList.size() - 1).image.setImage(realPOI);
-    		Connector.imageList.get(Connector.imageList.size() - 1).isNew = false;
+    	if (Connector.choosenPOIInLoc != null) { // didn't cancel
+    		POIImage poi = Connector.imageList.get(Connector.imageList.size() - 1);
+    		double[] cord = new double[2];
+    		cord[0] = poi.image.getX() - boundsInScene.getMinX();
+    		cord[0] = poi.image.getX() - boundsInScene.getMinY();
+    		Location newLoc = new Location(map, Connector.choosenPOIInLoc, cord);
+    		newLoc.saveToDatabase();
+    		poi.image.setImage(realPOI);
+    		poi.isNew = false;
     		firstPOIAdded = true;
     	}
     }

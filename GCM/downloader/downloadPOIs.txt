@@ -1,0 +1,27 @@
+-----Places Of Interest-----
+
+University of Haifa:
+- id: 1
+- type: Museum
+- description: A public research university on the top of Mount Carmel in Haifa, Israel. The university was founded in 1963 by the mayor of its host city, Abba Hushi, to operate under the academic auspices of the Hebrew University of Jerusalem.- accessibility to disabled: false
+
+School of Haifa:
+- id: 2
+- type: Public
+- description: the best shool in the city- accessibility to disabled: false
+
+haifa museum of art:
+- id: 3
+- type: Museum
+- description: the biggest meseum in the city- accessibility to disabled: false
+
+vivino:
+- id: 4
+- type: Restaurant
+- description: Vivino Haifa is located in a magical pine grove in the heart of the city, far from the city’s hustle and bustle. At Vivino Haifa you’ll find a piece of Italian tranquility under the sky in a beautiful courtyard, in our indoor garden or in an interior combining modern design with touches of the rich culture of the boot country.- accessibility to disabled: false
+
+Hecht Park:
+- id: 5
+- type: Park
+- description: Hecht Park is the largest stretch of greenery within the urban area of the City of Haifa. Though distinct from its surroundings, it is a continuous layer among the landscape of beaches and municipal open areas stretching between Dado Beach- accessibility to disabled: false
+

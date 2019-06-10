@@ -675,7 +675,6 @@ public class Database {
 	private static boolean exist(String table, int id) {
 		try {
 			String sql = "SELECT ID FROM " + table + " WHERE ID=?";
-			System.out.println(conn);
 			PreparedStatement check = conn.prepareStatement(sql);
 			check.setInt(1, id);
 			ResultSet res = check.executeQuery();
@@ -983,6 +982,7 @@ public class Database {
 		} catch (Exception e) {
 			closeConnection();
 			e.printStackTrace();
+			
 		}
 		return false;
 	}
@@ -1405,7 +1405,7 @@ public class Database {
 		try {
 			if (existStatistic(p.getId())) {
 				String sql = "UPDATE " + Table.Statistic.getValue()
-						+ " SET CityID=?, Date=?, NOTP=?, NS=?, NR=?, NV=?, NSD=?, NVP=? WHERE ID=?";
+						+ " SET CityID=?, Date=?, NOTP=?, NS=?, NSR=?, NV=?, NSD=?, NVP=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityId());
 				su.setDate(2, (Date) p.getDate());
@@ -2137,7 +2137,7 @@ public class Database {
 			int counter = 1;
 			String sql = "SELECT ID FROM " + Table.Statistic.getValue() + " WHERE ";
 			if (cityId != null)
-				sql += "CityDataVersionID=? AND ";
+				sql += "CityId=? AND ";
 
 			if (dateFrom != null && dateEnd != null)
 				sql += "(Date BETWEEN ? AND ?) AND ";

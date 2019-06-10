@@ -51,6 +51,7 @@ public class Connector {
 	public static PlaceOfInterest selectedPOI;
 	public static Route selectedRoute;
 	public static Customer selectedCustomer;
+	public static PlaceOfInterest choosenPOIInLoc;
 	
 	public static ArrayList<City> searchCityResult;
 	public static ArrayList<MapSight> searchMapResult;
