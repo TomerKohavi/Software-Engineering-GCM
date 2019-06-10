@@ -14,7 +14,7 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 	public Time recommendedTime;
 
 	private PlaceOfInterest temp_place;
-	public String temp_placeName;
+	public String tempPlaceName;
 
 	private RouteStop(int id, int routeId, int placeId, int numStop, Time recommendedTime) {
 		this.id = id;
@@ -38,7 +38,7 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 		this.recommendedTime = recommendedTime;
 		this.numStop = -1;
 		this.temp_place = p;
-		this.temp_placeName=p.getName();
+		this.tempPlaceName = p.getName();
 	}
 
 	public void saveToDatabase() {
@@ -51,7 +51,7 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 
 	public void reloadTempsFromDatabase() {
 		this.temp_place = Database.getPlaceOfInterestById(placeId);
-		this.temp_placeName=temp_place.getName();
+		this.tempPlaceName = temp_place.getName();
 	}
 
 	public PlaceOfInterest getCopyPlaceOfInterest() {
@@ -92,6 +92,16 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 
 	public void setRecommendedTime(Time recommendedTime) {
 		this.recommendedTime = recommendedTime;
+	}
+	
+	public String getTempPlaceName()
+	{
+		return this.tempPlaceName;
+	}
+	
+	public void setTempPlaceName(String s)
+	{
+		this.tempPlaceName = s;
 	}
 
 	@Override
