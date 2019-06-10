@@ -102,7 +102,10 @@ public class ChatClient extends AbstractClient
 			sendToServer(new Login(uname, pass, isEmployee));
 			this.semaphore.acquire();
 			this.user = this.login.loggedUser;
-			System.out.println("login " + this.user.getUserName());
+			if (this.user != null)
+				System.out.println("login " + this.user.getUserName());
+			else
+				System.out.println("login null");
 			return new Pair<User, LoginRegisterResult>(this.user, this.login.loginResult);
 		}
 		catch (InterruptedException e)
