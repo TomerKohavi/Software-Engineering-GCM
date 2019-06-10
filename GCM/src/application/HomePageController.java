@@ -412,7 +412,7 @@ public class HomePageController
 							Connector.selectedRoute = route;
 							ResultName.setText("Route " + route.getId());// set name and type
 							ResultInfo.setText(route.getInfo()); // set info
-//							boolean isAccess = route.isAcceptabilityToDisabled();
+							boolean isAccess = route.isAcceptabilityToDisabled();
 //							Text1.setText((isAccess ? "" : "Not ") + "Accessible to Disabled");
 
 							ArrayList<RouteStop> list = route.getCopyRouteStops();

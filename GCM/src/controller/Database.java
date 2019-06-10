@@ -1687,7 +1687,7 @@ public class Database
 			if (existStatistic(p.getId()))
 			{
 				String sql = "UPDATE " + Table.Statistic.getValue()
-						+ " SET CityID=?, Date=?, NOTP=?, NS=?, NSR=?, NV=?, NSD=?, NVP=? WHERE ID=?";
+						+ " SET CityID=?, Date=?, NOTP=?, NS=?, NSR=?, NV=?, NSD=?, NVP=?, NumMaps=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityId());
 				su.setDate(2, (Date) p.getDate());
@@ -1697,14 +1697,15 @@ public class Database
 				su.setInt(6, p.getNumVisited());
 				su.setInt(7, p.getNumSubDownloads());
 				su.setBoolean(8, p.isNewVersionPublished());
-				su.setInt(9, p.getId());
+				su.setInt(9, p.getNumMaps());
+				su.setInt(10, p.getId());
 				su.executeUpdate();
 				return true;
 			}
 			else
 			{
 				String sql = "INSERT INTO " + Table.Statistic.getValue()
-						+ " (ID, CityID, Date, NOTP, NS, NSR, NV, NSD, NVP) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+						+ " (ID, CityID, Date, NOTP, NS, NSR, NV, NSD, NVP, NumMaps) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getId());
 				su.setInt(2, p.getCityId());
@@ -1715,6 +1716,7 @@ public class Database
 				su.setInt(7, p.getNumVisited());
 				su.setInt(8, p.getNumSubDownloads());
 				su.setBoolean(9, p.isNewVersionPublished());
+				su.setInt(10, p.getNumMaps());
 				su.executeUpdate();
 				return false;
 			}
@@ -3055,7 +3057,7 @@ public class Database
 			ResultSet res = get(Table.Statistic.getValue(), id);
 			return Statistic._createStatistic(res.getInt("ID"), res.getInt("CityID"), res.getDate("Date"),
 					res.getInt("NOTP"), res.getInt("NS"), res.getInt("NSR"), res.getInt("NV"), res.getInt("NSD"),
-					res.getBoolean("NVP"));
+					res.getBoolean("NVP"), res.getInt("NumMaps"));
 		}
 		catch (Exception e)
 		{

@@ -27,10 +27,11 @@ import application.Connector;
  * This class overrides some of the methods defined in the abstract superclass
  * in order to give more functionality to the client.
  *
- * @author Dr Timothy C. Lethbridge
- * @author Dr Robert Lagani&egrave;
- * @author Fran&ccedil;ois B&eacute;langer
- * @version July 2000
+ * @author sigal
+ */
+/**
+ * @author user
+ *
  */
 public class ChatClient extends AbstractClient
 {
@@ -116,6 +117,21 @@ public class ChatClient extends AbstractClient
 		return null;
 	}
 
+	/**
+	 * @param username the user name of the new user
+	 * @param password the password of the new user
+	 * @param firstName the firstName of the new user
+	 * @param lastName the lastName of the new user
+	 * @param email the email of the new user
+	 * @param phone the phone number of the new user
+	 * @param role the user role(employee/manger) of the new user
+	 * @param ccard the credit card of the new user
+	 * @param expires the credit card expires of the new user
+	 * @param cvv the user credit card cvv of the new user
+	 * @param isEmployee if the new user if employee or not
+	 * @return  the user and the result of the request 
+	 * @throws IOException thrown when cannot register 
+	 */
 	public Pair<User, LoginRegisterResult> register(String username, String password, String firstName, String lastName, String email,
 			String phone, Role role, String ccard, String expires, String cvv, boolean isEmployee) throws IOException
 	{
@@ -135,12 +151,21 @@ public class ChatClient extends AbstractClient
 		return new Pair<User, LoginRegisterResult>(this.reg.user, this.reg.regResult);
 	}
 
+	/**
+	 * log off the user
+	 * @throws IOException when cannot log off
+	 */
 	public void logoff() throws IOException
 	{
 		sendToServer(new Logoff(this.user.getId()));
 		this.user = null;
 	}
 
+	/**
+	 * @param pathname the path of the image
+	 * @return image
+	 * @throws IOException thrown when cannot load the image from server
+	 */
 	public BufferedImage getImage(String pathname) throws IOException
 	{
 		sendToServer(new ImageTransfer(pathname, true));
@@ -152,6 +177,10 @@ public class ChatClient extends AbstractClient
 		return im;
 	}
 
+	/**
+	 * @param pathname the path of the image we want to save
+	 * @throws IOException problem with the image
+	 */
 	public void sendImage(String pathname) throws IOException
 	{
 		ImageTransfer imTr = new ImageTransfer(pathname, false);
@@ -159,6 +188,14 @@ public class ChatClient extends AbstractClient
 		sendToServer(imTr);
 	}
 
+	/**
+	 * @param cityName the name of city we want to search
+	 * @param cityInfo the info of city we want to search
+	 * @param poiName the name of point of interest we want to search
+	 * @param poiInfo the info of point of interest we want to search
+	 * @return array list with the city we searched from the server
+	 * @throws IOException if we cannot search the city
+	 */
 	public ArrayList<City> search(String cityName, String cityInfo, String poiName, String poiInfo) throws IOException
 	{
 		sendToServer(new Search(cityName, cityInfo, poiName, poiInfo));
@@ -170,6 +207,10 @@ public class ChatClient extends AbstractClient
 		return cityList;
 	}
 
+	/**
+	 * @return send to the server request for the customers
+	 * @throws IOException error in the request
+	 */
 	public ArrayList<Customer> customersRquest() throws IOException
 	{
 		sendToServer(new CustomersRequest());
@@ -185,6 +226,10 @@ public class ChatClient extends AbstractClient
 		return this.custReq.custList;
 	}
 
+	/**
+	 * @return return all the cities from the server
+	 * @throws IOException cannot get the cities from the server
+	 */
 	public ArrayList<Pair<String, Integer>> allCitiesRequest() throws IOException
 	{
 		sendToServer(new AllCitiesRequest());
@@ -201,11 +246,19 @@ public class ChatClient extends AbstractClient
 
 	}
 	
+	/**
+	 * @param object update every object that is not user
+	 * @throws IOException cannot update
+	 */
 	public void update(ClassMustProperties object) throws IOException
 	{
 		sendToServer(object);
 	}
 
+	/**
+	 * @param update user
+	 * @throws IOException cannot update
+	 */
 	public void updateUser(User user) throws IOException
 	{
 		sendToServer(user);
@@ -282,11 +335,5 @@ public class ChatClient extends AbstractClient
 		clientUI.display("The connection to the Server (" + getHost() + ", " + getPort() + ") has been disconnected");
 	}
 
-	public static void main(String[] args) throws IOException
-	{
-		ChatClient client = new ChatClient(Connector.LOCAL_HOST, Connector.PORT, new Console());
-		System.out.println(client.login("a", "a", false).a.getId());
-		client.logoff();
-	}
 }
 // End of ChatClient class
