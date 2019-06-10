@@ -53,19 +53,29 @@ import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
+/**
+ * @author sigal
+ * serializableImage by custom 
+ */
 class SerializableImage implements Serializable {
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	transient BufferedImage image;
 
+    /**
+     * @param out the strem output
+     * @throws IOException can be thrown by imageIO
+     */
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         if (image != null)
         	ImageIO.write(image, "png", out);
     }
     
+    /**
+     * @param in the in output 
+     * @throws IOException can be thrown by ImageIO
+     * @throws ClassNotFoundException can be thrown by class
+     */
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         image = ImageIO.read(in);

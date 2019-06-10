@@ -1,6 +1,7 @@
 package application;
 
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,6 +12,7 @@ import java.util.List;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -83,7 +85,7 @@ public class MapEditController {
         stage.showAndWait();
     }
     
-    public void initialize() throws FileNotFoundException {
+    public void initialize() throws IOException {
     	
     	realPOI = new Image(new FileInputStream("Pics\\POI.png"));
     	
@@ -92,7 +94,9 @@ public class MapEditController {
     		map = Connector.selectedMap;
     		Name.setText(map.getName());
     		InfoBox.setText(map.getInfo());
-//    		MapImage.setImage(); // set image
+    		BufferedImage bufIm = Connector.client.getImage("Pics\\" + map.getImgURL());
+			Image image = SwingFXUtils.toFXImage(bufIm, null);
+			MapImage.setImage(image);
     	}
     	else
     		map = new Map(Connector.selectedCity.getId(), null, null, null);
