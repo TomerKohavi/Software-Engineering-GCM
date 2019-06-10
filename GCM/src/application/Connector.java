@@ -35,8 +35,6 @@ public class Connector {
 	
 	public static boolean isEdit = true;
 	
-	public static boolean applied;
-	
 	
 	public static String listType = "City";
 	

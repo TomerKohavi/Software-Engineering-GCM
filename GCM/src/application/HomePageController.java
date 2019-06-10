@@ -668,36 +668,32 @@ public class HomePageController
 	@FXML
 	void callCreate(ActionEvent event) throws IOException
 	{
-		Connector.applied = false;
 		Connector.isEdit = false;
 		openNewPage(Connector.listType + "EditScene.fxml");
-		if (Connector.applied) {
-			MainList.getItems().clear();
-			if (Connector.listType.equals("Map"))
-				MainList.getItems().addAll(Connector.getMapsNames(Connector.searchMapResult));
-			else if (Connector.listType.equals("POI"))
-				MainList.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
-			else if (Connector.listType.equals("Route"))
-				MainList.getItems().addAll(Connector.getRoutesNames(Connector.searchRouteResult));
-		}
+		MainList.getItems().clear();
+		if (Connector.listType.equals("City"))
+			MainList.getItems().addAll(Connector.getCitiesNames(Connector.searchCityResult));
+		else if (Connector.listType.equals("Map"))
+			MainList.getItems().addAll(Connector.getMapsNames(Connector.searchMapResult));
+		else if (Connector.listType.equals("POI"))
+			MainList.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
+		else if (Connector.listType.equals("Route"))
+			MainList.getItems().addAll(Connector.getRoutesNames(Connector.searchRouteResult));
 	}
 	
 	@FXML
 	void callEdit(ActionEvent event) throws IOException
 	{
-		Connector.applied = false;
 		Connector.isEdit = true;
 		openNewPage(Connector.listType + "EditScene.fxml");
-		if (Connector.applied) {
-			MainList.getItems().clear();
-			if (Connector.listType.equals("Map"))
-				MainList.getItems().addAll(Connector.getMapsNames(Connector.searchMapResult));
-			else if (Connector.listType.equals("POI"))
-				MainList.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
-			else if (Connector.listType.equals("Route"))
-				MainList.getItems().addAll(Connector.getRoutesNames(Connector.searchRouteResult));
-				
-		}
+		if (Connector.listType.equals("City"))
+			MainList.getItems().addAll(Connector.getCitiesNames(Connector.searchCityResult));
+		else if (Connector.listType.equals("Map"))
+			MainList.getItems().addAll(Connector.getMapsNames(Connector.searchMapResult));
+		else if (Connector.listType.equals("POI"))
+			MainList.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
+		else if (Connector.listType.equals("Route"))
+			MainList.getItems().addAll(Connector.getRoutesNames(Connector.searchRouteResult));
 	}
 
 	@FXML
