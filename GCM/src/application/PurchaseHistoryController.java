@@ -33,7 +33,8 @@ public class PurchaseHistoryController {
     private TableView<OneTimePurchase> PastOneTime; // Value injected by FXMLLoader
 
 
-    public void initialize()
+    @SuppressWarnings("unchecked")
+	public void initialize()
     {	
 		ObservableList<OneTimePurchase> otpL = FXCollections.observableArrayList(Connector.selectedCustomer.getCopyOneTimePurchase());
 		ObservableList<Subscription> acL = FXCollections.observableArrayList(Connector.selectedCustomer.getCopyActiveSubscription());
@@ -54,12 +55,12 @@ public class PurchaseHistoryController {
 		
 		
 		TableColumn<Subscription, String> cityColumn = new TableColumn<>("City");
-		oneCityColumn.setMinWidth(150);
-		oneCityColumn.setCellValueFactory(new PropertyValueFactory<>("cityName"));
+		cityColumn.setMinWidth(150);
+		cityColumn.setCellValueFactory(new PropertyValueFactory<>("cityName"));
 		
 		TableColumn<Subscription, Double> priceColumn = new TableColumn<>("Price");
-		onePriceColumn.setMinWidth(50);
-		onePriceColumn.setCellValueFactory(new PropertyValueFactory<>("pricePayed"));
+		priceColumn.setMinWidth(50);
+		priceColumn.setCellValueFactory(new PropertyValueFactory<>("pricePayed"));
 		
 		TableColumn<Subscription, Double> dateColumn = new TableColumn<>("Date");
 		dateColumn.setMinWidth(100);
@@ -68,6 +69,23 @@ public class PurchaseHistoryController {
 		TableColumn<Subscription, Integer> monthColumn = new TableColumn<>("Months");
 		monthColumn.setMinWidth(60);
 		monthColumn.setCellValueFactory(new PropertyValueFactory<>("numMonth"));
+		
+		
+		TableColumn<Subscription, String> pastCityColumn = new TableColumn<>("City");
+		pastCityColumn.setMinWidth(150);
+		pastCityColumn.setCellValueFactory(new PropertyValueFactory<>("cityName"));
+		
+		TableColumn<Subscription, Double> pastPriceColumn = new TableColumn<>("Price");
+		pastPriceColumn.setMinWidth(50);
+		pastPriceColumn.setCellValueFactory(new PropertyValueFactory<>("pricePayed"));
+		
+		TableColumn<Subscription, Double> pastDateColumn = new TableColumn<>("Date");
+		pastDateColumn.setMinWidth(100);
+		pastDateColumn.setCellValueFactory(new PropertyValueFactory<>("expirationDate"));
+		
+		TableColumn<Subscription, Integer> pastMonthColumn = new TableColumn<>("Months");
+		pastMonthColumn.setMinWidth(60);
+		pastMonthColumn.setCellValueFactory(new PropertyValueFactory<>("numMonth"));
 
 		
 		Active.setItems(acL);
@@ -78,35 +96,13 @@ public class PurchaseHistoryController {
 		PastSub.setItems(usL);
 		
 		PastSub.getColumns().clear();
-		PastSub.getColumns().addAll(cityColumn, priceColumn, dateColumn, monthColumn);
+		PastSub.getColumns().addAll(pastCityColumn, pastPriceColumn, pastDateColumn, pastMonthColumn);
 		
 		PastOneTime.setItems(otpL);
 		
 		PastOneTime.getColumns().clear();
 		PastOneTime.getColumns().addAll(oneCityColumn, onePriceColumn, oneDateColumn);
-    	
-//    	for (OneTimePurchase otp : otpL)
-//    	{
-//    		otp.getPricePayed();
-//    		otp.getPurchaseDate();
-//    		otp.getCityName();
-//    	}
-//    	
-//    	for (Subscription sub : acL)
-//    	{
-//    		sub.getExpirationDate();
-//    		sub.getPricePayed();
-//    		sub.getNumMonths();
-//    		sub.getCityName();
-//    	}
-//    	
-//    	for (Subscription sub : usL)
-//    	{
-//    		sub.getExpirationDate();
-//    		sub.getPricePayed();
-//    		sub.getNumMonths();
-//    		sub.getCityName();
-//    	}
+		
     }
     
     @FXML
