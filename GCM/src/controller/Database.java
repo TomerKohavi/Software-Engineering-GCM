@@ -1697,7 +1697,7 @@ public class Database
 				su.setInt(6, p.getNumVisited());
 				su.setInt(7, p.getNumSubDownloads());
 				su.setBoolean(8, p.isNewVersionPublished());
-				su.setBoolean(9, p.getNumMaps());
+				su.setInt(9, p.getNumMaps());
 				su.setInt(10, p.getId());
 				su.executeUpdate();
 				return true;
@@ -1716,7 +1716,7 @@ public class Database
 				su.setInt(7, p.getNumVisited());
 				su.setInt(8, p.getNumSubDownloads());
 				su.setBoolean(9, p.isNewVersionPublished());
-				su.setBoolean(10, p.getNumMaps());
+				su.setInt(10, p.getNumMaps());
 				su.executeUpdate();
 				return false;
 			}
