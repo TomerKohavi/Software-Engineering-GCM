@@ -412,7 +412,7 @@ public class HomePageController
 							Connector.selectedRoute = route;
 							ResultName.setText("Route " + route.getId());// set name and type
 							ResultInfo.setText(route.getInfo()); // set info
-							boolean isAccess = route.isAcceptabilityToDisabled();
+//							boolean isAccess = route.isAcceptabilityToDisabled();
 //							Text1.setText((isAccess ? "" : "Not ") + "Accessible to Disabled");
 
 							ArrayList<RouteStop> list = route.getCopyRouteStops();
@@ -656,10 +656,15 @@ public class HomePageController
 	@FXML
 	void callRemove(ActionEvent event)
 	{
+		// TODO Sigal need to implement the correct removal
 		int index = MainList.getSelectionModel().getSelectedIndex();
 		MainList.getItems().remove(index);
-		// call server to remove that thing -> can check which type it is by looking at
-		// the value of Connector.listType
+		if (Connector.listType.equals("Map"))
+			Connector.selectedMap.deleteFromDatabase();
+		else if (Connector.listType.equals("POI"))
+			Connector.selectedPOI.deleteFromDatabase();
+		else if (Connector.listType.equals("Route"))
+			Connector.selectedRoute.deleteFromDatabase();
 		clearInfo(false);
 	}
 

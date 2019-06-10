@@ -26,7 +26,7 @@
             <Font size="14.0" />
          </font>
       </JFXButton>
-      <Text fx:id="IncorrectText" fill="RED" layoutX="440.0" layoutY="467.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Invalid Inputs" visible="false" />
+      <Text fx:id="IncorrectText" fill="RED" layoutX="440.0" layoutY="467.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Invalid Inputs" textAlignment="CENTER" visible="false" />
       <JFXButton fx:id="ApplyChangesButton" layoutX="598.0" layoutY="520.0" onAction="#applyChanges" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: #41e0d0;" text="Apply Changes">
          <font>
             <Font size="21.0" />
