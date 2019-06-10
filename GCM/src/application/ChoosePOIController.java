@@ -26,7 +26,7 @@ public class ChoosePOIController {
     private JFXButton AddButton; // Value injected by FXMLLoader
 
     public void initialize() {
-    	POIList.getItems().addAll("POI1", "POI2", "POI3", "POI4");
+    	POIList.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
     }
     
     @FXML
@@ -34,6 +34,7 @@ public class ChoosePOIController {
 		int selectedIdx = POIList.getSelectionModel().getSelectedIndex();
     	if (selectedIdx >= 0)
     	{
+    		Connector.choosenPOIInLoc = Connector.searchPOIResult.get(selectedIdx).getCopyPlace();
     		mainPane.getScene().getWindow().hide();
     	}
     }

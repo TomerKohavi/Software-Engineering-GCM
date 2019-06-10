@@ -1,6 +1,6 @@
 package objectClasses;
 
-import java.util.Date;
+import java.sql.Date;
 
 import controller.Database;
 import otherClasses.ClassMustProperties;
@@ -15,9 +15,10 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 	private int numVisited;
 	private int numSubDownloads;
 	private boolean newVersionPublished;
+	private int numMaps;
 
 	private Statistic(int id, int cityId, Date date, int numOneTimePurchases, int numSubscriptions,
-			int numSubscriptionsRenewal, int numVisited,int numSubDownloads,boolean newVersionPublished) {
+			int numSubscriptionsRenewal, int numVisited,int numSubDownloads,boolean newVersionPublished,int numMaps) {
 		this.id = id;
 		this.cityId = cityId;
 		this.date = date;
@@ -27,12 +28,13 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 		this.numVisited = numVisited;
 		this.numSubDownloads=numSubDownloads;
 		this.newVersionPublished=newVersionPublished;
+		this.numMaps=numMaps;
 	}
 
 	public static Statistic _createStatistic(int id, int cityId, Date date, int numOneTimePurchases,
-			int numSubscriptions, int numSubscriptionsRenewal, int numVisited,int numSubDownloads,boolean newVersionPublished) { // friend to Database
+			int numSubscriptions, int numSubscriptionsRenewal, int numVisited,int numSubDownloads,boolean newVersionPublished,int numMaps) { // friend to Database
 		return new Statistic(id, cityId, date, numOneTimePurchases, numSubscriptions, numSubscriptionsRenewal,
-				numVisited,numSubDownloads,newVersionPublished);
+				numVisited,numSubDownloads,newVersionPublished,numMaps);
 	}
 
 	public Statistic(int cityId, Date date) {
@@ -45,10 +47,11 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 		this.numVisited = 0;
 		this.numSubDownloads=0;
 		this.newVersionPublished=false;
+		this.numMaps=-1;
 	}
 
 	public static Statistic createBlankStatistic() {
-		return new Statistic(-1, -1, null, 0, 0, 0, 0,0,false);
+		return new Statistic(-1, -1, null, 0, 0, 0, 0,0,false,-1);
 	}
 
 	public static Statistic addStatistics(Statistic s1, Statistic s2) {
@@ -162,6 +165,14 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 
 	public boolean isNewVersionPublished() {
 		return newVersionPublished;
+	}
+	
+	public void setNumMaps(int numMaps) {
+		this.numMaps=numMaps;
+	}
+	
+	public int getNumMaps() {
+		return this.numMaps;
 	}
 
 	public void setNewVersionPublished(boolean newVersionPublished) {

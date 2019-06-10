@@ -46,6 +46,8 @@ public class Connector {
 
 	public static boolean unpublished = false;
 	
+	public static String errorMsg;
+	
 	public static City selectedCity;
 	public static Map selectedMap;
 	public static PlaceOfInterest selectedPOI;

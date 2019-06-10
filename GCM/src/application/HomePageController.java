@@ -412,10 +412,9 @@ public class HomePageController
 							Connector.selectedRoute = route;
 							ResultName.setText("Route " + route.getId());// set name and type
 							ResultInfo.setText(route.getInfo()); // set info
-//							boolean isAccess = route.isAcceptabilityToDisabled();
+							boolean isAccess = route.isAcceptabilityToDisabled();
 //							Text1.setText((isAccess ? "" : "Not ") + "Accessible to Disabled");
 
-							// TODO KOHAVI IMPLEMENTS
 							ArrayList<RouteStop> list = route.getCopyRouteStops();
 							StopsTable.setVisible(true);
 							ObservableList<RouteStop> stops = FXCollections.observableArrayList(list);
@@ -463,7 +462,7 @@ public class HomePageController
 							ResultInfo.setText("Name: " + Connector.selectedCustomer.getFirstName() + " " + Connector.selectedCustomer.getLastName() + "\n" + "Email: "
 									+ Connector.selectedCustomer.getEmail() + "\n" + "Phone: " + Connector.selectedCustomer.getPhoneNumber());
 							ViewPurchaseHistoryButton.setVisible(true);
-
+							EditButton.setVisible(false);
 						}
 					}
 				}
