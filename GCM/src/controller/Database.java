@@ -520,7 +520,7 @@ public class Database
 				e.saveToDatabase();
 				Customer cust = new Customer("yosi11", "LDCyosiiii!", "yosi@gmail.com", "yosi", "ben asser",
 						"0523322123", "5495681338665894", "07/24", "896");
-				Subscription sub0 = new Subscription(cust, 2, new Date(119, 8, 6), 201.8, 199.9, new Date(119, 10, 8));
+				Subscription sub0 = new Subscription(cust, 1, new Date(119, 8, 6), 201.8, 199.9, new Date(119, 10, 8));
 				cust.addSubscription(sub0);
 				Subscription sub1 = new Subscription(cust, 2, new Date(109, 8, 6), 171.8, 112.9, new Date(119, 9, 7));
 				cust.addSubscription(sub1);
@@ -1603,6 +1603,7 @@ public class Database
 				su.setDouble(5, p.getFullPrice());
 				su.setDouble(6, p.getPricePayed());
 				su.setDate(7, (Date) p.getExpirationDate()); // fix here - RON
+				su.executeUpdate();
 				return false;
 			}
 		}

@@ -18,10 +18,11 @@ public class Main2 {
 			
 			
 			
-			Customer c=Database.getCustomerById(2);
+			/*Customer c=Database.getCustomerById(2);
 			System.out.println(c.getCopyActiveSubscription().get(0).getCityId());
-			ArrayList<Integer> ids = Database.searchSubscription(null, null, today, true);
-			//InformationSystem.newVersionWasPublished(3);
+			ArrayList<Integer> ids = Database.searchSubscription(null, null, today, true);*/
+			InformationSystem.newVersionWasPublished(3);
+			InformationSystem.newVersionWasPublished(1);
 			Downloader.downloadReportsUpdateVersions("downloadReportsUpdateVersions.txt");
 			
 			
@@ -30,7 +31,7 @@ public class Main2 {
 			System.out.println("took "+timeElapsed+" sec");
 		}
 		catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		Database.closeConnection();
 	}
