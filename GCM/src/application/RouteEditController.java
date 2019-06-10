@@ -41,9 +41,6 @@ public class RouteEditController
 	@FXML // fx:id="InfoBox"
 	private TextArea InfoBox; // Value injected by FXMLLoader
 
-	@FXML // fx:id="Accessibility"
-	private CheckBox Accessibility; // Value injected by FXMLLoader
-
 	@FXML // fx:id="StopsBox"
 	private JFXListView<String> POIBox; // Value injected by FXMLLoader
 
@@ -74,14 +71,13 @@ public class RouteEditController
 			route = Connector.selectedRoute;
 			Name.setText("Route " + route.getId());
 			InfoBox.setText(route.getInfo());
-			Accessibility.setSelected(route.isAcceptabilityToDisabled());
 			
 			stopList = route.getCopyRouteStops();
 			StopsBox.setVisible(true);
 			ObservableList<RouteStop> stops = FXCollections.observableArrayList(stopList);
 			
 			poiColumn = new TableColumn<>("POI");
-			poiColumn.setMinWidth(365);
+			poiColumn.setMinWidth(213);
 			poiColumn.setCellValueFactory(new PropertyValueFactory<>("tempPlaceName"));
 			
 			timeColumn = new TableColumn<>("Time");
@@ -121,12 +117,11 @@ public class RouteEditController
 			int selectedIdx = POIBox.getSelectionModel().getSelectedIndex();
 			if (selectedIdx >= 0)
 			{
-				RouteStop newRouteStop = new RouteStop(route, Connector.searchPOIResult.get(selectedIdx).getCopyPlace(), new Time((long)time / 60));
+				RouteStop newRouteStop = new RouteStop(route, Connector.searchPOIResult.get(selectedIdx).getCopyPlace(), new Time((time/60), time % 60, 0)); // TODO
 				stopList.add(newRouteStop);
 				updateTable();
 				StopTime.setText("");
 				TimeError.setOpacity(0);
-				Accessibility.setSelected(route.isAcceptabilityToDisabled());
 			}
 		}
 		else

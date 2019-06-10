@@ -32,6 +32,7 @@ import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 import objectClasses.Location;
 import objectClasses.Map;
+import objectClasses.MapSight;
 
 public class MapEditController {
 

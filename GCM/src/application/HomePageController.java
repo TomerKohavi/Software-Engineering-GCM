@@ -412,8 +412,6 @@ public class HomePageController
 							Connector.selectedRoute = route;
 							ResultName.setText("Route " + route.getId());// set name and type
 							ResultInfo.setText(route.getInfo()); // set info
-//							boolean isAccess = route.isAcceptabilityToDisabled();
-//							Text1.setText((isAccess ? "" : "Not ") + "Accessible to Disabled");
 
 							ArrayList<RouteStop> list = route.getCopyRouteStops();
 							StopsTable.setVisible(true);
@@ -660,26 +658,47 @@ public class HomePageController
 		int index = MainList.getSelectionModel().getSelectedIndex();
 		MainList.getItems().remove(index);
 		if (Connector.listType.equals("Map"))
-			Connector.selectedMap.deleteFromDatabase();
+			Connector.searchMapResult.remove(index);
 		else if (Connector.listType.equals("POI"))
-			Connector.selectedPOI.deleteFromDatabase();
+			Connector.searchPOIResult.remove(index);
 		else if (Connector.listType.equals("Route"))
-			Connector.selectedRoute.deleteFromDatabase();
+			Connector.searchRouteResult.remove(index);
 		clearInfo(false);
 	}
 
 	@FXML
 	void callCreate(ActionEvent event) throws IOException
 	{
+		Connector.applied = false;
 		Connector.isEdit = false;
 		openNewPage(Connector.listType + "EditScene.fxml");
+		if (Connector.applied) {
+			MainList.getItems().clear();
+			if (Connector.listType.equals("Map"))
+				MainList.getItems().addAll(Connector.getMapsNames(Connector.searchMapResult));
+			else if (Connector.listType.equals("POI"))
+				MainList.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
+			else if (Connector.listType.equals("Route"))
+				MainList.getItems().addAll(Connector.getRoutesNames(Connector.searchRouteResult));
+		}
 	}
 	
 	@FXML
 	void callEdit(ActionEvent event) throws IOException
 	{
+		Connector.applied = false;
 		Connector.isEdit = true;
 		openNewPage(Connector.listType + "EditScene.fxml");
+		if (Connector.applied) {
+			MainList.getItems().clear();
+			if (Connector.listType.equals("Map"))
+				MainList.getItems().addAll(Connector.getMapsNames(Connector.searchMapResult));
+			else if (Connector.listType.equals("POI"))
+				MainList.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
+			else if (Connector.listType.equals("Route"))
+				MainList.getItems().addAll(Connector.getRoutesNames(Connector.searchRouteResult));
+				
+		}
 	}
 
 	@FXML
@@ -704,7 +723,7 @@ public class HomePageController
 		{
 			if (BuyButton.getText().equals("Buy"))
 				openNewPage("BuyScene.fxml");
-			else if (BuyButton.getText().equals("Download"))
+			else if (BuyButton.getText().equals("Download")) // TODO
 			{
 				DirectoryChooser chooser = new DirectoryChooser();
 				chooser.setTitle("Choose Download Location");
