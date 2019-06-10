@@ -5,6 +5,7 @@
 package client;
 
 import ocsf.client.*;
+import otherClasses.ClassMustProperties;
 import otherClasses.Pair;
 import server.EchoServer.LoginRegisterResult;
 import common.*;
@@ -166,11 +167,6 @@ public class ChatClient extends AbstractClient
 		return cityList;
 	}
 
-	public void updateUser(User user) throws IOException
-	{
-		sendToServer(user);
-	}
-
 	public ArrayList<Customer> customersRquest() throws IOException
 	{
 		sendToServer(new CustomersRequest());
@@ -200,6 +196,16 @@ public class ChatClient extends AbstractClient
 		}
 		return this.cityReq.cityList;
 
+	}
+	
+	public void update(ClassMustProperties object) throws IOException
+	{
+		sendToServer(object);
+	}
+
+	public void updateUser(User user) throws IOException
+	{
+		sendToServer(user);
 	}
 
 	// Instance methods ***********************************************
