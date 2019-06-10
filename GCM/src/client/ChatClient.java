@@ -151,7 +151,7 @@ public class ChatClient extends AbstractClient
 	public void sendImage(String pathname) throws IOException
 	{
 		ImageTransfer imTr = new ImageTransfer(pathname, false);
-		imTr.loadImage();
+		imTr.readImageFromFile();
 		sendToServer(imTr);
 	}
 
