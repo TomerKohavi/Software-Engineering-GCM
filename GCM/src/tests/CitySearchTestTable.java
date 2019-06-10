@@ -28,19 +28,19 @@ public class CitySearchTestTable {
 		    public static Iterable<Object[]> data() {
 		        return Arrays.asList(new Object[][] { 
 		        		//cityName, cityDescription, placeName, placeDescription, useUnpublished,		expectedC1, expectedC2, expectedC3, expectedC4
-		                 { "Haifa",null , null ,null , false ,		true , false, false, false },
+		                 { "Haifa",null , null ,null , false ,											true , false, false, false },
 		                 { null ,"the second most populous city in Israel" , null ,null , false ,		false , true, false, false },
-		                 { null ,null , null ,"One of the biggest" , true ,		false , false, true, true },
-		                 { null ,null , null ,"One of the biggest" , false ,		false , false, true, false },
-		                 { "Tel Aviv" ,null , "Dizengoff Circle" ,null , false ,		false , true, false, false },
-		                 { null ,null , "Brooklyn Bridge" ,null , false ,		false , false, true, false },
-		                 { null ,"The City" , null ,"Israel" , false ,		true , true, false, false },
-		                 { null ,null , null ,"area" , false ,		false , true, true, false },
-		                 { null ,null , null ,"area Israel" , false ,		false , true, false, false },
-		                 { "Jerusalem" ,null , null ,"wall" , false ,		false , false, false, true },
-		                 { null ,"popular" , null ,"river" , false ,		false , false, true, false },
-		                 { "Tel Aviv" ,null , "Jaffa" ,null , true ,		 false , true, false, false },
-		                 { "Tel Aviv" ,null , "Jaffa" ,null , false ,		false , false, false, false },
+		                 { null ,null , null ,"One of the biggest" , true ,								false , false, true, true },
+		                 { null ,null , null ,"One of the biggest" , false ,							false , false, true, false },
+		                 { "Tel Aviv" ,null , "Dizengoff Circle" ,null , false ,						false , true, false, false },
+		                 { null ,null , "Brooklyn Bridge" ,null , false ,								false , false, true, false },
+		                 { null ,"The City" , null ,"Israel" , false ,									true , true, false, false },
+		                 { null ,null , null ,"area" , false ,											false , true, true, false },
+		                 { null ,null , null ,"area Israel" , false ,									false , true, false, false },
+		                 { "Jerusalem" ,null , null ,"wall" , false ,									false , false, false, true },
+		                 { null ,"popular" , null ,"river" , false ,									false , false, true, false },
+		                 { "Tel Aviv" ,null , "Jaffa" ,null , true ,									false , true, false, false },
+		                 { "Tel Aviv" ,null , "Jaffa" ,null , false ,									false , false, false, false },
 		                
 		           });
 		    }
