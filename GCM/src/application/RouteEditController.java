@@ -77,7 +77,7 @@ public class RouteEditController
 			ObservableList<RouteStop> stops = FXCollections.observableArrayList(stopList);
 			
 			poiColumn = new TableColumn<>("POI");
-			poiColumn.setMinWidth(213);
+			poiColumn.setMinWidth(212);
 			poiColumn.setCellValueFactory(new PropertyValueFactory<>("tempPlaceName"));
 			
 			timeColumn = new TableColumn<>("Time");
