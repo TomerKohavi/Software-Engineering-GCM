@@ -9,8 +9,16 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
+/**
+ * @author sigal
+ * transfer images from client to server and return the result to the client
+ */
 public class ImageTransfer extends Command{
 	
+	/**
+	 * @param pathname the path of the image we want to transfer
+	 * @param requested load/save
+	 */
 	public ImageTransfer(String pathname, boolean requested)
 	{
 		this.pathname = pathname;
@@ -18,7 +26,10 @@ public class ImageTransfer extends Command{
 		this.SrIm = new SerializableImage();
 	}
 	
-	public void loadImage()
+	/**
+	 * load the image from the server 
+	 */
+	public void readImageFromFile()
 	{
 		try {
 			File file = new File(pathname);
@@ -29,11 +40,18 @@ public class ImageTransfer extends Command{
 		}
 	}
 	
+	/**
+	 * @return the image from the server
+	 */
 	public BufferedImage getImage()
 	{
 		return this.SrIm.image;
 	}
 	
+	/**
+	 * save the image into the server
+	 * @param pathname the path of the image we want to save
+	 */
 	public void saveImage(String pathname)
 	{
 		try {

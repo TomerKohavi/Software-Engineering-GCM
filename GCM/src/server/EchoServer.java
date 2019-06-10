@@ -217,7 +217,7 @@ public class EchoServer extends AbstractServer
 				ImageTransfer imTr = (ImageTransfer) msg;
 				if (imTr.requested)
 				{
-					imTr.loadImage();
+					imTr.readImageFromFile();
 					client.sendToClient(imTr);
 				}
 				else
