@@ -564,7 +564,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 
@@ -693,7 +693,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			String sql = "SELECT ID FROM " + table + " WHERE ID=?";
@@ -877,7 +877,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			if (existPlaceOfInterest(p.getId())) {
@@ -934,8 +934,8 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			if (existMap(p.getId())) {
@@ -988,7 +988,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			if (existRoute(p.getId())) {
@@ -1039,7 +1039,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			if (existCity(p.getId())) {
@@ -1091,7 +1091,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			if (existCustomer(p.getId())) {
@@ -1163,7 +1163,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			if (existEmployee(p.getId())) {
@@ -1224,7 +1224,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			if (existLocation(p.getId())) {
@@ -1278,7 +1278,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			if (existRouteStop(p.getId())) {
@@ -1333,7 +1333,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			if (existMapSight(p.getId())) {
@@ -1383,7 +1383,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			if (existPlaceOfInterestSight(p.getId())) {
@@ -1434,7 +1434,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			if (existRouteSight(p.getId())) {
@@ -1487,7 +1487,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			if (existCityDataVersion(p.getId())) {
@@ -1542,7 +1542,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			if (existSubscription(p.getId())) {
@@ -1601,7 +1601,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			if (existOneTimePurchase(p.getId())) {
@@ -1659,7 +1659,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			if (existStatistic(p.getId())) {
@@ -1720,7 +1720,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			String sql = "DELETE FROM " + table + " WHERE ID=?";
@@ -1893,7 +1893,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			int counter = 1;
@@ -1950,7 +1950,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			String sql = "SELECT ID FROM " + Table.Map.getValue() + " WHERE ";
@@ -2003,7 +2003,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			String sql = "SELECT ID FROM " + Table.Route.getValue() + " WHERE ";
@@ -2049,7 +2049,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			String[] words = { "" };
@@ -2104,7 +2104,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			int counter = 1;
@@ -2174,7 +2174,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			int counter = 1;
@@ -2220,7 +2220,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			int counter = 1;
@@ -2270,7 +2270,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			int counter = 1;
@@ -2315,7 +2315,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			int counter = 1;
@@ -2361,7 +2361,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			int counter = 1;
@@ -2410,7 +2410,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			int counter = 1;
@@ -2452,7 +2452,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			int counter = 1;
@@ -2513,7 +2513,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			int counter = 1;
@@ -2571,7 +2571,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			int counter = 1;
@@ -2633,7 +2633,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
-				System.out.println("Creating local connection");
+				System.err.println("Creating local connection \n \n \n It means something is wrong \n You did not call create connection, or closed the connection.");
 				createConnection();
 			}
 			String sql = "SELECT * FROM " + table + " WHERE ID=?";
