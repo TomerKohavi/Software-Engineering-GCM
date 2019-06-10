@@ -26,8 +26,8 @@
                </image>
             </ImageView>
          </children></Pane>
-      <JFXTextField fx:id="Username" focusColor="#41e0d0" layoutX="590.0" layoutY="342.0" onAction="#getUsername" prefHeight="25.0" prefWidth="287.0" promptText="Username" />
-      <JFXPasswordField fx:id="Password" focusColor="#41e0d0" layoutX="590.0" layoutY="419.0" onAction="#getPassword" prefHeight="25.0" prefWidth="287.0" promptText="Password" />
+      <JFXTextField fx:id="Username" focusColor="#41e0d0" layoutX="590.0" layoutY="342.0" onAction="#login" prefHeight="25.0" prefWidth="287.0" promptText="Username" />
+      <JFXPasswordField fx:id="Password" focusColor="#41e0d0" layoutX="590.0" layoutY="419.0" onAction="#login" prefHeight="25.0" prefWidth="287.0" promptText="Password" />
       <JFXButton fx:id="LoginButton" layoutX="590.0" layoutY="500.0" onAction="#login" prefHeight="45.0" prefWidth="287.0" style="-fx-background-color: #41e0d0;" text="Login">
          <font>
             <Font size="21.0" />
