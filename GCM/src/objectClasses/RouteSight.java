@@ -29,7 +29,7 @@ public class RouteSight implements ClassMustProperties, Serializable {
 		this.id = Database.generateIdRouteSight();
 		this.cityDataVersionId = cdvId;
 		this.routeId = r.getId();
-		this.isFavorite=isFavorite;
+		this.isFavorite = isFavorite;
 		this.temp_route = r;
 	}
 

@@ -66,9 +66,9 @@ public class ChatClient extends AbstractClient
 	AllCitiesRequest cityReq;
 
 	CreateMap cmap;
-	
+
 	CreatePOI cpoi;
-	
+
 	CreateRoute croute;
 
 	Semaphore semaphore;
@@ -244,20 +244,22 @@ public class ChatClient extends AbstractClient
 		this.semAcquire();
 		return this.cmap.mapS;
 	}
-	
-	public PlaceOfInterestSight createPOI(int cityId, String name, PlaceType type, String placeDescription, boolean accessibilityToDisabled,int cdvId) throws IOException{
-		sendToServer(new CreatePOI(cityId, name, type, placeDescription, accessibilityToDisabled,cdvId));
+
+	public PlaceOfInterestSight createPOI(int cityId, String name, PlaceType type, String placeDescription,
+			boolean accessibilityToDisabled, int cdvId) throws IOException
+	{
+		sendToServer(new CreatePOI(cityId, name, type, placeDescription, accessibilityToDisabled, cdvId));
 		this.semAcquire();
 		return this.cpoi.poiS;
-	} 
+	}
 
-	public RouteSight createRoute(int cityId, String info,int cdvId) throws IOException{
-		sendToServer(new CreateRoute(cityId, info,cdvId));
+	public RouteSight createRoute(int cityId, String info, int cdvId) throws IOException
+	{
+		sendToServer(new CreateRoute(cityId, info, cdvId));
 		this.semAcquire();
 		return this.croute.routeS;
-	} 
+	}
 
-	
 	/**
 	 * @param object update every object that is not user
 	 * @throws IOException cannot update
@@ -303,8 +305,7 @@ public class ChatClient extends AbstractClient
 			this.cpoi = (CreatePOI) msg;
 		else if (msg instanceof CreateRoute)
 			this.croute = (CreateRoute) msg;
-		
-		
+
 		if (msg instanceof Command)
 			this.semaphore.release();
 		else
@@ -339,5 +340,10 @@ public class ChatClient extends AbstractClient
 		clientUI.display("The connection to the Server (" + getHost() + ", " + getPort() + ") has been disconnected");
 	}
 
+	public static void main(String[] args) throws IOException
+	{
+		ChatClient client = new ChatClient("localhost", 5555, new Console());
+		client.createMap(1234, "sigmap", "mapsig", "oof.png", 4321);
+	}
 }
 // End of ChatClient class
