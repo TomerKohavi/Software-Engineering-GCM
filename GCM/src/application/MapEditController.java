@@ -166,35 +166,27 @@ public class MapEditController
 	@FXML
 	void apply(ActionEvent event)
 	{
-		if (Connector.isEdit)
+		try
 		{
-			map.setName(Name.getText());
-			map.setInfo(InfoBox.getText());
+			if (Connector.isEdit)
+			{
+				map.setName(Name.getText());
+				map.setInfo(InfoBox.getText());
 //    	map.setImgURL(imgURL);
 //		MapImage.getImage(); 
-			try
-			{
 				Connector.client.update(map);
 			}
-			catch (IOException e)
+			else
 			{
-				e.printStackTrace();
-			}
-		}
-		else
-		{
-			try
-			{
-				MapSight mapS = Connector.client.createMap(Connector.selectedCity.getId(), Name.getText(), InfoBox.getText(), null,
-						Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId());
+				MapSight mapS = Connector.client.createMap(Connector.selectedCity.getId(), Name.getText(),
+						InfoBox.getText(), null, Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId());
 				Connector.searchMapResult.add(mapS);
 			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
 		}
-
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 		if (!firstPOIAdded)
 		{
 			mainPane.getChildren().remove(mainPane.getChildren().size() - 1);

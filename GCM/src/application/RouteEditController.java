@@ -19,16 +19,19 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import objectClasses.PlaceOfInterestSight;
 import objectClasses.Route;
+import objectClasses.RouteSight;
 import objectClasses.RouteStop;
+import objectClasses.PlaceOfInterest.PlaceType;
 
 public class RouteEditController
 {
 
 	private Route route;
-	
+
 	private ArrayList<RouteStop> stopList;
-	
+
 	private TableColumn<RouteStop, String> poiColumn;
 	private TableColumn<RouteStop, Time> timeColumn;
 
@@ -71,31 +74,29 @@ public class RouteEditController
 			route = Connector.selectedRoute;
 			Name.setText("Route " + route.getId());
 			InfoBox.setText(route.getInfo());
-			
+
 			stopList = route.getCopyRouteStops();
 			StopsBox.setVisible(true);
 			ObservableList<RouteStop> stops = FXCollections.observableArrayList(stopList);
-			
+
 			poiColumn = new TableColumn<>("POI");
 			poiColumn.setMinWidth(212);
 			poiColumn.setCellValueFactory(new PropertyValueFactory<>("tempPlaceName"));
-			
+
 			timeColumn = new TableColumn<>("Time");
 			timeColumn.setMinWidth(83);
 			timeColumn.setCellValueFactory(new PropertyValueFactory<>("recommendedTime"));
-			
+
 			StopsBox.setItems(stops);
 
 			StopsBox.getColumns().clear();
 			StopsBox.getColumns().addAll(poiColumn, timeColumn);
 		}
-		else
-			route = new Route(Connector.selectedCity.getId(), null);
-		
+
 		POIBox.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
 
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private void updateTable()
 	{
@@ -117,7 +118,8 @@ public class RouteEditController
 			int selectedIdx = POIBox.getSelectionModel().getSelectedIndex();
 			if (selectedIdx >= 0)
 			{
-				RouteStop newRouteStop = new RouteStop(route, Connector.searchPOIResult.get(selectedIdx).getCopyPlace(), new Time((time/60), time % 60, 0)); // TODO
+				RouteStop newRouteStop = new RouteStop(route, Connector.searchPOIResult.get(selectedIdx).getCopyPlace(),
+						new Time((time / 60), time % 60, 0)); // TODO
 				stopList.add(newRouteStop);
 				updateTable();
 				StopTime.setText("");
@@ -142,10 +144,19 @@ public class RouteEditController
 	@FXML
 	void apply(ActionEvent event)
 	{
-		route.setInfo(InfoBox.getText());
 		try
 		{
-			Connector.client.update(route);
+			if (Connector.isEdit)
+			{
+				route.setInfo(InfoBox.getText());
+				Connector.client.update(route);
+			}
+			else
+			{
+					RouteSight routeS = Connector.client.createRoute(Connector.selectedCity.getId(), Name.getText(),
+							Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId());
+					Connector.searchRouteResult.add(routeS);
+			}
 		}
 		catch (IOException e)
 		{

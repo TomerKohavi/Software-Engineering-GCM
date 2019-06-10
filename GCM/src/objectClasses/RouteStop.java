@@ -40,7 +40,7 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 		this.temp_place = p;
 		this.tempPlaceName = p.getName();
 	}
-
+	
 	public void saveToDatabase() {
 		Database._saveRouteStop(this);
 	}
