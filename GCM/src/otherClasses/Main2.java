@@ -21,7 +21,7 @@ public class Main2 {
 			/*Customer c=Database.getCustomerById(2);
 			System.out.println(c.getCopyActiveSubscription().get(0).getCityId());
 			ArrayList<Integer> ids = Database.searchSubscription(null, null, today, true);*/
-			InformationSystem.newVersionWasPublished(3);
+			InformationSystem.newVersionWasPublished(2);
 			InformationSystem.newVersionWasPublished(1);
 			Downloader.downloadReportsUpdateVersions("downloadReportsUpdateVersions.txt");
 			
