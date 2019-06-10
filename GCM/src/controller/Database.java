@@ -338,6 +338,7 @@ public class Database
 				cdv.addRouteSight(rs1);
 
 				c1.addPublishedCityDataVersion(cdv);
+				c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv,"2.0"));
 				c1.saveToDatabase();
 			}
 			// 2
@@ -423,6 +424,7 @@ public class Database
 				cdv.addRouteSight(rs1);
 
 				c1.addPublishedCityDataVersion(cdv);
+				c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv,"2.0"));
 				c1.saveToDatabase();
 			}
 			// 3
@@ -507,6 +509,7 @@ public class Database
 			cdv.addRouteSight(rs1);
 
 			c1.addPublishedCityDataVersion(cdv);
+			c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv,"2.0"));
 			c1.saveToDatabase();
 
 			// create Users
@@ -517,12 +520,12 @@ public class Database
 				e.saveToDatabase();
 				Customer cust = new Customer("yosi11", "LDCyosiiii!", "yosi@gmail.com", "yosi", "ben asser",
 						"0523322123", "5495681338665894", "07/24", "896");
-				Subscription sub0 = new Subscription(cust, c1, new Date(119, 8, 6), 201.8, 199.9, new Date(119, 10, 8));
+				Subscription sub0 = new Subscription(cust, 2, new Date(119, 8, 6), 201.8, 199.9, new Date(119, 10, 8));
 				cust.addSubscription(sub0);
-				Subscription sub1 = new Subscription(cust, c1, new Date(109, 8, 6), 171.8, 112.9, new Date(119, 9, 7));
+				Subscription sub1 = new Subscription(cust, 2, new Date(109, 8, 6), 171.8, 112.9, new Date(119, 9, 7));
 				cust.addSubscription(sub1);
 
-				OneTimePurchase otp = new OneTimePurchase(cust, c1, new Date(119, 8, 6), 20, 19);
+				OneTimePurchase otp = new OneTimePurchase(cust, 1 , new Date(119, 8, 6), 20, 19);
 				otp.updateToWasDownload();
 				cust.addOneTimePurchase(otp);
 				cust.saveToDatabase();
@@ -534,12 +537,12 @@ public class Database
 				e.saveToDatabase();
 				Customer cust = new Customer("dan", "masterDan%", "dannyf.post@gmail.com", "dan", "feldman",
 						"0523325686", "5495655558665894", "01/23", "354");
-				Subscription sub0 = new Subscription(cust, c1, new Date(113, 8, 6), 211.8, 189.9, new Date(119, 10, 8));
+				Subscription sub0 = new Subscription(cust, 1, new Date(113, 8, 6), 211.8, 189.9, new Date(119, 10, 8));
 				cust.addSubscription(sub0);
-				Subscription sub1 = new Subscription(cust, c1, new Date(109, 9, 2), 131.8, 111.9, new Date(119, 8, 3));
+				Subscription sub1 = new Subscription(cust, 3, new Date(109, 9, 2), 131.8, 111.9, new Date(119, 8, 3));
 				cust.addSubscription(sub1);
 
-				OneTimePurchase otp = new OneTimePurchase(cust, c1, new Date(119, 8, 6), 19, 18);
+				OneTimePurchase otp = new OneTimePurchase(cust, 2, new Date(119, 8, 6), 19, 18);
 				otp.updateToWasDownload();
 				cust.addOneTimePurchase(otp);
 				cust.saveToDatabase();
@@ -552,10 +555,10 @@ public class Database
 				e.saveToDatabase();
 				Customer cust = new Customer("gadi", "gadiHAVIV!@", "gadi@gmail.com", "gadi", "landau", "0524867726",
 						"5495123458665894", "01/25", "891");
-				Subscription sub = new Subscription(cust, c1, new Date(119, 7, 6), 53.2, 50.9, new Date(119, 9, 8));
+				Subscription sub = new Subscription(cust, 1, new Date(119, 7, 6), 53.2, 50.9, new Date(119, 9, 8));
 				cust.addSubscription(sub);
 
-				OneTimePurchase otp = new OneTimePurchase(cust, c1, new Date(119, 8, 6), 9, 8);
+				OneTimePurchase otp = new OneTimePurchase(cust, 2, new Date(119, 8, 6), 9, 8);
 				otp.updateToWasDownload();
 				cust.addOneTimePurchase(otp);
 				cust.saveToDatabase();
@@ -567,10 +570,10 @@ public class Database
 				e.saveToDatabase();
 				Customer cust = new Customer("tomer", "IAmTomer*", "1234tomer@gmail.com", "tomer", "kohavi",
 						"0524867726", "5495123458612894", "02/25", "821");
-				Subscription sub = new Subscription(cust, c1, new Date(119, 7, 6), 63.2, 50.9, new Date(119, 9, 8));
+				Subscription sub = new Subscription(cust, 3, new Date(119, 7, 6), 63.2, 50.9, new Date(119, 9, 8));
 				cust.addSubscription(sub);
 
-				OneTimePurchase otp = new OneTimePurchase(cust, c1, new Date(119, 7, 6), 19, 8);
+				OneTimePurchase otp = new OneTimePurchase(cust, 1, new Date(119, 7, 6), 19, 8);
 				otp.updateToWasDownload();
 				cust.addOneTimePurchase(otp);
 				cust.saveToDatabase();

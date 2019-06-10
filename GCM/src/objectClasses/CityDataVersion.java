@@ -48,9 +48,9 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 		this.temp_removeRouteSights = new ArrayList<>();
 	}
 
-	public CityDataVersion(CityDataVersion other) {
+	public CityDataVersion(CityDataVersion other,String versionName) {
 		this.id = Database.generateIdCityDataVersion();
-		this.versionName = other.versionName;
+		this.versionName = versionName;
 		this.priceOneTime = other.priceOneTime;
 		this.pricePeriod = other.pricePeriod;
 		this.cityId = other.cityId;

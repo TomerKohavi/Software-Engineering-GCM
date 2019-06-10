@@ -19,8 +19,8 @@ public class OneTimePurchase extends CityPurchase implements ClassMustProperties
         return new OneTimePurchase(id,cityId,userId,purchaseDate, fullPrice,pricePayed,wasDownload);
     }
 
-    public OneTimePurchase(Customer u,City c, Date purchaseDate, double fullPrice, double pricePayed) {
-        super(u.getId(), c.getId(), purchaseDate, fullPrice, pricePayed);
+    public OneTimePurchase(Customer u,int cityId, Date purchaseDate, double fullPrice, double pricePayed) {
+        super(u.getId(), cityId, purchaseDate, fullPrice, pricePayed);
         this.wasDownload = false;
     }
 
@@ -30,7 +30,9 @@ public class OneTimePurchase extends CityPurchase implements ClassMustProperties
 
     public void deleteFromDatabase(){Database._deleteOneTimePurchase(this.getId());}
 
-    public void reloadTempsFromDatabase(){}
+    public void reloadTempsFromDatabase(){
+    	super.reloadTempsFromDatabase();
+    }
 
     public boolean getWasDownload() {
         return wasDownload;
