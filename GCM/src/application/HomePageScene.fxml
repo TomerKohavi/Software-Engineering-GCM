@@ -80,7 +80,7 @@
                   <Font size="14.0" />
                </font>
             </JFXButton>
-            <TableView fx:id="StopsTable" layoutX="74.0" layoutY="248.0" prefHeight="274.0" prefWidth="452.0" visible="false">
+            <TableView fx:id="StopsTable" layoutX="74.0" layoutY="248.0" prefHeight="275.0" prefWidth="450.0" visible="false">
               <columns>
                 <TableColumn prefWidth="359.0" text="POI" />
                 <TableColumn minWidth="0.0" prefWidth="92.0" text="Time" />

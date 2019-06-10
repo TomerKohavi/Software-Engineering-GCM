@@ -356,6 +356,7 @@ public class HomePageController
 		MainList.setOnMouseClicked(new EventHandler<MouseEvent>()
 		{
 
+			@SuppressWarnings("unchecked")
 			@Override
 			public void handle(MouseEvent click)
 			{
@@ -411,20 +412,22 @@ public class HomePageController
 							Connector.selectedRoute = route;
 							ResultName.setText("Route " + route.getId());// set name and type
 							ResultInfo.setText(route.getInfo()); // set info
-							Text1.setText((route.isAcceptabilityToDisabled() ? "" : "Not") + "Accessible to Disabled");
+//							boolean isAccess = route.isAcceptabilityToDisabled();
+//							Text1.setText((isAccess ? "" : "Not ") + "Accessible to Disabled");
 
 							// TODO KOHAVI IMPLEMENTS
 							ArrayList<RouteStop> list = route.getCopyRouteStops();
 							StopsTable.setVisible(true);
 							ObservableList<RouteStop> stops = FXCollections.observableArrayList(list);
+							System.out.println(list.get(1).tempPlaceName);
 							
-							TableColumn<RouteStop, Integer> poiColumn = new TableColumn<>("POI");
-//							poiColumn.setMinWidth(200);
-							poiColumn.setCellValueFactory(new PropertyValueFactory<>("temp_placeNam"));
+							TableColumn<RouteStop, String> poiColumn = new TableColumn<>("POI");
+							poiColumn.setMinWidth(365);
+							poiColumn.setCellValueFactory(new PropertyValueFactory<>("tempPlaceName"));
 							
 							TableColumn<RouteStop, Time> timeColumn = new TableColumn<>("Time");
-//							poiColumn.setMinWidth(200);
-							poiColumn.setCellValueFactory(new PropertyValueFactory<>("recommendedTime"));
+							timeColumn.setMinWidth(83);
+							timeColumn.setCellValueFactory(new PropertyValueFactory<>("recommendedTime"));
 							
 							StopsTable.setItems(stops);
 
