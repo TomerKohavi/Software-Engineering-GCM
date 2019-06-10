@@ -187,7 +187,7 @@ public class MapEditController
 			{
 				MapSight mapS = Connector.client.createMap(Connector.selectedCity.getId(), Name.getText(), InfoBox.getText(), null,
 						Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId());
-				// TODO KOHAVI USE
+				Connector.searchMapResult.add(mapS);
 			}
 			catch (IOException e)
 			{

@@ -305,7 +305,10 @@ public class EchoServer extends AbstractServer
 				handleUpdate((Update) msg);
 			else if (msg instanceof CreateMap)
 				client.sendToClient(handleMapCreation((CreateMap) msg));
-			// TODO LIOR DO IT
+			else if (msg instanceof CreatePOI)
+				client.sendToClient(handlePOICreation((CreatePOI) msg));
+			else if (msg instanceof CreateMap)
+				client.sendToClient(handleRouteCreation((CreateRoute) msg));
 			else
 				System.out.println(msg.getClass().toString() + '\n' + msg.toString());
 		}
