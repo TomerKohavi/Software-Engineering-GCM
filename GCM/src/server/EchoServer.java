@@ -22,6 +22,7 @@ import controller.Database;
 import controller.SearchCatalog;
 import io_commands.*;
 import javafx.scene.chart.PieChart.Data;
+import objectClasses.City;
 import objectClasses.Customer;
 import objectClasses.Employee;
 import objectClasses.User;
@@ -189,6 +190,12 @@ public class EchoServer extends AbstractServer
 
 	}
 
+	public void handleUpdate(Update update)
+	{
+		System.out.println("update " + update.toUpdate.getClass().toString());
+		update.toUpdate.saveToDatabase();
+	}
+	
 	/**
 	 * This method handles any messages received from the client.
 	 *
@@ -210,7 +217,7 @@ public class EchoServer extends AbstractServer
 				ImageTransfer imTr = (ImageTransfer) msg;
 				if (imTr.requested)
 				{
-					imTr.loadImage();
+					imTr.readImageFromFile();
 					client.sendToClient(imTr);
 				}
 				else
@@ -218,12 +225,16 @@ public class EchoServer extends AbstractServer
 			}
 			else if (msg instanceof Search)
 				client.sendToClient(handleSearch((Search) msg));
-			else if (msg instanceof User)
-				handleUpdateUser((User) msg);
 			else if (msg instanceof CustomersRequest)
 				client.sendToClient(handleUsersRequest((CustomersRequest) msg)); 
 			else if (msg instanceof AllCitiesRequest)
 				client.sendToClient(handleCityRequest((AllCitiesRequest) msg)); 
+			else if (msg instanceof User)
+				handleUpdateUser((User) msg);
+			else if (msg instanceof Update)
+				handleUpdate((Update) msg);
+			else
+				System.out.println(msg.getClass().toString());
 		}
 		catch (IOException e)
 		{

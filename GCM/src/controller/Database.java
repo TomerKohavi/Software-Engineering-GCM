@@ -24,6 +24,7 @@ import objectClasses.RouteSight;
 import objectClasses.RouteStop;
 import objectClasses.Statistic;
 import objectClasses.Subscription;
+import otherClasses.DatabaseException;
 import otherClasses.Pair;
 import objectClasses.Employee.Role;
 import objectClasses.PlaceOfInterest.PlaceType;
@@ -36,7 +37,8 @@ import java.security.MessageDigest;
  * @author tal20
  *
  */
-public class Database {
+public class Database
+{
 	static private final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 
 	// update USER, PASS and DB URL according to credentials provided by the
@@ -54,7 +56,8 @@ public class Database {
 	 *         table
 	 * 
 	 */
-	public enum Counter {
+	public enum Counter
+	{
 		PlaceOfInterest(0), User(1), Map(2), Location(3), CityDataVersion(4), Route(5), CityPurchase(6), City(7),
 		RouteStop(8), MapSight(9), PlaceOfInterestSight(10), RouteSight(11), Statistic(12);
 
@@ -66,7 +69,8 @@ public class Database {
 		 * @param nv: Integer that hold the value
 		 * @return A Counter object.
 		 */
-		Counter(final int nv) {
+		Counter(final int nv)
+		{
 			value = nv;
 		}
 
@@ -75,7 +79,8 @@ public class Database {
 		 * 
 		 * @return Returns the value
 		 */
-		public int getValue() {
+		public int getValue()
+		{
 			return value;
 		}
 	}
@@ -85,10 +90,12 @@ public class Database {
 	 * 
 	 * @return List of all the customers
 	 */
-	public static ArrayList<Customer> getAllCustomers() {
+	public static ArrayList<Customer> getAllCustomers()
+	{
 		ArrayList<Integer> ids = searchCustomer(null, null);
 		ArrayList<Customer> custs = new ArrayList<Customer>();
-		for (int id : ids) {
+		for (int id : ids)
+		{
 			Customer c = Database.getCustomerById(id);
 			if (c != null)
 				custs.add(c);
@@ -101,10 +108,12 @@ public class Database {
 	 * 
 	 * @return List of all the cities
 	 */
-	public static ArrayList<Pair<String, Integer>> getAllCitiesNameId() {
+	public static ArrayList<Pair<String, Integer>> getAllCitiesNameId()
+	{
 		ArrayList<Integer> ids = searchCity(null, null);
 		ArrayList<Pair<String, Integer>> list = new ArrayList<Pair<String, Integer>>();
-		for (int id : ids) {
+		for (int id : ids)
+		{
 			String cName = Database.getCityNameById(id);
 			if (cName == null)
 				continue;
@@ -116,7 +125,8 @@ public class Database {
 	/**
 	 * @author tal20 This enum maps from full table names and local names.
 	 */
-	public enum Table {
+	public enum Table
+	{
 		PlaceOfInterest("POIs"), Map("Maps"), Route("Routes"), City("Cities"), Customer("Customers"),
 		Employee("Employees"), Location("Locations"), RouteStop("RouteStop"), MapSight("MapSights"),
 		PlaceOfInterestSight("POISights"), RouteSight("RouteSights"), CityDataVersion("CityDataVersions"),
@@ -129,14 +139,16 @@ public class Database {
 		 * 
 		 * @param envUrl
 		 */
-		Table(final String envUrl) {
+		Table(final String envUrl)
+		{
 			url = envUrl;
 		}
 
 		/**
 		 * @return the table name
 		 */
-		public String getValue() {
+		public String getValue()
+		{
 			return url;
 		}
 	}
@@ -144,15 +156,20 @@ public class Database {
 	/**
 	 * Create a new database connection.
 	 */
-	public static void createConnection() {
-		try {
-			if (conn == null) {
+	public static void createConnection()
+	{
+		try
+		{
+			if (conn == null)
+			{
 				Class.forName(JDBC_DRIVER);
 				conn = DriverManager.getConnection(DB_URL, USER, PASS);
 				System.out.println("connection opening");
 			}
-		} catch (Exception e) {
-			System.out.println(e.getClass().toString());
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
 		}
 
 	}
@@ -160,17 +177,21 @@ public class Database {
 	/**
 	 * CLose the database connection
 	 */
-	public static void closeConnection() {
-		try {
-			if (conn != null) {
+	public static void closeConnection()
+	{
+		try
+		{
+			if (conn != null)
+			{
 				conn.close();
 				conn = null;
 				System.out.println("connection closing");
 			}
 			return;
-		} catch (Exception e) {
-			System.out.println(e.getClass().toString());
-			System.out.println(e.getClass().toString());
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
 		}
 		return;
 	}
@@ -183,8 +204,10 @@ public class Database {
 	 * @param pass of the user
 	 * @return true if the data base is reset
 	 */
-	public static boolean resetAll(String name, String pass) {
-		try {
+	public static boolean resetAll(String name, String pass)
+	{
+		try
+		{
 			String sql = "SELECT Name FROM Team WHERE Name=? AND Password=?";
 			PreparedStatement check = conn.prepareStatement(sql);
 			check.setString(1, name);
@@ -193,22 +216,26 @@ public class Database {
 			// check if there is exciting row in table before insert
 			if (!res.next())
 				return false;
-			for (Table table : Table.values()) {
+			for (Table table : Table.values())
+			{
 				sql = "DELETE FROM " + table.getValue() + " WHERE TRUE";
 				PreparedStatement gt = conn.prepareStatement(sql);
 				gt.executeUpdate();
 			}
 
-			for (Counter type : Counter.values()) {
+			for (Counter type : Counter.values())
+			{
 				PreparedStatement su = conn.prepareStatement("UPDATE `Counters` SET Counter=0 WHERE Object=?");
 				su.setInt(1, type.getValue());
 				su.executeUpdate();
 			}
 			System.out.println("Finished reset");
 			return true;
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 		}
 		return true;
 	}
@@ -219,8 +246,10 @@ public class Database {
 	 * @param name of the user permission
 	 * @param pass of the user permission
 	 */
-	public static void initDatabase(String name, String pass) {
-		try {
+	public static void initDatabase(String name, String pass)
+	{
+		try
+		{
 			Database.createConnection();
 			// reset
 			if (!Database.resetAll(name, pass))
@@ -547,9 +576,13 @@ public class Database {
 				cust.saveToDatabase();
 			}
 
-		} catch (Exception e) {
-			System.out.println(e.getClass().toString());
-		} finally {
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
 			// Database.closeConnection();
 		}
 	}
@@ -559,15 +592,17 @@ public class Database {
 	 * @param type: the table find ID
 	 * @return the ID of this table
 	 */
-	private static int generateId(int type) {
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
-			}
+	private static int generateId(int type)
+	{
+		try
+		{
 
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
+			}
 			PreparedStatement gt = conn.prepareStatement("SELECT Counter FROM Counters WHERE Object=? ");
 			gt.setInt(1, type);
 			ResultSet res = gt.executeQuery();
@@ -577,16 +612,12 @@ public class Database {
 			su.setInt(1, counter);
 			su.setInt(2, type);
 			su.executeUpdate();
-
-			if (localConnectionCreated) {
-				System.out.println("Closing local connection");
-				localConnectionCreated = false;
-				closeConnection();
-			}
 			return counter;
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return -1;
 		}
 	}
@@ -594,14 +625,16 @@ public class Database {
 	/**
 	 * @return the ID of the next user
 	 */
-	public static int generateIdUser() {
+	public static int generateIdUser()
+	{
 		return generateId(Counter.User.getValue());
 	}
 
 	/**
 	 * @return the ID of the next POI
 	 */
-	public static int generateIdPlaceOfInterest() {// first example
+	public static int generateIdPlaceOfInterest()
+	{// first example
 		return generateId(Counter.PlaceOfInterest.getValue());
 
 	}
@@ -609,109 +642,120 @@ public class Database {
 	/**
 	 * @return the ID of the next map
 	 */
-	public static int generateIdMap() {
+	public static int generateIdMap()
+	{
 		return generateId(Counter.Map.getValue());
 	}
 
 	/**
 	 * @return the ID of the next location
 	 */
-	public static int generateIdLocation() {
+	public static int generateIdLocation()
+	{
 		return generateId(Counter.Location.getValue());
 	}
 
 	/**
 	 * @return the ID of the next city data version
 	 */
-	public static int generateIdCityDataVersion() {
+	public static int generateIdCityDataVersion()
+	{
 		return generateId(Counter.CityDataVersion.getValue());
 	}
 
 	/**
 	 * @return the ID of the next route
 	 */
-	public static int generateIdRoute() {
+	public static int generateIdRoute()
+	{
 		return generateId(Counter.Route.getValue());
 	}
 
 	/**
 	 * @return the ID of the next city purchase
 	 */
-	public static int generateIdCityPurchase() {
+	public static int generateIdCityPurchase()
+	{
 		return generateId(Counter.CityPurchase.getValue());
 	}
 
 	/**
 	 * @return the ID of the next city
 	 */
-	public static int generateIdCity() {
+	public static int generateIdCity()
+	{
 		return generateId(Counter.City.getValue());
 	}
 
 	/**
 	 * @return the ID of the next route stop
 	 */
-	public static int generateIdRouteStop() {
+	public static int generateIdRouteStop()
+	{
 		return generateId(Counter.RouteStop.getValue());
 	}
 
 	/**
 	 * @return the ID of the next map sight
 	 */
-	public static int generateIdMapSight() {
+	public static int generateIdMapSight()
+	{
 		return generateId(Counter.MapSight.getValue());
 	}
 
 	/**
 	 * @return the ID of the next POI sight
 	 */
-	public static int generateIdPlaceOfInterestSight() {
+	public static int generateIdPlaceOfInterestSight()
+	{
 		return generateId(Counter.PlaceOfInterestSight.getValue());
 	}
 
 	/**
 	 * @return the ID of the next route sight
 	 */
-	public static int generateIdRouteSight() {
+	public static int generateIdRouteSight()
+	{
 		return generateId(Counter.RouteSight.getValue());
 	}
 
 	/**
 	 * @return the ID of the next statistic
 	 */
-	public static int generateIdStatistic() {
+	public static int generateIdStatistic()
+	{
 		return generateId(Counter.Statistic.getValue());
 	}
 
 	/**
 	 * @param table: the table to search in
-	 * @param id: the id to search
+	 * @param id:    the id to search
 	 * @return true if exists, false else.
 	 */
-	private static boolean exist(String table, int id) {
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+	private static boolean exist(String table, int id)
+	{
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
 			String sql = "SELECT ID FROM " + table + " WHERE ID=?";
 			PreparedStatement check = conn.prepareStatement(sql);
 			check.setInt(1, id);
 			ResultSet res = check.executeQuery();
 			// check if there is exciting row in table before insert
-			if (localConnectionCreated) {
-				System.out.println("Closing local connection");
-				localConnectionCreated = false;
-				closeConnection();
-			}
 			if (!res.next())
 				return false;
 			return true;
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 		}
 		return true;
 	}
@@ -722,7 +766,8 @@ public class Database {
 	 * @param id: id to search for
 	 * @return whether there is a POI with this ID.
 	 */
-	private static boolean existPlaceOfInterest(int id) {
+	private static boolean existPlaceOfInterest(int id)
+	{
 		return exist(Table.PlaceOfInterest.getValue(), id);
 	}
 
@@ -732,7 +777,8 @@ public class Database {
 	 * @param id: id to search for
 	 * @return whether there is a map with this ID.
 	 */
-	private static boolean existMap(int id) {
+	private static boolean existMap(int id)
+	{
 		return exist(Table.Map.getValue(), id);
 	}
 
@@ -742,7 +788,8 @@ public class Database {
 	 * @param id: id to search for
 	 * @return whether there is a route with this ID.
 	 */
-	private static boolean existRoute(int id) {
+	private static boolean existRoute(int id)
+	{
 		return exist(Table.Route.getValue(), id);
 	}
 
@@ -752,7 +799,8 @@ public class Database {
 	 * @param id: id to search for
 	 * @return whether there is a city with this ID.
 	 */
-	private static boolean existCity(int id) {
+	private static boolean existCity(int id)
+	{
 		return exist(Table.City.getValue(), id);
 	}
 
@@ -762,7 +810,8 @@ public class Database {
 	 * @param id: id to search for
 	 * @return whether there is a customer with this ID.
 	 */
-	private static boolean existCustomer(int id) {
+	private static boolean existCustomer(int id)
+	{
 		return exist(Table.Customer.getValue(), id);
 	}
 
@@ -772,7 +821,8 @@ public class Database {
 	 * @param id: id to search for
 	 * @return whether there is a employee with this ID.
 	 */
-	private static boolean existEmployee(int id) {
+	private static boolean existEmployee(int id)
+	{
 		return exist(Table.Employee.getValue(), id);
 	}
 
@@ -782,7 +832,8 @@ public class Database {
 	 * @param id: id to search for
 	 * @return whether there is a location with this ID.
 	 */
-	private static boolean existLocation(int id) {
+	private static boolean existLocation(int id)
+	{
 		return exist(Table.Location.getValue(), id);
 	}
 
@@ -792,7 +843,8 @@ public class Database {
 	 * @param id: id to search for
 	 * @return whether there is a route stop with this ID.
 	 */
-	private static boolean existRouteStop(int id) {
+	private static boolean existRouteStop(int id)
+	{
 		return exist(Table.RouteStop.getValue(), id);
 	}
 
@@ -802,7 +854,8 @@ public class Database {
 	 * @param id: id to search for
 	 * @return whether there is a map sight with this ID.
 	 */
-	private static boolean existMapSight(int id) {
+	private static boolean existMapSight(int id)
+	{
 		return exist(Table.MapSight.getValue(), id);
 	}
 
@@ -812,7 +865,8 @@ public class Database {
 	 * @param id: id to search for
 	 * @return whether there is a POI sight with this ID.
 	 */
-	private static boolean existPlaceOfInterestSight(int id) {
+	private static boolean existPlaceOfInterestSight(int id)
+	{
 		return exist(Table.PlaceOfInterestSight.getValue(), id);
 	}
 
@@ -822,7 +876,8 @@ public class Database {
 	 * @param id: id to search for
 	 * @return whether there is a route sight with this ID.
 	 */
-	private static boolean existRouteSight(int id) {
+	private static boolean existRouteSight(int id)
+	{
 		return exist(Table.RouteSight.getValue(), id);
 	}
 
@@ -832,7 +887,8 @@ public class Database {
 	 * @param id: id to search for
 	 * @return whether there is a city data version with this ID.
 	 */
-	private static boolean existCityDataVersion(int id) {
+	private static boolean existCityDataVersion(int id)
+	{
 		return exist(Table.CityDataVersion.getValue(), id);
 	}
 
@@ -842,7 +898,8 @@ public class Database {
 	 * @param id: id to search for
 	 * @return whether there is a subscription with this ID.
 	 */
-	private static boolean existSubscription(int id) {
+	private static boolean existSubscription(int id)
+	{
 		return exist(Table.Subscription.getValue(), id);
 	}
 
@@ -852,7 +909,8 @@ public class Database {
 	 * @param id: id to search for
 	 * @return whether there is a one time purchase with this ID.
 	 */
-	private static boolean existOneTimePurchase(int id) {
+	private static boolean existOneTimePurchase(int id)
+	{
 		return exist(Table.OneTimePurchase.getValue(), id);
 	}
 
@@ -862,7 +920,8 @@ public class Database {
 	 * @param id: id to search for
 	 * @return whether there is a statistic with this ID.
 	 */
-	private static boolean existStatistic(int id) {
+	private static boolean existStatistic(int id)
+	{
 		return exist(Table.Statistic.getValue(), id);
 	}
 
@@ -872,15 +931,19 @@ public class Database {
 	 * @param p the place of interest we want to save
 	 * @return true if an updated was made. false for new element.
 	 */
-	public static boolean savePlaceOfInterest(PlaceOfInterest p) {
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+	public static boolean savePlaceOfInterest(PlaceOfInterest p)
+	{
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
-			if (existPlaceOfInterest(p.getId())) {
+			if (existPlaceOfInterest(p.getId()))
+			{
 				String sql = "UPDATE " + Table.PlaceOfInterest.getValue()
 						+ " SET CityID=?, Name=?, Type=?, Description=?, ATD=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
@@ -891,13 +954,10 @@ public class Database {
 				su.setBoolean(5, p.isAccessibilityToDisabled());
 				su.setInt(6, p.getId());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return true;
-			} else {
+			}
+			else
+			{
 				String sql = "INSERT INTO " + Table.PlaceOfInterest.getValue()
 						+ " (ID,CityID, Name, Type, Description, ATD) VALUES (?,?, ?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
@@ -908,17 +968,13 @@ public class Database {
 				su.setString(5, p.getPlaceDescription());
 				su.setBoolean(6, p.isAccessibilityToDisabled());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return false;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -929,16 +985,18 @@ public class Database {
 	 * @param p the map we want to save
 	 * @return true if an updated was made. false for new element.
 	 */
-	public static boolean saveMap(Map p) {
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				System.out.println("Creating local connection");
-				createConnection();
+	public static boolean saveMap(Map p)
+	{
+		try
+		{
+
+			if (conn == null)
+			{
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
-			if (existMap(p.getId())) {
+			if (existMap(p.getId()))
+			{
 				String sql = "UPDATE " + Table.Map.getValue() + " SET Name=?, Info=?, imgURL=?, CityID=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setString(1, p.getName());
@@ -947,13 +1005,10 @@ public class Database {
 				su.setInt(4, p.getCityId());
 				su.setInt(5, p.getId());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return true;
-			} else {
+			}
+			else
+			{
 				String sql = "INSERT INTO " + Table.Map.getValue()
 						+ " (ID,Name, Info, imgURL, CityID) VALUES (?,?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
@@ -963,16 +1018,13 @@ public class Database {
 				su.setString(4, p.getImgURL());
 				su.setInt(5, p.getCityId());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return false;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -983,15 +1035,19 @@ public class Database {
 	 * @param p the route we want to save
 	 * @return true if an updated was made. false for new element.
 	 */
-	public static boolean saveRoute(Route p) {
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+	public static boolean saveRoute(Route p)
+	{
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
-			if (existRoute(p.getId())) {
+			if (existRoute(p.getId()))
+			{
 				String sql = "UPDATE " + Table.Route.getValue() + " SET Info=?, NumStops=?, CityID=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setString(1, p.getInfo());
@@ -999,13 +1055,10 @@ public class Database {
 				su.setInt(3, p.getCityId());
 				su.setInt(4, p.getId());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return true;
-			} else {
+			}
+			else
+			{
 				String sql = "INSERT INTO " + Table.Route.getValue()
 						+ " (ID, Info, NumStops, CityID) VALUES (?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
@@ -1014,16 +1067,13 @@ public class Database {
 				su.setInt(3, p.getNumStops());
 				su.setInt(4, p.getCityId());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return false;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -1034,15 +1084,19 @@ public class Database {
 	 * @param p the city we want to save
 	 * @return true if an updated was made. false for new element.
 	 */
-	public static boolean saveCity(City p) {
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+	public static boolean saveCity(City p)
+	{
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
-			if (existCity(p.getId())) {
+			if (existCity(p.getId()))
+			{
 				String sql = "UPDATE " + Table.City.getValue() + " SET Name=?, Description=?, VersionID=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setString(1, p.getCityName());
@@ -1050,13 +1104,10 @@ public class Database {
 				su.setInt(3, p.getPublishedVersionId() == null ? -1 : p.getPublishedVersionId());
 				su.setInt(4, p.getId());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return true;
-			} else {
+			}
+			else
+			{
 				String sql = "INSERT INTO " + Table.City.getValue()
 						+ " (ID,Name, Description, VersionID) VALUES (?,?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
@@ -1065,16 +1116,13 @@ public class Database {
 				su.setString(3, p.getCityDescription());
 				su.setInt(4, p.getPublishedVersionId() == null ? -1 : p.getPublishedVersionId());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return false;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 
 		}
 		return false;
@@ -1086,15 +1134,19 @@ public class Database {
 	 * @param p the customer we want to save
 	 * @return true if an updated was made. false for new element.
 	 */
-	public static boolean saveCustomer(Customer p) {
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+	public static boolean saveCustomer(Customer p)
+	{
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
-			if (existCustomer(p.getId())) {
+			if (existCustomer(p.getId()))
+			{
 				String sql = "UPDATE " + Table.Customer.getValue()
 						+ " SET Username=?, Password=?, Email=?, FirstName=?, LastName=?,"
 						+ " PhoneNumber=?, CardNum=?, CVC=?, Exp=? WHERE ID=?";
@@ -1110,11 +1162,6 @@ public class Database {
 				su.setString(9, p.getCreditCardExpires());
 				su.setInt(10, p.getId());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return true;
 			}
 //			else if(!searchCustomer(p.getUserName(), null).isEmpty())
@@ -1122,7 +1169,8 @@ public class Database {
 //				System.out.println("already saved");
 //				return false;
 //			}
-			else {
+			else
+			{
 				String sql = "INSERT INTO " + Table.Customer.getValue() + " "
 						+ "(ID,Username, Password, Email, FirstName, LastName, PhoneNumber, CardNum, CVC, Exp) VALUES "
 						+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -1138,16 +1186,13 @@ public class Database {
 				su.setString(9, p.getCvc());
 				su.setString(10, p.getCreditCardExpires());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return false;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -1158,15 +1203,19 @@ public class Database {
 	 * @param p the employee we want save
 	 * @return true if an updated was made. false for new element.
 	 */
-	public static boolean saveEmployee(Employee p) {
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+	public static boolean saveEmployee(Employee p)
+	{
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
-			if (existEmployee(p.getId())) {
+			if (existEmployee(p.getId()))
+			{
 				String sql = "UPDATE " + Table.Employee.getValue() + " Username=?,"
 						+ " Password=?, Email=?, FirstName=?, LastName=?, PhoneNumber=?, Role=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
@@ -1178,13 +1227,10 @@ public class Database {
 				su.setString(6, p.getPhoneNumber());
 				su.setInt(7, p.getRole().getValue());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return true;
-			} else {
+			}
+			else
+			{
 				String sql = "INSERT INTO " + Table.Employee.getValue()
 						+ " (ID,Username, Password, Email, FirstName, LastName, PhoneNumber, Role)"
 						+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -1198,16 +1244,13 @@ public class Database {
 				su.setString(7, p.getPhoneNumber());
 				su.setInt(8, p.getRole().getValue());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return false;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -1220,14 +1263,17 @@ public class Database {
 	 */
 	public static boolean _saveLocation(Location p) // friend to Map
 	{
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
-			if (existLocation(p.getId())) {
+			if (existLocation(p.getId()))
+			{
 				String sql = "UPDATE " + Table.Location.getValue() + " SET MapID=?, POIID=?, x=?, y=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getMapId());
@@ -1236,13 +1282,10 @@ public class Database {
 				su.setDouble(4, p.getCoordinates()[1]);
 				su.setInt(5, p.getId());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return true;
-			} else {
+			}
+			else
+			{
 				String sql = "INSERT INTO " + Table.Location.getValue()
 						+ " (ID, MapID, POIID, x, y) VALUES (?, ?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
@@ -1252,16 +1295,14 @@ public class Database {
 				su.setDouble(4, p.getCoordinates()[0]);
 				su.setDouble(5, p.getCoordinates()[1]);
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
+
 				return false;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -1274,14 +1315,17 @@ public class Database {
 	 */
 	public static boolean _saveRouteStop(RouteStop p)// friend to Route
 	{
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
-			if (existRouteStop(p.getId())) {
+			if (existRouteStop(p.getId()))
+			{
 				String sql = "UPDATE " + Table.RouteStop.getValue()
 						+ " SET RouteID=?, PlaceID=?, NumStops=?, Time=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
@@ -1291,13 +1335,10 @@ public class Database {
 				su.setTime(4, p.getRecommendedTime());
 				su.setInt(5, p.getId());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return true;
-			} else {
+			}
+			else
+			{
 				String sql = "INSERT INTO " + Table.RouteStop.getValue()
 						+ " (ID,RouteID, PlaceID, NumStops, Time) VALUES (?, ?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
@@ -1307,16 +1348,13 @@ public class Database {
 				su.setInt(4, p.getNumStop());
 				su.setTime(5, p.getRecommendedTime());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return false;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -1329,27 +1367,27 @@ public class Database {
 	 */
 	public static boolean _saveMapSight(MapSight p) // friend to MapSight
 	{
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
-			if (existMapSight(p.getId())) {
+			if (existMapSight(p.getId()))
+			{
 				String sql = "UPDATE " + Table.MapSight.getValue() + " SET MapID=?, CityDataVersionID=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getMapId());
 				su.setInt(2, p.getCityDataVersionId());
 				su.setInt(3, p.getId());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return true;
-			} else {
+			}
+			else
+			{
 				String sql = "INSERT INTO " + Table.MapSight.getValue()
 						+ " (ID,MapID, CityDataVersionID) VALUES (?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
@@ -1357,16 +1395,13 @@ public class Database {
 				su.setInt(2, p.getMapId());
 				su.setInt(3, p.getCityDataVersionId());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return false;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -1379,14 +1414,17 @@ public class Database {
 	 */
 	public static boolean _savePlaceOfInterestSight(PlaceOfInterestSight p)// friend to CityDataVersion
 	{
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
-			if (existPlaceOfInterestSight(p.getId())) {
+			if (existPlaceOfInterestSight(p.getId()))
+			{
 				String sql = "UPDATE " + Table.PlaceOfInterestSight.getValue()
 						+ " SET CityDataVersions=?, POIID=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
@@ -1394,13 +1432,10 @@ public class Database {
 				su.setInt(2, p.getPlaceOfInterestId());
 				su.setInt(3, p.getId());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return true;
-			} else {
+			}
+			else
+			{
 				String sql = "INSERT INTO " + Table.PlaceOfInterestSight.getValue()
 						+ " (ID,CityDataVersions, POIID) VALUES (?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
@@ -1408,16 +1443,13 @@ public class Database {
 				su.setInt(2, p.getCityDataVersionId());
 				su.setInt(3, p.getPlaceOfInterestId());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return false;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -1430,14 +1462,17 @@ public class Database {
 	 */
 	public static boolean _saveRouteSight(RouteSight p)// friend to CityDataVersion
 	{
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
-			if (existRouteSight(p.getId())) {
+			if (existRouteSight(p.getId()))
+			{
 				String sql = "UPDATE " + Table.RouteSight.getValue()
 						+ " SET CityDataVersions=?, RouteID=?, IsFavorite=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
@@ -1446,13 +1481,10 @@ public class Database {
 				su.setBoolean(3, p.getIsFavorite());
 				su.setInt(4, p.getId());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return true;
-			} else {
+			}
+			else
+			{
 				String sql = "INSERT INTO " + Table.RouteSight.getValue()
 						+ " (ID,CityDataVersions, RouteID, IsFavorite) VALUES (?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
@@ -1461,16 +1493,13 @@ public class Database {
 				su.setInt(3, p.getRouteId());
 				su.setBoolean(4, p.getIsFavorite());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return false;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -1483,14 +1512,17 @@ public class Database {
 	 */
 	public static boolean _saveCityDataVersion(CityDataVersion p)// friend to City
 	{
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
-			if (existCityDataVersion(p.getId())) {
+			if (existCityDataVersion(p.getId()))
+			{
 				String sql = "UPDATE " + Table.CityDataVersion.getValue()
 						+ " SET CityID=?, VersionName=?, PriceOneTime=?, PricePeriod=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
@@ -1500,13 +1532,10 @@ public class Database {
 				su.setDouble(4, p.getPricePeriod());
 				su.setInt(5, p.getId());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return true;
-			} else {
+			}
+			else
+			{
 				String sql = "INSERT INTO " + Table.CityDataVersion.getValue()
 						+ " (ID,CityID, VersionName, PriceOneTime, PricePeriod) VALUES (?, ?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
@@ -1516,16 +1545,13 @@ public class Database {
 				su.setDouble(4, p.getPriceOneTime());
 				su.setDouble(5, p.getPricePeriod());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return false;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -1538,14 +1564,17 @@ public class Database {
 	 */
 	public static boolean _saveSubscription(Subscription p) // friend to Customer
 	{
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
-			if (existSubscription(p.getId())) {
+			if (existSubscription(p.getId()))
+			{
 				String sql = "UPDATE " + Table.Subscription.getValue()
 						+ " SET CityID=?, UserID=?, PurchaseDate=?, FullPrice=?, PricePayed=?, ExpDate=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
@@ -1557,13 +1586,10 @@ public class Database {
 				su.setDate(6, (Date) p.getExpirationDate()); // fix here - RON
 				su.setInt(7, p.getId());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return true;
-			} else {
+			}
+			else
+			{
 				String sql = "INSERT INTO " + Table.Subscription.getValue()
 						+ " (ID,CityID, UserID, PurchaseDate, FullPrice, PricePayed, ExpDate) VALUES (?,?,?, ?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
@@ -1574,17 +1600,13 @@ public class Database {
 				su.setDouble(5, p.getFullPrice());
 				su.setDouble(6, p.getPricePayed());
 				su.setDate(7, (Date) p.getExpirationDate()); // fix here - RON
-				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return false;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -1597,14 +1619,17 @@ public class Database {
 	 */
 	public static boolean _saveOneTimePurchase(OneTimePurchase p) // friend to Customer
 	{
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
-			if (existOneTimePurchase(p.getId())) {
+			if (existOneTimePurchase(p.getId()))
+			{
 				String sql = "UPDATE " + Table.OneTimePurchase.getValue()
 						+ " SET CityID=?, UserID=?, PurchaseDate=?, FullPrice=?, PricePayed=?, WasDownloaded=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
@@ -1616,13 +1641,10 @@ public class Database {
 				su.setBoolean(6, p.getWasDownload());
 				su.setInt(7, p.getId());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return true;
-			} else {
+			}
+			else
+			{
 				String sql = "INSERT INTO " + Table.OneTimePurchase.getValue()
 						+ " (ID,CityID, UserID, PurchaseDate, FullPrice, PricePayed, WasDownloaded) VALUES (?,?, ?, ?, ?, ?,?)";
 				PreparedStatement su = conn.prepareStatement(sql);
@@ -1634,16 +1656,13 @@ public class Database {
 				su.setDouble(6, p.getPricePayed());
 				su.setBoolean(7, p.getWasDownload());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return false;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -1654,17 +1673,21 @@ public class Database {
 	 * @param p the statistic we want to save
 	 * @return true if an updated was made. false for new element.
 	 */
-	public static boolean _saveStatistic(Statistic p) {
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+	public static boolean _saveStatistic(Statistic p)
+	{
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
-			if (existStatistic(p.getId())) {
+			if (existStatistic(p.getId()))
+			{
 				String sql = "UPDATE " + Table.Statistic.getValue()
-						+ " SET CityID=?, Date=?, NOTP=?, NS=?, NSR=?, NV=?, NSD=?, NVP=? WHERE ID=?";
+						+ " SET CityID=?, Date=?, NOTP=?, NS=?, NSR=?, NV=?, NSD=?, NVP=?, NumMaps=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityId());
 				su.setDate(2, (Date) p.getDate());
@@ -1674,17 +1697,15 @@ public class Database {
 				su.setInt(6, p.getNumVisited());
 				su.setInt(7, p.getNumSubDownloads());
 				su.setBoolean(8, p.isNewVersionPublished());
-				su.setInt(9, p.getId());
+				su.setBoolean(9, p.getNumMaps());
+				su.setInt(10, p.getId());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return true;
-			} else {
+			}
+			else
+			{
 				String sql = "INSERT INTO " + Table.Statistic.getValue()
-						+ " (ID, CityID, Date, NOTP, NS, NSR, NV, NSD, NVP) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+						+ " (ID, CityID, Date, NOTP, NS, NSR, NV, NSD, NVP, NumMaps) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getId());
 				su.setInt(2, p.getCityId());
@@ -1695,47 +1716,45 @@ public class Database {
 				su.setInt(7, p.getNumVisited());
 				su.setInt(8, p.getNumSubDownloads());
 				su.setBoolean(9, p.isNewVersionPublished());
+				su.setBoolean(10, p.getNumMaps());
 				su.executeUpdate();
-				if (localConnectionCreated) {
-					System.out.println("Closing local connection");
-					localConnectionCreated = false;
-					closeConnection();
-				}
 				return false;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 		}
 		return false;
 	}
 
 	/**
 	 * @param table: the table to search in
-	 * @param id: the id to delete
+	 * @param id:    the id to delete
 	 * @return true if deleted, false else.
 	 */
-	private static boolean delete(String table, int id) {
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+	private static boolean delete(String table, int id)
+	{
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
 			String sql = "DELETE FROM " + table + " WHERE ID=?";
 			PreparedStatement gt = conn.prepareStatement(sql);
 			gt.setInt(1, id);
 			int count = gt.executeUpdate();
-			if (localConnectionCreated) {
-				System.out.println("Closing local connection");
-				localConnectionCreated = false;
-				closeConnection();
-			}
 			return count != 0;
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -1744,7 +1763,8 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean deletePlaceOfInterest(int id) {
+	public static boolean deletePlaceOfInterest(int id)
+	{
 		return delete(Table.PlaceOfInterest.getValue(), id);
 	}
 
@@ -1752,7 +1772,8 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean deleteMap(int id) {
+	public static boolean deleteMap(int id)
+	{
 		return delete(Table.Map.getValue(), id);
 	}
 
@@ -1760,7 +1781,8 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean deleteRoute(int id) {
+	public static boolean deleteRoute(int id)
+	{
 		return delete(Table.Route.getValue(), id);
 	}
 
@@ -1768,7 +1790,8 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean deleteCity(int id) {
+	public static boolean deleteCity(int id)
+	{
 		return delete(Table.City.getValue(), id);
 	}
 
@@ -1776,7 +1799,8 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean deleteCustomer(int id) {
+	public static boolean deleteCustomer(int id)
+	{
 		return delete(Table.Customer.getValue(), id);
 	}
 
@@ -1784,7 +1808,8 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean deleteEmployee(int id) {
+	public static boolean deleteEmployee(int id)
+	{
 		return delete(Table.Employee.getValue(), id);
 	}
 
@@ -1792,7 +1817,8 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean _deleteLocation(int id) {
+	public static boolean _deleteLocation(int id)
+	{
 		return delete(Table.Location.getValue(), id);
 	}
 
@@ -1800,7 +1826,8 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean _deleteRouteStop(int id) {
+	public static boolean _deleteRouteStop(int id)
+	{
 		return delete(Table.RouteStop.getValue(), id);
 	}
 
@@ -1808,7 +1835,8 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean _deleteMapSight(int id) {
+	public static boolean _deleteMapSight(int id)
+	{
 		return delete(Table.MapSight.getValue(), id);
 	}
 
@@ -1816,7 +1844,8 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean _deletePlaceOfInterestSight(int id) {
+	public static boolean _deletePlaceOfInterestSight(int id)
+	{
 		return delete(Table.PlaceOfInterestSight.getValue(), id);
 	}
 
@@ -1824,7 +1853,8 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean _deleteRouteSight(int id) {
+	public static boolean _deleteRouteSight(int id)
+	{
 		return delete(Table.RouteSight.getValue(), id);
 	}
 
@@ -1832,7 +1862,8 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean _deleteCityDataVersion(int id) {
+	public static boolean _deleteCityDataVersion(int id)
+	{
 		return delete(Table.CityDataVersion.getValue(), id);
 	}
 
@@ -1840,7 +1871,8 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean _deleteSubscription(int id) {
+	public static boolean _deleteSubscription(int id)
+	{
 		return delete(Table.Subscription.getValue(), id);
 	}
 
@@ -1848,7 +1880,8 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean _deleteOneTimePurchase(int id) {
+	public static boolean _deleteOneTimePurchase(int id)
+	{
 		return delete(Table.OneTimePurchase.getValue(), id);
 	}
 
@@ -1856,7 +1889,8 @@ public class Database {
 	 * @param id the id to delete
 	 * @return true if deleted, false else.
 	 */
-	public static boolean _deleteStatistic(int id) {
+	public static boolean _deleteStatistic(int id)
+	{
 		return delete(Table.Statistic.getValue(), id);
 	}
 
@@ -1864,16 +1898,20 @@ public class Database {
 	 * @param gt: A finished SQL query to run.
 	 * @return returns the list of the results.
 	 */
-	private static ArrayList<Integer> queryToList(PreparedStatement gt) {
-		try {
+	private static ArrayList<Integer> queryToList(PreparedStatement gt)
+	{
+		try
+		{
 			ResultSet res = gt.executeQuery();
 			ArrayList<Integer> IDs = new ArrayList<>();
 			while (res.next())
 				IDs.add(res.getInt("ID"));
 			return IDs;
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -1888,13 +1926,16 @@ public class Database {
 	 * @param cityId           the id of the city we want to search
 	 * @return the result list.
 	 */
-	public static ArrayList<Integer> searchPlaceOfInterest(String placeName, String placeDescription, Integer cityId) {
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+	public static ArrayList<Integer> searchPlaceOfInterest(String placeName, String placeDescription, Integer cityId)
+	{
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
 			int counter = 1;
 			String[] words = { "" };
@@ -1922,15 +1963,12 @@ public class Database {
 			if (cityId != null)
 				gt.setInt(counter++, cityId);
 
-			if (localConnectionCreated) {
-				System.out.println("Closing local connection");
-				localConnectionCreated = false;
-				closeConnection();
-			}
 			return queryToList(gt);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -1944,14 +1982,17 @@ public class Database {
 	 * @param imgURL the image url we want to search
 	 * @return : the result list.
 	 */
-	public static ArrayList<Integer> searchMap(Integer cityId, String name, String info, String imgURL) {
-		try {
+	public static ArrayList<Integer> searchMap(Integer cityId, String name, String info, String imgURL)
+	{
+		try
+		{
 			int counter = 1;
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
 			String sql = "SELECT ID FROM " + Table.Map.getValue() + " WHERE ";
 			if (cityId != null)
@@ -1976,16 +2017,12 @@ public class Database {
 			if (imgURL != null)
 				gt.setString(counter++, imgURL);
 
-			if (localConnectionCreated) {
-				System.out.println("Closing local connection");
-				localConnectionCreated = false;
-				closeConnection();
-			}
-
 			return queryToList(gt);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -1997,14 +2034,17 @@ public class Database {
 	 * @param info   the info data we want to search
 	 * @return the result list.
 	 */
-	public static ArrayList<Integer> searchRoute(Integer cityId, String info) {
-		try {
+	public static ArrayList<Integer> searchRoute(Integer cityId, String info)
+	{
+		try
+		{
 			int counter = 1;
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
 			String sql = "SELECT ID FROM " + Table.Route.getValue() + " WHERE ";
 			if (cityId != null)
@@ -2019,17 +2059,13 @@ public class Database {
 			if (info != null)
 				gt.setString(counter++, info);
 
-			if (localConnectionCreated) {
-				System.out.println("Closing local connection");
-				localConnectionCreated = false;
-				closeConnection();
-			}
-
 			return queryToList(gt);
 
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -2043,14 +2079,17 @@ public class Database {
 	 * @param cityDescription the city description we want to search
 	 * @return the result list.
 	 */
-	public static ArrayList<Integer> searchCity(String cityName, String cityDescription) {
-		try {
+	public static ArrayList<Integer> searchCity(String cityName, String cityDescription)
+	{
+		try
+		{
 			int counter = 1;
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
 			String[] words = { "" };
 			if (cityDescription != null)
@@ -2076,17 +2115,13 @@ public class Database {
 				for (int i = 0; i < len; i++)
 					gt.setString(counter++, "%" + words[i] + "%");
 
-			if (localConnectionCreated) {
-				System.out.println("Closing local connection");
-				localConnectionCreated = false;
-				closeConnection();
-			}
-
 			return queryToList(gt);
 
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -2096,16 +2131,19 @@ public class Database {
 	 * 
 	 * @param userName
 	 * @param password
-	 * @param          table: user type
+	 * @param table:   user type
 	 * @return the result list.
 	 */
-	private static ArrayList<Integer> searchUser(String userName, String password, String table) {
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+	private static ArrayList<Integer> searchUser(String userName, String password, String table)
+	{
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
 			int counter = 1;
 			String sql = "SELECT ID FROM " + table + " WHERE ";
@@ -2125,17 +2163,13 @@ public class Database {
 			if (password != null)
 				gt.setString(counter++, password);
 
-			if (localConnectionCreated) {
-				System.out.println("Closing local connection");
-				localConnectionCreated = false;
-				closeConnection();
-			}
-
 			return queryToList(gt);
 
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -2147,7 +2181,8 @@ public class Database {
 	 * @param password the password we want to search
 	 * @return the result list.
 	 */
-	public static ArrayList<Integer> searchCustomer(String userName, String password) {
+	public static ArrayList<Integer> searchCustomer(String userName, String password)
+	{
 		return searchUser(userName, password, Table.Customer.getValue());
 	}
 
@@ -2158,7 +2193,8 @@ public class Database {
 	 * @param password the password we want to search
 	 * @return the result list.
 	 */
-	public static ArrayList<Integer> searchEmployee(String userName, String password) {
+	public static ArrayList<Integer> searchEmployee(String userName, String password)
+	{
 		return searchUser(userName, password, Table.Employee.getValue());
 	}
 
@@ -2169,13 +2205,16 @@ public class Database {
 	 * @param placeId the place id we want to search
 	 * @return the result list.
 	 */
-	public static ArrayList<Integer> searchLocation(Integer mapId, Integer placeId) {
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+	public static ArrayList<Integer> searchLocation(Integer mapId, Integer placeId)
+	{
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
 			int counter = 1;
 			String sql = "SELECT ID FROM " + Table.Location.getValue() + " WHERE ";
@@ -2192,17 +2231,13 @@ public class Database {
 			if (placeId != null)
 				gt.setInt(counter++, placeId);
 
-			if (localConnectionCreated) {
-				System.out.println("Closing local connection");
-				localConnectionCreated = false;
-				closeConnection();
-			}
-
 			return queryToList(gt);
 
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -2215,13 +2250,16 @@ public class Database {
 	 * @param numStop the number stop we want to search
 	 * @return the result list.
 	 */
-	public static ArrayList<Integer> searchRouteStop(Integer routeId, Integer placeId, Integer numStop) {
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+	public static ArrayList<Integer> searchRouteStop(Integer routeId, Integer placeId, Integer numStop)
+	{
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
 			int counter = 1;
 			String sql = "SELECT ID FROM " + Table.RouteStop.getValue() + " WHERE ";
@@ -2243,17 +2281,13 @@ public class Database {
 			if (numStop != null)
 				gt.setInt(counter++, numStop);
 
-			if (localConnectionCreated) {
-				System.out.println("Closing local connection");
-				localConnectionCreated = false;
-				closeConnection();
-			}
-
 			return queryToList(gt);
 
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -2265,13 +2299,16 @@ public class Database {
 	 * @param mapId             the map id we want to search
 	 * @return the result list.
 	 */
-	public static ArrayList<Integer> searchMapSight(Integer cityDataVersionId, Integer mapId) {
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+	public static ArrayList<Integer> searchMapSight(Integer cityDataVersionId, Integer mapId)
+	{
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
 			int counter = 1;
 			String sql = "SELECT ID FROM " + Table.MapSight.getValue() + " WHERE ";
@@ -2288,17 +2325,13 @@ public class Database {
 			if (mapId != null)
 				gt.setInt(counter++, mapId);
 
-			if (localConnectionCreated) {
-				System.out.println("Closing local connection");
-				localConnectionCreated = false;
-				closeConnection();
-			}
-
 			return queryToList(gt);
 
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -2310,13 +2343,16 @@ public class Database {
 	 * @param placeId           the place id we want to search
 	 * @return the result list.
 	 */
-	public static ArrayList<Integer> searchPlaceOfInterestSight(Integer cityDataVersionId, Integer placeId) {
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+	public static ArrayList<Integer> searchPlaceOfInterestSight(Integer cityDataVersionId, Integer placeId)
+	{
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
 			int counter = 1;
 			String sql = "SELECT ID FROM " + Table.PlaceOfInterestSight.getValue() + " WHERE ";
@@ -2333,17 +2369,13 @@ public class Database {
 			if (placeId != null)
 				gt.setInt(counter++, placeId);
 
-			if (localConnectionCreated) {
-				System.out.println("Closing local connection");
-				localConnectionCreated = false;
-				closeConnection();
-			}
-
 			return queryToList(gt);
 
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -2356,13 +2388,16 @@ public class Database {
 	 * @param isFavorite        if we want to search favorite or not
 	 * @return the result list.
 	 */
-	public static ArrayList<Integer> searchRouteSight(Integer cityDataVersionId, Integer routeId, Boolean isFavorite) {
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+	public static ArrayList<Integer> searchRouteSight(Integer cityDataVersionId, Integer routeId, Boolean isFavorite)
+	{
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
 			int counter = 1;
 			String sql = "SELECT ID FROM " + Table.RouteSight.getValue() + " WHERE ";
@@ -2384,17 +2419,13 @@ public class Database {
 			if (isFavorite != null)
 				gt.setBoolean(counter++, isFavorite);
 
-			if (localConnectionCreated) {
-				System.out.println("Closing local connection");
-				localConnectionCreated = false;
-				closeConnection();
-			}
-
 			return queryToList(gt);
 
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -2405,13 +2436,16 @@ public class Database {
 	 * @param cityId the city id we want to search
 	 * @return the result list.
 	 */
-	public static ArrayList<Integer> searchCityDataVersion(Integer cityId) {
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+	public static ArrayList<Integer> searchCityDataVersion(Integer cityId)
+	{
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
 			int counter = 1;
 			String sql = "SELECT ID FROM " + Table.CityDataVersion.getValue() + " WHERE ";
@@ -2423,17 +2457,13 @@ public class Database {
 			if (cityId != null)
 				gt.setInt(counter++, cityId);
 
-			if (localConnectionCreated) {
-				System.out.println("Closing local connection");
-				localConnectionCreated = false;
-				closeConnection();
-			}
-
 			return queryToList(gt);
 
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -2447,13 +2477,16 @@ public class Database {
 	 * @param active if we want to search active or not
 	 * @return the result list.
 	 */
-	public static ArrayList<Integer> searchSubscription(Integer userId, Integer cityId, Date date, Boolean active) {
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+	public static ArrayList<Integer> searchSubscription(Integer userId, Integer cityId, Date date, Boolean active)
+	{
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
 			int counter = 1;
 			String sql = "SELECT ID, PurchaseDate, ExpDate FROM " + Table.Subscription.getValue() + " WHERE ";
@@ -2461,7 +2494,8 @@ public class Database {
 				sql += "UserID=? AND ";
 			if (cityId != null)
 				sql += "CityID=? AND ";
-			if (active != null) {
+			if (active != null)
+			{
 				if (active)
 					sql += "(? BETWEEN PurchaseDate AND ExpDate) AND ";
 				else
@@ -2483,17 +2517,13 @@ public class Database {
 			if (date != null)
 				gt.setDate(counter++, date);
 
-			if (localConnectionCreated) {
-				System.out.println("Closing local connection");
-				localConnectionCreated = false;
-				closeConnection();
-			}
-
 			return queryToList(gt);
 
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -2508,13 +2538,16 @@ public class Database {
 	 * @return the result list.
 	 */
 	public static ArrayList<Integer> searchOneTimePurchase(Integer userId, Integer cityId, Date purchaseDate,
-			Boolean wasDownload) {
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+			Boolean wasDownload)
+	{
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
 			int counter = 1;
 			String sql = "SELECT ID FROM " + Table.OneTimePurchase.getValue() + " WHERE ";
@@ -2540,17 +2573,13 @@ public class Database {
 			if (wasDownload != null)
 				gt.setBoolean(counter++, wasDownload);
 
-			if (localConnectionCreated) {
-				System.out.println("Closing local connection");
-				localConnectionCreated = false;
-				closeConnection();
-			}
-
 			return queryToList(gt);
 
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -2566,13 +2595,16 @@ public class Database {
 	 * 
 	 */
 	public static ArrayList<Integer> searchStatistic(Integer cityId, Date date, Date dateFrom, Date dateEnd,
-			Boolean newVersionPublished) {
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+			Boolean newVersionPublished)
+	{
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
 			int counter = 1;
 			String sql = "SELECT ID FROM " + Table.Statistic.getValue() + " WHERE ";
@@ -2598,25 +2630,24 @@ public class Database {
 			if (cityId != null)
 				gt.setInt(counter++, cityId);
 
-			if (dateFrom != null && dateEnd != null) {
+			if (dateFrom != null && dateEnd != null)
+			{
 				gt.setDate(counter++, dateFrom);
 				gt.setDate(counter++, dateEnd);
-			} else if (date != null)
+			}
+			else if (date != null)
 				gt.setDate(counter++, date);
 
 			if (newVersionPublished != null)
 				gt.setBoolean(counter++, newVersionPublished);
 
-			if (localConnectionCreated) {
-				System.out.println("Closing local connection");
-				localConnectionCreated = false;
-				closeConnection();
-			}
 			return queryToList(gt);
 
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
@@ -2625,33 +2656,33 @@ public class Database {
 	 * returns the row with id=id on table.
 	 * 
 	 * @param table: where to look
-	 * @param id: target ID
+	 * @param id:    target ID
 	 * @return last element from result set
 	 */
-	private static ResultSet get(String table, int id) {
-		try {
-			boolean localConnectionCreated = false;
-			if (conn == null) {
-				localConnectionCreated = true;
-				System.out.println("Creating local connection");
-				createConnection();
+	private static ResultSet get(String table, int id)
+	{
+		try
+		{
+
+			if (conn == null)
+			{
+
+				System.err.println("No connection found");
+				throw new DatabaseException();
 			}
 			String sql = "SELECT * FROM " + table + " WHERE ID=?";
 			PreparedStatement gt = conn.prepareStatement(sql);
 			gt.setInt(1, id);
 			ResultSet res = gt.executeQuery();
-			if (localConnectionCreated) {
-				System.out.println("Closing local connection");
-				localConnectionCreated = false;
-				closeConnection();
-			}
 			if (!res.next())
 				return null;
 			res.last();
 			return res;
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -2662,17 +2693,21 @@ public class Database {
 	 * @param id the id of the place of interest we want to get
 	 * @return the new object
 	 */
-	public static PlaceOfInterest getPlaceOfInterestById(int id) {
-		try {
+	public static PlaceOfInterest getPlaceOfInterestById(int id)
+	{
+		try
+		{
 			ResultSet res = get(Table.PlaceOfInterest.getValue(), id);
 			if (res == null)
 				return null;
 			return PlaceOfInterest._createPlaceOfInterest(res.getInt("ID"), res.getInt("CityID"), res.getString("Name"),
 					PlaceOfInterest.PlaceType.values()[res.getInt("Type")], res.getString("Description"),
 					res.getInt("ATD") != 0);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -2683,16 +2718,20 @@ public class Database {
 	 * @param id the id of the map we want to get
 	 * @return the new object
 	 */
-	public static Map getMapById(int id) {
-		try {
+	public static Map getMapById(int id)
+	{
+		try
+		{
 			ResultSet res = get(Table.Map.getValue(), id);
 			if (res == null)
 				return null;
 			return Map._createMap(res.getInt("ID"), res.getInt("CityID"), res.getString("Name"), res.getString("Info"),
 					res.getString("imgURL"));
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -2703,15 +2742,19 @@ public class Database {
 	 * @param id the id of the route we want to get
 	 * @return the new object
 	 */
-	public static Route getRouteById(int id) {
-		try {
+	public static Route getRouteById(int id)
+	{
+		try
+		{
 			ResultSet res = get(Table.Route.getValue(), id);
 			if (res == null)
 				return null;
 			return Route._createRoute(res.getInt("ID"), res.getInt("CityID"), res.getString("Info"));
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -2722,15 +2765,19 @@ public class Database {
 	 * @param id the id of the city we want to get
 	 * @return the name of the city
 	 */
-	public static String getCityNameById(int id) {
-		try {
+	public static String getCityNameById(int id)
+	{
+		try
+		{
 			ResultSet res = get(Table.City.getValue(), id);
 			if (res == null)
 				return null;
 			return res.getString("Name");
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -2741,16 +2788,20 @@ public class Database {
 	 * @param id the id of the city we want to get
 	 * @return the new object
 	 */
-	public static City getCityById(int id) {
-		try {
+	public static City getCityById(int id)
+	{
+		try
+		{
 			ResultSet res = get(Table.City.getValue(), id);
 			if (res == null)
 				return null;
 			return City._createCity(res.getInt("ID"), res.getString("Name"), res.getString("Description"),
 					res.getInt("VersionID") == -1 ? null : res.getInt("VersionID"));
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -2761,8 +2812,10 @@ public class Database {
 	 * @param id the id of the cutomer we want to get
 	 * @return the new object
 	 */
-	public static Customer getCustomerById(int id) {
-		try {
+	public static Customer getCustomerById(int id)
+	{
+		try
+		{
 			ResultSet res = get(Table.Customer.getValue(), id);
 			if (res == null)
 				return null;
@@ -2770,9 +2823,11 @@ public class Database {
 					res.getString("Email"), res.getString("FirstName"), res.getString("LastName"),
 					res.getString("PhoneNumber"), res.getString("CardNum"), res.getString("Exp"), res.getString("CVC"));
 
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -2783,17 +2838,21 @@ public class Database {
 	 * @param id the id of the employee we want to get
 	 * @return the new object
 	 */
-	public static Employee getEmployeeById(int id) {
-		try {
+	public static Employee getEmployeeById(int id)
+	{
+		try
+		{
 			ResultSet res = get(Table.Employee.getValue(), id);
 			if (res == null)
 				return null;
 			return Employee._createEmployee(res.getInt("ID"), res.getString("Username"), res.getString("Password"),
 					res.getString("Email"), res.getString("FirstName"), res.getString("LastName"),
 					res.getString("PhoneNumber"), Employee.Role.values()[res.getInt("Role")]);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -2804,16 +2863,20 @@ public class Database {
 	 * @param id the id of the location we want to get
 	 * @return the new object
 	 */
-	public static Location _getLocationById(int id) {
-		try {
+	public static Location _getLocationById(int id)
+	{
+		try
+		{
 			ResultSet res = get(Table.Location.getValue(), id);
 			if (res == null)
 				return null;
 			double[] coordinates = { res.getInt("x"), res.getInt("y") };
 			return Location._createLocation(res.getInt("ID"), res.getInt("MapID"), res.getInt("POIID"), coordinates);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -2824,16 +2887,20 @@ public class Database {
 	 * @param id the id of the route stop we want to get
 	 * @return the new object
 	 */
-	public static RouteStop _getRouteStopById(int id) {
-		try {
+	public static RouteStop _getRouteStopById(int id)
+	{
+		try
+		{
 			ResultSet res = get(Table.RouteStop.getValue(), id);
 			if (res == null)
 				return null;
 			return RouteStop._createRouteStop(res.getInt("ID"), res.getInt("RouteID"), res.getInt("PlaceID"),
 					res.getInt("NumStops"), res.getTime("Time"));
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -2844,15 +2911,19 @@ public class Database {
 	 * @param id the id of the map sight we want to get
 	 * @return the new object
 	 */
-	public static MapSight _getMapSightById(int id) {
-		try {
+	public static MapSight _getMapSightById(int id)
+	{
+		try
+		{
 			ResultSet res = get(Table.MapSight.getValue(), id);
 			if (res == null)
 				return null;
 			return MapSight._createMapSight(res.getInt("ID"), res.getInt("MapID"), res.getInt("CityDataVersionID"));
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -2863,16 +2934,20 @@ public class Database {
 	 * @param id the id of the place of interest sight we want to get
 	 * @return the new object
 	 */
-	public static PlaceOfInterestSight _getPlaceOfInterestSightById(int id) {
-		try {
+	public static PlaceOfInterestSight _getPlaceOfInterestSightById(int id)
+	{
+		try
+		{
 			ResultSet res = get(Table.PlaceOfInterestSight.getValue(), id);
 			if (res == null)
 				return null;
 			return PlaceOfInterestSight._PlaceOfInterestSight(res.getInt("ID"), res.getInt("CityDataVersions"),
 					res.getInt("POIID"));
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -2883,16 +2958,20 @@ public class Database {
 	 * @param id the id of the route sight we want to get
 	 * @return the new object
 	 */
-	public static RouteSight _getRouteSightById(int id) {
-		try {
+	public static RouteSight _getRouteSightById(int id)
+	{
+		try
+		{
 			ResultSet res = get(Table.RouteSight.getValue(), id);
 			if (res == null)
 				return null;
 			return RouteSight._createRouteSight(res.getInt("ID"), res.getInt("CityDataVersions"), res.getInt("RouteID"),
 					res.getBoolean("IsFavorite"));
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -2903,14 +2982,18 @@ public class Database {
 	 * @param id the id of the city data version we want to get
 	 * @return the new object
 	 */
-	public static CityDataVersion _getCityDataVersionById(int id) {
-		try {
+	public static CityDataVersion _getCityDataVersionById(int id)
+	{
+		try
+		{
 			ResultSet res = get(Table.CityDataVersion.getValue(), id);
 			return CityDataVersion._createCityDataVersion(res.getInt("ID"), res.getInt("CityID"),
 					res.getString("VersionName"), res.getDouble("PriceOneTime"), res.getDouble("PricePeriod"));
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -2921,15 +3004,19 @@ public class Database {
 	 * @param id the id of the subscription we want to get
 	 * @return the new object
 	 */
-	public static Subscription _getSubscriptionById(int id) {
-		try {
+	public static Subscription _getSubscriptionById(int id)
+	{
+		try
+		{
 			ResultSet res = get(Table.Subscription.getValue(), id);
 			return Subscription._createSubscription(res.getInt("ID"), res.getInt("CityID"), res.getInt("UserID"),
 					res.getDate("PurchaseDate"), res.getDouble("FullPrice"), res.getDouble("PricePayed"),
 					res.getDate("ExpDate"));
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -2940,15 +3027,19 @@ public class Database {
 	 * @param id the id of the one time purchase we want to get
 	 * @return the new object
 	 */
-	public static OneTimePurchase _getOneTimePurchaseById(int id) {
-		try {
+	public static OneTimePurchase _getOneTimePurchaseById(int id)
+	{
+		try
+		{
 			ResultSet res = get(Table.OneTimePurchase.getValue(), id);
 			return OneTimePurchase._createOneTimePurchase(res.getInt("ID"), res.getInt("CityID"), res.getInt("UserID"),
 					res.getDate("PurchaseDate"), res.getDouble("FullPrice"), res.getDouble("PricePayed"),
 					res.getBoolean("WasDownloaded"));
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -2959,15 +3050,19 @@ public class Database {
 	 * @param id the id of the statistic we want to get
 	 * @return the new object
 	 */
-	public static Statistic _getStatisticById(int id) {
-		try {
+	public static Statistic _getStatisticById(int id)
+	{
+		try
+		{
 			ResultSet res = get(Table.Statistic.getValue(), id);
 			return Statistic._createStatistic(res.getInt("ID"), res.getInt("CityID"), res.getDate("Date"),
 					res.getInt("NOTP"), res.getInt("NS"), res.getInt("NSR"), res.getInt("NV"), res.getInt("NSD"),
-					res.getBoolean("NVP"));
-		} catch (Exception e) {
+					res.getBoolean("NVP"), res.getInt("NumMaps"));
+		}
+		catch (Exception e)
+		{
 			// closeConnection();
-			System.out.println(e.getClass().toString());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -2978,7 +3073,8 @@ public class Database {
 	 * @see java.lang.Object#finalize() clean the connection when finished.
 	 */
 	@Override
-	protected void finalize() throws Throwable {
+	protected void finalize() throws Throwable
+	{
 		closeConnection();
 	}
 }

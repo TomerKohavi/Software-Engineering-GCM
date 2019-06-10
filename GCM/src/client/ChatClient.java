@@ -5,6 +5,7 @@
 package client;
 
 import ocsf.client.*;
+import otherClasses.ClassMustProperties;
 import otherClasses.Pair;
 import server.EchoServer.LoginRegisterResult;
 import common.*;
@@ -151,7 +152,7 @@ public class ChatClient extends AbstractClient
 	public void sendImage(String pathname) throws IOException
 	{
 		ImageTransfer imTr = new ImageTransfer(pathname, false);
-		imTr.loadImage();
+		imTr.readImageFromFile();
 		sendToServer(imTr);
 	}
 
@@ -164,11 +165,6 @@ public class ChatClient extends AbstractClient
 		ArrayList<City> cityList = this.search.searchResult;
 		this.search = null;
 		return cityList;
-	}
-
-	public void updateUser(User user) throws IOException
-	{
-		sendToServer(user);
 	}
 
 	public ArrayList<Customer> customersRquest() throws IOException
@@ -200,6 +196,16 @@ public class ChatClient extends AbstractClient
 		}
 		return this.cityReq.cityList;
 
+	}
+	
+	public void update(ClassMustProperties object) throws IOException
+	{
+		sendToServer(object);
+	}
+
+	public void updateUser(User user) throws IOException
+	{
+		sendToServer(user);
 	}
 
 	// Instance methods ***********************************************
