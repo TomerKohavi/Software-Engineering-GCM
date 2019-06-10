@@ -30,10 +30,6 @@ public class OneTimePurchase extends CityPurchase implements ClassMustProperties
 
     public void deleteFromDatabase(){Database._deleteOneTimePurchase(this.getId());}
 
-    public void reloadTempsFromDatabase(){
-    	super.reloadTempsFromDatabase();
-    }
-
     public boolean getWasDownload() {
         return wasDownload;
     }

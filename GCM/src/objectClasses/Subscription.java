@@ -38,9 +38,6 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 		Database._deleteSubscription(this.getId());
 	}
 
-	public void reloadTempsFromDatabase() {
-	}
-
 	public boolean isGoingToEnd(Date date) {
 		return expirationDate.getTime() - date.getTime() < closeTime.getTime();
 	}
