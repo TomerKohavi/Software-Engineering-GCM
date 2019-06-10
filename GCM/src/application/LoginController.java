@@ -98,7 +98,7 @@ public class LoginController
 		user = Username.getText();
 		pass = Password.getText();
 		Pair<User, LoginRegisterResult> loginResult = Connector.client.login(user, pass, false);
-		if (loginResult.b != LoginRegisterResult.Success && loginResult.a != null)
+		if (loginResult.b == LoginRegisterResult.Success && loginResult.a != null)
 		{
 			Connector.user = loginResult.a;
 			loadPage("HomePageScene.fxml");

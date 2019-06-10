@@ -101,11 +101,14 @@ public class EchoServer extends AbstractServer
 			int id = list.get(0);
 			if (!this.loggedList.contains(id))
 			{
-				login.loggedUser = Database.getEmployeeById(id);
+				if (login.isEmployee)
+					login.loggedUser = Database.getEmployeeById(id);
+				else
+					login.loggedUser = Database.getCustomerById(id);
 				this.loggedList.add(login.loggedUser.getId());
 				login.loginResult = LoginRegisterResult.Success;
 			}
-			else
+			else 
 			{
 				login.loggedUser = null;
 				login.loginResult = LoginRegisterResult.alredyLogged;

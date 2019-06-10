@@ -118,22 +118,23 @@ public class ChatClient extends AbstractClient
 	}
 
 	/**
-	 * @param username the user name of the new user
-	 * @param password the password of the new user
-	 * @param firstName the firstName of the new user
-	 * @param lastName the lastName of the new user
-	 * @param email the email of the new user
-	 * @param phone the phone number of the new user
-	 * @param role the user role(employee/manger) of the new user
-	 * @param ccard the credit card of the new user
-	 * @param expires the credit card expires of the new user
-	 * @param cvv the user credit card cvv of the new user
+	 * @param username   the user name of the new user
+	 * @param password   the password of the new user
+	 * @param firstName  the firstName of the new user
+	 * @param lastName   the lastName of the new user
+	 * @param email      the email of the new user
+	 * @param phone      the phone number of the new user
+	 * @param role       the user role(employee/manger) of the new user
+	 * @param ccard      the credit card of the new user
+	 * @param expires    the credit card expires of the new user
+	 * @param cvv        the user credit card cvv of the new user
 	 * @param isEmployee if the new user if employee or not
-	 * @return  the user and the result of the request 
-	 * @throws IOException thrown when cannot register 
+	 * @return the user and the result of the request
+	 * @throws IOException thrown when cannot register
 	 */
-	public Pair<User, LoginRegisterResult> register(String username, String password, String firstName, String lastName, String email,
-			String phone, Role role, String ccard, String expires, String cvv, boolean isEmployee) throws IOException
+	public Pair<User, LoginRegisterResult> register(String username, String password, String firstName, String lastName,
+			String email, String phone, Role role, String ccard, String expires, String cvv, boolean isEmployee)
+			throws IOException
 	{
 		sendToServer(new Register(username, password, firstName, lastName, email, phone, role, ccard, expires, cvv,
 				isEmployee));
@@ -153,12 +154,16 @@ public class ChatClient extends AbstractClient
 
 	/**
 	 * log off the user
+	 * 
 	 * @throws IOException when cannot log off
 	 */
 	public void logoff() throws IOException
 	{
-		sendToServer(new Logoff(this.user.getId()));
-		this.user = null;
+		if (this.user != null)
+		{
+			sendToServer(new Logoff(this.user.getId()));
+			this.user = null;
+		}
 	}
 
 	/**
@@ -191,8 +196,8 @@ public class ChatClient extends AbstractClient
 	/**
 	 * @param cityName the name of city we want to search
 	 * @param cityInfo the info of city we want to search
-	 * @param poiName the name of point of interest we want to search
-	 * @param poiInfo the info of point of interest we want to search
+	 * @param poiName  the name of point of interest we want to search
+	 * @param poiInfo  the info of point of interest we want to search
 	 * @return array list with the city we searched from the server
 	 * @throws IOException if we cannot search the city
 	 */
@@ -245,7 +250,7 @@ public class ChatClient extends AbstractClient
 		return this.cityReq.cityList;
 
 	}
-	
+
 	/**
 	 * @param object update every object that is not user
 	 * @throws IOException cannot update
