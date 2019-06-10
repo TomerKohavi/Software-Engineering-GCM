@@ -40,7 +40,11 @@ public class Route implements ClassMustProperties, Serializable {
 		ArrayList<Integer> routeStopsIds = Database.searchRouteStop(this.id, null, null);
 		ArrayList<RouteStop> arrList = new ArrayList<RouteStop>();
 		for (int rdId : routeStopsIds)
-			arrList.add(Database._getRouteStopById(rdId));
+			{
+				RouteStop rss=Database._getRouteStopById(rdId);
+				if(rss==null) continue;
+				arrList.add(rss);
+			}
 		Collections.sort(arrList);
 		for (int i = 0; i < arrList.size(); i++)
 			arrList.get(i).setNumStop(i);
@@ -148,10 +152,15 @@ public class Route implements ClassMustProperties, Serializable {
 	}
 
 	public boolean isAcceptabilityToDisabled() {
+		int counter=0;
 		for(RouteStop rs:temp_routeStops){
-			if(!rs.getCopyPlace().isAccessibilityToDisabled())
-				return false;
+			if(rs.getCopyPlace()!=null) {
+				counter++;
+				if(!rs.getCopyPlace().isAccessibilityToDisabled())
+					return false;
+			}
 		}
+		System.out.println(counter+" vs "+temp_routeStops.size());
 		return true;
 	}
 
