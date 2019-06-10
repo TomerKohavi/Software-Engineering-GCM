@@ -50,30 +50,48 @@ public class LoginController
 	@FXML // fx:id="Back"
 	private JFXButton Back; // Value injected by FXMLLoader
 
+	/**
+	 * @param FXMLpage the FXML page 
+	 * @throws IOException can be thrown by FXMLLoader
+	 */
 	void loadPage(String FXMLpage) throws IOException
 	{
 		AnchorPane pane = (AnchorPane) FXMLLoader.load((URL) this.getClass().getResource(FXMLpage));
 		mainPane.getChildren().setAll(pane);
 	}
 
+	/**
+	 * @param event the FXML event we are working on
+	 * @throws IOException  can be thrown by loadPage
+	 */
 	@FXML
 	void employeeAcessScene(ActionEvent event) throws IOException
 	{
 		loadPage("EmployeeLoginScene.fxml");
 	}
 
+	/**
+	 * @param event the FXML event we are working on
+	 */
 	@FXML
 	void getPassword(ActionEvent event)
 	{
 		pass = Password.getText();
 	}
 
+	/**
+	 * @param event the FXML event we are working on
+	 */
 	@FXML
 	void getUsername(ActionEvent event)
 	{
 		user = Username.getText();
 	}
 
+	/**
+	 * @param event the FXML event we are working on
+	 * @throws IOException can be thrown by clentLogin
+	 */
 	@FXML
 	void login(ActionEvent event) throws IOException
 	{
@@ -93,13 +111,20 @@ public class LoginController
 			IncorrectText.setOpacity(1);
 		}
 	}
-
+	/**
+	 * @param event the FXML event we are working on
+	 * @throws IOException can be thrown by loadPage
+	 */
 	@FXML
 	void goBack(ActionEvent event) throws IOException
 	{
 		loadPage("HomePageScene.fxml");
 	}
 
+	/**
+	 * @param event the FXML event we are working on
+	 * @throws IOException can be thrown by loadPage
+	 */
 	@FXML
 	void register(ActionEvent event) throws IOException
 	{
