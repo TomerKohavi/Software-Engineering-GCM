@@ -17,7 +17,7 @@
             <Font size="18.0" />
          </font>
       </JFXButton>
-      <Text fx:id="ErrorMsg" layoutX="58.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login Error: You need to Log in in order to buy the city maps." wrappingWidth="679.3544921875">
+      <Text fx:id="ErrorMsg" layoutX="58.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error Message" wrappingWidth="679.3544921875">
          <font>
             <Font size="18.0" />
          </font>

@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import objectClasses.User;
 import objectClasses.Employee.Role;
@@ -70,6 +71,19 @@ public class EmployeeRegisterController
 		AnchorPane pane = (AnchorPane) FXMLLoader.load((URL) this.getClass().getResource(FXMLpage));
 		mainPane.getChildren().setAll(pane);
 	}
+	
+	void openNewPage(String FXMLpage) throws IOException
+	{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLpage));
+		Stage stage = new Stage();
+		stage.initModality(Modality.WINDOW_MODAL);
+		stage.initOwner(mainPane.getScene().getWindow());
+		stage.setScene(new Scene((Parent) loader.load()));
+		stage.setResizable(false);
+
+		// showAndWait will block execution until the window closes...
+		stage.showAndWait();
+	}
 
 	@FXML
 	void loginScene(ActionEvent event) throws IOException
@@ -91,8 +105,10 @@ public class EmployeeRegisterController
 		String errorMsg = RegCheck.isValidUser(usr, pass, first, last, emailAdd, phoneNumber).getValue();
 		if (!errorMsg.equals("All Good"))
 		{
-			IncorrectText.setText(errorMsg);
-			IncorrectText.setOpacity(1);
+			Connector.errorMsg = errorMsg;
+			openNewPage("ErrorScene.fxml");
+//			IncorrectText.setText(errorMsg);
+//			IncorrectText.setOpacity(1);
 		}
 		else
 		{
@@ -106,8 +122,10 @@ public class EmployeeRegisterController
 			}
 			else
 			{
-				IncorrectText.setText(regResult.b.getValue());
-				IncorrectText.setOpacity(1);
+				Connector.errorMsg = errorMsg;
+				openNewPage("ErrorScene.fxml");
+//				IncorrectText.setText(regResult.b.getValue());
+//				IncorrectText.setOpacity(1);
 			}
 		}
 	}

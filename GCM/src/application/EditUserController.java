@@ -157,8 +157,10 @@ public class EditUserController
 				}
 				else
 				{
-					IncorrectText.setText(check);
-					IncorrectText.setVisible(true);
+					Connector.errorMsg = check;
+					openNewPage("ErrorScene.fxml");
+//					IncorrectText.setText(check);
+//					IncorrectText.setVisible(true);
 				}
 			}
 			else
@@ -175,8 +177,10 @@ public class EditUserController
 		}
 		else
 		{
-			IncorrectText.setText(check);
-			IncorrectText.setVisible(true);
+			Connector.errorMsg = check;
+			openNewPage("ErrorScene.fxml");
+//			IncorrectText.setText(check);
+//			IncorrectText.setVisible(true);
 		}
 	}
 

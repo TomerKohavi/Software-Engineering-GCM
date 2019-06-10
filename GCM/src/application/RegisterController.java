@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import objectClasses.User;
 import otherClasses.Pair;
@@ -86,6 +87,19 @@ public class RegisterController
 		mainPane.getChildren().setAll(pane);
 	}
 
+	void openNewPage(String FXMLpage) throws IOException
+	{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLpage));
+		Stage stage = new Stage();
+		stage.initModality(Modality.WINDOW_MODAL);
+		stage.initOwner(mainPane.getScene().getWindow());
+		stage.setScene(new Scene((Parent) loader.load()));
+		stage.setResizable(false);
+
+		// showAndWait will block execution until the window closes...
+		stage.showAndWait();
+	}
+	
 	@FXML
 	void loginScene(ActionEvent event) throws IOException
 	{
@@ -109,8 +123,10 @@ public class RegisterController
 				.getValue();
 		if (!errorMsg.equals("All Good"))
 		{
-			IncorrectText.setText(errorMsg);
-			IncorrectText.setOpacity(1);
+			Connector.errorMsg = errorMsg;
+			openNewPage("ErrorScene.fxml");
+//			IncorrectText.setText(errorMsg);
+//			IncorrectText.setOpacity(1);
 		}
 		else
 		{
@@ -125,8 +141,10 @@ public class RegisterController
 			}
 			else
 			{
-				IncorrectText.setText(regResult.b.getValue());
-				IncorrectText.setOpacity(1);
+				Connector.errorMsg = regResult.b.getValue();
+				openNewPage("ErrorScene.fxml");
+//				IncorrectText.setText(regResult.b.getValue());
+//				IncorrecIncorrectTexttText.setOpacity(1);
 			}
 		}
 	}
