@@ -564,6 +564,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 
@@ -578,6 +579,7 @@ public class Database {
 			su.executeUpdate();
 
 			if (localConnectionCreated) {
+				System.out.println("Closing local connection");
 				localConnectionCreated = false;
 				closeConnection();
 			}
@@ -691,6 +693,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			String sql = "SELECT ID FROM " + table + " WHERE ID=?";
@@ -699,6 +702,7 @@ public class Database {
 			ResultSet res = check.executeQuery();
 			// check if there is exciting row in table before insert
 			if (localConnectionCreated) {
+				System.out.println("Closing local connection");
 				localConnectionCreated = false;
 				closeConnection();
 			}
@@ -873,6 +877,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			if (existPlaceOfInterest(p.getId())) {
@@ -887,6 +892,7 @@ public class Database {
 				su.setInt(6, p.getId());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -903,6 +909,8 @@ public class Database {
 				su.setBoolean(6, p.isAccessibilityToDisabled());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -926,6 +934,8 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			if (existMap(p.getId())) {
@@ -938,6 +948,7 @@ public class Database {
 				su.setInt(5, p.getId());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -953,6 +964,7 @@ public class Database {
 				su.setInt(5, p.getCityId());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -976,6 +988,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			if (existRoute(p.getId())) {
@@ -987,6 +1000,7 @@ public class Database {
 				su.setInt(4, p.getId());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1001,6 +1015,7 @@ public class Database {
 				su.setInt(4, p.getCityId());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1024,6 +1039,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			if (existCity(p.getId())) {
@@ -1035,6 +1051,7 @@ public class Database {
 				su.setInt(4, p.getId());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1049,6 +1066,7 @@ public class Database {
 				su.setInt(4, p.getPublishedVersionId() == null ? -1 : p.getPublishedVersionId());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1073,6 +1091,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			if (existCustomer(p.getId())) {
@@ -1092,6 +1111,7 @@ public class Database {
 				su.setInt(10, p.getId());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1119,6 +1139,7 @@ public class Database {
 				su.setString(10, p.getCreditCardExpires());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1142,6 +1163,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			if (existEmployee(p.getId())) {
@@ -1157,6 +1179,7 @@ public class Database {
 				su.setInt(7, p.getRole().getValue());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1176,6 +1199,7 @@ public class Database {
 				su.setInt(8, p.getRole().getValue());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1200,6 +1224,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			if (existLocation(p.getId())) {
@@ -1212,6 +1237,7 @@ public class Database {
 				su.setInt(5, p.getId());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1227,6 +1253,7 @@ public class Database {
 				su.setDouble(5, p.getCoordinates()[1]);
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1251,6 +1278,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			if (existRouteStop(p.getId())) {
@@ -1264,6 +1292,7 @@ public class Database {
 				su.setInt(5, p.getId());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1279,6 +1308,7 @@ public class Database {
 				su.setTime(5, p.getRecommendedTime());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1303,6 +1333,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			if (existMapSight(p.getId())) {
@@ -1313,6 +1344,7 @@ public class Database {
 				su.setInt(3, p.getId());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1326,6 +1358,7 @@ public class Database {
 				su.setInt(3, p.getCityDataVersionId());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1350,6 +1383,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			if (existPlaceOfInterestSight(p.getId())) {
@@ -1361,6 +1395,7 @@ public class Database {
 				su.setInt(3, p.getId());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1374,6 +1409,7 @@ public class Database {
 				su.setInt(3, p.getPlaceOfInterestId());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1398,6 +1434,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			if (existRouteSight(p.getId())) {
@@ -1410,6 +1447,7 @@ public class Database {
 				su.setInt(4, p.getId());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1424,6 +1462,7 @@ public class Database {
 				su.setBoolean(4, p.getIsFavorite());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1448,6 +1487,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			if (existCityDataVersion(p.getId())) {
@@ -1461,6 +1501,7 @@ public class Database {
 				su.setInt(5, p.getId());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1476,6 +1517,7 @@ public class Database {
 				su.setDouble(5, p.getPricePeriod());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1500,6 +1542,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			if (existSubscription(p.getId())) {
@@ -1515,6 +1558,7 @@ public class Database {
 				su.setInt(7, p.getId());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1532,6 +1576,7 @@ public class Database {
 				su.setDate(7, (Date) p.getExpirationDate()); // fix here - RON
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1556,6 +1601,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			if (existOneTimePurchase(p.getId())) {
@@ -1571,6 +1617,7 @@ public class Database {
 				su.setInt(7, p.getId());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1588,6 +1635,7 @@ public class Database {
 				su.setBoolean(7, p.getWasDownload());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1611,6 +1659,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			if (existStatistic(p.getId())) {
@@ -1628,6 +1677,7 @@ public class Database {
 				su.setInt(9, p.getId());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1647,6 +1697,7 @@ public class Database {
 				su.setBoolean(9, p.isNewVersionPublished());
 				su.executeUpdate();
 				if (localConnectionCreated) {
+					System.out.println("Closing local connection");
 					localConnectionCreated = false;
 					closeConnection();
 				}
@@ -1669,6 +1720,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			String sql = "DELETE FROM " + table + " WHERE ID=?";
@@ -1676,6 +1728,7 @@ public class Database {
 			gt.setInt(1, id);
 			int count = gt.executeUpdate();
 			if (localConnectionCreated) {
+				System.out.println("Closing local connection");
 				localConnectionCreated = false;
 				closeConnection();
 			}
@@ -1840,6 +1893,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			int counter = 1;
@@ -1869,6 +1923,7 @@ public class Database {
 				gt.setInt(counter++, cityId);
 
 			if (localConnectionCreated) {
+				System.out.println("Closing local connection");
 				localConnectionCreated = false;
 				closeConnection();
 			}
@@ -1895,6 +1950,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			String sql = "SELECT ID FROM " + Table.Map.getValue() + " WHERE ";
@@ -1921,6 +1977,7 @@ public class Database {
 				gt.setString(counter++, imgURL);
 
 			if (localConnectionCreated) {
+				System.out.println("Closing local connection");
 				localConnectionCreated = false;
 				closeConnection();
 			}
@@ -1946,6 +2003,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			String sql = "SELECT ID FROM " + Table.Route.getValue() + " WHERE ";
@@ -1962,6 +2020,7 @@ public class Database {
 				gt.setString(counter++, info);
 
 			if (localConnectionCreated) {
+				System.out.println("Closing local connection");
 				localConnectionCreated = false;
 				closeConnection();
 			}
@@ -1990,6 +2049,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			String[] words = { "" };
@@ -2017,6 +2077,7 @@ public class Database {
 					gt.setString(counter++, "%" + words[i] + "%");
 
 			if (localConnectionCreated) {
+				System.out.println("Closing local connection");
 				localConnectionCreated = false;
 				closeConnection();
 			}
@@ -2043,6 +2104,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			int counter = 1;
@@ -2064,6 +2126,7 @@ public class Database {
 				gt.setString(counter++, password);
 
 			if (localConnectionCreated) {
+				System.out.println("Closing local connection");
 				localConnectionCreated = false;
 				closeConnection();
 			}
@@ -2111,6 +2174,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			int counter = 1;
@@ -2129,6 +2193,7 @@ public class Database {
 				gt.setInt(counter++, placeId);
 
 			if (localConnectionCreated) {
+				System.out.println("Closing local connection");
 				localConnectionCreated = false;
 				closeConnection();
 			}
@@ -2155,6 +2220,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			int counter = 1;
@@ -2178,6 +2244,7 @@ public class Database {
 				gt.setInt(counter++, numStop);
 
 			if (localConnectionCreated) {
+				System.out.println("Closing local connection");
 				localConnectionCreated = false;
 				closeConnection();
 			}
@@ -2203,6 +2270,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			int counter = 1;
@@ -2221,6 +2289,7 @@ public class Database {
 				gt.setInt(counter++, mapId);
 
 			if (localConnectionCreated) {
+				System.out.println("Closing local connection");
 				localConnectionCreated = false;
 				closeConnection();
 			}
@@ -2246,6 +2315,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			int counter = 1;
@@ -2264,6 +2334,7 @@ public class Database {
 				gt.setInt(counter++, placeId);
 
 			if (localConnectionCreated) {
+				System.out.println("Closing local connection");
 				localConnectionCreated = false;
 				closeConnection();
 			}
@@ -2290,6 +2361,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			int counter = 1;
@@ -2313,6 +2385,7 @@ public class Database {
 				gt.setBoolean(counter++, isFavorite);
 
 			if (localConnectionCreated) {
+				System.out.println("Closing local connection");
 				localConnectionCreated = false;
 				closeConnection();
 			}
@@ -2337,6 +2410,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			int counter = 1;
@@ -2350,6 +2424,7 @@ public class Database {
 				gt.setInt(counter++, cityId);
 
 			if (localConnectionCreated) {
+				System.out.println("Closing local connection");
 				localConnectionCreated = false;
 				closeConnection();
 			}
@@ -2377,6 +2452,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			int counter = 1;
@@ -2408,6 +2484,7 @@ public class Database {
 				gt.setDate(counter++, date);
 
 			if (localConnectionCreated) {
+				System.out.println("Closing local connection");
 				localConnectionCreated = false;
 				closeConnection();
 			}
@@ -2436,6 +2513,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			int counter = 1;
@@ -2463,6 +2541,7 @@ public class Database {
 				gt.setBoolean(counter++, wasDownload);
 
 			if (localConnectionCreated) {
+				System.out.println("Closing local connection");
 				localConnectionCreated = false;
 				closeConnection();
 			}
@@ -2492,6 +2571,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			int counter = 1;
@@ -2528,6 +2608,7 @@ public class Database {
 				gt.setBoolean(counter++, newVersionPublished);
 
 			if (localConnectionCreated) {
+				System.out.println("Closing local connection");
 				localConnectionCreated = false;
 				closeConnection();
 			}
@@ -2552,6 +2633,7 @@ public class Database {
 			boolean localConnectionCreated = false;
 			if (conn == null) {
 				localConnectionCreated = true;
+				System.out.println("Creating local connection");
 				createConnection();
 			}
 			String sql = "SELECT * FROM " + table + " WHERE ID=?";
@@ -2559,6 +2641,7 @@ public class Database {
 			gt.setInt(1, id);
 			ResultSet res = gt.executeQuery();
 			if (localConnectionCreated) {
+				System.out.println("Closing local connection");
 				localConnectionCreated = false;
 				closeConnection();
 			}
