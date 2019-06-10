@@ -99,7 +99,7 @@ public final class Downloader
             	printWriter.println("The Message:");
             	String space="   ";
             	printWriter.println(space+"Hello loyal customer,");
-            	printWriter.println(space+"Our dedicated crew works hard everyday just to improve your viewing content.");
+            	printWriter.println(space+"Our dedicated crew works hard every day just to improve your viewing content.");
             	printWriter.println(space+"After many hours we finally managed to create new versions of several cities.");
             	printWriter.println(space+"As of today the following cities will be updated:");
             	for(City city:p.b)

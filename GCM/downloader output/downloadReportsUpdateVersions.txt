@@ -10,6 +10,7 @@ The Message:
    Our dedicated crew works hard everyday just to improve your viewing content.
    After many hours we finally managed to create new versions of several cities.
    As of today the following cities will be updated:
+   - The city: "Haifa", version: "1.0".
    - The city: "Tel aviv", version: "1.0".
    That is all for now,
    Thanks again for your hard support.

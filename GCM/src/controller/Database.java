@@ -520,9 +520,9 @@ public class Database
 				e.saveToDatabase();
 				Customer cust = new Customer("yosi11", "LDCyosiiii!", "yosi@gmail.com", "yosi", "ben asser",
 						"0523322123", "5495681338665894", "07/24", "896");
-				Subscription sub0 = new Subscription(cust, 1, new Date(119, 8, 6), 201.8, 199.9, new Date(119, 10, 8));
+				Subscription sub0 = new Subscription(cust, 1, new Date(119, 5, 8), 201.8, 199.9, new Date(119, 11, 8));
 				cust.addSubscription(sub0);
-				Subscription sub1 = new Subscription(cust, 2, new Date(109, 8, 6), 171.8, 112.9, new Date(119, 9, 7));
+				Subscription sub1 = new Subscription(cust, 2, new Date(119, 8, 7), 171.8, 112.9, new Date(119, 12, 7));
 				cust.addSubscription(sub1);
 
 				OneTimePurchase otp = new OneTimePurchase(cust, 1 , new Date(119, 8, 6), 20, 19);
@@ -537,9 +537,9 @@ public class Database
 				e.saveToDatabase();
 				Customer cust = new Customer("dan", "masterDan%", "dannyf.post@gmail.com", "dan", "feldman",
 						"0523325686", "5495655558665894", "01/23", "354");
-				Subscription sub0 = new Subscription(cust, 1, new Date(113, 8, 6), 211.8, 189.9, new Date(119, 10, 8));
+				Subscription sub0 = new Subscription(cust, 1, new Date(119, 8, 8), 211.8, 189.9, new Date(119, 11, 8));
 				cust.addSubscription(sub0);
-				Subscription sub1 = new Subscription(cust, 3, new Date(109, 9, 2), 131.8, 111.9, new Date(119, 8, 3));
+				Subscription sub1 = new Subscription(cust, 3, new Date(119, 3, 3), 131.8, 111.9, new Date(119, 8, 3));
 				cust.addSubscription(sub1);
 
 				OneTimePurchase otp = new OneTimePurchase(cust, 2, new Date(119, 8, 6), 19, 18);
@@ -555,7 +555,7 @@ public class Database
 				e.saveToDatabase();
 				Customer cust = new Customer("gadi", "gadiHAVIV!@", "gadi@gmail.com", "gadi", "landau", "0524867726",
 						"5495123458665894", "01/25", "891");
-				Subscription sub = new Subscription(cust, 1, new Date(119, 7, 6), 53.2, 50.9, new Date(119, 9, 8));
+				Subscription sub = new Subscription(cust, 1, new Date(118, 7, 8), 53.2, 50.9, new Date(118, 9, 8));
 				cust.addSubscription(sub);
 
 				OneTimePurchase otp = new OneTimePurchase(cust, 2, new Date(119, 8, 6), 9, 8);
