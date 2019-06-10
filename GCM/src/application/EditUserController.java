@@ -187,6 +187,7 @@ public class EditUserController
 	@FXML
 	void viewPurchaseHistory(ActionEvent event) throws IOException
 	{
+		Connector.selectedCustomer = (Customer) Connector.user;
 		openNewPage("PurchaseHistoryScene.fxml");
 	}
 

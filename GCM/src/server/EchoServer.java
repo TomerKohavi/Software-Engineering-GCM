@@ -27,8 +27,13 @@ import objectClasses.Customer;
 import objectClasses.Employee;
 import objectClasses.User;
 import objectClasses.Employee.Role;
+import objectClasses.PlaceOfInterest.PlaceType;
+import objectClasses.PlaceOfInterestSight;
+import objectClasses.Route;
+import objectClasses.RouteSight;
 import objectClasses.Map;
 import objectClasses.MapSight;
+import objectClasses.PlaceOfInterest;
 
 /**
  * This class overrides some of the methods in the abstract superclass in order
@@ -239,9 +244,27 @@ public class EchoServer extends AbstractServer
 		return cmap;
 	}
 	
-	public /*INSERT CLASS*/Object handlePOICreation(/*INSERT CLASS*/Object ob) {return null;} //TODO LIOR DO IT
+	public CreatePOI handlePOICreation(CreatePOI cpoi) {
+		PlaceOfInterest poi = new PlaceOfInterest(cpoi.cityId, cpoi.name, cpoi.type, cpoi.placeDescription, cpoi.accessibilityToDisabled);
+		poi.saveToDatabase();
+		
+		PlaceOfInterestSight poiS = new PlaceOfInterestSight(cpoi.cdvId, poi);
+		poiS.saveToDatabase();
+		
+		cpoi.poiS = poiS;
+		return cpoi;
+	} 
 
-	public /*INSERT CLASS*/Object handleRouteCreation(/*INSERT CLASS*/Object ob) {return null;} //TODO LIOR DO IT
+	public CreateRoute handleRouteCreation(CreateRoute croute) {
+		Route route = new Route(croute.cityId, croute.info);
+		route.saveToDatabase();
+		
+		RouteSight routeS = new RouteSight(croute.cdvId, route,false);//sigal look at this false. I didn't know how to treat this
+		routeS.saveToDatabase();
+		
+		croute.routeS = routeS;
+		return croute;
+	} 
 
 	/**
 	 * This method handles any messages received from the client.

@@ -416,7 +416,6 @@ public class HomePageController
 							ArrayList<RouteStop> list = route.getCopyRouteStops();
 							StopsTable.setVisible(true);
 							ObservableList<RouteStop> stops = FXCollections.observableArrayList(list);
-							System.out.println(list.get(1).tempPlaceName);
 							
 							TableColumn<RouteStop, String> poiColumn = new TableColumn<>("POI");
 							poiColumn.setMinWidth(365);
