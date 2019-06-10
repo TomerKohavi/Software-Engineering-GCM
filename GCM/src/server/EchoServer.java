@@ -190,7 +190,7 @@ public class EchoServer extends AbstractServer
 
 	}
 
-	public <T> void handleUpdate(Update update)
+	public void handleUpdate(Update update)
 	{
 		System.out.println("update " + update.toUpdate.getClass().toString());
 		update.toUpdate.saveToDatabase();
