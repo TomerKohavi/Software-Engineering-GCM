@@ -16,6 +16,7 @@ import objectClasses.Customer;
 import objectClasses.User;
 import objectClasses.Employee.Role;
 import objectClasses.MapSight;
+import objectClasses.PlaceOfInterest.PlaceType;
 import objectClasses.PlaceOfInterestSight;
 import objectClasses.RouteSight;
 
@@ -65,6 +66,10 @@ public class ChatClient extends AbstractClient
 	AllCitiesRequest cityReq;
 
 	CreateMap cmap;
+	
+	CreatePOI cpoi;
+	
+	CreateRoute croute;
 
 	Semaphore semaphore;
 
@@ -240,9 +245,17 @@ public class ChatClient extends AbstractClient
 		return this.cmap.mapS;
 	}
 	
-	public PlaceOfInterestSight createPOI(/* insert POI params (no id) */ int cdvId) {return null;} // TODO LIOR DO IT
+	public PlaceOfInterestSight createPOI(int cityId, String name, PlaceType type, String placeDescription, boolean accessibilityToDisabled,int cdvId) throws IOException{
+		sendToServer(new CreatePOI(cityId, name, type, placeDescription, accessibilityToDisabled,cdvId));
+		this.semAcquire();
+		return this.cpoi.poiS;
+	} 
 
-	public RouteSight createRoute(/* insert Route params (no id) */ int cdvId) {return null;} // TODO LIOR DO IT
+	public RouteSight createRoute(int cityId, String info,int cdvId) throws IOException{
+		sendToServer(new CreateRoute(cityId, info,cdvId));
+		this.semAcquire();
+		return this.croute.routeS;
+	} 
 
 	
 	/**
@@ -286,7 +299,10 @@ public class ChatClient extends AbstractClient
 			this.cityReq = (AllCitiesRequest) msg;
 		else if (msg instanceof CreateMap)
 			this.cmap = (CreateMap) msg;
-		//LIOR TODO ADD POI+ROUTE
+		else if (msg instanceof CreatePOI)
+			this.cpoi = (CreatePOI) msg;
+		else if (msg instanceof CreateRoute)
+			this.croute = (CreateRoute) msg;
 		
 		
 		if (msg instanceof Command)
