@@ -1,5 +1,7 @@
 package application;
 
+import java.io.IOException;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -70,7 +72,14 @@ public class POIEditController {
     	poi.setPlaceDescription(InfoBox.getText());
 //    	poi.setType(type);
     	poi.setAccessibilityToDisabled(Accessibility.isSelected());
-    	poi.saveToDatabase();
+    	try
+		{
+			Connector.client.update(poi);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
     	mainPane.getScene().getWindow().hide();
     }
 

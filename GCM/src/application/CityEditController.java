@@ -1,5 +1,7 @@
 package application;
 
+import java.io.IOException;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -48,7 +50,14 @@ public class CityEditController {
     void apply(ActionEvent event) {
     	Connector.selectedCity.setCityName(Name.getText());
     	Connector.selectedCity.setCityDescription(InfoBox.getText());
-    	Connector.selectedCity.saveToDatabase();
+    	try
+		{
+			Connector.client.update(Connector.selectedCity);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
     	mainPane.getScene().getWindow().hide();
     }
 

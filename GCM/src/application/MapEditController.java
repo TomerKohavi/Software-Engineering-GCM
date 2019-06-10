@@ -153,8 +153,14 @@ public class MapEditController {
     	map.setInfo(InfoBox.getText());
 //    	map.setImgURL(imgURL);
 //		MapImage.getImage();
-    	map.saveToDatabase();
-    	
+    	try
+		{
+			Connector.client.update(map);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
     	if (!firstPOIAdded) {
     		mainPane.getChildren().remove(mainPane.getChildren().size() - 1);
     		Connector.imageList.remove(Connector.imageList.size() - 1);
