@@ -68,6 +68,9 @@ public class EditUserController
 
 	@FXML // fx:id="CSV"
 	private JFXTextField CVC; // Value injected by FXMLLoader
+	
+    @FXML // fx:id="ViewPurchaseHistoryButton"
+    private JFXButton ViewPurchaseHistoryButton; // Value injected by FXMLLoader
 
 	public void initialize()
 	{
@@ -99,6 +102,7 @@ public class EditUserController
 			ExperationMonth.setVisible(false);
 			ExperationYear.setVisible(false);
 			CVC.setVisible(false);
+			ViewPurchaseHistoryButton.setVisible(false);
 		}
 	}
 
