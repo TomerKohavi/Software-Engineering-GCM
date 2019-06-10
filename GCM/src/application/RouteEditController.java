@@ -1,24 +1,36 @@
 package application;
 
 import java.io.IOException;
+import java.sql.Time;
+import java.util.ArrayList;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import objectClasses.Route;
+import objectClasses.RouteStop;
 
 public class RouteEditController
 {
 
 	private Route route;
+	
+	private ArrayList<RouteStop> stopList;
+	
+	private TableColumn<RouteStop, String> poiColumn;
+	private TableColumn<RouteStop, Time> timeColumn;
 
 	@FXML // fx:id="mainPane"
 	private AnchorPane mainPane; // Value injected by FXMLLoader
@@ -36,7 +48,7 @@ public class RouteEditController
 	private JFXListView<String> POIBox; // Value injected by FXMLLoader
 
 	@FXML // fx:id="StopsBox"
-	private TableView<String> StopsBox; // Value injected by FXMLLoader
+	private TableView<RouteStop> StopsBox; // Value injected by FXMLLoader
 
 	@FXML // fx:id="AddPoiButton"
 	private JFXButton AddPoiButton; // Value injected by FXMLLoader
@@ -63,12 +75,40 @@ public class RouteEditController
 			Name.setText("Route " + route.getId());
 			InfoBox.setText(route.getInfo());
 			Accessibility.setSelected(route.isAcceptabilityToDisabled());
-			StopsBox.getItems().addAll(""); // add to table, copy from HomePageController
-			POIBox.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
+			
+			stopList = route.getCopyRouteStops();
+			StopsBox.setVisible(true);
+			ObservableList<RouteStop> stops = FXCollections.observableArrayList(stopList);
+			
+			poiColumn = new TableColumn<>("POI");
+			poiColumn.setMinWidth(365);
+			poiColumn.setCellValueFactory(new PropertyValueFactory<>("tempPlaceName"));
+			
+			timeColumn = new TableColumn<>("Time");
+			timeColumn.setMinWidth(83);
+			timeColumn.setCellValueFactory(new PropertyValueFactory<>("recommendedTime"));
+			
+			StopsBox.setItems(stops);
+
+			StopsBox.getColumns().clear();
+			StopsBox.getColumns().addAll(poiColumn, timeColumn);
 		}
 		else
 			route = new Route(Connector.selectedCity.getId(), null);
+		
+		POIBox.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
 
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void updateTable()
+	{
+		poiColumn.setCellValueFactory(new PropertyValueFactory<>("tempPlaceName"));
+		timeColumn.setCellValueFactory(new PropertyValueFactory<>("recommendedTime"));
+		ObservableList<RouteStop> stops = FXCollections.observableArrayList(stopList);
+		StopsBox.setItems(stops);
+		StopsBox.getColumns().clear();
+		StopsBox.getColumns().addAll(poiColumn, timeColumn);
 	}
 
 	@FXML
@@ -81,7 +121,9 @@ public class RouteEditController
 			int selectedIdx = POIBox.getSelectionModel().getSelectedIndex();
 			if (selectedIdx >= 0)
 			{
-				StopsBox.getItems().addAll("" + selectedIdx); // need to implement
+				RouteStop newRouteStop = new RouteStop(route, Connector.searchPOIResult.get(selectedIdx).getCopyPlace(), new Time((long)time / 60));
+				stopList.add(newRouteStop);
+				updateTable();
 				StopTime.setText("");
 				TimeError.setOpacity(0);
 				Accessibility.setSelected(route.isAcceptabilityToDisabled());
@@ -97,7 +139,8 @@ public class RouteEditController
 		int selectedIdx = StopsBox.getSelectionModel().getSelectedIndex();
 		if (selectedIdx >= 0)
 		{
-			StopsBox.getItems().remove(selectedIdx);
+			stopList.remove(selectedIdx);
+			updateTable();
 		}
 	}
 
