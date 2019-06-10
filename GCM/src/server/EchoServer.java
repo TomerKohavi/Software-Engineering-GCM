@@ -239,6 +239,10 @@ public class EchoServer extends AbstractServer
 		return cmap;
 	}
 	
+	public /*INSERT CLASS*/Object handlePOICreation(/*INSERT CLASS*/Object ob) {return null;} //TODO LIOR DO IT
+
+	public /*INSERT CLASS*/Object handleRouteCreation(/*INSERT CLASS*/Object ob) {return null;} //TODO LIOR DO IT
+
 	/**
 	 * This method handles any messages received from the client.
 	 *
@@ -277,7 +281,8 @@ public class EchoServer extends AbstractServer
 			else if (msg instanceof Update)
 				handleUpdate((Update) msg);
 			else if (msg instanceof CreateMap)
-				handleMapCreation((CreateMap) msg);
+				client.sendToClient(handleMapCreation((CreateMap) msg));
+			// TODO LIOR DO IT
 			else
 				System.out.println(msg.getClass().toString() + '\n' + msg.toString());
 		}

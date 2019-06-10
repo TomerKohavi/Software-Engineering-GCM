@@ -16,6 +16,8 @@ import objectClasses.Customer;
 import objectClasses.User;
 import objectClasses.Employee.Role;
 import objectClasses.MapSight;
+import objectClasses.PlaceOfInterestSight;
+import objectClasses.RouteSight;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -227,33 +229,22 @@ public class ChatClient extends AbstractClient
 	public ArrayList<Pair<String, Integer>> allCitiesRequest() throws IOException
 	{
 		sendToServer(new AllCitiesRequest());
-		try
-		{
-			this.semaphore.acquire();
-		}
-		catch (InterruptedException e)
-		{
-			System.err.println("semaphore");
-			e.printStackTrace();
-		}
+		this.semAcquire();
 		return this.cityReq.cityList;
 	}
 
 	public MapSight createMap(int cityId, String name, String info, String imgURL, int cdvId) throws IOException
 	{
 		sendToServer(new CreateMap(cityId, name, info, imgURL, cdvId));
-		try
-		{
-			this.semaphore.acquire();
-		}
-		catch (InterruptedException e)
-		{
-			System.err.println("semaphore");
-			e.printStackTrace();
-		}
+		this.semAcquire();
 		return this.cmap.mapS;
 	}
+	
+	public PlaceOfInterestSight createPOI(/* insert POI params (no id) */ int cdvId) {return null;} // TODO LIOR DO IT
 
+	public RouteSight createRoute(/* insert Route params (no id) */ int cdvId) {return null;} // TODO LIOR DO IT
+
+	
 	/**
 	 * @param object update every object that is not user
 	 * @throws IOException cannot update
@@ -295,7 +286,9 @@ public class ChatClient extends AbstractClient
 			this.cityReq = (AllCitiesRequest) msg;
 		else if (msg instanceof CreateMap)
 			this.cmap = (CreateMap) msg;
-
+		//LIOR TODO ADD POI+ROUTE
+		
+		
 		if (msg instanceof Command)
 			this.semaphore.release();
 		else
