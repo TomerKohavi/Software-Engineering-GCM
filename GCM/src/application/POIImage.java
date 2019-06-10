@@ -16,12 +16,13 @@ public class POIImage {
 	
 	private Image realImg, addedImage, removeImg;
 	public boolean isNew;
-	private boolean isRemovable;
+	private boolean isRemovable, dontChange;
 	
-	public POIImage(boolean _isNew) throws FileNotFoundException {
+	public POIImage(boolean _isNew, boolean _dontChange) throws FileNotFoundException {
 		
 		isNew = _isNew;
 		isRemovable = false;
+		dontChange = _dontChange;
 		
 		realImg = new Image(new FileInputStream("Pics\\POI.png"));
 		addedImage = new Image(new FileInputStream("Pics\\Add_POI.png"));
@@ -36,7 +37,7 @@ public class POIImage {
 
     	    @Override
     	    public void handle(MouseEvent click) {
-    	    	if (!Connector.unpublished || isNew)
+    	    	if (!Connector.unpublished || isNew || dontChange)
     	    		return;
     	    	isRemovable = !isRemovable;
     	    	if (isRemovable) {

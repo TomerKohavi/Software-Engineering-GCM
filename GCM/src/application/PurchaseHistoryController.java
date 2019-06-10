@@ -42,7 +42,7 @@ public class PurchaseHistoryController {
 		
 		
 		TableColumn<OneTimePurchase, String> oneCityColumn = new TableColumn<>("City");
-		oneCityColumn.setMinWidth(150);
+		oneCityColumn.setMinWidth(228);
 		oneCityColumn.setCellValueFactory(new PropertyValueFactory<>("cityName"));
 		
 		TableColumn<OneTimePurchase, Double> onePriceColumn = new TableColumn<>("Price");
@@ -50,12 +50,12 @@ public class PurchaseHistoryController {
 		onePriceColumn.setCellValueFactory(new PropertyValueFactory<>("pricePayed"));
 		
 		TableColumn<OneTimePurchase, Double> oneDateColumn = new TableColumn<>("Date");
-		oneDateColumn.setMinWidth(100);
+		oneDateColumn.setMinWidth(80);
 		oneDateColumn.setCellValueFactory(new PropertyValueFactory<>("purchaseDate"));
 		
 		
 		TableColumn<Subscription, String> cityColumn = new TableColumn<>("City");
-		cityColumn.setMinWidth(150);
+		cityColumn.setMinWidth(167);
 		cityColumn.setCellValueFactory(new PropertyValueFactory<>("cityName"));
 		
 		TableColumn<Subscription, Double> priceColumn = new TableColumn<>("Price");
@@ -63,7 +63,7 @@ public class PurchaseHistoryController {
 		priceColumn.setCellValueFactory(new PropertyValueFactory<>("pricePayed"));
 		
 		TableColumn<Subscription, Double> dateColumn = new TableColumn<>("Date");
-		dateColumn.setMinWidth(100);
+		dateColumn.setMinWidth(80);
 		dateColumn.setCellValueFactory(new PropertyValueFactory<>("expirationDate"));
 		
 		TableColumn<Subscription, Integer> monthColumn = new TableColumn<>("Months");
@@ -72,7 +72,7 @@ public class PurchaseHistoryController {
 		
 		
 		TableColumn<Subscription, String> pastCityColumn = new TableColumn<>("City");
-		pastCityColumn.setMinWidth(150);
+		pastCityColumn.setMinWidth(167);
 		pastCityColumn.setCellValueFactory(new PropertyValueFactory<>("cityName"));
 		
 		TableColumn<Subscription, Double> pastPriceColumn = new TableColumn<>("Price");
@@ -80,7 +80,7 @@ public class PurchaseHistoryController {
 		pastPriceColumn.setCellValueFactory(new PropertyValueFactory<>("pricePayed"));
 		
 		TableColumn<Subscription, Double> pastDateColumn = new TableColumn<>("Date");
-		pastDateColumn.setMinWidth(100);
+		pastDateColumn.setMinWidth(80);
 		pastDateColumn.setCellValueFactory(new PropertyValueFactory<>("expirationDate"));
 		
 		TableColumn<Subscription, Integer> pastMonthColumn = new TableColumn<>("Months");

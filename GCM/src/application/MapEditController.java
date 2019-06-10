@@ -1,12 +1,10 @@
 package application;
 
-import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.jfoenix.controls.JFXButton;
@@ -109,7 +107,7 @@ public class MapEditController
 			List<Location> locList = map.getCopyLocations();
 			for (Location loc : locList)
 			{
-				POIImage poiImage = new POIImage(false);
+				POIImage poiImage = new POIImage(false, false);
 				poiImage.image.setX(loc.getCoordinates()[0] + boundsInScene.getMinX());
 				poiImage.image.setY(loc.getCoordinates()[1] + boundsInScene.getMinY());
 				Connector.imageList.add(poiImage);
@@ -132,7 +130,7 @@ public class MapEditController
 				POIImage poiImage = null;
 				try
 				{
-					poiImage = new POIImage(true);
+					poiImage = new POIImage(true, false);
 				}
 				catch (FileNotFoundException e)
 				{
@@ -170,8 +168,8 @@ public class MapEditController
 		{
 			map.setName(Name.getText());
 			map.setInfo(InfoBox.getText());
-//    	map.setImgURL(imgURL);
-//		MapImage.getImage(); 
+//    		map.setImgURL(imgURL);
+//			MapImage.getImage(); 
 			try
 			{
 				Connector.client.update(map);
