@@ -54,12 +54,28 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 		this.priceOneTime = other.priceOneTime;
 		this.pricePeriod = other.pricePeriod;
 		this.cityId = other.cityId;
-		this.temp_placeSights = new ArrayList<>(other.temp_placeSights);
-		this.temp_removePlaceSights = new ArrayList<>(other.temp_removePlaceSights);
-		this.temp_mapSights = new ArrayList<>(other.temp_mapSights);
-		this.temp_removeMapSights = new ArrayList<>(other.temp_removeMapSights);
-		this.temp_routeSights = new ArrayList<>(other.temp_routeSights);
-		this.temp_removeRouteSights = new ArrayList<>(other.temp_removeRouteSights);
+		this.temp_placeSights = new ArrayList<>();
+		for(PlaceOfInterestSight ps:other.temp_placeSights) {
+			PlaceOfInterestSight newPs=new PlaceOfInterestSight(this.id, ps.getCopyPlace());
+			temp_placeSights.add(newPs);
+		}
+		this.temp_removePlaceSights = new ArrayList<>();
+		this.temp_mapSights = new ArrayList<>();
+		for(MapSight ms:other.temp_mapSights) {
+			Map newMap=new Map(ms.getCopyMap());
+			newMap.saveToDatabase();
+			MapSight newMs=new MapSight(this.id, newMap);
+			temp_mapSights.add(newMs);
+		}
+		this.temp_removeMapSights = new ArrayList<>();
+		this.temp_routeSights = new ArrayList<>();
+		for(RouteSight rs:other.temp_routeSights) {
+			Route newR=new Route(rs.getCopyRoute());
+			newR.saveToDatabase();
+			RouteSight newRs=new RouteSight(this.id, rs.getCopyRoute(), rs.getIsFavorite());
+			temp_routeSights.add(newRs);
+		}
+		this.temp_removeRouteSights = new ArrayList<>();
 	}
 
 	public void saveToDatabase() {
@@ -172,6 +188,14 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 		}
 		return null;
 	}
+	
+	public MapSight getMapSightByMapName(String name) {
+		for (MapSight ms : temp_mapSights) {
+			if (ms.getCopyMap().getName().equals(name))
+				return ms;
+		}
+		return null;
+	}
 
 	public MapSight getMapSightById(int msId) {
 		for (MapSight ms : temp_mapSights) {
@@ -274,6 +298,14 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 	public RouteSight getRouteSightByRouteId(int routeId) {
 		for (RouteSight rs : temp_routeSights) {
 			if (rs.getRouteId() == routeId)
+				return rs;
+		}
+		return null;
+	}
+	
+	public RouteSight getRouteSightByRouteInfo(String routeInfo) {
+		for (RouteSight rs : temp_routeSights) {
+			if (rs.getCopyRoute().getInfo().equals(routeInfo))
 				return rs;
 		}
 		return null;

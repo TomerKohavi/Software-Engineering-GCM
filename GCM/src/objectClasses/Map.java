@@ -38,6 +38,20 @@ public class Map implements ClassMustProperties, Serializable {
 		this.temp_locations = new ArrayList<>();
 		this.temp_removeLocations = new ArrayList<>();
 	}
+	
+	public Map(Map other) {
+		this.id = Database.generateIdMap();
+		this.cityId = other.cityId;
+		this.name = other.name;
+		this.info = other.info;
+		this.imgURL = other.imgURL;
+		this.temp_locations = new ArrayList<>();
+		for(Location l:other.getCopyLocations()) {
+			Location newL=new Location(this, l.getCopyPlaceOfInterest(), l.getCoordinates());
+			temp_locations.add(newL);
+		}
+		this.temp_removeLocations = new ArrayList<>();
+	}
 
 	private ArrayList<Location> generateLocations() {
 		ArrayList<Integer> ids = Database.searchLocation(this.id, null);

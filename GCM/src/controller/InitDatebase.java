@@ -348,28 +348,20 @@ public class InitDatebase {
 		
 		CityDataVersion cdv2 = new CityDataVersion(cdv, "2.0");
 		
+		Map m1=cdv2.getMapSightByMapName(m0.getName()).getCopyMap();
 		double[] coords1 = { 200, 400 };
-		Location l1 = new Location(m0, p1, coords1);
-		m0.addLocation(l1);
-		m0.saveToDatabase();
-		MapSight ms1 = new MapSight(cdv2.getId(), m0);
-		cdv2.addMapSight(ms1);
+		Location l1 = new Location(m1, p1, coords1);
+		m1.addLocation(l1);
+		m1.saveToDatabase();
 		
-		// For RON:    We want to add p1 to the route "one stop route" in cdv2, and change its name to "Two stop route"
-		// Please explain how you did it, so that I add more tommorrow.
-		
-//		RouteStop rstop1 = new RouteStop(r, p0, new Time(4, 30, 0));
-//		r.addRouteStop(rstop1);
-//		RouteStop rstop2 = new RouteStop(r, p1, new Time(2, 0, 0));
-//		r.addRouteStop(rstop2);
-//		r.saveToDatabase();
-//		RouteSight rs = new RouteSight(cdv.getId(), r, true);
-//		cdv.addRouteSight(rs);
-//
-//		R
+		Route r2 =cdv2.getRouteSightByRouteInfo(r1.getInfo()).getCopyRoute();
+		r2.setInfo("Two stop route");
+		RouteStop rstop2 = new RouteStop(r2, p1, new Time(2, 0, 0));
+		r2.addRouteStop(rstop2);
+		r2.saveToDatabase();
 
 		c1.addPublishedCityDataVersion(cdv);
-		c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv, "2.0"));
+		c1.addUnpublishedCityDataVersion(cdv2);
 		c1.saveToDatabase();
 	}
 	
