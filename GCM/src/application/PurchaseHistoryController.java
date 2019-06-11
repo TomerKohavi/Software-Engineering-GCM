@@ -40,52 +40,71 @@ public class PurchaseHistoryController {
 		ObservableList<Subscription> acL = FXCollections.observableArrayList(Connector.selectedCustomer.getCopyActiveSubscription());
 		ObservableList<Subscription> usL = FXCollections.observableArrayList(Connector.selectedCustomer.getCopyUnactiveSubscription());
 		
+		for (Subscription sub : acL)
+			sub.getNumMonths();
+		
+		for (Subscription sub : usL)
+			sub.getNumMonths();
+		
+		System.out.println(Connector.selectedCustomer.getCopyUnactiveSubscription().get(0).months);
+		
 		
 		TableColumn<OneTimePurchase, String> oneCityColumn = new TableColumn<>("City");
 		oneCityColumn.setMinWidth(228);
+		oneCityColumn.setMaxWidth(228);
 		oneCityColumn.setCellValueFactory(new PropertyValueFactory<>("cityName"));
 		
 		TableColumn<OneTimePurchase, Double> onePriceColumn = new TableColumn<>("Price");
 		onePriceColumn.setMinWidth(50);
+		onePriceColumn.setMaxWidth(50);
 		onePriceColumn.setCellValueFactory(new PropertyValueFactory<>("pricePayed"));
 		
 		TableColumn<OneTimePurchase, Double> oneDateColumn = new TableColumn<>("Date");
 		oneDateColumn.setMinWidth(80);
+		oneDateColumn.setMaxWidth(80);
 		oneDateColumn.setCellValueFactory(new PropertyValueFactory<>("purchaseDate"));
 		
 		
 		TableColumn<Subscription, String> cityColumn = new TableColumn<>("City");
-		cityColumn.setMinWidth(167);
+		cityColumn.setMinWidth(168);
+		cityColumn.setMaxWidth(168);
 		cityColumn.setCellValueFactory(new PropertyValueFactory<>("cityName"));
 		
 		TableColumn<Subscription, Double> priceColumn = new TableColumn<>("Price");
 		priceColumn.setMinWidth(50);
+		priceColumn.setMaxWidth(50);
 		priceColumn.setCellValueFactory(new PropertyValueFactory<>("pricePayed"));
 		
 		TableColumn<Subscription, Double> dateColumn = new TableColumn<>("Date");
 		dateColumn.setMinWidth(80);
+		dateColumn.setMaxWidth(80);
 		dateColumn.setCellValueFactory(new PropertyValueFactory<>("expirationDate"));
 		
 		TableColumn<Subscription, Integer> monthColumn = new TableColumn<>("Months");
 		monthColumn.setMinWidth(60);
-		monthColumn.setCellValueFactory(new PropertyValueFactory<>("numMonth"));
+		monthColumn.setMaxWidth(60);
+		monthColumn.setCellValueFactory(new PropertyValueFactory<>("numMonths"));
 		
 		
 		TableColumn<Subscription, String> pastCityColumn = new TableColumn<>("City");
-		pastCityColumn.setMinWidth(167);
+		pastCityColumn.setMinWidth(168);
+		pastCityColumn.setMaxWidth(168);
 		pastCityColumn.setCellValueFactory(new PropertyValueFactory<>("cityName"));
 		
 		TableColumn<Subscription, Double> pastPriceColumn = new TableColumn<>("Price");
 		pastPriceColumn.setMinWidth(50);
+		pastPriceColumn.setMaxWidth(50);
 		pastPriceColumn.setCellValueFactory(new PropertyValueFactory<>("pricePayed"));
 		
 		TableColumn<Subscription, Double> pastDateColumn = new TableColumn<>("Date");
 		pastDateColumn.setMinWidth(80);
+		pastDateColumn.setMaxWidth(80);
 		pastDateColumn.setCellValueFactory(new PropertyValueFactory<>("expirationDate"));
 		
 		TableColumn<Subscription, Integer> pastMonthColumn = new TableColumn<>("Months");
 		pastMonthColumn.setMinWidth(60);
-		pastMonthColumn.setCellValueFactory(new PropertyValueFactory<>("numMonth"));
+		pastMonthColumn.setMaxWidth(60);
+		pastMonthColumn.setCellValueFactory(new PropertyValueFactory<>("numMonths"));
 
 		
 		Active.setItems(acL);
