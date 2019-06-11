@@ -46,8 +46,6 @@ public class PurchaseHistoryController {
 		for (Subscription sub : usL)
 			sub.getNumMonths();
 		
-		System.out.println(Connector.selectedCustomer.getCopyUnactiveSubscription().get(0).months);
-		
 		
 		TableColumn<OneTimePurchase, String> oneCityColumn = new TableColumn<>("City");
 		oneCityColumn.setMinWidth(228);
