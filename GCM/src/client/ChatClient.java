@@ -369,11 +369,5 @@ public class ChatClient extends AbstractClient
 		exception.printStackTrace();
 		clientUI.display("The connection to the Server (" + getHost() + ", " + getPort() + ") has been disconnected");
 	}
-
-	public static void main(String[] args) throws IOException
-	{
-		ChatClient client = new ChatClient("localhost", 5555, new Console());
-		client.createMap(1234, "sigmap", "mapsig", "oof.png", 4321);
-	}
 }
 // End of ChatClient class

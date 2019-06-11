@@ -484,20 +484,34 @@ public class HomePageController
 						}
 						else if (Connector.listType.equals("Report")) // reports
 						{
-							Statistic statboi;
+							Statistic statboi = null;
 							if (selectedIndex == 0) // All
 							{
-								statboi = InformationSystem.getRangeSumStatistics(null,
-										new java.sql.Date(Date.valueOf(FirstDate.getValue()).getTime()),
-										new java.sql.Date(Date.valueOf(LastDate.getValue()).getTime())); // TODO
+								try
+								{
+									statboi = Connector.client.getStatistics(null,
+											new java.sql.Date(Date.valueOf(FirstDate.getValue()).getTime()),
+											new java.sql.Date(Date.valueOf(LastDate.getValue()).getTime()));
+								}
+								catch (IOException e)
+								{
+									e.printStackTrace();
+								} // TODO
 								ReportCityName.setText("All Cities");
 							}
 							else
 							{
-								statboi = InformationSystem.getRangeSumStatistics(
-										Connector.allCities.get(selectedIndex - 1).b,
-										new java.sql.Date(Date.valueOf(FirstDate.getValue()).getTime()),
-										new java.sql.Date(Date.valueOf(LastDate.getValue()).getTime())); // TODO
+								try
+								{
+									statboi = Connector.client.getStatistics(
+											Connector.allCities.get(selectedIndex - 1).b,
+											new java.sql.Date(Date.valueOf(FirstDate.getValue()).getTime()),
+											new java.sql.Date(Date.valueOf(LastDate.getValue()).getTime()));
+								}
+								catch (IOException e)
+								{
+									e.printStackTrace();
+								} // TODO
 								ReportCityName.setText(Connector.allCities.get(selectedIndex - 1).a);
 
 							}

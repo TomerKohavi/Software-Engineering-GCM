@@ -241,9 +241,10 @@ public class Database
 	}
 
 	/**
-	 	// generate ID's
-
-	/**
+	 * // generate ID's
+	 * 
+	 * /**
+	 * 
 	 * @param type: the table find ID
 	 * @return the ID of this table
 	 */
@@ -1394,7 +1395,6 @@ public class Database
 	{
 		try
 		{
-
 			if (conn == null)
 			{
 
