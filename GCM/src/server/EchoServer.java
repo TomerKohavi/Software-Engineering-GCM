@@ -286,15 +286,10 @@ public class EchoServer extends AbstractServer
 
 	public void handleDelete(Delete del)
 	{
+		System.out.println("delete " + del.toDelete.getClass().toString());
 		del.toDelete.deleteFromDatabase();
 	}
 	
-	public Statboi handleStatistics(Statboi statboi)
-	{
-		statboi.statboi = InformationSystem.getRangeSumStatistics(statboi.cityId, statboi.from, statboi.end);
-		return statboi;
-	}
-
 	/**
 	 * This method handles any messages received from the client.
 	 *
@@ -433,6 +428,12 @@ public class EchoServer extends AbstractServer
 
 		System.out.println(msg);
 		this.sendToAllClients(msg);
+	}
+
+	public Statboi handleStatistics(Statboi statboi)
+	{
+		statboi.statboi = InformationSystem.getRangeSumStatistics(statboi.cityId, statboi.from, statboi.end);
+		return statboi;
 	}
 
 	/**
