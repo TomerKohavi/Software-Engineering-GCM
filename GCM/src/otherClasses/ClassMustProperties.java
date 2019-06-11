@@ -8,4 +8,6 @@ public interface ClassMustProperties extends Serializable {
 	public void deleteFromDatabase();
 
 	public void reloadTempsFromDatabase();
+	
+	public int getId();
 }

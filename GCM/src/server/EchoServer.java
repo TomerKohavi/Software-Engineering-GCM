@@ -286,7 +286,7 @@ public class EchoServer extends AbstractServer
 
 	public void handleDelete(Delete del)
 	{
-		System.out.println("delete " + del.toDelete.getClass().toString());
+		System.out.println("delete " + del.toDelete.getClass().toString() + " " + del.toDelete.getId());
 		del.toDelete.deleteFromDatabase();
 	}
 	
