@@ -67,7 +67,7 @@ public class POIEditController
 			{
 				poi.setName(Name.getText());
 				poi.setPlaceDescription(InfoBox.getText());
-//    	poi.setType(type);
+//   	 	poi.setType(type);
 				poi.setAccessibilityToDisabled(Accessibility.isSelected());
 				Connector.client.update(poi);
 			}

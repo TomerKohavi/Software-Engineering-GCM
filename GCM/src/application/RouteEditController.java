@@ -233,12 +233,13 @@ public class RouteEditController
 			ArrayList<Integer> stopIdList = Connector.client.createRouteStops(stopList);
 			for (int i = 0; i < stopIdList.size(); i++)
 				stopList.get(i)._setId(stopIdList.get(i));
+			Connector.selectedRoute.setRouteStops(stopList);
+			mainPane.getScene().getWindow().hide();
 		}
 		catch (IOException e)
 		{
 			e.printStackTrace();
 		}
-		mainPane.getScene().getWindow().hide();
 	}
 
 	@FXML
