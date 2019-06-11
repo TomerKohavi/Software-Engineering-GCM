@@ -40,6 +40,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -362,6 +363,7 @@ public class HomePageController
 		}
 		
 		Connector.poiNameTextArea.setVisible(false);
+		Connector.poiNameTextArea.setTextAlignment(TextAlignment.CENTER);
 		mainPane.getChildren().add(Connector.poiNameTextArea);
 		
 		MainList.setOnMouseClicked(new EventHandler<MouseEvent>()

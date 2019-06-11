@@ -4,13 +4,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import javafx.event.EventHandler;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 
 public class POIImage {
-
-//	public POI poi;
 	
 	public ImageView image;
 	
@@ -44,8 +44,10 @@ public class POIImage {
     	    		if (Connector.poiNameTextArea.getText().equals(""))
     	    		{
     	    				Connector.poiNameTextArea.setText(poiName);
-    	    				Connector.poiNameTextArea.setLayoutX(image.getLayoutX());
-    	    				Connector.poiNameTextArea.setLayoutY(image.getLayoutY());
+    	    				System.out.println(image.getLayoutX() + "" + image.getLayoutY());
+    	    				System.out.println(image.getX() + "" + image.getY());
+    	    				Connector.poiNameTextArea.setX(image.getX() - 15);
+    	    				Connector.poiNameTextArea.setY(image.getY());
     	    				Connector.poiNameTextArea.setVisible(true);
     	    		}
     	    		else

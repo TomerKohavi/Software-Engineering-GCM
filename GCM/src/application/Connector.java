@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.jfoenix.controls.JFXButton;
 
-import javafx.scene.control.TextArea;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import objectClasses.City;
 import objectClasses.Customer;
@@ -59,7 +59,7 @@ public class Connector {
 	public static ArrayList<Pair<String, Integer>> allCities;
 	public static ArrayList<Customer> customerList;
 	
-	public static TextArea poiNameTextArea = new TextArea("");
+	public static Text poiNameTextArea = new Text("");
 	
 	public static ArrayList<String> getCitiesNames(ArrayList<City> cityList)
 	{
