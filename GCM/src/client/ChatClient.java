@@ -71,6 +71,8 @@ public class ChatClient extends AbstractClient
 	CreatePOI cpoi;
 
 	CreateRoute croute;
+	
+	CreateRouteStops cstops;
 
 	Semaphore semaphore;
 
@@ -261,9 +263,16 @@ public class ChatClient extends AbstractClient
 		return this.croute.routeS;
 	}
 	
-	public ArrayList<Integer> createRoutStops(ArrayList<RouteStop> newStopList)
+	public ArrayList<Integer> createRouteStops(ArrayList<RouteStop> newStopList) throws IOException
 	{
-		sendToServer(new RouteStopsSave(newStopList));
+		sendToServer(new CreateRouteStops(newStopList));
+		this.semAcquire();
+		return this.cstops.idList;
+	}
+	
+	public void deleteObject(ClassMustProperties object) throws IOException
+	{
+		sendToServer(new Delete(object));
 	}
 
 	/**
@@ -311,7 +320,9 @@ public class ChatClient extends AbstractClient
 			this.cpoi = (CreatePOI) msg;
 		else if (msg instanceof CreateRoute)
 			this.croute = (CreateRoute) msg;
-
+		else if (msg instanceof CreateRouteStops)
+			this.cstops = (CreateRouteStops) msg;
+		
 		if (msg instanceof Command)
 			this.semaphore.release();
 		else

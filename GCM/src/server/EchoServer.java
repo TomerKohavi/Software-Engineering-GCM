@@ -31,6 +31,7 @@ import objectClasses.PlaceOfInterest.PlaceType;
 import objectClasses.PlaceOfInterestSight;
 import objectClasses.Route;
 import objectClasses.RouteSight;
+import objectClasses.RouteStop;
 import objectClasses.Map;
 import objectClasses.MapSight;
 import objectClasses.PlaceOfInterest;
@@ -92,7 +93,7 @@ public class EchoServer extends AbstractServer
 	}
 
 	/**
-	 * @param login login request 
+	 * @param login login request
 	 * @return login result
 	 */
 	public Login handleLogin(Login login)
@@ -115,7 +116,7 @@ public class EchoServer extends AbstractServer
 				this.loggedList.add(login.loggedUser.getId());
 				login.loginResult = LoginRegisterResult.Success;
 			}
-			else 
+			else
 			{
 				login.loggedUser = null;
 				login.loginResult = LoginRegisterResult.alredyLogged;
@@ -230,41 +231,61 @@ public class EchoServer extends AbstractServer
 		System.out.println("update " + update.toUpdate.getClass().toString());
 		update.toUpdate.saveToDatabase();
 	}
-	
-	
+
 	public CreateMap handleMapCreation(CreateMap cmap)
 	{
 		Map map = new Map(cmap.cityId, cmap.name, cmap.info, cmap.imgURL);
 		map.saveToDatabase();
-		
+
 		MapSight mapS = new MapSight(cmap.cdvId, map);
 		mapS.saveToDatabase();
-		
+
 		cmap.mapS = mapS;
 		return cmap;
 	}
-	
-	public CreatePOI handlePOICreation(CreatePOI cpoi) {
-		PlaceOfInterest poi = new PlaceOfInterest(cpoi.cityId, cpoi.name, cpoi.type, cpoi.placeDescription, cpoi.accessibilityToDisabled);
+
+	public CreatePOI handlePOICreation(CreatePOI cpoi)
+	{
+		PlaceOfInterest poi = new PlaceOfInterest(cpoi.cityId, cpoi.name, cpoi.type, cpoi.placeDescription,
+				cpoi.accessibilityToDisabled);
 		poi.saveToDatabase();
-		
+
 		PlaceOfInterestSight poiS = new PlaceOfInterestSight(cpoi.cdvId, poi);
 		poiS.saveToDatabase();
-		
+
 		cpoi.poiS = poiS;
 		return cpoi;
-	} 
+	}
 
-	public CreateRoute handleRouteCreation(CreateRoute croute) {
+	public CreateRoute handleRouteCreation(CreateRoute croute)
+	{
 		Route route = new Route(croute.cityId, croute.info);
 		route.saveToDatabase();
-		
-		RouteSight routeS = new RouteSight(croute.cdvId, route,false);//sigal look at this false. I didn't know how to treat this
+
+		RouteSight routeS = new RouteSight(croute.cdvId, route, false);// sigal look at this false. I didn't know how to
+																		// treat this
 		routeS.saveToDatabase();
-		
+
 		croute.routeS = routeS;
 		return croute;
-	} 
+	}
+
+	public CreateRouteStops handleRouteStopsCreation(CreateRouteStops cstops)
+	{
+		cstops.idList = new ArrayList<Integer>();
+		for (RouteStop stop : cstops.stopList)
+		{
+			stop._setId(Database.generateIdRouteStop());
+			cstops.idList.add(stop.getId());
+			stop.saveToDatabase();
+		}
+		return cstops;
+	}
+
+	public void handleDelete(Delete del)
+	{
+		del.toDelete.deleteFromDatabase();
+	}
 
 	/**
 	 * This method handles any messages received from the client.
@@ -296,9 +317,9 @@ public class EchoServer extends AbstractServer
 			else if (msg instanceof Search)
 				client.sendToClient(handleSearch((Search) msg));
 			else if (msg instanceof CustomersRequest)
-				client.sendToClient(handleUsersRequest((CustomersRequest) msg)); 
+				client.sendToClient(handleUsersRequest((CustomersRequest) msg));
 			else if (msg instanceof AllCitiesRequest)
-				client.sendToClient(handleCityRequest((AllCitiesRequest) msg)); 
+				client.sendToClient(handleCityRequest((AllCitiesRequest) msg));
 			else if (msg instanceof User)
 				handleUpdateUser((User) msg);
 			else if (msg instanceof Update)
@@ -307,8 +328,12 @@ public class EchoServer extends AbstractServer
 				client.sendToClient(handleMapCreation((CreateMap) msg));
 			else if (msg instanceof CreatePOI)
 				client.sendToClient(handlePOICreation((CreatePOI) msg));
-			else if (msg instanceof CreateMap)
+			else if (msg instanceof CreateRoute)
 				client.sendToClient(handleRouteCreation((CreateRoute) msg));
+			else if (msg instanceof CreateRouteStops)
+				client.sendToClient(handleRouteStopsCreation((CreateRouteStops) msg));
+			else if (msg instanceof Delete)
+				handleDelete((Delete) msg);
 			else
 				System.out.println(msg.getClass().toString() + '\n' + msg.toString());
 		}
@@ -350,9 +375,7 @@ public class EchoServer extends AbstractServer
 		if (message.equalsIgnoreCase("#display"))
 			this.serverUI.display(loggedList);
 		else if (message.equalsIgnoreCase("#quit"))
-		{
 			quit();
-		}
 	}
 
 	/**

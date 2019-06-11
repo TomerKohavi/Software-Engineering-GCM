@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import objectClasses.RouteStop;
 
-public class RouteStopsSave extends Command
+public class CreateRouteStops extends Command
 {
 	
-	public RouteStopsSave(ArrayList<RouteStop> stopList)
+	public CreateRouteStops(ArrayList<RouteStop> stopList)
 	{
 		this.stopList = stopList;
 	}

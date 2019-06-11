@@ -55,6 +55,11 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 	{
 		return id;
 	}
+	
+	public void _setId(int id)
+	{
+		this.id = id;
+	}
 
 	public void setNumStop(int numStop)
 	{
