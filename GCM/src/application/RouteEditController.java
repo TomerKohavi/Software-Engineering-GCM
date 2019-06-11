@@ -116,7 +116,7 @@ public class RouteEditController
 
 			poiColumn = new TableColumn<RouteStop, String>("POI");
 			poiColumn.setMinWidth(212);
-			poiColumn.setCellValueFactory(new PropertyValueFactory<>("tempPlaceName"));
+			poiColumn.setCellValueFactory(new PropertyValueFactory<>("tempPlaceName")); // TODO Fix Sigal stupid
 			poiColumn.setSortable(false);
 
 			timeColumn = new TableColumn<RouteStop, Time>("Time");
@@ -143,6 +143,7 @@ public class RouteEditController
 	void up(ActionEvent event)
 	{
 		int index = StopsBox.getSelectionModel().getSelectedIndex();
+		stopList.add(index-1, stopList.remove(index));
 		StopsBox.getItems().add(index-1, StopsBox.getItems().remove(index));
 		StopsBox.getSelectionModel().clearAndSelect(index-1);
 	}
@@ -151,6 +152,7 @@ public class RouteEditController
 	void down(ActionEvent event)
 	{
 		int index = StopsBox.getSelectionModel().getSelectedIndex();
+		stopList.add(index+1, stopList.remove(index));
 		StopsBox.getItems().add(index+1, StopsBox.getItems().remove(index));
 		StopsBox.getSelectionModel().clearAndSelect(index+1);
 	}
