@@ -340,8 +340,8 @@ public class HomePageController
 		else
 			LoginButton.setText("Login");
 
-		if (Connector.user instanceof Employee)
-		{ // check if employee -> can edit
+		if (Connector.user instanceof Employee) // check if employee -> can edit
+		{
 			EditButton.setVisible(true);
 			UnpublishSearch.setVisible(true);
 			SideReport.setVisible(true);
@@ -436,12 +436,12 @@ public class HomePageController
 							Statistic statboi;
 							if (selectedIndex == 0) // All
 							{
-								statboi = InformationSystem.getRangeSumStatistics(null, new java.sql.Date(Date.valueOf(FirstDate.getValue()).getTime()), new java.sql.Date(Date.valueOf(LastDate.getValue()).getTime()));
+								statboi = InformationSystem.getRangeSumStatistics(null, new java.sql.Date(Date.valueOf(FirstDate.getValue()).getTime()), new java.sql.Date(Date.valueOf(LastDate.getValue()).getTime())); // TODO
 								ReportCityName.setText("All Cities");
 							}
 							else
 							{
-								statboi = InformationSystem.getRangeSumStatistics(Connector.allCities.get(selectedIndex - 1).b, new java.sql.Date(Date.valueOf(FirstDate.getValue()).getTime()), new java.sql.Date(Date.valueOf(LastDate.getValue()).getTime()));
+								statboi = InformationSystem.getRangeSumStatistics(Connector.allCities.get(selectedIndex - 1).b, new java.sql.Date(Date.valueOf(FirstDate.getValue()).getTime()), new java.sql.Date(Date.valueOf(LastDate.getValue()).getTime())); // TODO
 								ReportCityName.setText(Connector.allCities.get(selectedIndex - 1).a);
 								
 							}
@@ -471,7 +471,6 @@ public class HomePageController
 	void search(ActionEvent event) throws IOException
 	{
 		setMainSideButton(SideSearch);
-		Connector.searchedCity = true;
 		Connector.listType = "City";
 		cityName = CityNameBox.getText();
 		cityInfo = CityInfoBox.getText();
@@ -483,21 +482,20 @@ public class HomePageController
 		if (Connector.searchCityResult != null && !Connector.searchCityResult.isEmpty())
 		{
 
-			if (UnpublishSearch.isSelected())
-			{// search unpublished
+			if (UnpublishSearch.isSelected()) // TODO search unpublished
+			{
 				Connector.unpublished = true;
 				System.out.println("search unpublished");
 			}
-			else
-			{// search published
+			else // TODO search published
+			{
 				Connector.unpublished = false;
 				System.out.println("search published");
 			}
 
 			clearInfo(true);
-
-			for (City city : Connector.searchCityResult)
-				MainList.getItems().add(city.getCityName());
+			
+			MainList.getItems().addAll(Connector.getCitiesNames(Connector.searchCityResult));
 
 			NotValid.setOpacity(0);
 		}
@@ -511,7 +509,7 @@ public class HomePageController
 	void watch(ActionEvent event)
 	{
 		if (FirstDate.getValue() == null || LastDate.getValue() == null || 0 <= FirstDate.getValue().compareTo(LastDate.getValue())) // date not valid
-		{ // date not valid
+		{
 			DateNotValid.setVisible(true);
 		}
 		else

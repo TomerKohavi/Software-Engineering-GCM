@@ -36,8 +36,6 @@ public class Connector {
 	
 	public static String listType = "City";
 	
-	public static boolean searchedCity = true;
-	
 	public static List<POIImage> imageList = new ArrayList<POIImage> ();
 	
 	public static List<POIImage> removablePOIList = new ArrayList<POIImage> ();
@@ -88,7 +86,7 @@ public class Connector {
 	{
 		ArrayList<String> nameList = new ArrayList<String>();
 		for (RouteSight route : routeList)
-			nameList.add("route " + route.getCopyRoute().getId());
+			nameList.add("Route " + route.getCopyRoute().getId());
 		return nameList;
 	}
 }
