@@ -18,12 +18,6 @@ public class Main extends Application
 {
 	public void start(Stage primaryStage) throws IOException
 	{
-//        try {
-//            this.localHostPopUp();
-//        }
-//        catch (Exception e) {
-//            e.printStackTrace();
-//        }
 
 		Connector.client = new ChatClient(Connector.LOCAL_HOST, Connector.PORT, new Console());
 		Connector.mainStage = primaryStage;
@@ -35,16 +29,6 @@ public class Main extends Application
 		primaryStage.setResizable(false);
 		primaryStage.show();
 	}
-
-//    public void localHostPopUp() throws IOException {
-//        FXMLLoader fxmlLoader = new FXMLLoader(((Object)((Object)this)).getClass().getResource("HostPortScene.fxml"));
-//        Parent root = (Parent)fxmlLoader.load();
-//        Stage stage = new Stage();
-//        stage.initModality(Modality.APPLICATION_MODAL);
-//        stage.setTitle("Host-Port");
-//        stage.setScene(new Scene(root));
-//        stage.showAndWait();
-//    }
 
 	public static void main(String[] args)
 	{

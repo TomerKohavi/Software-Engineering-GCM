@@ -22,6 +22,7 @@ import controller.Downloader;
 import controller.InformationSystem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -188,6 +189,39 @@ public class HomePageController
 	@FXML // fx:id="LoadingGif"
 	private ImageView LoadingGif; // Value injected by FXMLLoader
 
+	class LoadingAnimation extends Task<Integer> {
+		
+		@Override
+		protected Integer call() throws Exception
+		{
+			boolean temp = true;
+			while(true)
+			{
+				System.out.println("s");
+				if (Connector.loading && temp)
+				{
+					startLoad();
+					temp = false;
+					System.out.println("load");
+				}
+				else if (!Connector.loading && !temp)
+				{
+					endLoad();
+					temp = true;
+					System.out.println("unload");
+				}
+			}
+		}
+		
+		@Override
+		public boolean cancel(boolean mayInterruptIfRunning)
+		{
+			updateMessage("Cancelled!");
+			return super.cancel(mayInterruptIfRunning);
+		}
+		
+	}
+	
 	void startLoad() throws FileNotFoundException
 	{
 		mainPane.setDisable(true);
@@ -334,6 +368,9 @@ public class HomePageController
 
 	public void initialize()
 	{
+//		LoadingAnimation la = new LoadingAnimation();
+//		Thread t = new Thread(la);
+//		t.start();
 
 		Connector.sideButton = SideSearch;
 		Connector.sideButton.setOpacity(1);
@@ -374,7 +411,7 @@ public class HomePageController
 			public void handle(MouseEvent click)
 			{
 
-				if (click.getClickCount() == 2)
+				if (click.getClickCount() == 1)
 				{
 					int selectedIndex = MainList.getSelectionModel().getSelectedIndex();
 					if (selectedIndex >= 0)
@@ -481,7 +518,7 @@ public class HomePageController
 	}
 
 	@FXML
-	void search(ActionEvent event) throws IOException
+	void search(ActionEvent event) throws IOException, InterruptedException
 	{
 		setMainSideButton(SideSearch);
 		Connector.listType = "City";
@@ -490,8 +527,10 @@ public class HomePageController
 		poiName = POINameBox.getText();
 		poiInfo = POIInfoBox.getText();
 //		startLoad();
+//		Connector.loading = true;
 		Connector.searchCityResult = Connector.client.search(cityName, cityInfo, poiName, poiInfo);
 //		endLoad();
+//		Connector.loading = false;
 		if (Connector.searchCityResult != null && !Connector.searchCityResult.isEmpty())
 		{
 

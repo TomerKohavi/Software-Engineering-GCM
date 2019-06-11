@@ -59,6 +59,8 @@ public class Connector {
 	public static ArrayList<Pair<String, Integer>> allCities;
 	public static ArrayList<Customer> customerList;
 	
+	public static boolean loading = false;
+	
 	public static Text poiNameTextArea = new Text("");
 	
 	public static ArrayList<String> getCitiesNames(ArrayList<City> cityList)
