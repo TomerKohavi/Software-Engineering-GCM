@@ -20,9 +20,11 @@ import objectClasses.PlaceOfInterest.PlaceType;
 import objectClasses.PlaceOfInterestSight;
 import objectClasses.RouteSight;
 import objectClasses.RouteStop;
+import objectClasses.Statistic;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
@@ -71,11 +73,13 @@ public class ChatClient extends AbstractClient
 	CreatePOI cpoi;
 
 	CreateRoute croute;
-	
+
 	CreateRouteStops cstops;
 
 	Semaphore semaphore;
 
+	Statboi statboi;
+	
 	/**
 	 * Constructs an instance of the chat client.
 	 *
@@ -262,14 +266,14 @@ public class ChatClient extends AbstractClient
 		this.semAcquire();
 		return this.croute.routeS;
 	}
-	
+
 	public ArrayList<Integer> createRouteStops(ArrayList<RouteStop> newStopList) throws IOException
 	{
 		sendToServer(new CreateRouteStops(newStopList));
 		this.semAcquire();
 		return this.cstops.idList;
 	}
-	
+
 	public void deleteObject(ClassMustProperties object) throws IOException
 	{
 		sendToServer(new Delete(object));
@@ -291,6 +295,13 @@ public class ChatClient extends AbstractClient
 	public void updateUser(User user) throws IOException
 	{
 		sendToServer(user);
+	}
+
+	public Statistic getStatistics(Integer cityId, Date from, Date end) throws IOException
+	{
+		sendToServer(new Statboi(cityId, from, end));
+		this.semAcquire();
+		return this.statboi.statboi;
 	}
 
 	// Instance methods ***********************************************
@@ -322,6 +333,8 @@ public class ChatClient extends AbstractClient
 			this.croute = (CreateRoute) msg;
 		else if (msg instanceof CreateRouteStops)
 			this.cstops = (CreateRouteStops) msg;
+		else if (msg instanceof Statboi)
+			this.statboi = (Statboi) msg;
 		
 		if (msg instanceof Command)
 			this.semaphore.release();

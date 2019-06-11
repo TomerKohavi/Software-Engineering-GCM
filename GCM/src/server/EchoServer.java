@@ -19,6 +19,7 @@ import otherClasses.*;
 import common.*;
 import common.Console;
 import controller.Database;
+import controller.InformationSystem;
 import controller.SearchCatalog;
 import io_commands.*;
 import javafx.scene.chart.PieChart.Data;
@@ -287,6 +288,12 @@ public class EchoServer extends AbstractServer
 	{
 		del.toDelete.deleteFromDatabase();
 	}
+	
+	public Statboi handleStatistics(Statboi statboi)
+	{
+		statboi.statboi = InformationSystem.getRangeSumStatistics(statboi.cityId, statboi.from, statboi.end);
+		return statboi;
+	}
 
 	/**
 	 * This method handles any messages received from the client.
@@ -335,6 +342,9 @@ public class EchoServer extends AbstractServer
 				client.sendToClient(handleRouteStopsCreation((CreateRouteStops) msg));
 			else if (msg instanceof Delete)
 				handleDelete((Delete) msg);
+			else if (msg instanceof Statboi)
+				client.sendToClient(handleStatistics((Statboi) msg));
+			
 			else
 				System.out.println(msg.getClass().toString() + '\n' + msg.toString());
 		}
