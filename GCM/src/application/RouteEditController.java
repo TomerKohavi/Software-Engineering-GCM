@@ -177,7 +177,7 @@ public class RouteEditController
 			{
 				PlaceOfInterest poi = Connector.searchPOIResult.get(selectedIdx).getCopyPlace();
 				RouteStop newRouteStop = RouteStop._createRouteStop(-1, -1, poi.getId(), poi.getName(), 0,
-						new Time((time / 60), time % 60, 0)); // TODO kohavi add changing order
+						new Time((time / 60), time % 60, 0));
 				stopList.add(newRouteStop);
 				updateTable();
 				StopTime.setText("");
