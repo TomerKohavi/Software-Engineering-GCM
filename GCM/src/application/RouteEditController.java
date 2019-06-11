@@ -1,5 +1,7 @@
 package application;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -8,6 +10,8 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,6 +20,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import objectClasses.Route;
@@ -42,6 +48,12 @@ public class RouteEditController
 
 	@FXML // fx:id="InfoBox"
 	private TextArea InfoBox; // Value injected by FXMLLoader
+	
+	@FXML // fx:id="UpButton"
+    private JFXButton UpButton; // Value injected by FXMLLoader
+
+    @FXML // fx:id="DownButton"
+    private JFXButton DownButton; // Value injected by FXMLLoader
 
 	@FXML // fx:id="StopsBox"
 	private JFXListView<String> POIBox; // Value injected by FXMLLoader
@@ -65,9 +77,33 @@ public class RouteEditController
 	private Text TimeError; // Value injected by FXMLLoade
 
 	@FXML
-	public void initialize()
+	public void initialize() throws FileNotFoundException
 	{
-
+//		ImageView upImg = new ImageView(new Image(new FileInputStream("Pics\\up_arrow.png")));
+//		ImageView downImg = new ImageView(new Image(new FileInputStream("Pics\\down_arrow.png")));
+//		upImg.setFitHeight(25);
+//		upImg.setFitWidth(25);
+//		downImg.setFitHeight(25);
+//		downImg.setFitWidth(25);
+//		
+//		UpButton.setGraphic(upImg);
+//		DownButton.setGraphic(downImg);
+//		DownButton.setMinWidth(25);
+//		DownButton.setMaxWidth(25);
+//		DownButton.setMinHeight(25);
+//		DownButton.setMaxHeight(25);
+		
+		ReadOnlyIntegerProperty selectedIndex = StopsBox.getSelectionModel().selectedIndexProperty();
+		
+		UpButton.disableProperty().bind(selectedIndex.lessThanOrEqualTo(0));
+		
+		DownButton.disableProperty().bind(Bindings.createBooleanBinding(() -> {
+	        int index = selectedIndex.get();
+	        return index < 0 || index+1 >= StopsBox.getItems().size();
+	    }, selectedIndex, StopsBox.getItems()));
+		
+		
+		
 		if (Connector.isEdit) // if its edit, load the data
 		{
 			route = Connector.selectedRoute;
@@ -78,13 +114,15 @@ public class RouteEditController
 			StopsBox.setVisible(true);
 			ObservableList<RouteStop> stops = FXCollections.observableArrayList(stopList);
 
-			poiColumn = new TableColumn<>("POI");
+			poiColumn = new TableColumn<RouteStop, String>("POI");
 			poiColumn.setMinWidth(212);
 			poiColumn.setCellValueFactory(new PropertyValueFactory<>("tempPlaceName"));
+			poiColumn.setSortable(false);
 
-			timeColumn = new TableColumn<>("Time");
+			timeColumn = new TableColumn<RouteStop, Time>("Time");
 			timeColumn.setMinWidth(83);
 			timeColumn.setCellValueFactory(new PropertyValueFactory<>("recommendedTime"));
+			timeColumn.setSortable(false);
 
 			StopsBox.setItems(stops);
 
@@ -99,6 +137,22 @@ public class RouteEditController
 
 		POIBox.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
 
+	}
+	
+	@FXML
+	void up(ActionEvent event)
+	{
+		int index = StopsBox.getSelectionModel().getSelectedIndex();
+		StopsBox.getItems().add(index-1, StopsBox.getItems().remove(index));
+		StopsBox.getSelectionModel().clearAndSelect(index-1);
+	}
+	
+	@FXML
+	void down(ActionEvent event)
+	{
+		int index = StopsBox.getSelectionModel().getSelectedIndex();
+		StopsBox.getItems().add(index+1, StopsBox.getItems().remove(index));
+		StopsBox.getSelectionModel().clearAndSelect(index+1);
 	}
 
 	@SuppressWarnings("unchecked")

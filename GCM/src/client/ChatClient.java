@@ -260,11 +260,6 @@ public class ChatClient extends AbstractClient
 		this.semAcquire();
 		return this.croute.routeS;
 	}
-	
-	public ArrayList<Integer> createRoutStops(ArrayList<RouteStop> newStopList)
-	{
-		sendToServer(new RouteStopsSave(newStopList));
-	}
 
 	/**
 	 * @param object update every object that is not user
