@@ -18,6 +18,7 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 
+import controller.Downloader;
 import controller.InformationSystem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -247,9 +248,7 @@ public class HomePageController
 		BuyButton.setVisible(false);
 		ReSubscribeButton.setVisible(false);
 		for (POIImage img : Connector.imageList)
-		{
 			mainPane.getChildren().remove(img.image);
-		}
 		Connector.imageList.clear();
 		ReportCityName.setVisible(false);
 		ReportInfo.setVisible(false);
@@ -300,6 +299,9 @@ public class HomePageController
 					BuyButton.setText("Change Price");
 				else
 					BuyButton.setVisible(false);
+				SideMap.setVisible(true);
+				SidePOI.setVisible(true);
+				SideRoutes.setVisible(true);
 			}
 			else
 			{
@@ -310,6 +312,9 @@ public class HomePageController
 					{
 						found = true;
 						BuyButton.setText("Download");
+						SideMap.setVisible(true);
+						SidePOI.setVisible(true);
+						SideRoutes.setVisible(true);
 						if (sub.isGoingToEnd(new Date(new java.util.Date().getTime())))
 							ReSubscribeButton.setVisible(true);
 						break;
@@ -349,10 +354,13 @@ public class HomePageController
 		}
 		else
 		{
+			SideMap.setVisible(false);
+			SidePOI.setVisible(false);
+			SideRoutes.setVisible(false);
 			SideReport.setVisible(false);
 			SideUsers.setVisible(false);
 		}
-
+		
 		MainList.setOnMouseClicked(new EventHandler<MouseEvent>()
 		{
 
@@ -633,13 +641,16 @@ public class HomePageController
 	{
 		Connector.listType = "Users";
 		setMainSideButton(SideUsers);
-		try
+		if (Connector.customerList == null)
 		{
-			Connector.customerList = Connector.client.customersRquest();
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
+			try
+			{
+				Connector.customerList = Connector.client.customersRquest();
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
 		}
 		for (Customer cust : Connector.customerList)
 			MainList.getItems().add(cust.getUserName());
@@ -722,6 +733,8 @@ public class HomePageController
 				chooser.setInitialDirectory(defaultDirectory);
 				File selectedDirectory = chooser.showDialog(null);
 				System.out.println(selectedDirectory.getPath()); // Path to folder
+				Downloader.downloadPOIs(Connector.selectedCity.getCopyPublishedVersion(), selectedDirectory.getPath() + "\\" + Connector.selectedCity.getCityName() + ".txt");
+				openNewPage("DownloadCompleteScene.fxml");
 			}
 			else if (BuyButton.getText().equals("Change Price"))
 				openNewPage("ChangePriceScene.fxml");
