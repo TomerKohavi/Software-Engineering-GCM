@@ -5,6 +5,7 @@ import java.sql.Time;
 import java.util.Calendar;
 
 import controller.Database;
+import controller.InitDatebase;
 
 public class Main {
 
@@ -12,7 +13,7 @@ public class Main {
 	{
 		Database.createConnection();
 		try {
-			Database.initDatabase("Tal", "11235813");
+			InitDatebase.initDatabase("Tal", "11235813");
 //			Date today = new Date(Calendar.getInstance().getTime().getTime());
 //			City c=new City("Haifa", "boring city");
 //			CityDataVersion cdv=new CityDataVersion(c,"0.11",29.90,132);
