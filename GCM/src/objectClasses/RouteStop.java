@@ -112,4 +112,9 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 	{
 		return o instanceof RouteStop && ((RouteStop) o).getId() == this.getId();
 	}
+
+	public void _setRouteId(int routeId)
+	{
+		this.routeId = routeId;
+	}
 }

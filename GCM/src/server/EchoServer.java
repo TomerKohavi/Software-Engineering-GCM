@@ -275,7 +275,8 @@ public class EchoServer extends AbstractServer
 		cstops.idList = new ArrayList<Integer>();
 		for (RouteStop stop : cstops.stopList)
 		{
-			stop._setId(Database.generateIdRouteStop());
+			if (stop.getId() == -1)
+				stop._setId(Database.generateIdRouteStop());
 			cstops.idList.add(stop.getId());
 			stop.saveToDatabase();
 		}

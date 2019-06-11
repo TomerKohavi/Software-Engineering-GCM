@@ -189,13 +189,14 @@ public class HomePageController
 	@FXML // fx:id="LoadingGif"
 	private ImageView LoadingGif; // Value injected by FXMLLoader
 
-	class LoadingAnimation extends Task<Integer> {
-		
+	class LoadingAnimation extends Task<Integer>
+	{
+
 		@Override
 		protected Integer call() throws Exception
 		{
 			boolean temp = true;
-			while(true)
+			while (true)
 			{
 				System.out.println("s");
 				if (Connector.loading && temp)
@@ -212,16 +213,16 @@ public class HomePageController
 				}
 			}
 		}
-		
+
 		@Override
 		public boolean cancel(boolean mayInterruptIfRunning)
 		{
 			updateMessage("Cancelled!");
 			return super.cancel(mayInterruptIfRunning);
 		}
-		
+
 	}
-	
+
 	void startLoad() throws FileNotFoundException
 	{
 		mainPane.setDisable(true);
@@ -398,11 +399,11 @@ public class HomePageController
 			SideReport.setVisible(false);
 			SideUsers.setVisible(false);
 		}
-		
+
 		Connector.poiNameTextArea.setVisible(false);
 		Connector.poiNameTextArea.setTextAlignment(TextAlignment.CENTER);
 		mainPane.getChildren().add(Connector.poiNameTextArea);
-		
+
 		MainList.setOnMouseClicked(new EventHandler<MouseEvent>()
 		{
 
@@ -418,12 +419,12 @@ public class HomePageController
 					{
 						InfoPane.setVisible(true);
 						if (Connector.listType.equals("City")) // City
-						{ 
+						{
 							Connector.selectedCity = Connector.searchCityResult.get(selectedIndex);
 							fillCityInfo(Connector.selectedCity);
 						}
 						else if (Connector.listType.equals("POI")) // POI
-						{ 
+						{
 							PlaceOfInterest poi = Connector.searchPOIResult.get(selectedIndex).getCopyPlace();
 							Connector.selectedPOI = poi;
 							ResultName.setText(poi.getName() + ", " + poi.getType());// set name and type
@@ -433,7 +434,7 @@ public class HomePageController
 																														// not
 						}
 						else if (Connector.listType.equals("Map")) // map
-						{ 
+						{
 							try
 							{
 								Map map = Connector.searchMapResult.get(selectedIndex).getCopyMap();
@@ -466,38 +467,46 @@ public class HomePageController
 							ArrayList<RouteStop> list = route.getCopyRouteStops();
 							StopsTable.setVisible(true);
 							ObservableList<RouteStop> stops = FXCollections.observableArrayList(list);
-							
+
 							TableColumn<RouteStop, String> poiColumn = new TableColumn<>("POI");
 							poiColumn.setMinWidth(365);
 							poiColumn.setCellValueFactory(new PropertyValueFactory<>("tempPlaceName"));
-							
+
 							TableColumn<RouteStop, Time> timeColumn = new TableColumn<>("Time");
 							timeColumn.setMinWidth(83);
 							timeColumn.setCellValueFactory(new PropertyValueFactory<>("recommendedTime"));
-							
+
 							StopsTable.setItems(stops);
 
 							StopsTable.getColumns().clear();
 							StopsTable.getColumns().addAll(poiColumn, timeColumn);
-							
+
 						}
 						else if (Connector.listType.equals("Report")) // reports
-						{ 
+						{
 							Statistic statboi;
 							if (selectedIndex == 0) // All
 							{
-								statboi = InformationSystem.getRangeSumStatistics(null, new java.sql.Date(Date.valueOf(FirstDate.getValue()).getTime()), new java.sql.Date(Date.valueOf(LastDate.getValue()).getTime())); // TODO
+								statboi = InformationSystem.getRangeSumStatistics(null,
+										new java.sql.Date(Date.valueOf(FirstDate.getValue()).getTime()),
+										new java.sql.Date(Date.valueOf(LastDate.getValue()).getTime())); // TODO
 								ReportCityName.setText("All Cities");
 							}
 							else
 							{
-								statboi = InformationSystem.getRangeSumStatistics(Connector.allCities.get(selectedIndex - 1).b, new java.sql.Date(Date.valueOf(FirstDate.getValue()).getTime()), new java.sql.Date(Date.valueOf(LastDate.getValue()).getTime())); // TODO
+								statboi = InformationSystem.getRangeSumStatistics(
+										Connector.allCities.get(selectedIndex - 1).b,
+										new java.sql.Date(Date.valueOf(FirstDate.getValue()).getTime()),
+										new java.sql.Date(Date.valueOf(LastDate.getValue()).getTime())); // TODO
 								ReportCityName.setText(Connector.allCities.get(selectedIndex - 1).a);
-								
+
 							}
-							ReportInfo.setText("Number of Maps: " + 100 + "\n" + "Number of One Time Purchases: " + statboi.getNumOneTimePurchases()
-										+ "\n" + "Number of Subscriptions: " + statboi.getNumSubscriptions() + "\n" + "Number of Re-Subscriptions: " + statboi.getNumSubscriptionsRenewal()
-										+ "\n" + "Number of Views: " + statboi.getNumVisited() + "\n" + "Number of Downloads: " + statboi.getNumSubDownloads());
+							ReportInfo.setText("Number of Maps: " + 100 + "\n" + "Number of One Time Purchases: "
+									+ statboi.getNumOneTimePurchases() + "\n" + "Number of Subscriptions: "
+									+ statboi.getNumSubscriptions() + "\n" + "Number of Re-Subscriptions: "
+									+ statboi.getNumSubscriptionsRenewal() + "\n" + "Number of Views: "
+									+ statboi.getNumVisited() + "\n" + "Number of Downloads: "
+									+ statboi.getNumSubDownloads());
 							ReportCityName.setVisible(true);
 							ReportInfo.setVisible(true);
 							InfoPane.setVisible(false);
@@ -506,8 +515,10 @@ public class HomePageController
 						{
 							Connector.selectedCustomer = Connector.customerList.get(selectedIndex);
 							ResultName.setText(Connector.selectedCustomer.getUserName()); // set name and type
-							ResultInfo.setText("Name: " + Connector.selectedCustomer.getFirstName() + " " + Connector.selectedCustomer.getLastName() + "\n" + "Email: "
-									+ Connector.selectedCustomer.getEmail() + "\n" + "Phone: " + Connector.selectedCustomer.getPhoneNumber());
+							ResultInfo.setText("Name: " + Connector.selectedCustomer.getFirstName() + " "
+									+ Connector.selectedCustomer.getLastName() + "\n" + "Email: "
+									+ Connector.selectedCustomer.getEmail() + "\n" + "Phone: "
+									+ Connector.selectedCustomer.getPhoneNumber());
 							ViewPurchaseHistoryButton.setVisible(true);
 							EditButton.setVisible(false);
 						}
@@ -546,7 +557,7 @@ public class HomePageController
 			}
 
 			clearInfo(true);
-			
+
 			MainList.getItems().addAll(Connector.getCitiesNames(Connector.searchCityResult));
 
 			NotValid.setOpacity(0);
@@ -560,7 +571,8 @@ public class HomePageController
 	@FXML
 	void watch(ActionEvent event)
 	{
-		if (FirstDate.getValue() == null || LastDate.getValue() == null || 0 <= FirstDate.getValue().compareTo(LastDate.getValue())) // date not valid
+		if (FirstDate.getValue() == null || LastDate.getValue() == null
+				|| 0 <= FirstDate.getValue().compareTo(LastDate.getValue())) // date not valid
 		{
 			DateNotValid.setVisible(true);
 		}
@@ -617,7 +629,8 @@ public class HomePageController
 	{
 		Connector.listType = "City";
 		setMainSideButton(SideSearch);
-		if (Connector.searchCityResult != null && Connector.searchCityResult.size() != 0) {
+		if (Connector.searchCityResult != null && Connector.searchCityResult.size() != 0)
+		{
 			MainList.getItems().addAll(Connector.getCitiesNames(Connector.searchCityResult));
 			if (Connector.selectedCity != null)
 				fillCityInfo(Connector.selectedCity); // the index of the chosen city
@@ -703,15 +716,21 @@ public class HomePageController
 	@FXML
 	void callRemove(ActionEvent event)
 	{
-		// TODO Sigal need to implement the correct removal
 		int index = MainList.getSelectionModel().getSelectedIndex();
 		MainList.getItems().remove(index);
-		if (Connector.listType.equals("Map"))
-			Connector.searchMapResult.remove(index);
-		else if (Connector.listType.equals("POI"))
-			Connector.searchPOIResult.remove(index);
-		else if (Connector.listType.equals("Route"))
-			Connector.searchRouteResult.remove(index);
+		try
+		{
+			if (Connector.listType.equals("Map"))
+				Connector.client.deleteObject(Connector.searchMapResult.remove(index));
+			else if (Connector.listType.equals("POI"))
+				Connector.client.deleteObject(Connector.searchPOIResult.remove(index));
+			else if (Connector.listType.equals("Route"))
+				Connector.client.deleteObject(Connector.searchRouteResult.remove(index));
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 		clearInfo(false);
 	}
 
@@ -730,7 +749,7 @@ public class HomePageController
 		else if (Connector.listType.equals("Route"))
 			MainList.getItems().addAll(Connector.getRoutesNames(Connector.searchRouteResult));
 	}
-	
+
 	@FXML
 	void callEdit(ActionEvent event) throws IOException
 	{
@@ -777,7 +796,9 @@ public class HomePageController
 				chooser.setInitialDirectory(defaultDirectory);
 				File selectedDirectory = chooser.showDialog(null);
 				System.out.println(selectedDirectory.getPath()); // Path to folder
-				Downloader.downloadPOIs(Connector.selectedCity.getCopyPublishedVersion(), selectedDirectory.getPath() + "\\" + Connector.selectedCity.getCityName() + " " + Connector.selectedCity.getCopyPublishedVersion().getVersionName() + ".txt");
+				Downloader.downloadPOIs(Connector.selectedCity.getCopyPublishedVersion(),
+						selectedDirectory.getPath() + "\\" + Connector.selectedCity.getCityName() + " "
+								+ Connector.selectedCity.getCopyPublishedVersion().getVersionName() + ".txt");
 				openNewPage("DownloadCompleteScene.fxml");
 			}
 			else if (BuyButton.getText().equals("Change Price"))

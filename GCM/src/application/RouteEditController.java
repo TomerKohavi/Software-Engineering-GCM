@@ -194,7 +194,14 @@ public class RouteEditController
 		int selectedIdx = StopsBox.getSelectionModel().getSelectedIndex();
 		if (selectedIdx >= 0)
 		{
-			stopList.remove(selectedIdx);
+			try
+			{
+				Connector.client.deleteObject(stopList.remove(selectedIdx));
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
 			updateTable();
 		}
 	}
@@ -216,7 +223,12 @@ public class RouteEditController
 				route = routeS.getCopyRoute();
 				Connector.searchRouteResult.add(routeS);
 			}
-			
+			for (RouteStop stop : stopList)
+				if (stop.getRouteId() == -1)
+					stop._setRouteId(route.getId());
+			ArrayList<Integer> stopIdList = Connector.client.createRouteStops(stopList);
+			for (int i = 0; i < stopIdList.size(); i++)
+				stopList.get(i)._setId(stopIdList.get(i));
 		}
 		catch (IOException e)
 		{
