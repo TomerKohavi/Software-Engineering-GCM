@@ -62,6 +62,10 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 		s.setNumVisited(s1.numVisited + s2.numVisited);
 		s.setNumSubDownloads(s1.numSubDownloads + s2.numSubDownloads);
 		s.setNewVersionPublished(s1.newVersionPublished | s2.newVersionPublished);
+		if(s1.date==null || s2.date==null)
+			s.setNumMaps(s1.date==null?s2.numMaps:s1.numMaps);
+		else
+			s.setNumMaps(s1.compareTo(s2)>0?s1.numMaps:s2.numMaps);
 		return s;
 	}
 

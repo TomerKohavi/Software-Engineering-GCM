@@ -45,6 +45,7 @@ public class InitDatebase {
 			benAndGadi();
 			sigalAndTomer();
 			aAndB();
+			initStatistics();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -443,6 +444,17 @@ public class InitDatebase {
 		otp.updateToWasDownload();
 		cust.addOneTimePurchase(otp);
 		cust.saveToDatabase();
+	}
+	
+	private static void initStatistics() {
+		//TODO: Ron need to fill real sattistics only once all the other init is done
+		InformationSystem.addOneTimePurchase(0,new Date(119,6,6));
+		InformationSystem.addSubDownload(0);
+		InformationSystem.addSubscription(0,new Date(119,5,5));
+		InformationSystem.addSubscriptionRenewal(0);
+		InformationSystem.addVisit(0);
+		InformationSystem.newVersionWasPublished(0,,new Date(119,4,4));
+		InformationSystem.setNumMaps(0, 2);
 	}
 
 }
