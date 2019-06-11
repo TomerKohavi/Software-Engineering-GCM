@@ -85,9 +85,14 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 		return placeName;
 	}
 	
-	public void _setName(String POIName)
+	public void setPlaceName(String POIName)
 	{
 		this.placeName = POIName;	
+	}
+	
+	public String getPlaceName()
+	{
+		return this.placeName;	
 	}
 
 	public void setNumStop(int numStop)

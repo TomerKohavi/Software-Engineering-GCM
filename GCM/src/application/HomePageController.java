@@ -470,7 +470,7 @@ public class HomePageController
 
 							TableColumn<RouteStop, String> poiColumn = new TableColumn<>("POI");
 							poiColumn.setMinWidth(365);
-							poiColumn.setCellValueFactory(new PropertyValueFactory<>("tempPlaceName"));
+							poiColumn.setCellValueFactory(new PropertyValueFactory<>("placeName"));
 
 							TableColumn<RouteStop, Time> timeColumn = new TableColumn<>("Time");
 							timeColumn.setMinWidth(83);

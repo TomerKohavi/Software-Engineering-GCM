@@ -113,7 +113,7 @@ public class RouteEditController
 
 			poiColumn = new TableColumn<RouteStop, String>("POI");
 			poiColumn.setMinWidth(212);
-			poiColumn.setCellValueFactory(new PropertyValueFactory<>("tempPlaceName")); // TODO Fix Sigal stupid
+			poiColumn.setCellValueFactory(new PropertyValueFactory<>("placeName")); // TODO Fix Sigal stupid
 			poiColumn.setSortable(false);
 
 			timeColumn = new TableColumn<RouteStop, Time>("Time");
@@ -157,7 +157,7 @@ public class RouteEditController
 	@SuppressWarnings("unchecked")
 	private void updateTable()
 	{
-		poiColumn.setCellValueFactory(new PropertyValueFactory<>("tempPlaceName"));
+		poiColumn.setCellValueFactory(new PropertyValueFactory<>("placeName"));
 		timeColumn.setCellValueFactory(new PropertyValueFactory<>("recommendedTime"));
 		ObservableList<RouteStop> stops = FXCollections.observableArrayList(stopList);
 		StopsBox.setItems(stops);
@@ -177,8 +177,7 @@ public class RouteEditController
 			{
 				PlaceOfInterest poi = Connector.searchPOIResult.get(selectedIdx).getCopyPlace();
 				RouteStop newRouteStop = RouteStop._createRouteStop(-1, -1, poi.getId(), poi.getName(), 0,
-						new Time((time / 60), time % 60, 0)); // TODO DO DO DO TODO DO DO DO DO kohavi add changing
-																// orcer
+						new Time((time / 60), time % 60, 0)); // TODO kohavi add changing order
 				stopList.add(newRouteStop);
 				updateTable();
 				StopTime.setText("");
@@ -224,9 +223,13 @@ public class RouteEditController
 				route = routeS.getCopyRoute();
 				Connector.searchRouteResult.add(routeS);
 			}
-			for (RouteStop stop : stopList)
+			for (int i=0; i < stopList.size(); i++)
+			{
+				RouteStop stop = stopList.get(i);
+				stop.setNumStop(i);
 				if (stop.getRouteId() == -1)
 					stop._setRouteId(route.getId());
+			}
 			ArrayList<Integer> stopIdList = Connector.client.createRouteStops(stopList);
 			for (int i = 0; i < stopIdList.size(); i++)
 				stopList.get(i)._setId(stopIdList.get(i));
