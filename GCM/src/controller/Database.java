@@ -578,6 +578,23 @@ public class Database
 				cust.addOneTimePurchase(otp);
 				cust.saveToDatabase();
 			}
+			// 5
+			{
+				Employee e = new Employee("a", "a", "a@gmail.com", "aa", "aa", "0500000000",
+						Employee.Role.CEO);
+				e.saveToDatabase();
+				Customer cust = new Customer("q", "q", "q@gmail.com", "q", "q q",
+						"0523022100", "5495681338665894", "07/24", "000");
+				Subscription sub0 = new Subscription(cust, 3, new Date(112, 2, 25), 201.8, 199.9, new Date(119, 5, 25));
+				cust.addSubscription(sub0);
+				Subscription sub1 = new Subscription(cust, 3, new Date(115, 2, 28), 171.8, 112.9, new Date(119, 12, 15));
+				cust.addSubscription(sub1);
+
+				OneTimePurchase otp = new OneTimePurchase(cust, 1 , new Date(119, 12, 13), 15, 9);
+				otp.updateToWasDownload();
+				cust.addOneTimePurchase(otp);
+				cust.saveToDatabase();
+			}
 
 		}
 		catch (Exception e)
