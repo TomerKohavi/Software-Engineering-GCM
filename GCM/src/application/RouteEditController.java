@@ -211,9 +211,13 @@ public class RouteEditController
 	{
 		try
 		{
+			for (int i = 0; i < stopList.size(); i++)
+				stopList.get(i).setNumStop(i);
+
 			if (Connector.isEdit)
 			{
 				route.setInfo(InfoBox.getText());
+				route.setRouteStops(stopList);
 				Connector.client.update(route);
 			}
 			else
@@ -223,13 +227,10 @@ public class RouteEditController
 				route = routeS.getCopyRoute();
 				Connector.searchRouteResult.add(routeS);
 			}
-			for (int i=0; i < stopList.size(); i++)
-			{
-				RouteStop stop = stopList.get(i);
-				stop.setNumStop(i);
+
+			for (RouteStop stop : stopList)
 				if (stop.getRouteId() == -1)
 					stop._setRouteId(route.getId());
-			}
 			ArrayList<Integer> stopIdList = Connector.client.createRouteStops(stopList);
 			for (int i = 0; i < stopIdList.size(); i++)
 				stopList.get(i)._setId(stopIdList.get(i));
