@@ -309,6 +309,31 @@ public class HomePageController
 		}
 	}
 
+	private void fillRouteInfo(Route route)
+	{
+		Connector.selectedRoute = route;
+		ResultName.setText("Route " + route.getId());// set name and type
+		ResultInfo.setText(route.getInfo()); // set info
+
+		ArrayList<RouteStop> list = route.getCopyRouteStops();
+		StopsTable.setVisible(true);
+		ObservableList<RouteStop> stops = FXCollections.observableArrayList(list);
+
+		TableColumn<RouteStop, String> poiColumn = new TableColumn<>("POI");
+		poiColumn.setMinWidth(365);
+		poiColumn.setCellValueFactory(new PropertyValueFactory<>("placeName"));
+
+		TableColumn<RouteStop, Time> timeColumn = new TableColumn<>("Time");
+		timeColumn.setMinWidth(83);
+		timeColumn.setCellValueFactory(new PropertyValueFactory<>("recommendedTime"));
+
+		StopsTable.setItems(stops);
+
+		StopsTable.getColumns().clear();
+		StopsTable.getColumns().addAll(poiColumn, timeColumn);
+
+	}
+	
 	private void fillCityInfo(City city)
 	{
 		Connector.selectedCity = city;
@@ -457,30 +482,10 @@ public class HomePageController
 								e.printStackTrace();
 							}
 						}
-						else if (Connector.listType.equals("Route"))
-						{ // route
-							Route route = Connector.searchRouteResult.get(selectedIndex).getCopyRoute();
-							Connector.selectedRoute = route;
-							ResultName.setText("Route " + route.getId());// set name and type
-							ResultInfo.setText(route.getInfo()); // set info
-
-							ArrayList<RouteStop> list = route.getCopyRouteStops();
-							StopsTable.setVisible(true);
-							ObservableList<RouteStop> stops = FXCollections.observableArrayList(list);
-
-							TableColumn<RouteStop, String> poiColumn = new TableColumn<>("POI");
-							poiColumn.setMinWidth(365);
-							poiColumn.setCellValueFactory(new PropertyValueFactory<>("placeName"));
-
-							TableColumn<RouteStop, Time> timeColumn = new TableColumn<>("Time");
-							timeColumn.setMinWidth(83);
-							timeColumn.setCellValueFactory(new PropertyValueFactory<>("recommendedTime"));
-
-							StopsTable.setItems(stops);
-
-							StopsTable.getColumns().clear();
-							StopsTable.getColumns().addAll(poiColumn, timeColumn);
-
+						else if (Connector.listType.equals("Route")) // route
+						{
+							Connector.selectedRoute = Connector.searchRouteResult.get(selectedIndex).getCopyRoute();
+							fillRouteInfo(Connector.selectedRoute);
 						}
 						else if (Connector.listType.equals("Report")) // reports
 						{
@@ -777,7 +782,10 @@ public class HomePageController
 		else if (Connector.listType.equals("POI"))
 			MainList.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
 		else if (Connector.listType.equals("Route"))
+		{
 			MainList.getItems().addAll(Connector.getRoutesNames(Connector.searchRouteResult));
+			fillRouteInfo(Connector.selectedRoute);
+		}
 	}
 
 	@FXML
