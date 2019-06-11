@@ -12,18 +12,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import objectClasses.PlaceOfInterestSight;
 import objectClasses.Route;
 import objectClasses.RouteSight;
 import objectClasses.RouteStop;
-import objectClasses.PlaceOfInterest.PlaceType;
+
+
 
 public class RouteEditController
 {
@@ -92,6 +91,11 @@ public class RouteEditController
 			StopsBox.getColumns().clear();
 			StopsBox.getColumns().addAll(poiColumn, timeColumn);
 		}
+		else
+		{
+			stopList = new ArrayList<RouteStop>();
+			// TODO KOHAVI INITIALIZE
+		}
 
 		POIBox.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
 
@@ -118,8 +122,8 @@ public class RouteEditController
 			int selectedIdx = POIBox.getSelectionModel().getSelectedIndex();
 			if (selectedIdx >= 0)
 			{
-				RouteStop newRouteStop = new RouteStop(route, Connector.searchPOIResult.get(selectedIdx).getCopyPlace(),
-						new Time((time / 60), time % 60, 0)); // TODO
+				RouteStop newRouteStop = RouteStop._createRouteStop(-1, -1, Connector.searchPOIResult.get(selectedIdx).getId(),
+						0, new Time((time / 60), time % 60, 0)); // TODO DO DO DO TODO DO DO DO DO kohavi add changing orcer
 				stopList.add(newRouteStop);
 				updateTable();
 				StopTime.setText("");
@@ -153,10 +157,12 @@ public class RouteEditController
 			}
 			else
 			{
-					RouteSight routeS = Connector.client.createRoute(Connector.selectedCity.getId(), Name.getText(),
-							Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId());
-					Connector.searchRouteResult.add(routeS);
+				RouteSight routeS = Connector.client.createRoute(Connector.selectedCity.getId(), Name.getText(),
+						Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId());
+				route = routeS.getCopyRoute();
+				Connector.searchRouteResult.add(routeS);
 			}
+			
 		}
 		catch (IOException e)
 		{

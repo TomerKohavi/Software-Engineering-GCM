@@ -19,6 +19,7 @@ import objectClasses.MapSight;
 import objectClasses.PlaceOfInterest.PlaceType;
 import objectClasses.PlaceOfInterestSight;
 import objectClasses.RouteSight;
+import objectClasses.RouteStop;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -258,6 +259,11 @@ public class ChatClient extends AbstractClient
 		sendToServer(new CreateRoute(cityId, info, cdvId));
 		this.semAcquire();
 		return this.croute.routeS;
+	}
+	
+	public ArrayList<Integer> createRoutStops(ArrayList<RouteStop> newStopList)
+	{
+		sendToServer(new RouteStopsSave(newStopList));
 	}
 
 	/**
