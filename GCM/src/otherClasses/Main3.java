@@ -18,10 +18,11 @@ public class Main3 {
 			
 			
 			
-			/*City c=Database.getCityById(1);
-			Route r=c.getCopyPublishedVersion().getRouteSightById(1).getCopyRoute();
-			System.out.println(r==null);
-			System.out.println(r.isAcceptabilityToDisabled());*/
+			Subscription s=Database._getSubscriptionById(7);
+			if(s==null)
+				System.out.println("nullllllllllllll");
+			else
+				System.out.println("num months: "+s.getNumMonths());
 			
 			
 			long finish = System.currentTimeMillis();
