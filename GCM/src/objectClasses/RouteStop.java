@@ -13,6 +13,7 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 	private int placeId;
 	private int numStop;
 	public Time recommendedTime;
+	private String placeName;
 
 	private RouteStop(int id, int routeId, int placeId, int numStop, Time recommendedTime)
 	{
@@ -21,12 +22,29 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 		this.placeId = placeId;
 		this.numStop = numStop;
 		this.recommendedTime = recommendedTime;
+		reloadTempsFromDatabase();
 	}
 
 	public static RouteStop _createRouteStop(int id, int routeId, int placeId, int numStop, Time recommendedTime)
 	{ // friend to Database
 		return new RouteStop(id, routeId, placeId, numStop, recommendedTime);
 	}
+	
+	private RouteStop(int id, int routeId, int placeId, String POIName, int numStop, Time recommendedTime)
+	{
+		this.id = id;
+		this.routeId = routeId;
+		this.placeId = placeId;
+		this.numStop = numStop;
+		this.recommendedTime = recommendedTime;
+		this.placeName = POIName;
+	}
+
+	public static RouteStop _createRouteStop(int id, int routeId, int placeId, String POIName, int numStop, Time recommendedTime)
+	{ // friend to Database
+		return new RouteStop(id, routeId, placeId, POIName, numStop, recommendedTime);
+	}
+
 
 	public RouteStop(Route r, PlaceOfInterest p, Time recommendedTime)
 	{
@@ -49,16 +67,27 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 
 	public void reloadTempsFromDatabase()
 	{
+		this.placeName = Database.getPlaceOfInterestById(placeId).getName();
 	}
 
 	public int getId()
 	{
 		return id;
 	}
-	
+
 	public void _setId(int id)
 	{
 		this.id = id;
+	}
+	
+	public String getPOIName()
+	{
+		return placeName;
+	}
+	
+	public void _setName(String POIName)
+	{
+		this.placeName = POIName;	
 	}
 
 	public void setNumStop(int numStop)

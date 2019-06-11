@@ -24,11 +24,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import objectClasses.PlaceOfInterest;
 import objectClasses.Route;
 import objectClasses.RouteSight;
 import objectClasses.RouteStop;
-
-
 
 public class RouteEditController
 {
@@ -48,12 +47,12 @@ public class RouteEditController
 
 	@FXML // fx:id="InfoBox"
 	private TextArea InfoBox; // Value injected by FXMLLoader
-	
-	@FXML // fx:id="UpButton"
-    private JFXButton UpButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="DownButton"
-    private JFXButton DownButton; // Value injected by FXMLLoader
+	@FXML // fx:id="UpButton"
+	private JFXButton UpButton; // Value injected by FXMLLoader
+
+	@FXML // fx:id="DownButton"
+	private JFXButton DownButton; // Value injected by FXMLLoader
 
 	@FXML // fx:id="StopsBox"
 	private JFXListView<String> POIBox; // Value injected by FXMLLoader
@@ -92,18 +91,16 @@ public class RouteEditController
 //		DownButton.setMaxWidth(25);
 //		DownButton.setMinHeight(25);
 //		DownButton.setMaxHeight(25);
-		
+
 		ReadOnlyIntegerProperty selectedIndex = StopsBox.getSelectionModel().selectedIndexProperty();
-		
+
 		UpButton.disableProperty().bind(selectedIndex.lessThanOrEqualTo(0));
-		
+
 		DownButton.disableProperty().bind(Bindings.createBooleanBinding(() -> {
-	        int index = selectedIndex.get();
-	        return index < 0 || index+1 >= StopsBox.getItems().size();
-	    }, selectedIndex, StopsBox.getItems()));
-		
-		
-		
+			int index = selectedIndex.get();
+			return index < 0 || index + 1 >= StopsBox.getItems().size();
+		}, selectedIndex, StopsBox.getItems()));
+
 		if (Connector.isEdit) // if its edit, load the data
 		{
 			route = Connector.selectedRoute;
@@ -138,23 +135,23 @@ public class RouteEditController
 		POIBox.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
 
 	}
-	
+
 	@FXML
 	void up(ActionEvent event)
 	{
 		int index = StopsBox.getSelectionModel().getSelectedIndex();
-		stopList.add(index-1, stopList.remove(index));
-		StopsBox.getItems().add(index-1, StopsBox.getItems().remove(index));
-		StopsBox.getSelectionModel().clearAndSelect(index-1);
+		stopList.add(index - 1, stopList.remove(index));
+		StopsBox.getItems().add(index - 1, StopsBox.getItems().remove(index));
+		StopsBox.getSelectionModel().clearAndSelect(index - 1);
 	}
-	
+
 	@FXML
 	void down(ActionEvent event)
 	{
 		int index = StopsBox.getSelectionModel().getSelectedIndex();
-		stopList.add(index+1, stopList.remove(index));
-		StopsBox.getItems().add(index+1, StopsBox.getItems().remove(index));
-		StopsBox.getSelectionModel().clearAndSelect(index+1);
+		stopList.add(index + 1, stopList.remove(index));
+		StopsBox.getItems().add(index + 1, StopsBox.getItems().remove(index));
+		StopsBox.getSelectionModel().clearAndSelect(index + 1);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -178,8 +175,10 @@ public class RouteEditController
 			int selectedIdx = POIBox.getSelectionModel().getSelectedIndex();
 			if (selectedIdx >= 0)
 			{
-				RouteStop newRouteStop = RouteStop._createRouteStop(-1, -1, Connector.searchPOIResult.get(selectedIdx).getId(),
-						0, new Time((time / 60), time % 60, 0)); // TODO DO DO DO TODO DO DO DO DO kohavi add changing orcer
+				PlaceOfInterest poi = Connector.searchPOIResult.get(selectedIdx).getCopyPlace();
+				RouteStop newRouteStop = RouteStop._createRouteStop(-1, -1, poi.getId(), poi.getName(), 0,
+						new Time((time / 60), time % 60, 0)); // TODO DO DO DO TODO DO DO DO DO kohavi add changing
+																// orcer
 				stopList.add(newRouteStop);
 				updateTable();
 				StopTime.setText("");
