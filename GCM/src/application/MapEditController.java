@@ -107,7 +107,7 @@ public class MapEditController
 			List<Location> locList = map.getCopyLocations();
 			for (Location loc : locList)
 			{
-				POIImage poiImage = new POIImage(false, false);
+				POIImage poiImage = new POIImage(false, false, loc.getCopyPlaceOfInterest().getName());
 				poiImage.image.setX(loc.getCoordinates()[0] + boundsInScene.getMinX());
 				poiImage.image.setY(loc.getCoordinates()[1] + boundsInScene.getMinY());
 				Connector.imageList.add(poiImage);
@@ -130,7 +130,7 @@ public class MapEditController
 				POIImage poiImage = null;
 				try
 				{
-					poiImage = new POIImage(true, false);
+					poiImage = new POIImage(true, false, "");
 				}
 				catch (FileNotFoundException e)
 				{
@@ -202,6 +202,7 @@ public class MapEditController
 		if (Connector.choosenPOIInLoc != null)
 		{ // didn't cancel
 			POIImage poi = Connector.imageList.get(Connector.imageList.size() - 1);
+			poi.setName(Connector.choosenPOIInLoc.getName());
 			double[] cord = new double[2];
 			cord[0] = poi.image.getX() - boundsInScene.getMinX();
 			cord[0] = poi.image.getX() - boundsInScene.getMinY();

@@ -17,12 +17,14 @@ public class POIImage {
 	private Image realImg, addedImage, removeImg;
 	public boolean isNew;
 	private boolean isRemovable, dontChange;
+	private String poiName;
 	
-	public POIImage(boolean _isNew, boolean _dontChange) throws FileNotFoundException {
+	public POIImage(boolean _isNew, boolean _dontChange, String _poiName) throws FileNotFoundException {
 		
 		isNew = _isNew;
 		isRemovable = false;
 		dontChange = _dontChange;
+		poiName = _poiName;
 		
 		realImg = new Image(new FileInputStream("Pics\\POI.png"));
 		addedImage = new Image(new FileInputStream("Pics\\Add_POI.png"));
@@ -37,7 +39,22 @@ public class POIImage {
 
     	    @Override
     	    public void handle(MouseEvent click) {
-    	    	if (!Connector.unpublished || isNew || dontChange)
+    	    	if (dontChange)
+    	    	{
+    	    		if (Connector.poiNameTextArea.getText().equals(""))
+    	    		{
+    	    				Connector.poiNameTextArea.setText(poiName);
+    	    				Connector.poiNameTextArea.setLayoutX(image.getLayoutX());
+    	    				Connector.poiNameTextArea.setLayoutY(image.getLayoutY());
+    	    				Connector.poiNameTextArea.setVisible(true);
+    	    		}
+    	    		else
+    	    		{
+    	    			Connector.poiNameTextArea.setText("");
+    	    			Connector.poiNameTextArea.setVisible(false);
+    	    		}
+    	    	}
+    	    	if (!Connector.unpublished || isNew || Connector.isEdit)
     	    		return;
     	    	isRemovable = !isRemovable;
     	    	if (isRemovable) {
@@ -58,6 +75,11 @@ public class POIImage {
 	
 	private void removeFromRemovalList() {
 		Connector.removablePOIList.remove(this);
+	}
+	
+	public void setName(String str)
+	{
+		poiName = str;
 	}
 	
 }

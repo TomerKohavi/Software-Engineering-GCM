@@ -361,6 +361,9 @@ public class HomePageController
 			SideUsers.setVisible(false);
 		}
 		
+		Connector.poiNameTextArea.setVisible(false);
+		mainPane.getChildren().add(Connector.poiNameTextArea);
+		
 		MainList.setOnMouseClicked(new EventHandler<MouseEvent>()
 		{
 
@@ -550,7 +553,7 @@ public class HomePageController
 			List<Location> locList = Connector.selectedMap.getCopyLocations();
 			for (Location loc : locList)
 			{
-				POIImage poiImage = new POIImage(false, true);
+				POIImage poiImage = new POIImage(false, true, loc.getCopyPlaceOfInterest().getName());
 				poiImage.image.setX(loc.getCoordinates()[0] + boundsInScene.getMinX());
 				poiImage.image.setY(loc.getCoordinates()[1] + boundsInScene.getMinY());
 				Connector.imageList.add(poiImage);
@@ -733,7 +736,7 @@ public class HomePageController
 				chooser.setInitialDirectory(defaultDirectory);
 				File selectedDirectory = chooser.showDialog(null);
 				System.out.println(selectedDirectory.getPath()); // Path to folder
-				Downloader.downloadPOIs(Connector.selectedCity.getCopyPublishedVersion(), selectedDirectory.getPath() + "\\" + Connector.selectedCity.getCityName() + ".txt");
+				Downloader.downloadPOIs(Connector.selectedCity.getCopyPublishedVersion(), selectedDirectory.getPath() + "\\" + Connector.selectedCity.getCityName() + " " + Connector.selectedCity.getCopyPublishedVersion().getVersionName() + ".txt");
 				openNewPage("DownloadCompleteScene.fxml");
 			}
 			else if (BuyButton.getText().equals("Change Price"))
