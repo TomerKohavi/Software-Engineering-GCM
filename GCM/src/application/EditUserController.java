@@ -22,6 +22,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import objectClasses.Customer;
 
+/**
+ * @author tomer
+ * edit the user detiels from the UI
+ */
 public class EditUserController
 {
 
@@ -72,6 +76,9 @@ public class EditUserController
     @FXML // fx:id="ViewPurchaseHistoryButton"
     private JFXButton ViewPurchaseHistoryButton; // Value injected by FXMLLoader
 
+    /**
+     * initialize the variables
+     */
 	public void initialize()
 	{
 		ExperationMonth.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
@@ -106,6 +113,10 @@ public class EditUserController
 		}
 	}
 
+	/**
+	 * @param FXMLpage the page we want to open
+	 * @throws IOException if we can't open the page
+	 */
 	void openNewPage(String FXMLpage) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLpage));
@@ -119,6 +130,10 @@ public class EditUserController
 		stage.showAndWait();
 	}
 
+	/**
+	 * @param event user click on change 
+	 * @throws IOException there is problem with those changes
+	 */
 	@FXML
 	void applyChanges(ActionEvent event) throws IOException
 	{
@@ -184,6 +199,11 @@ public class EditUserController
 		}
 	}
 
+
+	/**
+	 * @param event user click on watch history
+	 * @throws IOException can't get to the history
+	 */
 	@FXML
 	void viewPurchaseHistory(ActionEvent event) throws IOException
 	{
@@ -191,6 +211,10 @@ public class EditUserController
 		openNewPage("PurchaseHistoryScene.fxml");
 	}
 
+    /**
+     * go to the previous page
+     * @param event user click go previous page
+     */
 	@FXML
 	void goBack(ActionEvent event) throws IOException
 	{
