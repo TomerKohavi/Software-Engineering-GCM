@@ -22,7 +22,7 @@ public final class Downloader
     public static boolean downloadPOIs(CityDataVersion cdv,String path)
     {
         if(cdv==null) return false;
-        ArrayList<PlaceOfInterestSight> listPS=cdv.getCopyPlaceSights();
+        ArrayList<PlaceOfInterestSight> listPS=CityDataVersion._generatePlaceSights(cdv.getId());
         if(listPS==null) return false;
         try{
             FileWriter fileWriter = new FileWriter(path);

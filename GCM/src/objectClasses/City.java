@@ -113,11 +113,8 @@ public class City implements ClassMustProperties, Serializable {
 		this.temp_removeVersions = new ArrayList<>();
 		if (this.publishedVersionId == null)
 			this.temp_publishedVersion = null;
-		else {
+		else
 			this.temp_publishedVersion = Database._getCityDataVersionById(publishedVersionId);
-			if (temp_publishedVersion == null)
-				this.publishedVersionId = null;
-		}
 	}
 
 	/**
