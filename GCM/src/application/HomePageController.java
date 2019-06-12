@@ -52,7 +52,9 @@ import objectClasses.Employee;
 import objectClasses.Map;
 import objectClasses.MapSight;
 import objectClasses.PlaceOfInterest;
+import objectClasses.PlaceOfInterestSight;
 import objectClasses.Route;
+import objectClasses.RouteSight;
 import objectClasses.RouteStop;
 import objectClasses.Statistic;
 import objectClasses.Subscription;
@@ -312,32 +314,37 @@ public class HomePageController
 
 	private void fillCityInfo(City city)
 	{
+		if (Connector.selectedCity != city)
+		{
+			Connector.searchMapResult = null;
+			Connector.searchPOIResult = null;
+			Connector.searchRouteResult = null;
+		}
 		Connector.selectedCity = city;
 		InfoPane.setVisible(true);
 		ResultName.setText(city.getCityName()); // set name
 		ResultInfo.setText(city.getCityDescription()); // set info
-		// get QUERIES
-		CityDataVersion cityData = null;
+		// get QUERIE
 		if (UnpublishSearch.isSelected()) // TODO search unpublished
 		{
-			cityData = city.getCopyUnpublishedVersions().get(0);
+			Connector.cityData = city.getCopyUnpublishedVersions().get(0);
 			Connector.unpublished = true;
 			System.out.println("search unpublished");
 		}
 		else // TODO search published
 		{
-			cityData = city.getCopyPublishedVersion();
+			Connector.cityData = city.getCopyPublishedVersion();
 			Connector.unpublished = false;
 			System.out.println("search published");
 		}
-		Text1.setText("Maps Found: " + cityData.getNumMapSights()); // #Maps for the city
-		Text2.setText("POI Found: " + cityData.getNumPlaceOfInterestSights()); // #POI for the city
-		Text3.setText("Routes Found: " + cityData.getNumRouteSights()); // #Routes for the city
+		Text1.setText("Maps Found: " + Connector.cityData.getNumMapSights()); // #Maps for the city
+		Text2.setText("POI Found: " + Connector.cityData.getNumPlaceOfInterestSights()); // #POI for the city
+		Text3.setText("Routes Found: " + Connector.cityData.getNumRouteSights()); // #Routes for the city
 
 //		Connector.searchMapResult = cityData.getCopyMapSights();
-		Connector.searchPOIResult = cityData.getCopyPlaceSights();
-		Connector.searchRouteResult = cityData.getCopyRouteSights();
-
+//		Connector.searchPOIResult = cityData.getCopyPlaceSights();
+//		Connector.searchRouteResult = cityData.getCopyRouteSights();
+		
 		BuyButton.setVisible(true);
 		if (Connector.user != null)
 		{
@@ -696,33 +703,36 @@ public class HomePageController
 		openNewPage("EditUserScene.fxml");
 	}
 
+	@SuppressWarnings("unchecked")
 	@FXML
 	void showMaps(ActionEvent event) throws IOException
 	{
 		Connector.listType = "Map";
 		setMainSideButton(SideMap);
-		CityDataVersion cityData;
-		if (UnpublishSearch.isSelected()) // TODO search unpublished
-            cityData = Connector.selectedCity.getCopyUnpublishedVersions().get(0);
-        else // TODO search published
-            cityData = Connector.selectedCity.getCopyPublishedVersion();
-		Connector.searchMapResult = (ArrayList<MapSight>) Connector.client.fetchSights(cityData.getId(), MapSight.class);
+		if (Connector.searchMapResult == null)
+			Connector.searchMapResult = (ArrayList<MapSight>) Connector.client.fetchSights(Connector.cityData.getId(), MapSight.class);
 		MainList.getItems().addAll(Connector.getMapsNames(Connector.searchMapResult));
 	}
 
+	@SuppressWarnings("unchecked")
 	@FXML
-	void showPOI(ActionEvent event)
+	void showPOI(ActionEvent event) throws IOException
 	{
 		Connector.listType = "POI";
 		setMainSideButton(SidePOI);
+		if (Connector.searchPOIResult == null)
+			Connector.searchPOIResult = (ArrayList<PlaceOfInterestSight>) Connector.client.fetchSights(Connector.cityData.getId(), PlaceOfInterestSight.class); // TODO Sigal returns null
 		MainList.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
 	}
 
+	@SuppressWarnings("unchecked")
 	@FXML
-	void showRoutes(ActionEvent event)
+	void showRoutes(ActionEvent event) throws IOException
 	{
 		Connector.listType = "Route";
 		setMainSideButton(SideRoutes);
+		if (Connector.searchRouteResult == null)
+			Connector.searchRouteResult = (ArrayList<RouteSight>) Connector.client.fetchSights(Connector.cityData.getId(), RouteSight.class); // TODO Sigal returns null
 		MainList.getItems().addAll(Connector.getRoutesNames(Connector.searchRouteResult));
 	}
 
