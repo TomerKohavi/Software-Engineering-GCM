@@ -2,9 +2,18 @@ package io_commands;
 
 import objectClasses.RouteSight;
 
+/**
+ * @author sigal
+ * treat create route request from the client to the server
+ */
 public class CreateRoute extends Command
 {
 
+	/**
+	 * @param cityId the city id of the route
+	 * @param info the info of the route
+	 * @param cdvId city data version id of the route
+	 */
 	public CreateRoute(int cityId, String info, int cdvId)
 	{
 		this.cityId = cityId;
