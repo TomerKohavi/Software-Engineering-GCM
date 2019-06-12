@@ -167,15 +167,13 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 		this.temp_removeRouteSights = new ArrayList<>();
 	}
 
-	public static ArrayList<Map> _generateMaps(int cdvId) {
+	public static ArrayList<Map> _generateMapSights(int cdvId) {
 		ArrayList<Integer> ids = Database.searchMapSight(cdvId, null);
-		ArrayList<Map> arrList = new ArrayList<Map>();
+		ArrayList<MapSight> arrList = new ArrayList<MapSight>();
 		for (int id : ids) {
 			MapSight o = Database._getMapSightById(id);
-			if (o == null)continue;
-			Map m=Database.getMapById(o.getMapId());
-			if (m == null) continue;
-			arrList.add(m);
+			if (o == null || o.getCopyMap()==null)continue;
+			arrList.add(o);
 		}
 		return arrList;
 	}
