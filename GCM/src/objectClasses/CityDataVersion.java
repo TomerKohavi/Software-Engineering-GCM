@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import controller.Database;
 import otherClasses.ClassMustProperties;
 
+@SuppressWarnings("serial")
 public class CityDataVersion implements ClassMustProperties, Serializable {
 	private int id;
 	private int cityId;

@@ -19,7 +19,8 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 	private int numMaps;
 
 	private Statistic(int id, int cityId, Date date, int numOneTimePurchases, int numSubscriptions,
-			int numSubscriptionsRenewal, int numVisited,int numSubDownloads,boolean newVersionPublished,int numMaps) {
+			int numSubscriptionsRenewal, int numVisited, int numSubDownloads, boolean newVersionPublished,
+			int numMaps) {
 		this.id = id;
 		this.cityId = cityId;
 		this.date = date;
@@ -27,15 +28,16 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 		this.numSubscriptions = numSubscriptions;
 		this.numSubscriptionsRenewal = numSubscriptionsRenewal;
 		this.numVisited = numVisited;
-		this.numSubDownloads=numSubDownloads;
-		this.newVersionPublished=newVersionPublished;
-		this.numMaps=numMaps;
+		this.numSubDownloads = numSubDownloads;
+		this.newVersionPublished = newVersionPublished;
+		this.numMaps = numMaps;
 	}
 
 	public static Statistic _createStatistic(int id, int cityId, Date date, int numOneTimePurchases,
-			int numSubscriptions, int numSubscriptionsRenewal, int numVisited,int numSubDownloads,boolean newVersionPublished,int numMaps) { // friend to Database
+			int numSubscriptions, int numSubscriptionsRenewal, int numVisited, int numSubDownloads,
+			boolean newVersionPublished, int numMaps) { // friend to Database
 		return new Statistic(id, cityId, date, numOneTimePurchases, numSubscriptions, numSubscriptionsRenewal,
-				numVisited,numSubDownloads,newVersionPublished,numMaps);
+				numVisited, numSubDownloads, newVersionPublished, numMaps);
 	}
 
 	public Statistic(int cityId, Date date) {
@@ -46,13 +48,13 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 		this.numSubscriptions = 0;
 		this.numSubscriptionsRenewal = 0;
 		this.numVisited = 0;
-		this.numSubDownloads=0;
-		this.newVersionPublished=false;
-		this.numMaps=-1;
+		this.numSubDownloads = 0;
+		this.newVersionPublished = false;
+		this.numMaps = -1;
 	}
 
 	public static Statistic createBlankStatistic() {
-		return new Statistic(-1, -1, null, 0, 0, 0, 0,0,false,-1);
+		return new Statistic(-1, -1, null, 0, 0, 0, 0, 0, false, -1);
 	}
 
 	public static Statistic addStatistics(Statistic s1, Statistic s2) {
@@ -63,10 +65,10 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 		s.setNumVisited(s1.numVisited + s2.numVisited);
 		s.setNumSubDownloads(s1.numSubDownloads + s2.numSubDownloads);
 		s.setNewVersionPublished(s1.newVersionPublished | s2.newVersionPublished);
-		if(s1.date==null || s2.date==null)
-			s.setNumMaps(s1.date==null?s2.numMaps:s1.numMaps);
+		if (s1.date == null || s2.date == null)
+			s.setNumMaps(s1.date == null ? s2.numMaps : s1.numMaps);
 		else
-			s.setNumMaps(s1.compareTo(s2)>0?s1.numMaps:s2.numMaps);
+			s.setNumMaps(s1.compareTo(s2) > 0 ? s1.numMaps : s2.numMaps);
 		return s;
 	}
 
@@ -106,15 +108,15 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 	public void addSubDownload() {
 		this.numSubDownloads += 1;
 	}
-	
+
 	public void newVersionWasPublished() {
-		this.newVersionPublished=true;
+		this.newVersionPublished = true;
 	}
-	
+
 	public void setNumSubDownloads(int numSubDownloads) {
 		this.numSubDownloads = numSubDownloads;
 	}
-	
+
 	public int getNumSubDownload(int numSubDownloads) {
 		return this.numSubDownloads;
 	}
@@ -162,7 +164,7 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 	public int getNumSubDownloads() {
 		return numSubDownloads;
 	}
-	
+
 	@Override
 	public int compareTo(Statistic o) {
 		return this.date.compareTo(o.date);
@@ -171,11 +173,11 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 	public boolean isNewVersionPublished() {
 		return newVersionPublished;
 	}
-	
+
 	public void setNumMaps(int numMaps) {
-		this.numMaps=numMaps;
+		this.numMaps = numMaps;
 	}
-	
+
 	public int getNumMaps() {
 		return this.numMaps;
 	}

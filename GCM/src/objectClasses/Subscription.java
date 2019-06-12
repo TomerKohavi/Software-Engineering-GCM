@@ -11,7 +11,6 @@ import java.sql.Date;
 @SuppressWarnings("serial")
 public class Subscription extends CityPurchase implements ClassMustProperties, Serializable {
 
-	@SuppressWarnings("deprecation")
 	public static final Time closeTime = new Time(3 * 24, 0, 0);
 	private Date expirationDate;
 	
