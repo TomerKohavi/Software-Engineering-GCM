@@ -291,6 +291,34 @@ public class EchoServer extends AbstractServer
 		del.toDelete.deleteFromDatabase();
 	}
 	
+
+	private void handleAddStat(AddStat stat)
+	{
+		System.out.println("add stat " + stat.op);
+		switch (stat.op)
+		{
+		case OneTimePurcahse:
+			InformationSystem.addOneTimePurchase(stat.cityId);
+			break;
+		case Subscription:
+			InformationSystem.addSubscription(stat.cityId);
+			break;
+		case SubRenewal:
+			InformationSystem.addSubscriptionRenewal(stat.cityId);
+			break;
+		case Visit:
+			InformationSystem.addVisit(stat.cityId);
+			break;
+		case SubDownload:
+			InformationSystem.addSubDownload(stat.cityId);
+			break;
+		case VersionPublish:
+			InformationSystem.newVersionWasPublished(stat.cityId);
+			break;
+		}
+	}
+
+	
 	/**
 	 * This method handles any messages received from the client.
 	 *
@@ -340,7 +368,8 @@ public class EchoServer extends AbstractServer
 				handleDelete((Delete) msg);
 			else if (msg instanceof Statboi)
 				client.sendToClient(handleStatistics((Statboi) msg));
-			
+			else if (msg instanceof AddStat)
+				handleAddStat((AddStat) msg);
 			else
 				System.out.println(msg.getClass().toString() + '\n' + msg.toString());
 		}

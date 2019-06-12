@@ -10,6 +10,7 @@ import otherClasses.Pair;
 import server.EchoServer.LoginRegisterResult;
 import common.*;
 import common.Console;
+import controller.InformationSystem.Ops;
 import io_commands.*;
 import objectClasses.City;
 import objectClasses.Customer;
@@ -302,6 +303,11 @@ public class ChatClient extends AbstractClient
 		sendToServer(new Statboi(cityId, from, end));
 		this.semAcquire();
 		return this.statboi.statboi;
+	}
+	
+	public void addStat(Integer cityId, Ops op) throws IOException
+	{
+		sendToServer(new AddStat(cityId, op));
 	}
 
 	// Instance methods ***********************************************
