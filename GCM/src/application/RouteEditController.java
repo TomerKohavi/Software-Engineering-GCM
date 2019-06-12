@@ -108,29 +108,30 @@ public class RouteEditController
 			InfoBox.setText(route.getInfo());
 
 			stopList = route.getCopyRouteStops();
-			StopsBox.setVisible(true);
-			ObservableList<RouteStop> stops = FXCollections.observableArrayList(stopList);
-
-			poiColumn = new TableColumn<RouteStop, String>("POI");
-			poiColumn.setMinWidth(212);
-			poiColumn.setCellValueFactory(new PropertyValueFactory<>("placeName")); // TODO Fix Sigal stupid
-			poiColumn.setSortable(false);
-
-			timeColumn = new TableColumn<RouteStop, Time>("Time");
-			timeColumn.setMinWidth(83);
-			timeColumn.setCellValueFactory(new PropertyValueFactory<>("recommendedTime"));
-			timeColumn.setSortable(false);
-
-			StopsBox.setItems(stops);
-
-			StopsBox.getColumns().clear();
-			StopsBox.getColumns().addAll(poiColumn, timeColumn);
 		}
 		else
 		{
 			stopList = new ArrayList<RouteStop>();
-			// TODO KOHAVI INITIALIZE
+			Name.setText("New route");
 		}
+
+		StopsBox.setVisible(true);
+		ObservableList<RouteStop> stops = FXCollections.observableArrayList(stopList);
+
+		poiColumn = new TableColumn<RouteStop, String>("POI");
+		poiColumn.setMinWidth(212);
+		poiColumn.setCellValueFactory(new PropertyValueFactory<>("placeName")); // TODO Fix Sigal stupid
+		poiColumn.setSortable(false);
+
+		timeColumn = new TableColumn<RouteStop, Time>("Time");
+		timeColumn.setMinWidth(83);
+		timeColumn.setCellValueFactory(new PropertyValueFactory<>("recommendedTime"));
+		timeColumn.setSortable(false);
+
+		StopsBox.setItems(stops);
+
+		StopsBox.getColumns().clear();
+		StopsBox.getColumns().addAll(poiColumn, timeColumn);
 
 		POIBox.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
 
@@ -217,12 +218,12 @@ public class RouteEditController
 			if (Connector.isEdit)
 			{
 				route.setInfo(InfoBox.getText());
-				route.setRouteStops(stopList);
+				route.setRouteStops(null);
 				Connector.client.update(route);
 			}
 			else
 			{
-				RouteSight routeS = Connector.client.createRoute(Connector.selectedCity.getId(), Name.getText(),
+				RouteSight routeS = Connector.client.createRoute(Connector.selectedCity.getId(), InfoBox.getText(),
 						Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId());
 				route = routeS.getCopyRoute();
 				Connector.searchRouteResult.add(routeS);
