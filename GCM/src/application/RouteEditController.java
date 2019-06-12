@@ -218,7 +218,7 @@ public class RouteEditController
 			if (Connector.isEdit)
 			{
 				route.setInfo(InfoBox.getText());
-				route.setRouteStops(null);
+				route.setRouteStops(new ArrayList<RouteStop>());
 				Connector.client.update(route);
 			}
 			else
