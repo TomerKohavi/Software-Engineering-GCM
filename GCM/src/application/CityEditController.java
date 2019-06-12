@@ -13,6 +13,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import objectClasses.City;
 
+/**
+ * @author tomer
+ * the controller that treat edit city from the user
+ */
 public class CityEditController {
 
 	private City city;
@@ -32,6 +36,9 @@ public class CityEditController {
     @FXML // fx:id="Back"
     private JFXButton Back; // Value injected by FXMLLoader
     
+    /**
+     * initialize the variables
+     */
     @FXML
     public void initialize() {
     	
@@ -46,6 +53,10 @@ public class CityEditController {
     }
     
 
+    /**
+     * apply edit to city as user click
+     * @param event user click on edit city
+     */
     @FXML
     void apply(ActionEvent event) {
     	Connector.selectedCity.setCityName(Name.getText());
@@ -61,6 +72,10 @@ public class CityEditController {
     	mainPane.getScene().getWindow().hide();
     }
 
+    /**
+     * go to the previous page
+     * @param event user click go previous page
+     */
     @FXML
     void goBack(ActionEvent event) {
     	mainPane.getScene().getWindow().hide();
