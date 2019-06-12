@@ -233,6 +233,10 @@ public class EchoServer extends AbstractServer
 		update.toUpdate.saveToDatabase();
 	}
 
+	/**
+	 * @param cmap map creation that come from the client
+	 * @return create map object the sent to the client
+	 */
 	public CreateMap handleMapCreation(CreateMap cmap)
 	{
 		Map map = new Map(cmap.cityId, cmap.name, cmap.info, cmap.imgURL);
@@ -245,6 +249,10 @@ public class EchoServer extends AbstractServer
 		return cmap;
 	}
 
+	/**
+	 * @param cpoi point of interest creation that come from the client
+	 * @return create point of interest object the sent to the client
+	 */
 	public CreatePOI handlePOICreation(CreatePOI cpoi)
 	{
 		PlaceOfInterest poi = new PlaceOfInterest(cpoi.cityId, cpoi.name, cpoi.type, cpoi.placeDescription,
@@ -258,6 +266,10 @@ public class EchoServer extends AbstractServer
 		return cpoi;
 	}
 
+	/**
+	 * @param croute route creation that come from the client
+	 * @return create route object the sent to the client
+	 */
 	public CreateRoute handleRouteCreation(CreateRoute croute)
 	{
 		Route route = new Route(croute.cityId, croute.info);
@@ -271,6 +283,10 @@ public class EchoServer extends AbstractServer
 		return croute;
 	}
 
+	/**
+	 * @param cstops route stop creation that come from the client
+	 * @return create route stop object the sent to the client
+	 */
 	public CreateRouteStops handleRouteStopsCreation(CreateRouteStops cstops)
 	{
 		cstops.idList = new ArrayList<Integer>();
@@ -285,6 +301,10 @@ public class EchoServer extends AbstractServer
 		return cstops;
 	}
 
+	/**
+	 * handle delete request from the client 
+	 * @param del the delete request from the client 
+	 */
 	public void handleDelete(Delete del)
 	{
 		System.out.println("delete " + del.toDelete.getClass().toString() + " " + del.toDelete.getId());
@@ -292,6 +312,11 @@ public class EchoServer extends AbstractServer
 	}
 	
 
+
+	/**
+	 * handle add statistics request from the client 
+	 * @param stat the statistics request from the client 
+	 */
 	private void handleAddStat(AddStat stat)
 	{
 		System.out.println("add stat " + stat.op);
@@ -460,6 +485,11 @@ public class EchoServer extends AbstractServer
 		this.sendToAllClients(msg);
 	}
 
+	/**
+	 * handle statistics request  from the client and return the result
+	 * @param statboi the statistics request from the client
+	 * @return statistics result to the client 
+	 */
 	public Statboi handleStatistics(Statboi statboi)
 	{
 		statboi.statboi = InformationSystem.getRangeSumStatistics(statboi.cityId, statboi.from, statboi.end);
