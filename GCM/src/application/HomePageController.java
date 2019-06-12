@@ -50,6 +50,7 @@ import objectClasses.CityDataVersion;
 import objectClasses.Customer;
 import objectClasses.Employee;
 import objectClasses.Map;
+import objectClasses.MapSight;
 import objectClasses.PlaceOfInterest;
 import objectClasses.Route;
 import objectClasses.RouteStop;
@@ -381,9 +382,22 @@ public class HomePageController
 	
 	private void fillMapInfo(Map map)
 	{
+		CityDataVersion cityData;
+		if (UnpublishSearch.isSelected()) // TODO search unpublished
+        {
+            cityData = Connector.selectedCity.getCopyUnpublishedVersions().get(0);
+            Connector.unpublished = true;
+            System.out.println("search unpublished");
+        }
+        else // TODO search published
+        {
+            cityData = Connector.selectedCity.getCopyPublishedVersion();
+            Connector.unpublished = false;
+            System.out.println("search published");
+        }
 		try
 		{
-//			Connector.searchMapResult = _generateMapSights(int cdv); // TODO Sigal
+			Connector.searchMapResult = (ArrayList<MapSight>) Connector.client.fetchSights(cityData.getId(), MapSight.class);
 			ResultName.setText(map.getName());// set name and type
 			ResultInfo.setText(map.getInfo());// set info
 			BufferedImage bufIm = Connector.client.getImage("Pics\\" + map.getImgURL());
