@@ -2,6 +2,7 @@ package controller;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
 
 import objectClasses.City;
 import objectClasses.CityDataVersion;
@@ -96,7 +97,7 @@ public class InitDatebase {
 		m0.addLocation(l1);
 		m0.saveToDatabase();
 		MapSight ms0 = new MapSight(cdv.getId(), m0);
-		cdv.addMapSight(ms0);
+		ms0.saveToDatabase();
 
 		Map m1 = new Map(c1.getId(), "Mount Carmel", "Second map", "haifa2.png");
 		double[] coords2 = { 412.3, 285.7 };
@@ -110,7 +111,7 @@ public class InitDatebase {
 		m1.addLocation(l4);
 		m1.saveToDatabase();
 		MapSight ms1 = new MapSight(cdv.getId(), m1);
-		cdv.addMapSight(ms1);
+		ms1.saveToDatabase();
 		Route r = new Route(c1.getId(), "Small route");
 		RouteStop rstop1 = new RouteStop(r, p0, new Time(1, 25, 0));
 		r.addRouteStop(rstop1);
@@ -180,7 +181,7 @@ public class InitDatebase {
 		m0.addLocation(l1);
 		m0.saveToDatabase();
 		MapSight ms0 = new MapSight(cdv.getId(), m0);
-		cdv.addMapSight(ms0);
+		ms0.saveToDatabase();
 
 		Map m1 = new Map(c1.getId(), "Downtown", "Second map", "tel_aviv2.png");
 		double[] coords2 = { 117.3, 435.7 };
@@ -194,7 +195,7 @@ public class InitDatebase {
 		m1.addLocation(l4);
 		m1.saveToDatabase();
 		MapSight ms1 = new MapSight(cdv.getId(), m1);
-		cdv.addMapSight(ms1);
+		ms1.saveToDatabase();
 		Route r = new Route(c1.getId(), "Small route");
 		RouteStop rstop1 = new RouteStop(r, p0, new Time(4, 30, 0));
 		r.addRouteStop(rstop1);
@@ -265,7 +266,7 @@ public class InitDatebase {
 		m0.addLocation(l1);
 		m0.saveToDatabase();
 		MapSight ms0 = new MapSight(cdv.getId(), m0);
-		cdv.addMapSight(ms0);
+		ms0.saveToDatabase();
 
 		Map m1 = new Map(c1.getId(), "East city", "Second map", "jerusalem2.png");
 		double[] coords2 = { 123.3, 529.7 };
@@ -279,7 +280,7 @@ public class InitDatebase {
 		m1.addLocation(l4);
 		m1.saveToDatabase();
 		MapSight ms1 = new MapSight(cdv.getId(), m1);
-		cdv.addMapSight(ms1);
+		ms1.saveToDatabase();
 		Route r = new Route(c1.getId(), "Small route");
 		RouteStop rstop1 = new RouteStop(r, p0, new Time(1, 0, 0));
 		r.addRouteStop(rstop1);
@@ -338,7 +339,7 @@ public class InitDatebase {
 		Location l0 = new Location(m0, p0, coords0);
 		m0.addLocation(l0);
 		MapSight ms0 = new MapSight(cdv.getId(), m0);
-		cdv.addMapSight(ms0);
+		ms0.saveToDatabase();
 		
 		Route r1 = new Route(c1.getId(), "one stop route");
 		RouteStop rstop1 = new RouteStop(r1, p0, new Time(0, 40, 0));
@@ -349,11 +350,20 @@ public class InitDatebase {
 		
 		CityDataVersion cdv2 = new CityDataVersion(cdv, "2.0");
 		
-		Map m1=cdv2.getMapSightByMapName(m0.getName()).getCopyMap();
-		double[] coords1 = { 200, 400 };
-		Location l1 = new Location(m1, p1, coords1);
-		m1.addLocation(l1);
-		m1.saveToDatabase();
+		Map m1=null;
+		ArrayList<Integer> ids=Database.searchMap(m0.getCityId(), m0.getName(), m0.getInfo(), m0.getImgURL());
+		for(int id:ids) {
+			if(id!=m0.getId())
+			{
+				m1=Database.getMapById(id);
+			}
+		}
+		if(m1!=null) {
+			double[] coords1 = { 200, 400 };
+			Location l1 = new Location(m1, p1, coords1);
+			m1.addLocation(l1);
+			m1.saveToDatabase();
+		}
 		
 		Route r2 =cdv2.getRouteSightByRouteInfo(r1.getInfo()).getCopyRoute();
 		r2.setInfo("Two stop route");
