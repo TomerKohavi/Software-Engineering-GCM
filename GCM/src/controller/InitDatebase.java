@@ -79,15 +79,15 @@ public class InitDatebase {
 				false);
 		p4.saveToDatabase();
 		PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv.getId(), p0);
-		cdv.addPlaceOfInterestSight(ps0);
+		ps0.saveToDatabase();
 		PlaceOfInterestSight ps1 = new PlaceOfInterestSight(cdv.getId(), p1);
-		cdv.addPlaceOfInterestSight(ps1);
+		ps1.saveToDatabase();
 		PlaceOfInterestSight ps2 = new PlaceOfInterestSight(cdv.getId(), p2);
-		cdv.addPlaceOfInterestSight(ps2);
+		ps2.saveToDatabase();
 		PlaceOfInterestSight ps3 = new PlaceOfInterestSight(cdv.getId(), p3);
-		cdv.addPlaceOfInterestSight(ps3);
+		ps3.saveToDatabase();
 		PlaceOfInterestSight ps4 = new PlaceOfInterestSight(cdv.getId(), p4);
-		cdv.addPlaceOfInterestSight(ps4);
+		ps4.saveToDatabase();
 		Map m0 = new Map(c1.getId(), "Central city", "First map", "haifa1.png");
 		double[] coords0 = { 121.3, 518.7 };
 		Location l0 = new Location(m0, p0, coords0);
@@ -119,7 +119,7 @@ public class InitDatebase {
 		r.addRouteStop(rstop2);
 		r.saveToDatabase();
 		RouteSight rs = new RouteSight(cdv.getId(), r, true);
-		cdv.addRouteSight(rs);
+		rs.saveToDatabase();
 
 		Route r1 = new Route(c1.getId(), "Big route");
 		RouteStop rstop3 = new RouteStop(r1, p2, new Time(4, 0, 0));
@@ -130,7 +130,7 @@ public class InitDatebase {
 		r1.addRouteStop(rstop5);
 		r1.saveToDatabase();
 		RouteSight rs1 = new RouteSight(cdv.getId(), r1, true);
-		cdv.addRouteSight(rs1);
+		rs1.saveToDatabase();
 
 		c1.addPublishedCityDataVersion(cdv);
 		c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv, "2.0"));
@@ -163,15 +163,15 @@ public class InitDatebase {
 				false);
 		p4.saveToDatabase();
 		PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv.getId(), p0);
-		cdv.addPlaceOfInterestSight(ps0);
+		ps0.saveToDatabase();
 		PlaceOfInterestSight ps1 = new PlaceOfInterestSight(cdv.getId(), p1);
-		cdv.addPlaceOfInterestSight(ps1);
+		ps1.saveToDatabase();
 		PlaceOfInterestSight ps2 = new PlaceOfInterestSight(cdv.getId(), p2);
-		cdv.addPlaceOfInterestSight(ps2);
+		ps2.saveToDatabase();
 		PlaceOfInterestSight ps3 = new PlaceOfInterestSight(cdv.getId(), p3);
-		cdv.addPlaceOfInterestSight(ps3);
+		ps3.saveToDatabase();
 		PlaceOfInterestSight ps4 = new PlaceOfInterestSight(cdv.getId(), p4);
-		cdv.addPlaceOfInterestSight(ps4);
+		ps4.saveToDatabase();
 		Map m0 = new Map(c1.getId(), "North city", "First map", "tel_aviv1.png");
 		double[] coords0 = { 123.3, 354.7 };
 		Location l0 = new Location(m0, p0, coords0);
@@ -203,7 +203,7 @@ public class InitDatebase {
 		r.addRouteStop(rstop2);
 		r.saveToDatabase();
 		RouteSight rs = new RouteSight(cdv.getId(), r, true);
-		cdv.addRouteSight(rs);
+		rs.saveToDatabase();
 
 		Route r1 = new Route(c1.getId(), "Big route");
 		RouteStop rstop3 = new RouteStop(r1, p2, new Time(0, 40, 0));
@@ -214,7 +214,7 @@ public class InitDatebase {
 		r1.addRouteStop(rstop5);
 		r1.saveToDatabase();
 		RouteSight rs1 = new RouteSight(cdv.getId(), r1, true);
-		cdv.addRouteSight(rs1);
+		rs1.saveToDatabase();
 
 		c1.addPublishedCityDataVersion(cdv);
 		c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv, "2.0"));
@@ -248,15 +248,15 @@ public class InitDatebase {
 				false);
 		p4.saveToDatabase();
 		PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv.getId(), p0);
-		cdv.addPlaceOfInterestSight(ps0);
+		ps0.saveToDatabase();
 		PlaceOfInterestSight ps1 = new PlaceOfInterestSight(cdv.getId(), p1);
-		cdv.addPlaceOfInterestSight(ps1);
+		ps1.saveToDatabase();
 		PlaceOfInterestSight ps2 = new PlaceOfInterestSight(cdv.getId(), p2);
-		cdv.addPlaceOfInterestSight(ps2);
+		ps2.saveToDatabase();
 		PlaceOfInterestSight ps3 = new PlaceOfInterestSight(cdv.getId(), p3);
-		cdv.addPlaceOfInterestSight(ps3);
+		ps3.saveToDatabase();
 		PlaceOfInterestSight ps4 = new PlaceOfInterestSight(cdv.getId(), p4);
-		cdv.addPlaceOfInterestSight(ps4);
+		ps4.saveToDatabase();
 		Map m0 = new Map(c1.getId(), "West city", "First map", "jerusalem1.png");
 		double[] coords0 = { 233.3, 445.7 };
 		Location l0 = new Location(m0, p0, coords0);
@@ -288,7 +288,7 @@ public class InitDatebase {
 		r.addRouteStop(rstop2);
 		r.saveToDatabase();
 		RouteSight rs = new RouteSight(cdv.getId(), r, true);
-		cdv.addRouteSight(rs);
+		rs.saveToDatabase();
 
 		Route r1 = new Route(c1.getId(), "Big route");
 		RouteStop rstop3 = new RouteStop(r1, p2, new Time(4, 0, 0));
@@ -299,7 +299,7 @@ public class InitDatebase {
 		r1.addRouteStop(rstop5);
 		r1.saveToDatabase();
 		RouteSight rs1 = new RouteSight(cdv.getId(), r1, true);
-		cdv.addRouteSight(rs1);
+		rs1.saveToDatabase();
 
 		c1.addPublishedCityDataVersion(cdv);
 		c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv, "2.0"));
@@ -330,7 +330,7 @@ public class InitDatebase {
 		
 		CityDataVersion cdv = new CityDataVersion(c1, "1.0", 40, 135.4);
 		PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv.getId(), p0);
-		cdv.addPlaceOfInterestSight(ps0);
+		ps0.saveToDatabase();
 		
 		
 		Map m0 = new Map(c1.getId(), "Rome", "Rome map", "roma.png");
@@ -346,13 +346,13 @@ public class InitDatebase {
 		r1.addRouteStop(rstop1);
 		r1.saveToDatabase();
 		RouteSight rs1 = new RouteSight(cdv.getId(), r1, true);
-		cdv.addRouteSight(rs1);
+		rs1.saveToDatabase();
 		
 		CityDataVersion cdv2 = new CityDataVersion(cdv, "2.0");
 		
 		Map m1=null;
-		ArrayList<Integer> ids=Database.searchMap(m0.getCityId(), m0.getName(), m0.getInfo(), m0.getImgURL());
-		for(int id:ids) {
+		ArrayList<Integer> idsM1=Database.searchMap(m0.getCityId(), m0.getName(), m0.getInfo(), m0.getImgURL());
+		for(int id:idsM1) {
 			if(id!=m0.getId())
 			{
 				m1=Database.getMapById(id);
@@ -364,12 +364,26 @@ public class InitDatebase {
 			m1.addLocation(l1);
 			m1.saveToDatabase();
 		}
+		else
+			System.out.println("Something weird is happening :( check rome() in InitDatabase");
 		
-		Route r2 =cdv2.getRouteSightByRouteInfo(r1.getInfo()).getCopyRoute();
-		r2.setInfo("Two stop route");
-		RouteStop rstop2 = new RouteStop(r2, p1, new Time(2, 0, 0));
-		r2.addRouteStop(rstop2);
-		r2.saveToDatabase();
+		Route r2 =null;
+		ArrayList<Integer> idsR2=Database.searchRoute(r1.getCityId(), r1.getInfo());
+		for(int id:idsR2) {
+			if(id!=r1.getId())
+			{
+				r2=Database.getRouteById(id);
+			}
+		}
+		if(r2!=null)
+		{
+			r2.setInfo("Two stop route");
+			RouteStop rstop2 = new RouteStop(r2, p1, new Time(2, 0, 0));
+			r2.addRouteStop(rstop2);
+			r2.saveToDatabase();
+		}
+		else
+			System.out.println("Something weird is happening :( check rome() in InitDatabase");
 
 		c1.addPublishedCityDataVersion(cdv);
 		c1.addUnpublishedCityDataVersion(cdv2);
