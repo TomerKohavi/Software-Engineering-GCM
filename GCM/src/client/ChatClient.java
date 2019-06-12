@@ -100,6 +100,9 @@ public class ChatClient extends AbstractClient
 		this.semaphore = new Semaphore(0);
 	}
 
+	/**
+	 *  active semaphore 
+	 */
 	public void semAcquire()
 	{
 		try
@@ -246,6 +249,15 @@ public class ChatClient extends AbstractClient
 		return this.cityReq.cityList;
 	}
 
+	/**
+	 * @param cityId the id of the city that contained the map
+	 * @param name the name of the map
+	 * @param info the data of the city
+	 * @param imgURL the path of the image
+	 * @param cdvId city data version id of the map
+	 * @return map sight object of the new map
+	 * @throws IOException if there is problem with the semaphore
+	 */
 	public MapSight createMap(int cityId, String name, String info, String imgURL, int cdvId) throws IOException
 	{
 		sendToServer(new CreateMap(cityId, name, info, imgURL, cdvId));
@@ -253,6 +265,16 @@ public class ChatClient extends AbstractClient
 		return this.cmap.mapS;
 	}
 
+	/**
+	 * @param cityId the id of the city that contained the point of interest
+	 * @param name the name of the point of interest
+	 * @param type which type the point of interest
+	 * @param placeDescription the description of the point of interest
+	 * @param accessibilityToDisabled if the point of interest is accessibility 
+	 * @param cdvId city data version id of the point of interest
+	 * @return point of interest sight object of the new point of interest
+	 * @throws IOException if there is problem with the semaphore
+	 */
 	public PlaceOfInterestSight createPOI(int cityId, String name, PlaceType type, String placeDescription,
 			boolean accessibilityToDisabled, int cdvId) throws IOException
 	{
@@ -261,6 +283,13 @@ public class ChatClient extends AbstractClient
 		return this.cpoi.poiS;
 	}
 
+	/**
+	 * @param cityId the id of the city that contained the route
+	 * @param info the info of the route
+	 * @param cdvId city data version id of the route
+	 * @return route sight object of the new route
+	 * @throws IOException if there is problem with the semaphore
+	 */
 	public RouteSight createRoute(int cityId, String info, int cdvId) throws IOException
 	{
 		sendToServer(new CreateRoute(cityId, info, cdvId));
@@ -268,6 +297,11 @@ public class ChatClient extends AbstractClient
 		return this.croute.routeS;
 	}
 
+	/**
+	 * @param newStopList list of route stop to create
+	 * @return list if the ids of the new route stops
+	 * @throws IOException if there is problem with the semaphore
+	 */
 	public ArrayList<Integer> createRouteStops(ArrayList<RouteStop> newStopList) throws IOException
 	{
 		sendToServer(new CreateRouteStops(newStopList));
@@ -275,6 +309,10 @@ public class ChatClient extends AbstractClient
 		return this.cstops.idList;
 	}
 
+	/**
+	 * @param object object to delete
+	 * @throws IOException if there is problem with the delete
+	 */
 	public void deleteObject(ClassMustProperties object) throws IOException
 	{
 		sendToServer(new Delete(object));
@@ -298,6 +336,14 @@ public class ChatClient extends AbstractClient
 		sendToServer(user);
 	}
 
+	/**
+	 * get statistics from specific city and time
+	 * @param cityId the city id we want to get the statistic
+	 * @param from from when the statistics is taken
+	 * @param end until when the statistics is taken
+	 * @return statistics object with the relevant data
+	 * @throws IOException if there is problem with the semaphore
+	 */
 	public Statistic getStatistics(Integer cityId, Date from, Date end) throws IOException
 	{
 		sendToServer(new Statboi(cityId, from, end));
@@ -305,6 +351,11 @@ public class ChatClient extends AbstractClient
 		return this.statboi.statboi;
 	}
 	
+	/**
+	 * @param cityId the city id we want to add the statistics to here
+	 * @param op with  kind of statistics to add 
+	 * @throws IOException if there is any problem with the insert
+	 */
 	public void addStat(Integer cityId, Ops op) throws IOException
 	{
 		sendToServer(new AddStat(cityId, op));
