@@ -382,22 +382,8 @@ public class HomePageController
 	
 	private void fillMapInfo(Map map)
 	{
-		CityDataVersion cityData;
-		if (UnpublishSearch.isSelected()) // TODO search unpublished
-        {
-            cityData = Connector.selectedCity.getCopyUnpublishedVersions().get(0);
-            Connector.unpublished = true;
-            System.out.println("search unpublished");
-        }
-        else // TODO search published
-        {
-            cityData = Connector.selectedCity.getCopyPublishedVersion();
-            Connector.unpublished = false;
-            System.out.println("search published");
-        }
 		try
 		{
-			Connector.searchMapResult = (ArrayList<MapSight>) Connector.client.fetchSights(cityData.getId(), MapSight.class);
 			ResultName.setText(map.getName());// set name and type
 			ResultInfo.setText(map.getInfo());// set info
 			BufferedImage bufIm = Connector.client.getImage("Pics\\" + map.getImgURL());
@@ -711,10 +697,16 @@ public class HomePageController
 	}
 
 	@FXML
-	void showMaps(ActionEvent event) throws FileNotFoundException
+	void showMaps(ActionEvent event) throws IOException
 	{
 		Connector.listType = "Map";
 		setMainSideButton(SideMap);
+		CityDataVersion cityData;
+		if (UnpublishSearch.isSelected()) // TODO search unpublished
+            cityData = Connector.selectedCity.getCopyUnpublishedVersions().get(0);
+        else // TODO search published
+            cityData = Connector.selectedCity.getCopyPublishedVersion();
+		Connector.searchMapResult = (ArrayList<MapSight>) Connector.client.fetchSights(cityData.getId(), MapSight.class);
 		MainList.getItems().addAll(Connector.getMapsNames(Connector.searchMapResult));
 	}
 
