@@ -24,6 +24,7 @@ import controller.SearchCatalog;
 import io_commands.*;
 import javafx.scene.chart.PieChart.Data;
 import objectClasses.City;
+import objectClasses.CityDataVersion;
 import objectClasses.Customer;
 import objectClasses.Employee;
 import objectClasses.User;
@@ -318,6 +319,17 @@ public class EchoServer extends AbstractServer
 		}
 	}
 
+	public FetchSights handleFetchSights(FetchSights fs)
+	{
+		if (fs.sightType.isAssignableFrom(MapSight.class))
+		{
+			System.out.println("FETCH MAP SIGHT");
+			fs.sightList = CityDataVersion._generateMapSights(fs.cdvId);
+		}
+		else
+			System.err.println("AAAAAAAAAAAAAAAAAAAAAA");
+		return fs;
+	}
 	
 	/**
 	 * This method handles any messages received from the client.
@@ -370,6 +382,8 @@ public class EchoServer extends AbstractServer
 				client.sendToClient(handleStatistics((Statboi) msg));
 			else if (msg instanceof AddStat)
 				handleAddStat((AddStat) msg);
+			else if (msg instanceof FetchSights)
+				client.sendToClient(handleFetchSights((FetchSights) msg));
 			else
 				System.out.println(msg.getClass().toString() + '\n' + msg.toString());
 		}
