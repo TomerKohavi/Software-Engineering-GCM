@@ -12,6 +12,10 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
+/**
+ * @author tomer
+ * send message to the client with change price request
+ */
 public class ChangePriceController {
 	
 	private double oneTimePrice, monthPrice;
@@ -34,10 +38,17 @@ public class ChangePriceController {
     @FXML // fx:id="BuyButton"
     private JFXButton BuyButton; // Value injected by FXMLLoader
 
+    /**
+     * @param str string to format
+     * @return true if the string in the good format
+     */
     public static boolean isNumeric(String str) {
     	  return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
     }
     
+    /**
+     * initialize the variables
+     */
     public void initialize() {
     	oneTimePrice = 5;
     	monthPrice = 10;
@@ -45,6 +56,9 @@ public class ChangePriceController {
     	MonthField.setText(String.format("%.02f", monthPrice));
     }
     
+    /**
+     * @param event event from the UI that said to change the price
+     */
     @FXML
     void applyChanges(ActionEvent event) {
     	if (isNumeric(OneTimeField.getText()) && isNumeric(MonthField.getText())) {
@@ -56,6 +70,10 @@ public class ChangePriceController {
     	
     }
 
+    /**
+     * go to the back page
+     * @param event user click event
+     */
     @FXML
     void goBack(ActionEvent event) {
     	mainPane.getScene().getWindow().hide();
