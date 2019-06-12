@@ -50,6 +50,7 @@ import objectClasses.CityDataVersion;
 import objectClasses.Customer;
 import objectClasses.Employee;
 import objectClasses.Map;
+import objectClasses.MapSight;
 import objectClasses.PlaceOfInterest;
 import objectClasses.Route;
 import objectClasses.RouteStop;
@@ -383,7 +384,6 @@ public class HomePageController
 	{
 		try
 		{
-//			Connector.searchMapResult = _generateMapSights(int cdv); // TODO Sigal
 			ResultName.setText(map.getName());// set name and type
 			ResultInfo.setText(map.getInfo());// set info
 			BufferedImage bufIm = Connector.client.getImage("Pics\\" + map.getImgURL());
@@ -697,10 +697,16 @@ public class HomePageController
 	}
 
 	@FXML
-	void showMaps(ActionEvent event) throws FileNotFoundException
+	void showMaps(ActionEvent event) throws IOException
 	{
 		Connector.listType = "Map";
 		setMainSideButton(SideMap);
+		CityDataVersion cityData;
+		if (UnpublishSearch.isSelected()) // TODO search unpublished
+            cityData = Connector.selectedCity.getCopyUnpublishedVersions().get(0);
+        else // TODO search published
+            cityData = Connector.selectedCity.getCopyPublishedVersion();
+		Connector.searchMapResult = (ArrayList<MapSight>) Connector.client.fetchSights(cityData.getId(), MapSight.class);
 		MainList.getItems().addAll(Connector.getMapsNames(Connector.searchMapResult));
 	}
 
