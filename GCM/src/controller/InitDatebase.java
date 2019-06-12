@@ -45,6 +45,7 @@ public class InitDatebase {
 			benAndGadi();
 			sigalAndTomer();
 			aAndB();
+			initStatistics();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -348,28 +349,20 @@ public class InitDatebase {
 		
 		CityDataVersion cdv2 = new CityDataVersion(cdv, "2.0");
 		
+		Map m1=cdv2.getMapSightByMapName(m0.getName()).getCopyMap();
 		double[] coords1 = { 200, 400 };
-		Location l1 = new Location(m0, p1, coords1);
-		m0.addLocation(l1);
-		m0.saveToDatabase();
-		MapSight ms1 = new MapSight(cdv2.getId(), m0);
-		cdv2.addMapSight(ms1);
+		Location l1 = new Location(m1, p1, coords1);
+		m1.addLocation(l1);
+		m1.saveToDatabase();
 		
-		// For RON:    We want to add p1 to the route "one stop route" in cdv2, and change its name to "Two stop route"
-		// Please explain how you did it, so that I add more tommorrow.
-		
-//		RouteStop rstop1 = new RouteStop(r, p0, new Time(4, 30, 0));
-//		r.addRouteStop(rstop1);
-//		RouteStop rstop2 = new RouteStop(r, p1, new Time(2, 0, 0));
-//		r.addRouteStop(rstop2);
-//		r.saveToDatabase();
-//		RouteSight rs = new RouteSight(cdv.getId(), r, true);
-//		cdv.addRouteSight(rs);
-//
-//		R
+		Route r2 =cdv2.getRouteSightByRouteInfo(r1.getInfo()).getCopyRoute();
+		r2.setInfo("Two stop route");
+		RouteStop rstop2 = new RouteStop(r2, p1, new Time(2, 0, 0));
+		r2.addRouteStop(rstop2);
+		r2.saveToDatabase();
 
 		c1.addPublishedCityDataVersion(cdv);
-		c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv, "2.0"));
+		c1.addUnpublishedCityDataVersion(cdv2);
 		c1.saveToDatabase();
 	}
 	
@@ -451,6 +444,22 @@ public class InitDatebase {
 		otp.updateToWasDownload();
 		cust.addOneTimePurchase(otp);
 		cust.saveToDatabase();
+	}
+	
+	private static void initStatistics() {
+		//TODO: Ron need to fill real sattistics only once all the other init is done
+		InformationSystem.addOneTimePurchase(1,new Date(119,6,6));
+		InformationSystem.addOneTimePurchase(1,new Date(118,6,6));
+		InformationSystem.addOneTimePurchase(1,new Date(118,9,9));
+		InformationSystem.addSubDownload(1);
+		InformationSystem.addSubDownload(1);
+		InformationSystem.addSubDownload(1);
+		InformationSystem.addSubscription(1,new Date(119,5,5));
+		InformationSystem.addSubscriptionRenewal(1);
+		InformationSystem.addSubscriptionRenewal(1);
+		InformationSystem.addVisit(1);
+		InformationSystem.newVersionWasPublished(1, new Date(119,4,4));
+		InformationSystem.setNumMaps(1, 2);
 	}
 
 }

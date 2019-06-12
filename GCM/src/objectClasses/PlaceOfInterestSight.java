@@ -5,6 +5,7 @@ import java.io.Serializable;
 import controller.Database;
 import otherClasses.ClassMustProperties;
 
+@SuppressWarnings("serial")
 public class PlaceOfInterestSight implements ClassMustProperties, Serializable {
 	private int id;
 	private int cityDataVersionId;

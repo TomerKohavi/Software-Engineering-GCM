@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import controller.Database;
 
+@SuppressWarnings("serial")
 public abstract class User implements Serializable {
 
 	private int id;

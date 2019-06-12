@@ -5,6 +5,7 @@ import java.sql.Date;
 
 import controller.Database;
 
+@SuppressWarnings("serial")
 public abstract class CityPurchase implements Comparable<CityPurchase>, Serializable {
 	private int id;
 	private int cityId;

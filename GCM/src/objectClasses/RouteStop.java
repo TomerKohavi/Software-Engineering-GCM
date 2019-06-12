@@ -6,6 +6,7 @@ import java.sql.Time;
 import controller.Database;
 import otherClasses.ClassMustProperties;
 
+@SuppressWarnings("serial")
 public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Serializable
 {
 	private int id;

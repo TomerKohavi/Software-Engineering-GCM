@@ -7,6 +7,7 @@ import java.util.Collections;
 import controller.Database;
 import otherClasses.ClassMustProperties;
 
+@SuppressWarnings("serial")
 public class Route implements ClassMustProperties, Serializable
 {
 	private int id;
@@ -37,6 +38,18 @@ public class Route implements ClassMustProperties, Serializable
 		this.cityId = cityId;
 		this.info = info;
 		this.temp_routeStops = new ArrayList<>();
+		this.temp_removeRouteStops = new ArrayList<>();
+	}
+	
+	public Route(Route other) {
+		this.id = Database.generateIdRoute();
+		this.cityId = other.cityId;
+		this.info = other.info;
+		this.temp_routeStops = new ArrayList<>();
+		for(RouteStop rs:other.getCopyRouteStops()) {
+			RouteStop newRs=new RouteStop(this, rs.getCopyPlace(), rs.getRecommendedTime());
+			temp_routeStops.add(newRs);
+		}
 		this.temp_removeRouteStops = new ArrayList<>();
 	}
 

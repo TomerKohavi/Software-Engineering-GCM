@@ -6,6 +6,7 @@ import java.sql.Date;
 import controller.Database;
 import otherClasses.ClassMustProperties;
 
+@SuppressWarnings("serial")
 public class OneTimePurchase extends CityPurchase implements ClassMustProperties, Serializable
 {
     private boolean wasDownload;
