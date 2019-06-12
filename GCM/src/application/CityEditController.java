@@ -42,7 +42,7 @@ public class CityEditController {
     		InfoBox.setText(city.getCityDescription());
     	}
     	else
-    		city = new City(null, null);
+    		city = new City(null, null); // TODO Sigal
     }
     
 

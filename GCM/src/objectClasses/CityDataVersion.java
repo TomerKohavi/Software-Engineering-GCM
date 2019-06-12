@@ -16,8 +16,9 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 
 	private ArrayList<PlaceOfInterestSight> temp_placeSights;
 	private ArrayList<PlaceOfInterestSight> temp_removePlaceSights;
-	private ArrayList<MapSight> temp_mapSights;
-	private ArrayList<MapSight> temp_removeMapSights;
+	private int temp_numMaps;
+	//private ArrayList<MapSight> temp_mapSights;
+	//private ArrayList<MapSight> temp_removeMapSights;
 	private ArrayList<RouteSight> temp_routeSights;
 	private ArrayList<RouteSight> temp_removeRouteSights;
 
@@ -43,8 +44,9 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 		this.cityId = c.getId();
 		this.temp_placeSights = new ArrayList<>();
 		this.temp_removePlaceSights = new ArrayList<>();
-		this.temp_mapSights = new ArrayList<>();
-		this.temp_removeMapSights = new ArrayList<>();
+		//this.temp_mapSights = new ArrayList<>();
+		//this.temp_removeMapSights = new ArrayList<>();
+		this.temp_numMaps=0;
 		this.temp_routeSights = new ArrayList<>();
 		this.temp_removeRouteSights = new ArrayList<>();
 	}
@@ -61,14 +63,14 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 			temp_placeSights.add(newPs);
 		}
 		this.temp_removePlaceSights = new ArrayList<>();
-		this.temp_mapSights = new ArrayList<>();
+		/*this.temp_mapSights = new ArrayList<>();
 		for(MapSight ms:other.temp_mapSights) {
 			Map newMap=new Map(ms.getCopyMap());
 			newMap.saveToDatabase();
 			MapSight newMs=new MapSight(this.id, newMap);
 			temp_mapSights.add(newMs);
 		}
-		this.temp_removeMapSights = new ArrayList<>();
+		this.temp_removeMapSights = new ArrayList<>();*/
 		this.temp_routeSights = new ArrayList<>();
 		for(RouteSight rs:other.temp_routeSights) {
 			Route newR=new Route(rs.getCopyRoute());
@@ -89,7 +91,7 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
                 System.out.println("print of POIS from city, very big");
                 int pId=ps.getCopyPlace().getId();
                 //remove RouteStops and Locations of that POI
-                for (MapSight ms : temp_mapSights)
+                /*for (MapSight ms : temp_mapSights)
                 {
                     Map m=ms.getCopyMap();
                     Location l=m.getLocationByPlaceOfInterestId(pId);
@@ -99,7 +101,7 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
                         l=m.getLocationByPlaceOfInterestId(pId);
                     }
                     m.saveToDatabase();
-                }
+                }*/
                 for (RouteSight rs : temp_routeSights)
                 {
                     Route r=rs.getCopyRoute();
@@ -114,11 +116,11 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
             }
 		}
 		temp_removePlaceSights = new ArrayList<>();
-		for (MapSight ms : temp_removeMapSights) {
+		/*for (MapSight ms : temp_removeMapSights) {
 			if (!temp_mapSights.contains(ms))
 				ms.deleteFromDatabase();
 		}
-		temp_removeMapSights = new ArrayList<>();
+		temp_removeMapSights = new ArrayList<>();*/
 		for (RouteSight rs : temp_removeRouteSights) {
 			if (!temp_routeSights.contains(rs))
 				rs.deleteFromDatabase();
@@ -127,8 +129,8 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 		// save temps
 		for (PlaceOfInterestSight ps : temp_placeSights)
 			ps.saveToDatabase();
-		for (MapSight ms : temp_mapSights)
-			ms.saveToDatabase();
+		/*for (MapSight ms : temp_mapSights)
+			ms.saveToDatabase();*/
 		for (RouteSight rs : temp_routeSights)
 			rs.saveToDatabase();
 	}
@@ -139,17 +141,17 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 		for (PlaceOfInterestSight ps : temp_removePlaceSights)
 			ps.deleteFromDatabase();
 		temp_removePlaceSights = new ArrayList<>();
-		for (MapSight ms : temp_removeMapSights)
+		/*for (MapSight ms : temp_removeMapSights)
 			ms.deleteFromDatabase();
-		temp_removeMapSights = new ArrayList<>();
+		temp_removeMapSights = new ArrayList<>();*/
 		for (RouteSight rs : temp_removeRouteSights)
 			rs.deleteFromDatabase();
 		temp_removeRouteSights = new ArrayList<>();
 		// save temps
 		for (PlaceOfInterestSight ps : temp_placeSights)
 			ps.deleteFromDatabase();
-		for (MapSight ms : temp_mapSights)
-			ms.deleteFromDatabase();
+		/*for (MapSight ms : temp_mapSights)
+			ms.deleteFromDatabase();*/
 		for (RouteSight rs : temp_routeSights)
 			rs.deleteFromDatabase();
 	}
@@ -157,32 +159,30 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 	public void reloadTempsFromDatabase() {
 		this.temp_placeSights = generatePlaceOfInterestSights();
 		this.temp_removePlaceSights = new ArrayList<>();
-		this.temp_mapSights = generateMapSights();
-		this.temp_removeMapSights = new ArrayList<>();
+		//this.temp_mapSights = generateMapSights();
+		//this.temp_removeMapSights = new ArrayList<>();
+		ArrayList<Integer> ids = Database.searchMapSight(this.id, null);
+		this.temp_numMaps=ids.size();
 		this.temp_routeSights = generateRouteSights();
 		this.temp_removeRouteSights = new ArrayList<>();
 	}
 
-	private ArrayList<MapSight> generateMapSights() {
-		ArrayList<Integer> ids = Database.searchMapSight(this.id, null);
+	public static ArrayList<Map> _generateMapSights(int cdvId) {
+		ArrayList<Integer> ids = Database.searchMapSight(cdvId, null);
 		ArrayList<MapSight> arrList = new ArrayList<MapSight>();
 		for (int id : ids) {
 			MapSight o = Database._getMapSightById(id);
-			if (o == null)
-				continue;
-			if (Database.getMapById(o.getMapId()) == null)
-				Database._deleteMapSight(id);
-			else
-				arrList.add(o);
+			if (o == null || o.getCopyMap()==null)continue;
+			arrList.add(o);
 		}
 		return arrList;
 	}
 
 	public int getNumMapSights() {
-		return temp_mapSights.size();
+		return temp_numMaps;
 	}
 
-	public MapSight getMapSightByMapId(int mapId) {
+	/*public MapSight getMapSightByMapId(int mapId) {
 		for (MapSight ms : temp_mapSights) {
 			if (ms.getMapId() == mapId)
 				return ms;
@@ -222,7 +222,7 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 			}
 		}
 		return null;
-	}
+	}*/
 
 	private ArrayList<PlaceOfInterestSight> generatePlaceOfInterestSights() {
 		ArrayList<Integer> ids = Database.searchPlaceOfInterestSight(this.id, null);
@@ -378,9 +378,9 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 		return new ArrayList<>(temp_placeSights);
 	}
 
-	public ArrayList<MapSight> getCopyMapSights() {
+	/*public ArrayList<MapSight> getCopyMapSights() {
 		return new ArrayList<>(temp_mapSights);
-	}
+	}*/
 
 	public ArrayList<RouteSight> getCopyRouteSights() {
 		return new ArrayList<>(temp_routeSights);

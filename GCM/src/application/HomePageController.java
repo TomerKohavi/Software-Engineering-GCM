@@ -294,13 +294,13 @@ public class HomePageController
 		PublishButton.setVisible(false);
 		if (Connector.unpublished)
 		{
-			EditButton.setVisible(true);
 			RemoveButton.setVisible(true);
+			CreateButton.setVisible(true);
 			if (Connector.listType.equals("Map") || Connector.listType.equals("POI")
 					|| Connector.listType.equals("Route"))
-				CreateButton.setVisible(true);
+				EditButton.setVisible(true);
 			else
-				CreateButton.setVisible(false);
+				EditButton.setVisible(false);
 		}
 		else
 		{
@@ -309,31 +309,6 @@ public class HomePageController
 		}
 	}
 
-	private void fillRouteInfo(Route route)
-	{
-		Connector.selectedRoute = route;
-		ResultName.setText("Route " + route.getId());// set name and type
-		ResultInfo.setText(route.getInfo()); // set info
-
-		ArrayList<RouteStop> list = route.getCopyRouteStops();
-		StopsTable.setVisible(true);
-		ObservableList<RouteStop> stops = FXCollections.observableArrayList(list);
-
-		TableColumn<RouteStop, String> poiColumn = new TableColumn<>("POI");
-		poiColumn.setMinWidth(365);
-		poiColumn.setCellValueFactory(new PropertyValueFactory<>("placeName"));
-
-		TableColumn<RouteStop, Time> timeColumn = new TableColumn<>("Time");
-		timeColumn.setMinWidth(83);
-		timeColumn.setCellValueFactory(new PropertyValueFactory<>("recommendedTime"));
-
-		StopsTable.setItems(stops);
-
-		StopsTable.getColumns().clear();
-		StopsTable.getColumns().addAll(poiColumn, timeColumn);
-
-	}
-	
 	private void fillCityInfo(City city)
 	{
 		Connector.selectedCity = city;
@@ -341,12 +316,24 @@ public class HomePageController
 		ResultName.setText(city.getCityName()); // set name
 		ResultInfo.setText(city.getCityDescription()); // set info
 		// get QUERIES
-		CityDataVersion cityData = city.getCopyPublishedVersion();
+		CityDataVersion cityData = null;
+		if (UnpublishSearch.isSelected()) // TODO search unpublished
+		{
+			cityData = city.getCopyUnpublishedVersions().get(0);
+			Connector.unpublished = true;
+			System.out.println("search unpublished");
+		}
+		else // TODO search published
+		{
+			cityData = city.getCopyPublishedVersion();
+			Connector.unpublished = false;
+			System.out.println("search published");
+		}
 		Text1.setText("Maps Found: " + cityData.getNumMapSights()); // #Maps for the city
 		Text2.setText("POI Found: " + cityData.getNumPlaceOfInterestSights()); // #POI for the city
 		Text3.setText("Routes Found: " + cityData.getNumRouteSights()); // #Routes for the city
 
-		Connector.searchMapResult = cityData.getCopyMapSights();
+//		Connector.searchMapResult = cityData.getCopyMapSights();
 		Connector.searchPOIResult = cityData.getCopyPlaceSights();
 		Connector.searchRouteResult = cityData.getCopyRouteSights();
 
@@ -391,6 +378,63 @@ public class HomePageController
 		SidePOI.setDisable(false);
 		SideRoutes.setDisable(false);
 	}
+	
+	private void fillMapInfo(Map map)
+	{
+		try
+		{
+//			Connector.searchMapResult = _generateMapSights(int cdv); // TODO Sigal
+			ResultName.setText(map.getName());// set name and type
+			ResultInfo.setText(map.getInfo());// set info
+			BufferedImage bufIm = Connector.client.getImage("Pics\\" + map.getImgURL());
+			Image image = SwingFXUtils.toFXImage(bufIm, null);
+			MapImage.setImage(image);
+			ShowMapButton.setVisible(true);
+			InfoPane.setVisible(true);
+			MapImage.setVisible(false);
+			ShowMapButton.setText("Show Map");
+			for (POIImage img : Connector.imageList)
+				mainPane.getChildren().remove(img.image);
+			Connector.imageList.clear();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	private void fillPOIInfo(PlaceOfInterest poi)
+	{
+		ResultName.setText(poi.getName() + ", " + poi.getType());// set name and type
+		ResultInfo.setText(poi.getPlaceDescription()); // set info
+		Text1.setText((poi.isAccessibilityToDisabled() ? "" : "Not ") + "Accessible to Disabled"); // Accessible
+	}
+	
+	private void fillRouteInfo(Route route)
+	{
+		Connector.selectedRoute = route;
+		ResultName.setText("Route " + route.getId());// set name and type
+		ResultInfo.setText(route.getInfo()); // set info
+
+		ArrayList<RouteStop> list = route.getCopyRouteStops();
+		StopsTable.setVisible(true);
+		ObservableList<RouteStop> stops = FXCollections.observableArrayList(list);
+
+		TableColumn<RouteStop, String> poiColumn = new TableColumn<>("POI");
+		poiColumn.setMinWidth(365);
+		poiColumn.setCellValueFactory(new PropertyValueFactory<>("placeName"));
+
+		TableColumn<RouteStop, Time> timeColumn = new TableColumn<>("Time");
+		timeColumn.setMinWidth(83);
+		timeColumn.setCellValueFactory(new PropertyValueFactory<>("recommendedTime"));
+
+		StopsTable.setItems(stops);
+
+		StopsTable.getColumns().clear();
+		StopsTable.getColumns().addAll(poiColumn, timeColumn);
+
+	}
+	
 
 	public void initialize()
 	{
@@ -450,37 +494,13 @@ public class HomePageController
 						}
 						else if (Connector.listType.equals("POI")) // POI
 						{
-							PlaceOfInterest poi = Connector.searchPOIResult.get(selectedIndex).getCopyPlace();
-							Connector.selectedPOI = poi;
-							ResultName.setText(poi.getName() + ", " + poi.getType());// set name and type
-							ResultInfo.setText(poi.getPlaceDescription()); // set info
-							Text1.setText((poi.isAccessibilityToDisabled() ? "" : "Not ") + "Accessible to Disabled"); // Accessible
-																														// or
-																														// not
+							Connector.selectedPOI = Connector.searchPOIResult.get(selectedIndex).getCopyPlace();
+							fillPOIInfo(Connector.selectedPOI);
 						}
 						else if (Connector.listType.equals("Map")) // map
 						{
-							try
-							{
-								Map map = Connector.searchMapResult.get(selectedIndex).getCopyMap();
-								Connector.selectedMap = map;
-								ResultName.setText(map.getName());// set name and type
-								ResultInfo.setText(map.getInfo());// set info
-								BufferedImage bufIm = Connector.client.getImage("Pics\\" + map.getImgURL());
-								Image image = SwingFXUtils.toFXImage(bufIm, null);
-								MapImage.setImage(image);
-								ShowMapButton.setVisible(true);
-								InfoPane.setVisible(true);
-								MapImage.setVisible(false);
-								ShowMapButton.setText("Show Map");
-								for (POIImage img : Connector.imageList)
-									mainPane.getChildren().remove(img.image);
-								Connector.imageList.clear();
-							}
-							catch (IOException e)
-							{
-								e.printStackTrace();
-							}
+							Connector.selectedMap = Connector.searchMapResult.get(selectedIndex).getCopyMap();
+							fillMapInfo(Connector.selectedMap);
 						}
 						else if (Connector.listType.equals("Route")) // route
 						{
@@ -777,17 +797,29 @@ public class HomePageController
 		MainList.getItems().clear();
 		if (Connector.listType.equals("City"))
 			MainList.getItems().addAll(Connector.getCitiesNames(Connector.searchCityResult));
-		else if (Connector.listType.equals("Map"))
+		else if (Connector.listType.equals("Map")) {
 			MainList.getItems().addAll(Connector.getMapsNames(Connector.searchMapResult));
-		else if (Connector.listType.equals("POI"))
+			fillMapInfo(Connector.selectedMap);
+		}
+		else if (Connector.listType.equals("POI")) {
 			MainList.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
-		else if (Connector.listType.equals("Route"))
-		{
+			fillPOIInfo(Connector.selectedPOI);
+		}
+		else if (Connector.listType.equals("Route")) {
 			MainList.getItems().addAll(Connector.getRoutesNames(Connector.searchRouteResult));
 			fillRouteInfo(Connector.selectedRoute);
 		}
 	}
 
+	@FXML
+	void unpublishedPressed(ActionEvent event) throws IOException
+	{
+		if (UnpublishSearch.isSelected())
+			CreateButton.setVisible(true);
+		else
+			CreateButton.setVisible(false);
+	}
+	
 	@FXML
 	void callReSubscribe(ActionEvent event) throws IOException
 	{
