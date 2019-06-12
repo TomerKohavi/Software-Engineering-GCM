@@ -333,7 +333,7 @@ public class HomePageController
 		Text2.setText("POI Found: " + cityData.getNumPlaceOfInterestSights()); // #POI for the city
 		Text3.setText("Routes Found: " + cityData.getNumRouteSights()); // #Routes for the city
 
-		Connector.searchMapResult = cityData.getCopyMapSights();
+//		Connector.searchMapResult = cityData.getCopyMapSights();
 		Connector.searchPOIResult = cityData.getCopyPlaceSights();
 		Connector.searchRouteResult = cityData.getCopyRouteSights();
 
@@ -383,6 +383,7 @@ public class HomePageController
 	{
 		try
 		{
+//			Connector.searchMapResult = _generateMapSights(int cdv); // TODO Sigal
 			ResultName.setText(map.getName());// set name and type
 			ResultInfo.setText(map.getInfo());// set info
 			BufferedImage bufIm = Connector.client.getImage("Pics\\" + map.getImgURL());
