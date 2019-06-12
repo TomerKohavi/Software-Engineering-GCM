@@ -33,20 +33,24 @@ public class InitDatebase {
 			// reset
 			if (!Database.resetAll(name, pass))
 				return;
-
+			
 			// create cities, POIs, Routes
+			System.out.println("Creating cities...");
 			haifa();
 			telAviv();
 			jerusalem();
 
 			// create Users, subscriptions, purchases, downloads
-
+			System.out.println("Creating users...");
 			liorAndYosi();
 			danAndAdiel();
 			benAndGadi();
 			sigalAndTomer();
 			aAndB();
+			
+			//create statistics
 			initStatistics();
+			System.out.println("Creating statistics...");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

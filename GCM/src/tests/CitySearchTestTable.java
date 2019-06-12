@@ -103,7 +103,7 @@ public class CitySearchTestTable {
         			}
         		PlaceOfInterest p=new PlaceOfInterest(c.getId(), name, PlaceOfInterest.PlaceType.HISTORICAL, info, true);
         		PlaceOfInterestSight ps=new PlaceOfInterestSight(cdv.getId(), p);
-        		cdv.addPlaceOfInterestSight(ps);
+        		ps.saveToDatabase();
         		p.saveToDatabase();
         		if(needToPublish)
         			c.setUnpublishedToPublishedByVersionId(cdv.getId());
