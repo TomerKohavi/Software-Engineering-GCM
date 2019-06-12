@@ -11,6 +11,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 
+/**
+ * @author tomer
+ * the controller that treat the choose of the points of interest 
+ */
 public class ChoosePOIController {
 
     @FXML // fx:id="mainPane"
@@ -29,6 +33,10 @@ public class ChoosePOIController {
     	POIList.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
     }
     
+    /**
+     * add point of interest
+     * @param event user click on new points of interest
+     */
     @FXML
     void add(ActionEvent event) {
 		int selectedIdx = POIList.getSelectionModel().getSelectedIndex();
@@ -39,6 +47,10 @@ public class ChoosePOIController {
     	}
     }
 
+    /**
+     * go to the previous page
+     * @param event user click go previous page
+     */
     @FXML
     void goBack(ActionEvent event) {
     	mainPane.getScene().getWindow().hide();
