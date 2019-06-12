@@ -20,6 +20,10 @@ import objectClasses.User;
 import otherClasses.Pair;
 import client.ChatClient;
 
+/**
+ * @author tomer
+ * connect the UI to the client
+ */
 public class Connector {
 	
 	public static User user;
@@ -66,6 +70,10 @@ public class Connector {
 	
 	public static Text poiNameTextArea = new Text("");
 	
+	/**
+	 * @param cityList list of city to we want to get
+	 * @return list of names of the cities.
+	 */
 	public static ArrayList<String> getCitiesNames(ArrayList<City> cityList)
 	{
 		ArrayList<String> nameList = new ArrayList<String>();
@@ -74,6 +82,10 @@ public class Connector {
 		return nameList;
 	}
 	
+	/**
+	 * @param mapList list of map to we want to get
+	 * @return list of names of the maps.
+	 */
 	public static ArrayList<String> getMapsNames(ArrayList<MapSight> mapList)
 	{
 		ArrayList<String> nameList = new ArrayList<String>();
@@ -82,6 +94,10 @@ public class Connector {
 		return nameList;
 	}
 
+	/**
+	 * @param mapList list of point of interest to we want to get
+	 * @return list of names of the points of interest.
+	 */
 	public static ArrayList<String> getPOIsNames(ArrayList<PlaceOfInterestSight> poiList)
 	{
 		ArrayList<String> nameList = new ArrayList<String>();
@@ -90,6 +106,10 @@ public class Connector {
 		return nameList;
 	}
 	
+	/**
+	 * @param mapList list of route to we want to get
+	 * @return list of names of the routes.
+	 */
 	public static ArrayList<String> getRoutesNames(ArrayList<RouteSight> routeList)
 	{
 		ArrayList<String> nameList = new ArrayList<String>();
