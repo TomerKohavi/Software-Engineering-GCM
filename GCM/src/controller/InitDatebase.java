@@ -453,7 +453,7 @@ public class InitDatebase {
 		InformationSystem.addSubscription(0,new Date(119,5,5));
 		InformationSystem.addSubscriptionRenewal(0);
 		InformationSystem.addVisit(0);
-		InformationSystem.newVersionWasPublished(0,,new Date(119,4,4));
+		InformationSystem.newVersionWasPublished(0, new Date(119,4,4));
 		InformationSystem.setNumMaps(0, 2);
 	}
 
