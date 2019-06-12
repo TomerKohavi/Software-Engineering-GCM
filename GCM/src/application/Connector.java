@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXButton;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import objectClasses.City;
+import objectClasses.CityDataVersion;
 import objectClasses.Customer;
 import objectClasses.Map;
 import objectClasses.MapSight;
@@ -58,6 +59,8 @@ public class Connector {
 	public static ArrayList<RouteSight> searchRouteResult;
 	public static ArrayList<Pair<String, Integer>> allCities;
 	public static ArrayList<Customer> customerList;
+	
+	public static CityDataVersion cityData = null;
 	
 	public static boolean loading = false;
 	
