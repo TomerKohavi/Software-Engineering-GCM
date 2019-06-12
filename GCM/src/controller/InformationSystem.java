@@ -35,12 +35,21 @@ public final class InformationSystem
 	{
 		ArrayList<Integer> ids = Database.searchStatistic((Integer) cityId, null, from, end, null);
 		Statistic sum = Statistic.createBlankStatistic();
+		ArrayList<Statistic> statisticsNumMaps = new ArrayList<Statistic>();
 		for (int id : ids)
 		{
 			Statistic s = Database._getStatisticById(id);
-			if (s != null)
-				sum = Statistic.addStatistics(sum, s);
+			if (s == null) continue;
+			sum = Statistic.addStatistics(sum, s);
+			if(s.getNumMaps() >= 0)
+				statisticsNumMaps.add(s);
 		}
+		Collections.sort(statisticsNumMaps);
+		java.util.Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+		for (Statistic s: statisticsNumMaps)
+			map.put(s.getCityId(), s.getNumMaps());
+		int numMaps = sumMapList(map);
+		sum.setNumMaps(numMaps);
 		return sum;
 	}
 
