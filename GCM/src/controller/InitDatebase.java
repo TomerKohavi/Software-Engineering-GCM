@@ -448,13 +448,18 @@ public class InitDatebase {
 	
 	private static void initStatistics() {
 		//TODO: Ron need to fill real sattistics only once all the other init is done
-		InformationSystem.addOneTimePurchase(0,new Date(119,6,6));
-		InformationSystem.addSubDownload(0);
-		InformationSystem.addSubscription(0,new Date(119,5,5));
-		InformationSystem.addSubscriptionRenewal(0);
-		InformationSystem.addVisit(0);
-		InformationSystem.newVersionWasPublished(0, new Date(119,4,4));
-		InformationSystem.setNumMaps(0, 2);
+		InformationSystem.addOneTimePurchase(1,new Date(119,6,6));
+		InformationSystem.addOneTimePurchase(1,new Date(118,6,6));
+		InformationSystem.addOneTimePurchase(1,new Date(118,9,9));
+		InformationSystem.addSubDownload(1);
+		InformationSystem.addSubDownload(1);
+		InformationSystem.addSubDownload(1);
+		InformationSystem.addSubscription(1,new Date(119,5,5));
+		InformationSystem.addSubscriptionRenewal(1);
+		InformationSystem.addSubscriptionRenewal(1);
+		InformationSystem.addVisit(1);
+		InformationSystem.newVersionWasPublished(1, new Date(119,4,4));
+		InformationSystem.setNumMaps(1, 2);
 	}
 
 }
