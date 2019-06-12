@@ -7,6 +7,10 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
+/**
+ * @author tomer
+ * download data from the client to the UI
+ */
 public class DownloadCompleteController {
 
     @FXML // fx:id="mainPane"
@@ -18,6 +22,10 @@ public class DownloadCompleteController {
     @FXML // fx:id="ErrorMsg"
     private Text ErrorMsg; // Value injected by FXMLLoader
 
+    /**
+     * go to the previous page
+     * @param event user click go previous page
+     */
     @FXML
     void goBack(ActionEvent event) {
     	mainPane.getScene().getWindow().hide();
