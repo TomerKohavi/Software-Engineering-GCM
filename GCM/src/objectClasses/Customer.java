@@ -8,6 +8,7 @@ import java.util.Calendar;
 import controller.Database;
 import otherClasses.ClassMustProperties;
 
+@SuppressWarnings("serial")
 public class Customer extends User implements ClassMustProperties, Serializable {
 	
 	private String creditCardNum;

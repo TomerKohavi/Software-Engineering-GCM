@@ -8,6 +8,7 @@ import otherClasses.ClassMustProperties;
 
 import java.sql.Date;
 
+@SuppressWarnings("serial")
 public class Subscription extends CityPurchase implements ClassMustProperties, Serializable {
 
 	@SuppressWarnings("deprecation")

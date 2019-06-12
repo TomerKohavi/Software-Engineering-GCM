@@ -7,6 +7,7 @@ import java.util.Collections;
 import controller.Database;
 import otherClasses.ClassMustProperties;
 
+@SuppressWarnings("serial")
 public class Route implements ClassMustProperties, Serializable
 {
 	private int id;

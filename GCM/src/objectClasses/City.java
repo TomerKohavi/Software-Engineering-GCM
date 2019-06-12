@@ -8,6 +8,7 @@ import otherClasses.ClassMustProperties;
 /**
  * Class of a city object
  */
+@SuppressWarnings("serial")
 public class City implements ClassMustProperties, Serializable {
 	private int id;
 	private String cityName;

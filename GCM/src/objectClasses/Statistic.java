@@ -5,6 +5,7 @@ import java.sql.Date;
 import controller.Database;
 import otherClasses.ClassMustProperties;
 
+@SuppressWarnings("serial")
 public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 	private int id;
 	private int cityId;
