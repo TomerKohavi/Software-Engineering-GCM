@@ -383,7 +383,7 @@ public class EchoServer extends AbstractServer
 					client.sendToClient(imTr);
 				}
 				else
-					imTr.saveImage("\\Pics\\mememe.png");
+					imTr.saveImage();
 			}
 			else if (msg instanceof Search)
 				client.sendToClient(handleSearch((Search) msg));

@@ -34,8 +34,7 @@ import objectClasses.Map;
 import objectClasses.MapSight;
 
 /**
- * @author tomer
- * treat edit map controller and connect to the client
+ * @author tomer treat edit map controller and connect to the client
  */
 public class MapEditController
 {
@@ -47,6 +46,8 @@ public class MapEditController
 	private Map map;
 
 	private Bounds boundsInScene;
+
+	private String readpath;
 
 	@FXML // fx:id="mainPane"
 	private AnchorPane mainPane; // Value injected by FXMLLoader
@@ -80,6 +81,7 @@ public class MapEditController
 
 	/**
 	 * open new fxml page
+	 * 
 	 * @param FXMLpage the page we want to open
 	 * @throws IOException cannot open the page
 	 */
@@ -98,6 +100,7 @@ public class MapEditController
 
 	/**
 	 * initialize variables
+	 * 
 	 * @throws IOException problem with the variables load
 	 */
 	public void initialize() throws IOException
@@ -173,7 +176,8 @@ public class MapEditController
 		File f = fc.showOpenDialog(null);
 		if (f != null)
 		{
-			FileInputStream inputstream = new FileInputStream(f.getAbsolutePath());
+			readpath = f.getAbsolutePath();
+			FileInputStream inputstream = new FileInputStream(readpath);
 			Image image = new Image(inputstream);
 			MapImage.setImage(image);
 		}
@@ -190,7 +194,7 @@ public class MapEditController
 		}
 		return String.valueOf(arr);
 	}
-	
+
 	/**
 	 * @param event user click on edit map
 	 */
@@ -205,9 +209,7 @@ public class MapEditController
 				map.setInfo(InfoBox.getText());
 				String generatedPath = Connector.selectedCity.getCityName() + generateRandomString(15) + ".png";
 				map.setImgURL(generatedPath);
-//		MapImage.getImage(); 
-				String path = "KOHAVI"; // TODO get path from client
-				Connector.client.sendImage(path, generatedPath);
+				Connector.client.sendImage(readpath, generatedPath);
 				Connector.client.update(map);
 			}
 			else
@@ -256,6 +258,7 @@ public class MapEditController
 
 	/**
 	 * remove some parts in the map
+	 * 
 	 * @param event user click on remove
 	 */
 	@FXML
@@ -269,10 +272,11 @@ public class MapEditController
 		Connector.removablePOIList.clear();
 	}
 
-    /**
-     * go to the previous page
-     * @param event user click go previous page
-     */
+	/**
+	 * go to the previous page
+	 * 
+	 * @param event user click go previous page
+	 */
 	@FXML
 	void goBack(ActionEvent event)
 	{
