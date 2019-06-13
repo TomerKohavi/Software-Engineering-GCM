@@ -363,6 +363,11 @@ public class ChatClient extends AbstractClient
 		sendToServer(new AddStat(cityId, op));
 	}
 	
+	public void addStat(Integer cityId, Integer numMaps) throws IOException
+	{
+		sendToServer(new AddStat(cityId, numMaps));
+	}
+	
 	public ArrayList<?> fetchSights(int cdvId, Class<?> sightType) throws IOException
 	{
 		sendToServer(new FetchSights(cdvId, sightType));

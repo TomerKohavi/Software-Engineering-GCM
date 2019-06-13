@@ -106,10 +106,9 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 	}
 
 	public void saveToDatabase() {
-		/*
 		Database._saveCityDataVersion(this);
 		// delete removes
-		for (PlaceOfInterestSight ps : temp_removePlaceSights) {
+		/*for (PlaceOfInterestSight ps : temp_removePlaceSights) {
 			if (!temp_placeSights.contains(ps))
             {
                 ps.deleteFromDatabase();

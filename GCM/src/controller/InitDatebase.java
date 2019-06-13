@@ -29,6 +29,7 @@ public class InitDatebase {
 	 */
 	public static void initDatabase(String name, String pass) {
 		try {
+			System.out.println("Starting init database:");
 			Database.createConnection();
 			// reset
 			if (!Database.resetAll(name, pass))
@@ -39,6 +40,7 @@ public class InitDatebase {
 			haifa();
 			telAviv();
 			jerusalem();
+			rome();
 
 			// create Users, subscriptions, purchases, downloads
 			System.out.println("Creating users...");
@@ -49,13 +51,14 @@ public class InitDatebase {
 			aAndB();
 			
 			//create statistics
-			initStatistics();
 			System.out.println("Creating statistics...");
+			initStatistics();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			// Database.closeConnection();
 		}
+		System.out.println("Finish init database.");
 	}
 
 	private static void haifa() {
@@ -332,7 +335,7 @@ public class InitDatebase {
 				false);
 		p1.saveToDatabase();
 		
-		CityDataVersion cdv = new CityDataVersion(c1, "1.0", 40, 135.4);
+		CityDataVersion cdv = new CityDataVersion(c1, "1.0", 40, 135);
 		PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv.getId(), p0);
 		ps0.saveToDatabase();
 		
@@ -487,7 +490,7 @@ public class InitDatebase {
 		InformationSystem.addSubscriptionRenewal(1);
 		InformationSystem.addVisit(1);
 		InformationSystem.newVersionWasPublished(1, new Date(119,4,4));
-		InformationSystem.setNumMaps(1, 2);
+		InformationSystem.setNumMaps(1,2);
 	}
 
 }
