@@ -765,7 +765,7 @@ public class Database
 			else
 			{
 				String sql = "INSERT INTO " + Table.City.getValue()
-						+ " (ID,Name, Description, VersionID) VALUES (?,?, ?, ?)";
+						+ " (ID,Name, Description, VersionID, MNtP) VALUES (?,?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getId());
 				su.setString(2, p.getCityName());
