@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import objectClasses.City;
 import objectClasses.CityDataVersion;
 import objectClasses.Customer;
+import objectClasses.Employee;
 import objectClasses.Map;
 import objectClasses.MapSight;
 import objectClasses.PlaceOfInterest;
@@ -78,7 +79,12 @@ public class Connector {
 	{
 		ArrayList<String> nameList = new ArrayList<String>();
 		for (City city : cityList)
-			nameList.add(city.getCityName());
+		{
+			if (((Employee) Connector.user).getRole() == Employee.Role.CEO && city.getManagerNeedsToPublish())
+				nameList.add("★" + city.getCityName());
+			else
+				nameList.add(city.getCityName());
+		}
 		return nameList;
 	}
 	
@@ -114,7 +120,12 @@ public class Connector {
 	{
 		ArrayList<String> nameList = new ArrayList<String>();
 		for (RouteSight route : routeList)
-			nameList.add("Route " + route.getCopyRoute().getId());
+		{
+			if (route.getIsFavorite())
+				nameList.add("★" + "Route " + route.getCopyRoute().getId());
+			else
+				nameList.add("Route " + route.getCopyRoute().getId());
+		}
 		return nameList;
 	}
 }
