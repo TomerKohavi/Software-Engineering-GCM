@@ -4,9 +4,12 @@
 
 package application;
 
+import java.io.IOException;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 
+import controller.InformationSystem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
@@ -47,11 +50,12 @@ public class ReSubscribeController {
     
     /**
      * @param event user click on re subscribe
+     * @throws IOException 
      */
     @FXML
-    void ReSubscribe(ActionEvent event) {
-    	double price = monthPrice * MonthBox.getValue();
-    	// send price to server
+    void ReSubscribe(ActionEvent event) throws IOException {
+    	double price = monthPrice * MonthBox.getValue(); // send price to server
+    	Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.Subscription);
     	mainPane.getScene().getWindow().hide();
     }
 

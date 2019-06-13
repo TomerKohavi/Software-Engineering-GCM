@@ -869,6 +869,7 @@ public class HomePageController
 				Downloader.downloadPOIs(Connector.selectedCity.getCopyPublishedVersion(),
 						selectedDirectory.getPath() + "\\" + Connector.selectedCity.getCityName() + " "
 								+ Connector.selectedCity.getCopyPublishedVersion().getVersionName() + ".txt");
+				Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.SubDownload);
 				openNewPage("DownloadCompleteScene.fxml");
 			}
 			else if (BuyButton.getText().equals("Change Price"))
