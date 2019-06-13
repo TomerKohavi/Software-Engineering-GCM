@@ -27,14 +27,31 @@ public class CitySearchTestSingle {
 			public static PlaceOfInterest p5;
 			public static PlaceOfInterest p6;
 			
-			
 			private static PlaceOfInterest createAndAddPOI(City c,String name,String info,boolean publish)
             {
-        		CityDataVersion cdv=new CityDataVersion(c, "1.0", 100, 200);
-        		if(publish)
-        			c.addPublishedCityDataVersion(cdv);
+		    	Random rand = new Random();
+        		int randomNum=rand.nextInt(100);
+		    	CityDataVersion cdv;
+        		if(!publish)
+        			{
+        				if(c.getCopyUnpublishedVersions().size()==0)
+        					{
+        						cdv=new CityDataVersion(c, randomNum+".0", 100, 200);
+        						c.addUnpublishedCityDataVersion(cdv);
+        					}
+        				else
+        					cdv=c.getCopyUnpublishedVersions().get(0);
+        				
+        			}
         		else
-        			c.addUnpublishedCityDataVersion(cdv);
+        			{
+        				cdv=c.getPublishedVersion();
+        				if(cdv==null)
+        				{
+        					cdv=new CityDataVersion(c, randomNum+".2", 100, 200);
+        					c.addPublishedCityDataVersion(cdv);
+        				}
+        			}
         		PlaceOfInterest p=new PlaceOfInterest(c.getId(), name, PlaceOfInterest.PlaceType.HISTORICAL, info, true);
         		PlaceOfInterestSight ps=new PlaceOfInterestSight(cdv.getId(), p);
         		ps.saveToDatabase();

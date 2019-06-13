@@ -80,33 +80,35 @@ public class CitySearchTestTable {
 			public static PlaceOfInterest p9;
 			public static PlaceOfInterest p10;
           
-		    private static PlaceOfInterest createAndAddPOI(City c,String name,String info,boolean publish)
+			private static PlaceOfInterest createAndAddPOI(City c,String name,String info,boolean publish)
             {
 		    	Random rand = new Random();
         		int randomNum=rand.nextInt(100);
 		    	CityDataVersion cdv;
-		    	boolean needToPublish=false;
         		if(!publish)
         			{
-        				cdv=new CityDataVersion(c, randomNum+".0", 100, 200);
-        				c.addUnpublishedCityDataVersion(cdv);
+        				if(c.getCopyUnpublishedVersions().size()==0)
+        					{
+        						cdv=new CityDataVersion(c, randomNum+".0", 100, 200);
+        						c.addUnpublishedCityDataVersion(cdv);
+        					}
+        				else
+        					cdv=c.getCopyUnpublishedVersions().get(0);
+        				
         			}
         		else
         			{
         				cdv=c.getPublishedVersion();
         				if(cdv==null)
         				{
-        					needToPublish=true;
         					cdv=new CityDataVersion(c, randomNum+".2", 100, 200);
-        					c.addUnpublishedCityDataVersion(cdv);
+        					c.addPublishedCityDataVersion(cdv);
         				}
         			}
         		PlaceOfInterest p=new PlaceOfInterest(c.getId(), name, PlaceOfInterest.PlaceType.HISTORICAL, info, true);
         		PlaceOfInterestSight ps=new PlaceOfInterestSight(cdv.getId(), p);
         		ps.saveToDatabase();
         		p.saveToDatabase();
-        		if(needToPublish)
-        			c.setUnpublishedToPublishedByVersionId(cdv.getId());
         		return p;
             }
           

@@ -2025,7 +2025,6 @@ public class Database
 
 			if (placeId != null)
 				gt.setInt(counter++, placeId);
-
 			return queryToList(gt);
 
 		}

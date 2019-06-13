@@ -59,7 +59,7 @@ public final class SearchCatalog {
 					if(c==null) continue;
 					CityDataVersion cdv=c.getCopyPublishedVersion();
 					if(cdv==null) continue;
-					if(Database.searchPlaceOfInterestSight(cdv.getId(), p.getId())!=null)
+					if(Database.searchPlaceOfInterestSight(cdv.getId(), p.getId()).size()>0)
 						citiesIds.add(p.getCityId());
 				}
 			}
@@ -93,7 +93,7 @@ public final class SearchCatalog {
 				for (int id : placesOfCity) {
 						CityDataVersion cdv=c.getCopyPublishedVersion();
 						if(cdv==null) continue;
-						if(Database.searchPlaceOfInterestSight(cdv.getId(), id)!=null) {
+						if(Database.searchPlaceOfInterestSight(cdv.getId(), id).size()>0) {
 							remove=false;
 							break;
 						}
