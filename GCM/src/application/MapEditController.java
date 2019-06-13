@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -33,8 +34,7 @@ import objectClasses.Map;
 import objectClasses.MapSight;
 
 /**
- * @author tomer
- * treat edit map controller and connect to the client
+ * @author tomer treat edit map controller and connect to the client
  */
 public class MapEditController
 {
@@ -46,6 +46,8 @@ public class MapEditController
 	private Map map;
 
 	private Bounds boundsInScene;
+
+	private String readpath;
 
 	@FXML // fx:id="mainPane"
 	private AnchorPane mainPane; // Value injected by FXMLLoader
@@ -79,6 +81,7 @@ public class MapEditController
 
 	/**
 	 * open new fxml page
+	 * 
 	 * @param FXMLpage the page we want to open
 	 * @throws IOException cannot open the page
 	 */
@@ -97,6 +100,7 @@ public class MapEditController
 
 	/**
 	 * initialize variables
+	 * 
 	 * @throws IOException problem with the variables load
 	 */
 	public void initialize() throws IOException
@@ -109,7 +113,7 @@ public class MapEditController
 			map = Connector.selectedMap;
 			Name.setText(map.getName());
 			InfoBox.setText(map.getInfo());
-			BufferedImage bufIm = Connector.client.getImage("Pics\\" + map.getImgURL());
+			BufferedImage bufIm = Connector.client.fetchImage("Pics\\" + map.getImgURL());
 			Image image = SwingFXUtils.toFXImage(bufIm, null);
 			MapImage.setImage(image);
 		}
@@ -172,10 +176,23 @@ public class MapEditController
 		File f = fc.showOpenDialog(null);
 		if (f != null)
 		{
-			FileInputStream inputstream = new FileInputStream(f.getAbsolutePath());
+			readpath = f.getAbsolutePath();
+			FileInputStream inputstream = new FileInputStream(readpath);
 			Image image = new Image(inputstream);
 			MapImage.setImage(image);
 		}
+	}
+
+	static String generateRandomString(int length)
+	{
+		char[] arr = new char[length];
+		Random r = new Random();
+		for (int i = 0; i < length; i++)
+		{
+			boolean caps = r.nextBoolean();
+			arr[i] = (char) (r.nextInt(26) + (caps ? 'A' : 'a'));
+		}
+		return String.valueOf(arr);
 	}
 
 	/**
@@ -190,8 +207,9 @@ public class MapEditController
 			{
 				map.setName(Name.getText());
 				map.setInfo(InfoBox.getText());
-//    	map.setImgURL(imgURL);
-//		MapImage.getImage(); 
+				String generatedPath = Connector.selectedCity.getCityName() + generateRandomString(15) + ".png";
+				map.setImgURL(generatedPath);
+				Connector.client.sendImage(readpath, generatedPath);
 				Connector.client.update(map);
 			}
 			else
@@ -240,6 +258,7 @@ public class MapEditController
 
 	/**
 	 * remove some parts in the map
+	 * 
 	 * @param event user click on remove
 	 */
 	@FXML
@@ -253,10 +272,11 @@ public class MapEditController
 		Connector.removablePOIList.clear();
 	}
 
-    /**
-     * go to the previous page
-     * @param event user click go previous page
-     */
+	/**
+	 * go to the previous page
+	 * 
+	 * @param event user click go previous page
+	 */
 	@FXML
 	void goBack(ActionEvent event)
 	{

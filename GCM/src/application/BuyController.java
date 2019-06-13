@@ -1,7 +1,3 @@
-/**
- * Sample Skeleton for 'BuyScene.fxml' Controller Class
- */
-
 package application;
 
 import java.io.IOException;

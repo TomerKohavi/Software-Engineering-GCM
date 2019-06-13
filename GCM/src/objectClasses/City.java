@@ -16,6 +16,7 @@ public class City implements ClassMustProperties, Serializable
 	private String cityName;
 	private String cityDescription;
 	private Integer publishedVersionId;
+	private boolean managerNeedsToPublish;
 
 	private ArrayList<CityDataVersion> temp_unpublishedVersions;
 	private ArrayList<CityDataVersion> temp_removeVersions;
@@ -29,12 +30,13 @@ public class City implements ClassMustProperties, Serializable
 	 * @param cityDescription    the city description
 	 * @param publishedVersionId the id of the published version of this cirt
 	 */
-	private City(int id, String cityName, String cityDescription, Integer publishedVersionId)
+	private City(int id, String cityName, String cityDescription, Integer publishedVersionId,boolean managerNeedsToPublish)
 	{
 		this.id = id;
 		this.cityName = cityName;
 		this.cityDescription = cityDescription;
 		this.publishedVersionId = publishedVersionId;
+		this.managerNeedsToPublish=managerNeedsToPublish;
 		reloadTempsFromDatabase();
 	}
 
@@ -48,9 +50,9 @@ public class City implements ClassMustProperties, Serializable
 	 * @param publishedVersionId the id of the published version of this cirt
 	 * @return the new city object
 	 */
-	public static City _createCity(int id, String cityName, String cityDescription, Integer publishedVersionId)
+	public static City _createCity(int id, String cityName, String cityDescription, Integer publishedVersionId,boolean managerNeedsToPublish)
 	{
-		return new City(id, cityName, cityDescription, publishedVersionId);
+		return new City(id, cityName, cityDescription, publishedVersionId,managerNeedsToPublish);
 	}
 
 	/**
@@ -64,6 +66,7 @@ public class City implements ClassMustProperties, Serializable
 		this.id = Database.generateIdCity();
 		this.cityName = cityName;
 		this.cityDescription = cityDescription;
+		this.managerNeedsToPublish=false;
 		this.publishedVersionId = null;
 		this.temp_unpublishedVersions = new ArrayList<>();
 		this.temp_removeVersions = new ArrayList<>();
@@ -371,6 +374,22 @@ public class City implements ClassMustProperties, Serializable
 	public ArrayList<CityDataVersion> getCopyUnpublishedVersions()
 	{
 		return new ArrayList<>(temp_unpublishedVersions);
+	}
+	
+	/**
+	 * Set if the a worker requested the manager to publish the unpublished version
+	 * @param managerNeedsToPublish if the a worker requested the manager to publish the unpublished version
+	 */
+	public void setManagerNeedsToPublish(boolean managerNeedsToPublish) {
+		this.managerNeedsToPublish=managerNeedsToPublish;
+	}
+	
+	/**
+	 * Return boolean if the a worker requested the manager to publish the unpublished version
+	 * @return boolean if the a worker requested the manager to publish the unpublished version
+	 */
+	public boolean getManagerNeedsToPublish() {
+		return this.managerNeedsToPublish;
 	}
 
 	/**
