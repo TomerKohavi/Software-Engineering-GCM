@@ -4,10 +4,13 @@
 
 package application;
 
+import java.io.IOException;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
 
+import controller.InformationSystem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
@@ -59,11 +62,21 @@ public class BuyController {
     
     /**
      * @param event user click on buy
+     * @throws IOException 
      */
     @FXML
-    void buy(ActionEvent event) {
-    	double price = RadioOneTime.isSelected() ? oneTimePrice : (monthPrice * MonthBox.getValue());
-    	// send price to server
+    void buy(ActionEvent event) throws IOException {
+    	if (RadioOneTime.isSelected())
+    	{
+    		double price = oneTimePrice; // TODO send price to server
+    		Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.OneTimePurcahse);
+    	}
+    	else
+    	{
+    		double price = monthPrice * MonthBox.getValue(); // TODO send price to server
+    		Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.Subscription);
+    	}
+    	
     	mainPane.getScene().getWindow().hide();
     }
 
