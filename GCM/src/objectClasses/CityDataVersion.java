@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import controller.Database;
 import otherClasses.ClassMustProperties;
 
+/**
+ * @author ron
+ * TODO: FIX
+ */
 @SuppressWarnings("serial")
 public class CityDataVersion implements ClassMustProperties, Serializable {
 	private int id;
@@ -24,6 +28,15 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 	//private ArrayList<RouteSight> temp_routeSights;
 	//private ArrayList<RouteSight> temp_removeRouteSights;
 
+	/**
+	 * This is a private constructor of city data version object
+	 * 
+	 * @param id the city data version id
+	 * @param cityId the city id that connect to the city data version
+	 * @param versionName the version name of the city data version
+	 * @param priceOneTime the price for one time buy
+	 * @param pricePeriod the price for period buy
+	 */
 	private CityDataVersion(int id, int cityId, String versionName, double priceOneTime, double pricePeriod) {
 		this.id = id;
 		this.cityId = cityId;
@@ -33,11 +46,29 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 		reloadTempsFromDatabase();
 	}
 
+	/**
+	 * This function create City object according to all the inputs (supposed to be
+	 * used only in Database)
+	 * 
+	 * @param id the city data version id
+	 * @param cityId the city id that connect to the city data version
+	 * @param versionName the version name of the city data version
+	 * @param priceOneTime the price for one time buy
+	 * @param pricePeriod the price for period buy
+	 * @return new city data version object
+	 */
 	public static CityDataVersion _createCityDataVersion(int id, int cityId, String versionName, double priceOneTime,
 			double pricePeriod) { // friend Database
 		return new CityDataVersion(id, cityId, versionName, priceOneTime, pricePeriod);
 	}
 
+	/**
+	 * This is the normal public constructor for city data version object
+	 * @param c the city object of the city data version
+	 * @param versionName the version name of the city data version
+	 * @param priceOneTime the price for one time buy
+	 * @param pricePeriod the price for period buy
+	 */
 	public CityDataVersion(City c, String versionName, double priceOneTime, double pricePeriod) {
 		this.id = Database.generateIdCityDataVersion();
 		this.versionName = versionName;
@@ -55,6 +86,12 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 		this.temp_numRoutes=0;
 	}
 
+	/**
+	 * create new city data version with the same details as input and just new version name TODO: check if ok 
+	 *
+	 * @param other the city data version object we want to copy
+	 * @param versionName the new version name
+	 */
 	public CityDataVersion(CityDataVersion other,String versionName) {
 		this.id = Database.generateIdCityDataVersion();
 		this.versionName = versionName;
@@ -106,10 +143,9 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 	}
 
 	public void saveToDatabase() {
-		/*
 		Database._saveCityDataVersion(this);
 		// delete removes
-		for (PlaceOfInterestSight ps : temp_removePlaceSights) {
+		/*for (PlaceOfInterestSight ps : temp_removePlaceSights) {
 			if (!temp_placeSights.contains(ps))
             {
                 ps.deleteFromDatabase();
@@ -203,6 +239,11 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 		this.temp_numRoutes=idsRS.size();
 	}
 
+	/**
+	 * generate all the map sights from one city data version
+	 * @param cdvId the city data version id we ant to get there map sights
+	 * @return list of map sight object we want to get
+	 */
 	public static ArrayList<MapSight> _generateMapSights(int cdvId) {
 		ArrayList<Integer> ids = Database.searchMapSight(cdvId, null);
 		ArrayList<MapSight> arrList = new ArrayList<MapSight>();
@@ -214,6 +255,9 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 		return arrList;
 	}
 
+	/**
+	 * @return the number of map sights in the city data version
+	 */
 	public int getNumMapSights() {
 		return temp_numMaps;
 	}
@@ -260,6 +304,11 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 		return null;
 	}*/
 
+	/**
+	 * generate all the point of interest from one city data version
+	 * @param cdvId the city data version id we ant to get there point of interest
+	 * @return list of point of interest object we want to get
+	 */
 	public static ArrayList<PlaceOfInterestSight> _generatePlaceSights(int cdvId) {
 		ArrayList<Integer> ids = Database.searchPlaceOfInterestSight(cdvId, null);
 		ArrayList<PlaceOfInterestSight> arrList = new ArrayList<PlaceOfInterestSight>();
@@ -271,6 +320,9 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 		return arrList;
 	}
 
+	/**
+	 * @return the number of points of interest in the city data version
+	 */
 	public int getNumPlaceOfInterestSights() {
 		return temp_numPlaces;
 	}
@@ -309,6 +361,11 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 		return null;
 	}*/
 
+	/**
+	 * generate all the route sights from one city data version
+	 * @param cdvId the city data version id we ant to get there route sights
+	 * @return list of route sight object we want to get
+	 */
 	public static ArrayList<RouteSight> _generateRouteSights(int cdvId) {
 		ArrayList<Integer> ids = Database.searchPlaceOfInterestSight(cdvId, null);
 		ArrayList<RouteSight> arrList = new ArrayList<RouteSight>();
@@ -320,6 +377,11 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 		return arrList;
 	}
 
+	/**
+	 * Returns the number of route sights
+	 * 
+	 * @return the number of route sights
+	 */
 	public int getNumRouteSights() {
 		return temp_numRoutes;
 	}
@@ -366,38 +428,84 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 		return null;
 	}*/
 
+	/**
+	 * Returns the id of the city data version
+	 * 
+	 * @return the id of the city data version
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * Returns the city id
+	 * 
+	 * @return the city id
+	 */
 	public int getCityId() {
 		return cityId;
 	}
 
+	/**
+	 * Returns the version name
+	 * 
+	 * @return the version name
+	 */
 	public String getVersionName() {
 		return versionName;
 	}
 
+	/**
+	 * Returns the price of one time buy
+	 * 
+	 * @return the price of one time buy
+	 */
 	public double getPriceOneTime() {
 		return priceOneTime;
 	}
 
-	public double getPricePeriod() {
+	/**
+	 * Returns the price of period buy
+	 * 
+	 * @return the price of period buy
+	 */
+	 public double getPricePeriod() {
 		return pricePeriod;
 	}
 	
+
+	/**
+	* Returns the price of period buy after discount
+	* 
+	* @return the price of period buy after discount
+	*/
 	public double getPricePeriodWithDiscount() {
 		return pricePeriod*0.9;
 	}
 
+	/**
+	 * Sets the version name
+	 * 
+	 * @param versionName the version name
+	 */
 	public void setVersionName(String versionName) {
 		this.versionName = versionName;
 	}
 
+	/**
+	 * Sets the price of one time buy
+	 * 
+	 * @param priceOneTime the price of one time buy
+	 */
 	public void setPriceOneTime(double priceOneTime) {
 		this.priceOneTime = priceOneTime;
 	}
 
+	/**
+	 * Sets the price of period buy
+	 * 
+	 * @param pricePeriod the price of period buy
+	 */
 	public void setPricePeriod(double pricePeriod) {
 		this.pricePeriod = pricePeriod;
 	}

@@ -18,6 +18,13 @@ public class AddStat extends Command
 		this.cityId = cityId;
 		this.op = op;
 	}
+	
+	public AddStat(int cityId, int numMaps)
+	{
+		this.cityId = cityId;
+		this.numMaps=numMaps;
+		this.op = null;
+	}
 
 	public void delete()
 	{
@@ -25,4 +32,5 @@ public class AddStat extends Command
 
 	public Integer cityId;
 	public Ops op;
+	public Integer numMaps;
 }
