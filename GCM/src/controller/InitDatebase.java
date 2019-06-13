@@ -19,8 +19,15 @@ import objectClasses.RouteSight;
 import objectClasses.RouteStop;
 import objectClasses.Subscription;
 
+/**
+ * Class that in charge of initialize the data base
+ * 
+ * @author Myself
+ *
+ */
 public class InitDatebase {
-	/*
+	
+	/**
 	 * initialize the data base
 	 * 
 	 * @param name of the user permission
@@ -61,6 +68,9 @@ public class InitDatebase {
 		System.out.println("Finish init database.");
 	}
 
+	/**
+	 * Initializing Haifa city in database
+	 */
 	private static void haifa() {
 		City c1 = new City("Haifa", "The third largest city in Israel. As of 2016, the city is a major seaport "
 				+ "located on Israel's Mediterranean coastline in the Bay of Haifa covering 63.7 square kilometres.");
@@ -151,7 +161,10 @@ public class InitDatebase {
 		c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv, "2.0"));
 		c1.saveToDatabase();
 	}
-
+	
+	/**
+	 * Initializing Tel Aviv city in database
+	 */
 	private static void telAviv() {
 
 		City c1 = new City("Tel aviv",
@@ -238,7 +251,10 @@ public class InitDatebase {
 		c1.saveToDatabase();
 
 	}
-
+	
+	/**
+	 * Initializing Jerusalem city in database
+	 */
 	private static void jerusalem() {
 		City city = new City("Jerusalem", 
 				"Jerusalem is a city in the Middle East, located on a plateau in the Judaean Mountains between the Mediterranean and the Dead Sea. "
@@ -383,6 +399,9 @@ public class InitDatebase {
 		city.saveToDatabase();
 	}
 
+	/**
+	 * Initializing Rome city in database
+	 */
 	private static void rome() {
 		City city = new City("Rome",
 				"Rome (Latin and Italian: Roma (About this soundlisten)) is the capital city and a special comune of Italy "
@@ -541,6 +560,9 @@ public class InitDatebase {
 		city.saveToDatabase();
 	}
 
+	/**
+	 * Initializing Lior and Yosi users in database
+	 */
 	private static void liorAndYosi() {
 		Employee e = new Employee("Lior", "Lior_strong1!", "lior@gmail.com", "lior", "wiessman", "0523322726",
 				Employee.Role.CEO);
@@ -557,7 +579,10 @@ public class InitDatebase {
 		cust.addOneTimePurchase(otp);
 		cust.saveToDatabase();
 	}
-
+	
+	/**
+	 * Initializing Dan and adiel users in database
+	 */
 	private static void danAndAdiel() {
 		Employee e = new Employee("adiel", "adiel1", "statman.adiel@gmail.com", "adiel", "statman", "0525952726",
 				Employee.Role.REGULAR);
@@ -575,6 +600,9 @@ public class InitDatebase {
 		cust.saveToDatabase();
 	}
 
+	/**
+	 * Initializing Ben and Gadi users in database
+	 */
 	private static void benAndGadi() {
 		Employee e = new Employee("ben", "benbon&ALAA", "bengordoncshaifa@gmail.com", "ben", "musa", "0508322726",
 				Employee.Role.MANAGER);
@@ -590,6 +618,9 @@ public class InitDatebase {
 		cust.saveToDatabase();
 	}
 
+	/**
+	 * Initializing Sigal and Tomer employees in database
+	 */
 	private static void sigalAndTomer() {
 		Employee e = new Employee("sigal", "sigalIsNoob!", "yonatan.sigal11@gmail.com", "yonatan", "sigal",
 				"0508322126", Employee.Role.REGULAR);
@@ -605,6 +636,9 @@ public class InitDatebase {
 		cust.saveToDatabase();
 	}
 
+	/**
+	 * Initializing A and B employees in database
+	 */
 	private static void aAndB() {
 		Employee e = new Employee("a", "a", "a@gmail.com", "aa", "aa", "0500000000", Employee.Role.CEO);
 		e.saveToDatabase();
@@ -621,6 +655,9 @@ public class InitDatebase {
 		cust.saveToDatabase();
 	}
 
+	/**
+	 * Initializing the statistics in database
+	 */
 	private static void initStatistics() {
 		// TODO: Ron need to fill real sattistics only once all the other init is done
 		InformationSystem.addOneTimePurchase(1, new Date(119, 6, 6));
