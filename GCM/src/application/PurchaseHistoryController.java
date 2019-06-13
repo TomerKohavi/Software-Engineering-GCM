@@ -15,6 +15,10 @@ import javafx.scene.layout.AnchorPane;
 import objectClasses.OneTimePurchase;
 import objectClasses.Subscription;
 
+/**
+ * @author tomer
+ * handle purchase history from UI to client
+ */
 public class PurchaseHistoryController {
 
 	@FXML // fx:id="mainPane"
@@ -33,6 +37,9 @@ public class PurchaseHistoryController {
     private TableView<OneTimePurchase> PastOneTime; // Value injected by FXMLLoader
 
 
+    /**
+	 * initialize variables
+     */
     @SuppressWarnings("unchecked")
 	public void initialize()
     {	
@@ -122,6 +129,10 @@ public class PurchaseHistoryController {
 		
     }
     
+    /**
+     * go to the previous page
+     * @param event user click go previous page
+     */
     @FXML
     void goBack(ActionEvent event) {
     	mainPane.getScene().getWindow().hide();

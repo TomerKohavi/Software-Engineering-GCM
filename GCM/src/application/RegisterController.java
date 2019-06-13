@@ -23,6 +23,10 @@ import otherClasses.Pair;
 import server.EchoServer.LoginRegisterResult;
 import controller.RegCheck;
 
+/**
+ * @author tomer
+ * register controller that connect the UI register to the client
+ */
 public class RegisterController
 {
 
@@ -70,6 +74,9 @@ public class RegisterController
 	@FXML // fx:id="CSV"
 	private JFXTextField CVC; // Value injected by FXMLLoader
 
+	/**
+	 * initialize variables
+	 */
 	public void initialize()
 	{
 		ExperationMonth.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
@@ -81,12 +88,22 @@ public class RegisterController
 		ExperationYear.getItems().addAll(yearList);
 	}
 
+	/**
+	 * user ask for load page
+	 * @param FXMLpage the page we want to load
+	 * @throws IOException cannot load the page
+	 */
 	void loadPage(String FXMLpage) throws IOException
 	{
 		AnchorPane pane = (AnchorPane) FXMLLoader.load((URL) this.getClass().getResource(FXMLpage));
 		mainPane.getChildren().setAll(pane);
 	}
 
+	/**
+	 * open new page
+	 * @param FXMLpage the page we want to open
+	 * @throws IOException cannot open the page
+	 */
 	void openNewPage(String FXMLpage) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLpage));
@@ -100,12 +117,20 @@ public class RegisterController
 		stage.showAndWait();
 	}
 	
+	/**
+	 * @param event user click on login scene
+	 * @throws IOException cannot load the login scene page
+	 */
 	@FXML
 	void loginScene(ActionEvent event) throws IOException
 	{
 		loadPage("LoginScene.fxml");
 	}
 
+	/**
+	 * @param event user click on register
+	 * @throws IOException cannot register
+	 */
 	@FXML
 	void register(ActionEvent event) throws IOException
 	{
