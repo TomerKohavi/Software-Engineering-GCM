@@ -1,4 +1,5 @@
 package objectClasses;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -9,7 +10,8 @@ import otherClasses.ClassMustProperties;
  * Class of a city object
  */
 @SuppressWarnings("serial")
-public class City implements ClassMustProperties, Serializable {
+public class City implements ClassMustProperties, Serializable
+{
 	private int id;
 	private String cityName;
 	private String cityDescription;
@@ -19,15 +21,16 @@ public class City implements ClassMustProperties, Serializable {
 	private ArrayList<CityDataVersion> temp_removeVersions;
 	private CityDataVersion temp_publishedVersion;
 
-
 	/**
 	 * This is a private constructor of City object
-	 * @param id the city id
-	 * @param cityName the city name
-	 * @param cityDescription the city description
+	 * 
+	 * @param id                 the city id
+	 * @param cityName           the city name
+	 * @param cityDescription    the city description
 	 * @param publishedVersionId the id of the published version of this cirt
 	 */
-	private City(int id, String cityName, String cityDescription, Integer publishedVersionId) {
+	private City(int id, String cityName, String cityDescription, Integer publishedVersionId)
+	{
 		this.id = id;
 		this.cityName = cityName;
 		this.cityDescription = cityDescription;
@@ -36,23 +39,28 @@ public class City implements ClassMustProperties, Serializable {
 	}
 
 	/**
-	 * This function  create City object according to all the inputs (supposed to be used only in Database)
-	 * @param id the city id
-	 * @param cityName the city name
-	 * @param cityDescription the city description
+	 * This function create City object according to all the inputs (supposed to be
+	 * used only in Database)
+	 * 
+	 * @param id                 the city id
+	 * @param cityName           the city name
+	 * @param cityDescription    the city description
 	 * @param publishedVersionId the id of the published version of this cirt
 	 * @return the new city object
 	 */
-	public static City _createCity(int id, String cityName, String cityDescription, Integer publishedVersionId) {
+	public static City _createCity(int id, String cityName, String cityDescription, Integer publishedVersionId)
+	{
 		return new City(id, cityName, cityDescription, publishedVersionId);
 	}
 
 	/**
 	 * This is the normal public constructor for City object
-	 * @param cityName the city name
+	 * 
+	 * @param cityName        the city name
 	 * @param cityDescription the city description
 	 */
-	public City(String cityName, String cityDescription) {
+	public City(String cityName, String cityDescription)
+	{
 		this.id = Database.generateIdCity();
 		this.cityName = cityName;
 		this.cityDescription = cityDescription;
@@ -63,13 +71,14 @@ public class City implements ClassMustProperties, Serializable {
 	}
 
 	/**
-	 * Saves the City object to the database,
-	 * and it's data versions
+	 * Saves the City object to the database, and it's data versions
 	 */
-	public void saveToDatabase() {
+	public void saveToDatabase()
+	{
 		Database.saveCity(this);
 		// delete removes
-		for (CityDataVersion cdv : temp_removeVersions) {
+		for (CityDataVersion cdv : temp_removeVersions)
+		{
 			if (!temp_unpublishedVersions.contains(cdv) && !temp_publishedVersion.equals(cdv))
 				cdv.deleteFromDatabase();
 		}
@@ -82,10 +91,10 @@ public class City implements ClassMustProperties, Serializable {
 	}
 
 	/**
-	 * Deletes this city from the database,
-	 * and it's data versions
+	 * Deletes this city from the database, and it's data versions
 	 */
-	public void deleteFromDatabase() {
+	public void deleteFromDatabase()
+	{
 		Database.deleteCity(this.getId());
 		// delete removes
 		for (CityDataVersion cdv : temp_removeVersions)
@@ -97,18 +106,18 @@ public class City implements ClassMustProperties, Serializable {
 		if (temp_publishedVersion != null)
 			temp_publishedVersion.deleteFromDatabase();
 		// remove statistics
-		/*ArrayList<Integer> ids = Database.searchStatistic(this.id, null, null, null, null);
-		for (int id : ids) {
-			Statistic s = Database._getStatisticById(id);
-			if (s != null)
-				s.deleteFromDatabase();
-		}*/
+		/*
+		 * ArrayList<Integer> ids = Database.searchStatistic(this.id, null, null, null,
+		 * null); for (int id : ids) { Statistic s = Database._getStatisticById(id); if
+		 * (s != null) s.deleteFromDatabase(); }
+		 */
 	}
 
 	/**
-	 *  Reload the temps variables from the database
+	 * Reload the temps variables from the database
 	 */
-	public void reloadTempsFromDatabase() {
+	public void reloadTempsFromDatabase()
+	{
 		this.temp_unpublishedVersions = generateUnpublishedCityDataVersions();
 		this.temp_removeVersions = new ArrayList<>();
 		if (this.publishedVersionId == null)
@@ -118,15 +127,19 @@ public class City implements ClassMustProperties, Serializable {
 	}
 
 	/**
-	 * This private function create list of the unpublished data versions of this city
+	 * This private function create list of the unpublished data versions of this
+	 * city
+	 * 
 	 * @return list of the unpublished data versions of this city
 	 */
-	private ArrayList<CityDataVersion> generateUnpublishedCityDataVersions() {
+	private ArrayList<CityDataVersion> generateUnpublishedCityDataVersions()
+	{
 		ArrayList<Integer> ids = Database.searchCityDataVersion(this.id);
 		ArrayList<CityDataVersion> arrList = new ArrayList<CityDataVersion>();
-		for (int id : ids) {
+		for (int id : ids)
+		{
 			CityDataVersion o = Database._getCityDataVersionById(id);
-			if (o != null && (Integer)id != this.publishedVersionId)
+			if (o != null && (Integer) id != this.publishedVersionId)
 				arrList.add(o);
 		}
 		return arrList;
@@ -134,19 +147,24 @@ public class City implements ClassMustProperties, Serializable {
 
 	/**
 	 * Calculate the number of unpublished versions
+	 * 
 	 * @return the number of unpublished versions
 	 */
-	public int getNumUnpublishedCityDataVersions() {
+	public int getNumUnpublishedCityDataVersions()
+	{
 		return temp_unpublishedVersions.size();
 	}
 
 	/**
 	 * Returns the unpublished data version of this city according to id
+	 * 
 	 * @param cdvId The city data version id
 	 * @return he unpublished data version of this city according to id
 	 */
-	public CityDataVersion getUnpublishedCityDataVersionById(int cdvId) {
-		for (CityDataVersion cdv : temp_unpublishedVersions) {
+	public CityDataVersion getUnpublishedCityDataVersionById(int cdvId)
+	{
+		for (CityDataVersion cdv : temp_unpublishedVersions)
+		{
 			if (cdv.getId() == cdvId)
 				return cdv;
 		}
@@ -155,10 +173,12 @@ public class City implements ClassMustProperties, Serializable {
 
 	/**
 	 * Adds a new unpublished version to this city
+	 * 
 	 * @param cdv the new unpublished city data version
 	 * @return boolean if the insertion succeeded
 	 */
-	public boolean addUnpublishedCityDataVersion(CityDataVersion cdv) {
+	public boolean addUnpublishedCityDataVersion(CityDataVersion cdv)
+	{
 		if (cdv.getCityId() != this.getId())
 			return false;
 		temp_unpublishedVersions.add(cdv);
@@ -166,11 +186,14 @@ public class City implements ClassMustProperties, Serializable {
 	}
 
 	/**
-	 * Adds a new published version to this city, if there already a published version it becomes unpublished
+	 * Adds a new published version to this city, if there already a published
+	 * version it becomes unpublished
+	 * 
 	 * @param cdv the new published city data version
 	 * @return boolean if the insertion succeeded
 	 */
-	public boolean addPublishedCityDataVersion(CityDataVersion cdv) {
+	public boolean addPublishedCityDataVersion(CityDataVersion cdv)
+	{
 		if (cdv.getCityId() != this.getId())
 			return false;
 		if (this.publishedVersionId != null && this.temp_publishedVersion != null)
@@ -181,14 +204,19 @@ public class City implements ClassMustProperties, Serializable {
 	}
 
 	/**
-	 * Set unpublished version to published, and the current published to unpublished
-	 * @param cdvId  the city data version id
+	 * Set unpublished version to published, and the current published to
+	 * unpublished
+	 * 
+	 * @param cdvId the city data version id
 	 * @return boolean if change succeeded
 	 */
-	public boolean setUnpublishedToPublishedByVersionId(int cdvId) {
+	public boolean setUnpublishedToPublishedByVersionId(int cdvId)
+	{
 		CityDataVersion cdv = null;
-		for (CityDataVersion temp : new ArrayList<>(temp_unpublishedVersions)) {
-			if (temp.getId() == cdvId) {
+		for (CityDataVersion temp : new ArrayList<>(temp_unpublishedVersions))
+		{
+			if (temp.getId() == cdvId)
+			{
 				temp_unpublishedVersions.remove(temp);
 				cdv = temp;
 				break;
@@ -204,9 +232,11 @@ public class City implements ClassMustProperties, Serializable {
 
 	/**
 	 * Sets the current published version to unpublished
+	 * 
 	 * @return if change succeeded
 	 */
-	public boolean setPublishedToUnpublished() {
+	public boolean setPublishedToUnpublished()
+	{
 		if (this.publishedVersionId == null || this.temp_publishedVersion == null)
 			return false;
 		temp_unpublishedVersions.add(temp_publishedVersion);
@@ -217,43 +247,54 @@ public class City implements ClassMustProperties, Serializable {
 
 	/**
 	 * Returns the current public version, if none it will return null
+	 * 
 	 * @return the current public version
 	 */
-	public CityDataVersion getPublishedVersion() {
+	public CityDataVersion getPublishedVersion()
+	{
 		return temp_publishedVersion;
 	}
 
 	/**
 	 * Returns the current public version id, if none it will return null
+	 * 
 	 * @return the current public version id
 	 */
-	public Integer getPublishedVersionId() {
+	public Integer getPublishedVersionId()
+	{
 		return publishedVersionId;
 	}
 
 	/**
 	 * Returns if there is a published version
+	 * 
 	 * @return boolean if there is a published version
 	 */
-	public boolean isTherePublishedVersion() {
+	public boolean isTherePublishedVersion()
+	{
 		return getPublishedVersion() != null;
 	}
 
 	/**
 	 * Removes city data version by id
+	 * 
 	 * @param cdvId the city data version id
 	 * @return the version that was removed, null if none was found
 	 */
-	public CityDataVersion removeCityDataVersionById(int cdvId) {
-		if ((Integer)cdvId == publishedVersionId) {
+	public CityDataVersion removeCityDataVersionById(int cdvId)
+	{
+		if ((Integer) cdvId == publishedVersionId)
+		{
 			CityDataVersion cdv = temp_publishedVersion;
 			publishedVersionId = null;
 			temp_removeVersions.add(cdv);
 			temp_publishedVersion = null;
 			return cdv;
 		}
-		for (CityDataVersion cdv : new ArrayList<>(temp_unpublishedVersions)) {
-			if (cdv.getId() == cdvId) {
+		for (CityDataVersion cdv : new ArrayList<>(temp_unpublishedVersions))
+		{
+			if (cdv.getId() == cdvId)
+			{
 				temp_unpublishedVersions.remove(cdv);
 				temp_removeVersions.add(cdv);
 				return cdv;
@@ -264,67 +305,83 @@ public class City implements ClassMustProperties, Serializable {
 
 	/**
 	 * Returns the city id
+	 * 
 	 * @return the city id
 	 */
-	public int getId() {
+	public int getId()
+	{
 		return id;
 	}
 
 	/**
 	 * Returns the city name
+	 * 
 	 * @return the city name
 	 */
-	public String getCityName() {
+	public String getCityName()
+	{
 		return cityName;
 	}
 
 	/**
 	 * Return the city description
+	 * 
 	 * @return the city description
 	 */
-	public String getCityDescription() {
+	public String getCityDescription()
+	{
 		return cityDescription;
 	}
 
 	/**
 	 * Sets the city name
+	 * 
 	 * @param cityName the new city name
 	 */
-	public void setCityName(String cityName) {
+	public void setCityName(String cityName)
+	{
 		this.cityName = cityName;
 	}
 
 	/**
 	 * Sets the city description
+	 * 
 	 * @param cityDescription the new city description
 	 */
-	public void setCityDescription(String cityDescription) {
+	public void setCityDescription(String cityDescription)
+	{
 		this.cityDescription = cityDescription;
 	}
 
 	/**
 	 * Return a copy of the published version
+	 * 
 	 * @return a copy of the published version
 	 */
-	public CityDataVersion getCopyPublishedVersion() {
+	public CityDataVersion getCopyPublishedVersion()
+	{
 		return temp_publishedVersion;
 	}
 
 	/**
 	 * Returns a copy of the unpublished versions list
+	 * 
 	 * @return a copy of the unpublished versions list
 	 */
-	public ArrayList<CityDataVersion> getCopyUnpublishedVersions() {
+	public ArrayList<CityDataVersion> getCopyUnpublishedVersions()
+	{
 		return new ArrayList<>(temp_unpublishedVersions);
 	}
 
 	/**
 	 * Define the compare to ratio with another City
+	 * 
 	 * @param o a city object
 	 * @return ratio with another City
 	 */
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(Object o)
+	{
 		return o instanceof City && ((City) o).getId() == this.getId();
 	}
 }

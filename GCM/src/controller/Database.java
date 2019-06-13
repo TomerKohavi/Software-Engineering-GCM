@@ -2665,6 +2665,7 @@ public class Database
 		try
 		{
 			ResultSet res = get(Table.Subscription.getValue(), id);
+//			if (res == null) System.out.println("why god why");
 			return Subscription._createSubscription(res.getInt("ID"), res.getInt("CityID"), res.getInt("UserID"),
 					res.getDate("PurchaseDate"), res.getDouble("FullPrice"), res.getDouble("PricePayed"),
 					res.getDate("ExpDate"));

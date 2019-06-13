@@ -62,6 +62,14 @@ import objectClasses.Employee.Role;
 import objectClasses.Location;
 import otherClasses.*;
 
+/**
+ * @author tomer
+ * the home page xml
+ */
+/**
+ * @author user
+ *
+ */
 public class HomePageController
 {
 
@@ -192,9 +200,17 @@ public class HomePageController
 	@FXML // fx:id="LoadingGif"
 	private ImageView LoadingGif; // Value injected by FXMLLoader
 
+	/**
+	 * @author tomer
+	 * treat loading animation
+	 */
 	class LoadingAnimation extends Task<Integer>
 	{
 
+		/**
+		 * @return the value of the call
+		 * @throws Exception cannot call
+		 */
 		@Override
 		protected Integer call() throws Exception
 		{
@@ -217,6 +233,11 @@ public class HomePageController
 			}
 		}
 
+		/**
+		 * cancel operation
+		 * @param mayInterruptIfRunning problem with the cancel
+		 * @return if the cancel success
+		 */
 		@Override
 		public boolean cancel(boolean mayInterruptIfRunning)
 		{
@@ -226,6 +247,10 @@ public class HomePageController
 
 	}
 
+	/**
+	 * loading page
+	 * @throws FileNotFoundException the file wasn't found
+	 */
 	void startLoad() throws FileNotFoundException
 	{
 		mainPane.setDisable(true);
@@ -235,12 +260,20 @@ public class HomePageController
 		LoadingGif.setVisible(true);
 	}
 
+	/**
+	 * the file was end to be loaded
+	 */
 	void endLoad()
 	{
 		LoadingGif.setVisible(false);
 		mainPane.setDisable(false);
 	}
 
+	/**
+	 * open new page
+	 * @param FXMLpage new fxml page
+	 * @throws IOException cannot open the file
+	 */
 	void openNewPage(String FXMLpage) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLpage));
@@ -254,12 +287,21 @@ public class HomePageController
 		stage.showAndWait();
 	}
 
+	/**
+	 * load page
+	 * @param FXMLpage the page we want to load
+	 * @throws IOException cannot loat the page
+	 */
 	void loadPage(String FXMLpage) throws IOException
 	{
 		AnchorPane pane = (AnchorPane) FXMLLoader.load((URL) this.getClass().getResource(FXMLpage));
 		mainPane.getChildren().setAll(pane);
 	}
 
+	/**
+	 * set main side button
+	 * @param button button to set
+	 */
 	void setMainSideButton(JFXButton button)
 	{
 		Connector.sideButton.setOpacity(0.5);
@@ -268,6 +310,9 @@ public class HomePageController
 		clearInfo(true);
 	}
 
+	/**
+	 * @param clearList list of object to clear
+	 */
 	void clearInfo(boolean clearList)
 	{
 		if (clearList)
@@ -312,6 +357,10 @@ public class HomePageController
 		}
 	}
 
+	/**
+	 * add info to city
+	 * @param city city to add info
+	 */
 	private void fillCityInfo(City city)
 	{
 		if (Connector.selectedCity != city)
@@ -387,6 +436,10 @@ public class HomePageController
 		SideRoutes.setDisable(false);
 	}
 	
+	/**
+	 * add info to map
+	 * @param map map to add  the info
+	 */
 	private void fillMapInfo(Map map)
 	{
 		try
@@ -410,6 +463,10 @@ public class HomePageController
 		}
 	}
 	
+	/**
+	 * add info to point of interest
+	 * @param poi point of interest to add  the info
+	 */
 	private void fillPOIInfo(PlaceOfInterest poi)
 	{
 		ResultName.setText(poi.getName() + ", " + poi.getType());// set name and type
@@ -417,6 +474,10 @@ public class HomePageController
 		Text1.setText((poi.isAccessibilityToDisabled() ? "" : "Not ") + "Accessible to Disabled"); // Accessible
 	}
 	
+	/**
+	 * add info to route
+	 * @param route route to add  the info
+	 */
 	private void fillRouteInfo(Route route)
 	{
 		Connector.selectedRoute = route;
@@ -443,6 +504,9 @@ public class HomePageController
 	}
 	
 
+	/**
+	 * initialize variables
+	 */
 	public void initialize()
 	{
 //		LoadingAnimation la = new LoadingAnimation();
@@ -574,6 +638,12 @@ public class HomePageController
 		});
 	}
 
+	/**
+	 * search
+	 * @param event object to search
+	 * @throws IOException cannot find the object
+	 * @throws InterruptedException problem
+	 */
 	@FXML
 	void search(ActionEvent event) throws IOException, InterruptedException
 	{
@@ -614,6 +684,10 @@ public class HomePageController
 		}
 	}
 
+	/**
+	 * more details
+	 * @param event click on watch
+	 */
 	@FXML
 	void watch(ActionEvent event)
 	{
@@ -633,12 +707,21 @@ public class HomePageController
 
 	}
 
+	/**
+	 * view purchase history
+	 * @param event click on view purchase history
+	 * @throws IOException cannot see history
+	 */
 	@FXML
 	void viewPurchaseHistory(ActionEvent event) throws IOException
 	{
 		openNewPage("PurchaseHistoryScene.fxml");
 	}
 
+	/**
+	 * @param event user click on show map image
+	 * @throws FileNotFoundException cannot find the image
+	 */
 	@FXML
 	void showMapImage(ActionEvent event) throws FileNotFoundException
 	{
@@ -670,6 +753,9 @@ public class HomePageController
 		}
 	}
 
+	/**
+	 * @param event user click on show search event
+	 */
 	@FXML
 	void showSearch(ActionEvent event)
 	{
@@ -683,6 +769,10 @@ public class HomePageController
 		}
 	}
 
+	/**
+	 * @param event login page
+	 * @throws IOException cannot login
+	 */
 	@FXML
 	void login(ActionEvent event) throws IOException
 	{
@@ -697,12 +787,21 @@ public class HomePageController
 
 	}
 
+	/**
+	 * edit user details
+	 * @param event user want to edit his details
+	 * @throws IOException cannot edit user
+	 */
 	@FXML
 	void editUser(ActionEvent event) throws IOException
 	{
 		openNewPage("EditUserScene.fxml");
 	}
 
+	/**
+	 * @param event show map his clicked
+	 * @throws IOException cannot show map
+	 */
 	@SuppressWarnings("unchecked")
 	@FXML
 	void showMaps(ActionEvent event) throws IOException
@@ -714,6 +813,10 @@ public class HomePageController
 		MainList.getItems().addAll(Connector.getMapsNames(Connector.searchMapResult));
 	}
 
+	/**
+	 * @param event show point of interest his clicked
+	 * @throws IOException cannot show point of interest
+	 */
 	@SuppressWarnings("unchecked")
 	@FXML
 	void showPOI(ActionEvent event) throws IOException
@@ -725,6 +828,10 @@ public class HomePageController
 		MainList.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
 	}
 
+	/**
+	 * @param event show route his clicked
+	 * @throws IOException cannot show route
+	 */
 	@SuppressWarnings("unchecked")
 	@FXML
 	void showRoutes(ActionEvent event) throws IOException
@@ -736,6 +843,10 @@ public class HomePageController
 		MainList.getItems().addAll(Connector.getRoutesNames(Connector.searchRouteResult));
 	}
 
+	/**
+	 * @param event show report his clicked
+	 * @throws IOException cannot show report
+	 */
 	@FXML
 	void showReport(ActionEvent event) throws IOException
 	{
@@ -748,6 +859,10 @@ public class HomePageController
 			Connector.allCities = Connector.client.allCitiesRequest();
 	}
 
+	/**
+	 * @param event show users his clicked
+	 * @throws IOException cannot show users
+	 */
 	@FXML
 	void showUsers(ActionEvent event)
 	{
@@ -768,6 +883,9 @@ public class HomePageController
 			MainList.getItems().add(cust.getUserName());
 	}
 
+	/**
+	 * @param event remove
+	 */
 	@FXML
 	void callRemove(ActionEvent event)
 	{
@@ -789,6 +907,10 @@ public class HomePageController
 		clearInfo(false);
 	}
 
+	/**
+	 * @param event create is called
+	 * @throws IOException cannot create
+	 */
 	@FXML
 	void callCreate(ActionEvent event) throws IOException
 	{
@@ -805,6 +927,10 @@ public class HomePageController
 			MainList.getItems().addAll(Connector.getRoutesNames(Connector.searchRouteResult));
 	}
 
+	/**
+	 * @param event edit is called
+	 * @throws IOException cannot edit
+	 */
 	@FXML
 	void callEdit(ActionEvent event) throws IOException
 	{
@@ -827,6 +953,10 @@ public class HomePageController
 		}
 	}
 
+	/**
+	 * @param event need to unpublished 
+	 * @throws IOException cannot unpublished
+	 */
 	@FXML
 	void unpublishedPressed(ActionEvent event) throws IOException
 	{
@@ -836,12 +966,20 @@ public class HomePageController
 			CreateButton.setVisible(false);
 	}
 	
+	/**
+	 * @param event need to resubscribe
+	 * @throws IOException cannot resubscribe
+	 */
 	@FXML
 	void callReSubscribe(ActionEvent event) throws IOException
 	{
 		openNewPage("ReSubscribeScene.fxml");
 	}
 
+	/**
+	 * @param event need to publish 
+	 * @throws IOException cannot publish
+	 */
 	@FXML
 	void callPublish(ActionEvent event) throws IOException
 	{
@@ -849,6 +987,11 @@ public class HomePageController
 		System.out.println("Published");
 	}
 
+	/**
+	 * open but window
+	 * @param event user want to buy
+	 * @throws IOException cannot open the buy window
+	 */
 	@FXML
 	void openBuyWindodw(ActionEvent event) throws IOException
 	{
