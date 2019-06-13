@@ -23,6 +23,10 @@ import objectClasses.Employee.Role;
 import otherClasses.Pair;
 import server.EchoServer.LoginRegisterResult;
 
+/**
+ * @author tomer
+ * controller that connect employee register UI with the client
+ */
 public class EmployeeRegisterController
 {
 
@@ -61,17 +65,29 @@ public class EmployeeRegisterController
 	@FXML // fx:id="RoleBox"
 	private JFXComboBox<String> RoleBox; // Value injected by FXMLLoader
 
+	/**
+	 * initialize variables
+	 */
 	public void initialize()
 	{
 		RoleBox.getItems().addAll("Regular", "Manager", "CEO");
 	}
 
+	/**
+	 * @param FXMLpage the page we want to load
+	 * @throws IOException cannot load the page
+	 */
 	void loadPage(String FXMLpage) throws IOException
 	{
 		AnchorPane pane = (AnchorPane) FXMLLoader.load((URL) this.getClass().getResource(FXMLpage));
 		mainPane.getChildren().setAll(pane);
 	}
 	
+	/**
+	 * open new page
+	 * @param FXMLpage the page we want to open
+	 * @throws IOException cannot open the page
+	 */
 	void openNewPage(String FXMLpage) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLpage));
@@ -85,12 +101,20 @@ public class EmployeeRegisterController
 		stage.showAndWait();
 	}
 
+	/**
+	 * @param event load the employee login scene
+	 * @throws IOException
+	 */
 	@FXML
 	void loginScene(ActionEvent event) throws IOException
 	{
 		loadPage("EmployeeLoginScene.fxml");
 	}
 
+	/**
+	 * @param event user click on register
+	 * @throws IOException cannot registe the user
+	 */
 	@FXML
 	void register(ActionEvent event) throws IOException
 	{
