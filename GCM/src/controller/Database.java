@@ -2550,8 +2550,10 @@ public class Database
 			ResultSet res = get(Table.RouteStop.getValue(), id);
 			if (res == null)
 				return null;
+			Time temp = res.getTime("Time");
+			temp.setHours(temp.getHours() + 2);
 			return RouteStop._createRouteStop(res.getInt("ID"), res.getInt("RouteID"), res.getInt("PlaceID"),
-					res.getInt("NumStops"), res.getTime("Time"));
+					res.getInt("NumStops"), temp);
 		}
 		catch (Exception e)
 		{
