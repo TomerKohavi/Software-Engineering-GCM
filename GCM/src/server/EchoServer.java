@@ -346,13 +346,15 @@ public class EchoServer extends AbstractServer
 
 	public FetchSights handleFetchSights(FetchSights fs)
 	{
+		System.out.println("fetch " + fs.sightType.toString());
 		if (fs.sightType.isAssignableFrom(MapSight.class))
-		{
-			System.out.println("FETCH MAP SIGHT");
 			fs.sightList = CityDataVersion._generateMapSights(fs.cdvId);
-		}
+		else if (fs.sightType.isAssignableFrom(PlaceOfInterestSight.class))
+			fs.sightList = CityDataVersion._generatePlaceSights(fs.cdvId);
+		else if (fs.sightType.isAssignableFrom(RouteSight.class))
+			fs.sightList = CityDataVersion._generateRouteSights(fs.cdvId);
 		else
-			System.err.println("AAAAAAAAAAAAAAAAAAAAAA");
+			System.err.println("Wrong class type");
 		return fs;
 	}
 	

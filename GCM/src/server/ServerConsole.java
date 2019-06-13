@@ -124,4 +124,4 @@ public class ServerConsole implements ChatIF
 		server.accept(); // Wait for console data
 	}
 }
-//End of ServerConsole class
+//End of ServerConsole classss
