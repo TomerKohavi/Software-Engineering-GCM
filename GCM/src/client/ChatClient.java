@@ -184,9 +184,9 @@ public class ChatClient extends AbstractClient
 	 * @return image
 	 * @throws IOException thrown when cannot load the image from server
 	 */
-	public BufferedImage getImage(String pathname) throws IOException
+	public BufferedImage fetchImage(String pathname) throws IOException
 	{
-		sendToServer(new ImageTransfer(pathname, true));
+		sendToServer(new ImageTransfer(pathname, null, true));
 		this.semAcquire();
 		BufferedImage im = this.imTr.getImage();
 		this.imTr = null;
@@ -197,9 +197,9 @@ public class ChatClient extends AbstractClient
 	 * @param pathname the path of the image we want to save
 	 * @throws IOException problem with the image
 	 */
-	public void sendImage(String pathname) throws IOException
+	public void sendImage(String readpath, String writepath) throws IOException
 	{
-		ImageTransfer imTr = new ImageTransfer(pathname, false);
+		ImageTransfer imTr = new ImageTransfer(readpath, writepath, false);
 		imTr.readImageFromFile();
 		sendToServer(imTr);
 	}

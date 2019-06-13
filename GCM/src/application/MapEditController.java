@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -109,7 +110,7 @@ public class MapEditController
 			map = Connector.selectedMap;
 			Name.setText(map.getName());
 			InfoBox.setText(map.getInfo());
-			BufferedImage bufIm = Connector.client.getImage("Pics\\" + map.getImgURL());
+			BufferedImage bufIm = Connector.client.fetchImage("Pics\\" + map.getImgURL());
 			Image image = SwingFXUtils.toFXImage(bufIm, null);
 			MapImage.setImage(image);
 		}
@@ -178,6 +179,18 @@ public class MapEditController
 		}
 	}
 
+	static String generateRandomString(int length)
+	{
+		char[] arr = new char[length];
+		Random r = new Random();
+		for (int i = 0; i < length; i++)
+		{
+			boolean caps = r.nextBoolean();
+			arr[i] = (char) (r.nextInt(26) + (caps ? 'A' : 'a'));
+		}
+		return String.valueOf(arr);
+	}
+	
 	/**
 	 * @param event user click on edit map
 	 */
@@ -190,8 +203,11 @@ public class MapEditController
 			{
 				map.setName(Name.getText());
 				map.setInfo(InfoBox.getText());
-//    	map.setImgURL(imgURL);
+				String generatedPath = Connector.selectedCity.getCityName() + generateRandomString(15) + ".png";
+				map.setImgURL(generatedPath);
 //		MapImage.getImage(); 
+				String path = "KOHAVI"; // TODO get path from client
+				Connector.client.sendImage(path, generatedPath);
 				Connector.client.update(map);
 			}
 			else
