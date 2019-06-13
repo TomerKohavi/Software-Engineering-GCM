@@ -13,6 +13,10 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
+/**
+ * @author tomer
+ * controller that treat the buy 
+ */
 public class BuyController {
 	
 	private double oneTimePrice, monthPrice;
@@ -41,6 +45,9 @@ public class BuyController {
     @FXML // fx:id="BuyButton"
     private JFXButton BuyButton; // Value injected by FXMLLoader
 
+    /**
+	 * initialize variables
+     */
     public void initialize() {
     	MonthBox.getItems().addAll(1,2,3,4,5,6);
     	MonthBox.setValue(1);
@@ -50,6 +57,9 @@ public class BuyController {
     	SubscriptionPrice.setText(String.format("%.02f", monthPrice) + "$");
     }
     
+    /**
+     * @param event user click on buy
+     */
     @FXML
     void buy(ActionEvent event) {
     	double price = RadioOneTime.isSelected() ? oneTimePrice : (monthPrice * MonthBox.getValue());
@@ -57,12 +67,18 @@ public class BuyController {
     	mainPane.getScene().getWindow().hide();
     }
 
+    /**
+     * @param event user choose the one time
+     */
     @FXML
     void chooseOneTime(ActionEvent event) {
     	RadioOneTime.setSelected(true);
     	RadioSubscribe.setSelected(false);
     }
 
+    /**
+     * @param event user click on choose subscribe
+     */
     @FXML
     void chooseSubscribe(ActionEvent event) {
     	RadioSubscribe.setSelected(true);
@@ -70,14 +86,20 @@ public class BuyController {
     	SubscriptionPrice.setText(String.format("%.02f", monthPrice * MonthBox.getValue()) + "$");
     }
     
+    /**
+     * @param event user click on update parice
+     */
     @FXML
     void updatePrice(ActionEvent event) {
     	SubscriptionPrice.setText(String.format("%.02f", monthPrice * MonthBox.getValue()) + "$");
     }
 
+    /**
+     * go to the previous page
+     * @param event user click go previous page
+     */
     @FXML
     void goBack(ActionEvent event) {
     	mainPane.getScene().getWindow().hide();
     }
-
 }

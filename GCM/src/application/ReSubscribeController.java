@@ -12,6 +12,10 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
+/**
+ * @author tomer
+ * give new subscribe from UI to client
+ */
 public class ReSubscribeController {
 
 	private double monthPrice;
@@ -31,6 +35,9 @@ public class ReSubscribeController {
     @FXML // fx:id="ReSubscribeButton"
     private JFXButton ReSubscribeButton; // Value injected by FXMLLoader
 
+    /**
+	 * initialize variables
+     */
     public void initialize() {
     	MonthBox.getItems().addAll(1,2,3,4,5,6);
     	MonthBox.setValue(1);
@@ -38,6 +45,9 @@ public class ReSubscribeController {
     	SubscriptionPrice.setText(String.format("%.02f", monthPrice) + "$");
     }
     
+    /**
+     * @param event user click on re subscribe
+     */
     @FXML
     void ReSubscribe(ActionEvent event) {
     	double price = monthPrice * MonthBox.getValue();
@@ -45,11 +55,19 @@ public class ReSubscribeController {
     	mainPane.getScene().getWindow().hide();
     }
 
+    /**
+     * update price
+     * @param event user click on update price
+     */
     @FXML
     void updatePrice(ActionEvent event) {
     	SubscriptionPrice.setText(String.format("%.02f", monthPrice * MonthBox.getValue()) + "$");
     }
 
+    /**
+     * go to the previous page
+     * @param event user click go previous page
+     */
     @FXML
     void goBack(ActionEvent event) {
     	mainPane.getScene().getWindow().hide();

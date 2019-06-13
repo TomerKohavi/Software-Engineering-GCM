@@ -29,6 +29,10 @@ import objectClasses.Route;
 import objectClasses.RouteSight;
 import objectClasses.RouteStop;
 
+/**
+ * @author tomer
+ * edit route controller
+ */
 public class RouteEditController
 {
 
@@ -75,6 +79,10 @@ public class RouteEditController
 	@FXML // fx:id="TimeError"
 	private Text TimeError; // Value injected by FXMLLoade
 
+	/**
+	 * initialize variables
+	 * @throws FileNotFoundException cannot load the variables 
+	 */
 	@FXML
 	public void initialize() throws FileNotFoundException
 	{
@@ -137,6 +145,9 @@ public class RouteEditController
 
 	}
 
+	/**
+	 * @param event user click to up route
+	 */
 	@FXML
 	void up(ActionEvent event)
 	{
@@ -146,6 +157,9 @@ public class RouteEditController
 		StopsBox.getSelectionModel().clearAndSelect(index - 1);
 	}
 
+	/**
+	 * @param event user click to down route
+	 */
 	@FXML
 	void down(ActionEvent event)
 	{
@@ -155,6 +169,9 @@ public class RouteEditController
 		StopsBox.getSelectionModel().clearAndSelect(index + 1);
 	}
 
+	/**
+	 * update the table
+	 */
 	@SuppressWarnings("unchecked")
 	private void updateTable()
 	{
@@ -166,6 +183,9 @@ public class RouteEditController
 		StopsBox.getColumns().addAll(poiColumn, timeColumn);
 	}
 
+	/**
+	 * @param event add the point of interest to the route
+	 */
 	@FXML
 	void addPOI(ActionEvent event)
 	{
@@ -189,6 +209,9 @@ public class RouteEditController
 			TimeError.setOpacity(1);
 	}
 
+	/**
+	 * @param event remove the point of interest from the route
+	 */
 	@FXML
 	void removePOI(ActionEvent event)
 	{
@@ -207,6 +230,9 @@ public class RouteEditController
 		}
 	}
 
+	/**
+	 * @param event appaly changes
+	 */
 	@FXML
 	void apply(ActionEvent event)
 	{
@@ -244,6 +270,10 @@ public class RouteEditController
 		}
 	}
 
+    /**
+     * go to the previous page
+     * @param event user click go previous page
+     */
 	@FXML
 	void goBack(ActionEvent event)
 	{
