@@ -368,6 +368,12 @@ public class HomePageController
 			Connector.searchMapResult = null;
 			Connector.searchPOIResult = null;
 			Connector.searchRouteResult = null;
+			try {
+				Connector.client.addStat(city.getId(), InformationSystem.Ops.Visit);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		Connector.selectedCity = city;
 		InfoPane.setVisible(true);
@@ -528,8 +534,11 @@ public class HomePageController
 		{
 			EditButton.setVisible(true);
 			UnpublishSearch.setVisible(true);
-			SideReport.setVisible(true);
 			SideUsers.setVisible(true);
+			if (((Employee) Connector.user).getRole() != Employee.Role.REGULAR)
+				SideReport.setVisible(true);
+			else
+				SideReport.setVisible(false);
 		}
 		else
 		{
@@ -824,7 +833,7 @@ public class HomePageController
 		Connector.listType = "POI";
 		setMainSideButton(SidePOI);
 		if (Connector.searchPOIResult == null)
-			Connector.searchPOIResult = (ArrayList<PlaceOfInterestSight>) Connector.client.fetchSights(Connector.cityData.getId(), PlaceOfInterestSight.class); // TODO Sigal returns null
+			Connector.searchPOIResult = (ArrayList<PlaceOfInterestSight>) Connector.client.fetchSights(Connector.cityData.getId(), PlaceOfInterestSight.class);
 		MainList.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
 	}
 
@@ -839,7 +848,7 @@ public class HomePageController
 		Connector.listType = "Route";
 		setMainSideButton(SideRoutes);
 		if (Connector.searchRouteResult == null)
-			Connector.searchRouteResult = (ArrayList<RouteSight>) Connector.client.fetchSights(Connector.cityData.getId(), RouteSight.class); // TODO Sigal returns null
+			Connector.searchRouteResult = (ArrayList<RouteSight>) Connector.client.fetchSights(Connector.cityData.getId(), RouteSight.class);
 		MainList.getItems().addAll(Connector.getRoutesNames(Connector.searchRouteResult));
 	}
 
@@ -984,7 +993,8 @@ public class HomePageController
 	void callPublish(ActionEvent event) throws IOException
 	{
 		// publish the unpublished version
-		System.out.println("Published");
+		System.out.println("Published"); // TODO Sigal
+		Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.VersionPublish);
 	}
 
 	/**
@@ -1001,7 +1011,7 @@ public class HomePageController
 		{
 			if (BuyButton.getText().equals("Buy"))
 				openNewPage("BuyScene.fxml");
-			else if (BuyButton.getText().equals("Download")) // TODO
+			else if (BuyButton.getText().equals("Download"))
 			{
 				DirectoryChooser chooser = new DirectoryChooser();
 				chooser.setTitle("Choose Download Location");
