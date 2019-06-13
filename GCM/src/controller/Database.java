@@ -744,7 +744,6 @@ public class Database
 	{
 		try
 		{
-
 			if (conn == null)
 			{
 
@@ -753,12 +752,13 @@ public class Database
 			}
 			if (existCity(p.getId()))
 			{
-				String sql = "UPDATE " + Table.City.getValue() + " SET Name=?, Description=?, VersionID=? WHERE ID=?";
+				String sql = "UPDATE " + Table.City.getValue() + " SET Name=?, Description=?, VersionID=?, MNtP=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setString(1, p.getCityName());
 				su.setString(2, p.getCityDescription());
 				su.setInt(3, p.getPublishedVersionId() == null ? -1 : p.getPublishedVersionId());
-				su.setInt(4, p.getId());
+				su.setBoolean(4, p.getManagerNeedsToPublish());
+				su.setInt(5, p.getId());
 				su.executeUpdate();
 				return true;
 			}
@@ -771,6 +771,7 @@ public class Database
 				su.setString(2, p.getCityName());
 				su.setString(3, p.getCityDescription());
 				su.setInt(4, p.getPublishedVersionId() == null ? -1 : p.getPublishedVersionId());
+				su.setBoolean(5, p.getManagerNeedsToPublish());
 				su.executeUpdate();
 				return false;
 			}
@@ -2452,7 +2453,7 @@ public class Database
 			if (res == null)
 				return null;
 			return City._createCity(res.getInt("ID"), res.getString("Name"), res.getString("Description"),
-					res.getInt("VersionID") == -1 ? null : res.getInt("VersionID"));
+					res.getInt("VersionID") == -1 ? null : res.getInt("VersionID"), res.getBoolean("MNtP"));
 		}
 		catch (Exception e)
 		{
@@ -2551,7 +2552,7 @@ public class Database
 			if (res == null)
 				return null;
 			Time temp = res.getTime("Time");
-			temp.setHours(temp.getHours() + 2);
+			temp.setHours(temp.getHours());
 			return RouteStop._createRouteStop(res.getInt("ID"), res.getInt("RouteID"), res.getInt("PlaceID"),
 					res.getInt("NumStops"), temp);
 		}
