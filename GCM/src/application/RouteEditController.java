@@ -25,6 +25,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import objectClasses.PlaceOfInterest;
+import objectClasses.PlaceOfInterestSight;
 import objectClasses.Route;
 import objectClasses.RouteSight;
 import objectClasses.RouteStop;
@@ -81,10 +82,10 @@ public class RouteEditController
 
 	/**
 	 * initialize variables
-	 * @throws FileNotFoundException cannot load the variables 
+	 * @throws IOException 
 	 */
 	@FXML
-	public void initialize() throws FileNotFoundException
+	public void initialize() throws IOException
 	{
 //		ImageView upImg = new ImageView(new Image(new FileInputStream("Pics\\up_arrow.png")));
 //		ImageView downImg = new ImageView(new Image(new FileInputStream("Pics\\down_arrow.png")));
@@ -141,6 +142,8 @@ public class RouteEditController
 		StopsBox.getColumns().clear();
 		StopsBox.getColumns().addAll(poiColumn, timeColumn);
 
+		if (Connector.searchPOIResult == null)
+			Connector.searchPOIResult = (ArrayList<PlaceOfInterestSight>) Connector.client.fetchSights(Connector.cityData.getId(), PlaceOfInterestSight.class);
 		POIBox.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
 
 	}
