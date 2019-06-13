@@ -20,6 +20,10 @@ import objectClasses.User;
 import otherClasses.Pair;
 import server.EchoServer.LoginRegisterResult;
 
+/**
+ * @author tomer
+ * treat login page and connect to the client
+ */
 public class LoginController
 {
 

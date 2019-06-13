@@ -32,6 +32,10 @@ import objectClasses.Location;
 import objectClasses.Map;
 import objectClasses.MapSight;
 
+/**
+ * @author tomer
+ * treat edit map controller and connect to the client
+ */
 public class MapEditController
 {
 
@@ -73,6 +77,11 @@ public class MapEditController
 	@FXML // fx:id="RemoveSelectedButton"
 	private JFXButton RemoveSelectedButton; // Value injected by FXMLLoader
 
+	/**
+	 * open new fxml page
+	 * @param FXMLpage the page we want to open
+	 * @throws IOException cannot open the page
+	 */
 	void openNewPage(String FXMLpage) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLpage));
@@ -86,6 +95,10 @@ public class MapEditController
 		stage.showAndWait();
 	}
 
+	/**
+	 * initialize variables
+	 * @throws IOException problem with the variables load
+	 */
 	public void initialize() throws IOException
 	{
 
@@ -146,6 +159,10 @@ public class MapEditController
 
 	}
 
+	/**
+	 * @param event user ask for add new image
+	 * @throws FileNotFoundException cannot add the image
+	 */
 	@FXML
 	void addImage(ActionEvent event) throws FileNotFoundException
 	{
@@ -161,6 +178,9 @@ public class MapEditController
 		}
 	}
 
+	/**
+	 * @param event user click on edit map
+	 */
 	@FXML
 	void apply(ActionEvent event)
 	{
@@ -194,6 +214,10 @@ public class MapEditController
 		mainPane.getScene().getWindow().hide();
 	}
 
+	/**
+	 * @param event user click on add new point of interest to the map
+	 * @throws IOException cannot add the new point of interest to the map
+	 */
 	@FXML
 	void addPOILoc(ActionEvent event) throws IOException
 	{
@@ -214,6 +238,10 @@ public class MapEditController
 		}
 	}
 
+	/**
+	 * remove some parts in the map
+	 * @param event user click on remove
+	 */
 	@FXML
 	void removeSelected(ActionEvent event)
 	{
@@ -225,6 +253,10 @@ public class MapEditController
 		Connector.removablePOIList.clear();
 	}
 
+    /**
+     * go to the previous page
+     * @param event user click go previous page
+     */
 	@FXML
 	void goBack(ActionEvent event)
 	{
