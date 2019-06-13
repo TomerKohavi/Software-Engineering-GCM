@@ -10,6 +10,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
+/**
+ * @author tomer
+ * treat the image in the point of interest
+ */
 public class POIImage {
 	
 	public ImageView image;
@@ -19,6 +23,12 @@ public class POIImage {
 	private boolean isRemovable, dontChange;
 	private String poiName;
 	
+	/**
+	 * @param _isNew if the point of interest is new
+	 * @param _dontChange if we want to change to point of interest
+	 * @param _poiName the name of the point of interest
+	 * @throws FileNotFoundException cannot find the image or the point of interest
+	 */
 	public POIImage(boolean _isNew, boolean _dontChange, String _poiName) throws FileNotFoundException {
 		
 		isNew = _isNew;
@@ -71,14 +81,24 @@ public class POIImage {
     	});
 	}
 	
+	/**
+	 * add to list of things to remove
+	 */
 	private void addToRemovalList() {
 		Connector.removablePOIList.add(this);
 	}
 	
+	/**
+	 * remove all things from the remove list
+	 */
 	private void removeFromRemovalList() {
 		Connector.removablePOIList.remove(this);
 	}
 	
+	/**
+	 * set to new name
+	 * @param str new name
+	 */
 	public void setName(String str)
 	{
 		poiName = str;

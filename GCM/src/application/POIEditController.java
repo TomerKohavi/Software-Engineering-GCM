@@ -16,6 +16,10 @@ import objectClasses.PlaceOfInterest;
 import objectClasses.PlaceOfInterest.PlaceType;
 import objectClasses.PlaceOfInterestSight;
 
+/**
+ * @author tomer
+ * controller for edit point of interest
+ */
 public class POIEditController
 {
 
@@ -42,6 +46,9 @@ public class POIEditController
 	@FXML // fx:id="Accessibility"
 	private CheckBox Accessibility; // Value injected by FXMLLoader
 
+	/**
+	 * initialize variables
+	 */
 	@FXML
 	public void initialize()
 	{
@@ -58,6 +65,9 @@ public class POIEditController
 		}
 	}
 
+	/**
+	 * @param event user click on edit poin of intreset
+	 */
 	@FXML
 	void apply(ActionEvent event)
 	{
@@ -86,6 +96,10 @@ public class POIEditController
 		mainPane.getScene().getWindow().hide();
 	}
 
+    /**
+     * go to the previous page
+     * @param event user click go previous page
+     */
 	@FXML
 	void goBack(ActionEvent event)
 	{
