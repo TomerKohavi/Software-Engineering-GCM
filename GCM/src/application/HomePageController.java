@@ -914,11 +914,11 @@ public class HomePageController
 				Connector.client.deleteObject(Connector.searchCityResult.remove(index)); // TODO CHECK creation
 			}
 			else if (Connector.listType.equals("Map"))
-				Connector.client.deleteObject(Connector.searchMapResult.remove(index)); // TODO CHECK creation
+				Connector.client.deleteObject(Connector.searchMapResult.remove(index));
 			else if (Connector.listType.equals("POI"))
-				Connector.client.deleteObject(Connector.searchPOIResult.remove(index)); // TODO DO DO
+				Connector.client.deleteObject(Connector.searchPOIResult.remove(index));
 			else if (Connector.listType.equals("Route"))
-				Connector.client.deleteObject(Connector.searchRouteResult.remove(index)); // TODO DO DO DO
+				Connector.client.deleteObject(Connector.searchRouteResult.remove(index));
 		}
 		catch (IOException e)
 		{
