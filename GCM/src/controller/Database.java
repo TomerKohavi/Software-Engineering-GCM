@@ -11,7 +11,7 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
-import javafx.scene.chart.PieChart.Data;
+//import javafx.scene.chart.PieChart.Data;
 import objectClasses.City;
 import objectClasses.CityDataVersion;
 import objectClasses.Customer;
@@ -37,8 +37,9 @@ import java.security.MessageDigest;
 //import javax.xml.bind.DatatypeConverter;
 
 /**
+ * class that handles the management of the database
  * @author tal20
- *
+ * @author Lior Weissman
  */
 public class Database {
 	static private final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
@@ -675,7 +676,7 @@ public class Database {
 				su.setString(2, p.getInfo());
 				su.setInt(3, p.getNumStops());
 				su.setInt(4, p.getCityId());
-				su.setString(4, p.getName());
+				su.setString(5, p.getName());
 				su.executeUpdate();
 				return false;
 			}

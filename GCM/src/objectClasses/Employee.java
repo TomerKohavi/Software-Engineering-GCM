@@ -12,8 +12,7 @@ import otherClasses.ClassMustProperties;
 @SuppressWarnings("serial")
 public class Employee extends User implements ClassMustProperties, Serializable {
 	/**
-	 * @author ron
-	 * TODO: fix
+	 * The type of employee
 	 */
 	public enum Role {
 		REGULAR(0), MANAGER(1), CEO(2);

@@ -83,6 +83,7 @@ public class Route implements ClassMustProperties, Serializable
 		this.id = Database.generateIdRoute();
 		this.cityId = other.cityId;
 		this.info = other.info;
+		this.name=other.name;
 		this.temp_routeStops = new ArrayList<>();
 		for(RouteStop rs:other.getCopyRouteStops()) {
 			RouteStop newRs=new RouteStop(this, rs.getCopyPlace(), rs.getRecommendedTime());

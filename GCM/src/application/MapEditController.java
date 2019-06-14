@@ -126,7 +126,7 @@ public class MapEditController
 			locList = map.getCopyLocations();
 			for (Location loc : locList)
 			{
-				POIImage poiImage = new POIImage(false, false, loc.getCopyPlaceOfInterest().getName());
+				POIImage poiImage = new POIImage(false, false, loc.getCopyPlaceOfInterest().getName(), loc);
 				poiImage.image.setX(loc.getCoordinates()[0] + boundsInScene.getMinX());
 				poiImage.image.setY(loc.getCoordinates()[1] + boundsInScene.getMinY());
 				Connector.imageList.add(poiImage);
@@ -149,7 +149,7 @@ public class MapEditController
 				POIImage poiImage = null;
 				try
 				{
-					poiImage = new POIImage(true, false, "");
+					poiImage = new POIImage(true, false, "", null);
 				}
 				catch (FileNotFoundException e)
 				{
@@ -245,17 +245,16 @@ public class MapEditController
 	{
 		Connector.choosenPOIInLoc = null;
 		openNewPage("ChoosePOIScene.fxml");
-		if (Connector.choosenPOIInLoc != null)
-		{ // didn't cancel
+		if (Connector.choosenPOIInLoc != null)// didn't cancel
+		{ 
 			POIImage poi = Connector.imageList.get(Connector.imageList.size() - 1);
 			poi.setName(Connector.choosenPOIInLoc.getName());
 			double[] cord = new double[2];
 			cord[0] = poi.image.getX() - boundsInScene.getMinX();
 			cord[1] = poi.image.getY() - boundsInScene.getMinY();
-			Location newLoc = Location._createLocalLocation(map, Connector.choosenPOIInLoc, cord); // TODO Sigal
-			locList.add(newLoc);
 			poi.image.setImage(realPOI);
 			poi.isNew = false;
+//			poi.setLoc(); // TODO Sigal add location
 			firstPOIAdded = true;
 		}
 	}
@@ -270,6 +269,7 @@ public class MapEditController
 	{
 		for (POIImage img : Connector.removablePOIList)
 		{
+//			img.getLoc() // TODO Sigal Remove location
 			mainPane.getChildren().remove(img.image);
 			Connector.imageList.remove(img);
 		}

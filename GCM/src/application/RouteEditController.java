@@ -7,6 +7,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 
@@ -52,6 +53,9 @@ public class RouteEditController
 
 	@FXML // fx:id="InfoBox"
 	private TextArea InfoBox; // Value injected by FXMLLoader
+	
+	@FXML // fx:id="FavoriteBox"
+    private JFXCheckBox FavoriteBox; // Value injected by FXMLLoader
 
 	@FXML // fx:id="UpButton"
 	private JFXButton UpButton; // Value injected by FXMLLoader
@@ -87,20 +91,6 @@ public class RouteEditController
 	@FXML
 	public void initialize() throws IOException
 	{
-//		ImageView upImg = new ImageView(new Image(new FileInputStream("Pics\\up_arrow.png")));
-//		ImageView downImg = new ImageView(new Image(new FileInputStream("Pics\\down_arrow.png")));
-//		upImg.setFitHeight(25);
-//		upImg.setFitWidth(25);
-//		downImg.setFitHeight(25);
-//		downImg.setFitWidth(25);
-//		
-//		UpButton.setGraphic(upImg);
-//		DownButton.setGraphic(downImg);
-//		DownButton.setMinWidth(25);
-//		DownButton.setMaxWidth(25);
-//		DownButton.setMinHeight(25);
-//		DownButton.setMaxHeight(25);
-
 		ReadOnlyIntegerProperty selectedIndex = StopsBox.getSelectionModel().selectedIndexProperty();
 
 		UpButton.disableProperty().bind(selectedIndex.lessThanOrEqualTo(0));
@@ -115,7 +105,7 @@ public class RouteEditController
 			route = Connector.selectedRoute;
 			Name.setText(route.getName());
 			InfoBox.setText(route.getInfo());
-
+//			FavoriteBox.setSelected(route.getIs); // TODO get isFavorite (is in RouteSight but not in Route - Blame Ronen)
 			stopList = route.getCopyRouteStops();
 		}
 		else
@@ -259,7 +249,7 @@ public class RouteEditController
 			else
 			{
 				RouteSight routeS = Connector.client.createRoute(Connector.selectedCity.getId(), Name.getText(), InfoBox.getText(),
-						Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId(), true); // TODO kohavi get isFavorite route
+						Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId(), FavoriteBox.isSelected());
 				Connector.selectedRoute = route = routeS.getCopyRoute();
 				Connector.searchRouteResult.add(routeS);
 			}

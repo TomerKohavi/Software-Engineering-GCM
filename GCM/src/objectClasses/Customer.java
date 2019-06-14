@@ -242,9 +242,10 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 		return result;
 	}
 
-	/** TODO: ron fill it
-	 * @param cityId
-	 * @return
+	/** 
+	 * Returns boolean if the customer has active subscription today to the city
+	 * @param cityId the city id
+	 * @return if the customer allowed to view the city
 	 */
 	public boolean canViewCityWithSubscription(int cityId) {
 		for (Subscription s : temp_activeSubscription)

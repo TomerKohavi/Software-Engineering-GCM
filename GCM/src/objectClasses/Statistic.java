@@ -188,7 +188,7 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 	/**
 	 * Sets the number of download subscription
 	 * 
-	 * @param SubDownloads the number of download subscription
+	 * @param numSubDownloads the number of download subscription
 	 */
 	public void setNumSubDownloads(int numSubDownloads) {
 		this.numSubDownloads = numSubDownloads;

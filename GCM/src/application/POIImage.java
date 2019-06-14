@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import objectClasses.Location;
 
 /**
  * @author tomer
@@ -22,6 +23,7 @@ public class POIImage {
 	public boolean isNew;
 	private boolean isRemovable, dontChange;
 	private String poiName;
+	private Location loc;
 	
 	/**
 	 * Constructor.
@@ -30,12 +32,13 @@ public class POIImage {
 	 * @param _poiName the name of the point of interest
 	 * @throws FileNotFoundException cannot find the image or the point of interest
 	 */
-	public POIImage(boolean _isNew, boolean _dontChange, String _poiName) throws FileNotFoundException {
+	public POIImage(boolean _isNew, boolean _dontChange, String _poiName, Location _loc) throws FileNotFoundException {
 		
 		isNew = _isNew;
 		isRemovable = false;
 		dontChange = _dontChange;
 		poiName = _poiName;
+		loc = _loc;
 		
 		realImg = new Image(new FileInputStream("Pics\\POI.png"));
 		addedImage = new Image(new FileInputStream("Pics\\Add_POI.png"));
@@ -103,6 +106,16 @@ public class POIImage {
 	public void setName(String str)
 	{
 		poiName = str;
+	}
+	
+	public void setLoc(Location _loc)
+	{
+		loc = _loc;
+	}
+	
+	public Location getLoc()
+	{
+		return loc;
 	}
 	
 }
