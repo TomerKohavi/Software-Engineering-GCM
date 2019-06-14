@@ -25,6 +25,7 @@ import io_commands.*;
 import javafx.scene.chart.PieChart.Data;
 import objectClasses.City;
 import objectClasses.CityDataVersion;
+import objectClasses.CityPurchase;
 import objectClasses.Customer;
 import objectClasses.Employee;
 import objectClasses.User;
@@ -98,7 +99,7 @@ public class EchoServer extends AbstractServer
 	 * @param login login request
 	 * @return login result
 	 */
-	public Login handleLogin(Login login)
+	private Login handleLogin(Login login)
 	{
 		System.out.println("login " + login.name + " ");
 		ArrayList<Integer> list;
@@ -139,7 +140,7 @@ public class EchoServer extends AbstractServer
 	/**
 	 * @param logoff the log off request
 	 */
-	public void handleLogoff(Logoff logoff)
+	private void handleLogoff(Logoff logoff)
 	{
 		System.out.println("logoff " + logoff.logoffID + " " + this.loggedList.remove(logoff.logoffID));
 	}
@@ -148,7 +149,7 @@ public class EchoServer extends AbstractServer
 	 * @param reg the register request
 	 * @return the register result
 	 */
-	public Register handleRegister(Register reg)
+	private Register handleRegister(Register reg)
 	{
 		System.out.println("register " + reg.username);
 		if (Database.searchCustomer(reg.username, null).isEmpty()
@@ -183,7 +184,7 @@ public class EchoServer extends AbstractServer
 	 * @param s the search request
 	 * @return the search result
 	 */
-	public Search handleSearch(Search s)
+	private Search handleSearch(Search s)
 	{
 		System.out.println("search: " + s.cityName + "|" + s.cityInfo + "|" + s.poiName + "|" + s.poiInfo);
 		s.searchResult = SearchCatalog.SearchCity(s.cityName, s.cityInfo, s.poiName, s.poiInfo);
@@ -193,7 +194,7 @@ public class EchoServer extends AbstractServer
 	/**
 	 * @param user the user request we want to handle
 	 */
-	public void handleUpdateUser(User user)
+	private void handleUpdateUser(User user)
 	{
 		System.out.print("update " + user.getUserName());
 		if (user instanceof Customer)
@@ -206,7 +207,7 @@ public class EchoServer extends AbstractServer
 	 * @param cr the customer request we want to handle
 	 * @return the result of the request
 	 */
-	public CustomersRequest handleUsersRequest(CustomersRequest cr)
+	private CustomersRequest handleUsersRequest(CustomersRequest cr)
 	{
 		System.out.println("customers list request");
 		cr.custList = Database.getAllCustomers();
@@ -217,7 +218,7 @@ public class EchoServer extends AbstractServer
 	 * @param cityReq the get all city request
 	 * @return the result of the request
 	 */
-	public AllCitiesRequest handleCityRequest(AllCitiesRequest cityReq)
+	private AllCitiesRequest handleCityRequest(AllCitiesRequest cityReq)
 	{
 		System.out.println("cities list request");
 		cityReq.cityList = Database.getAllCitiesNameId();
@@ -228,7 +229,7 @@ public class EchoServer extends AbstractServer
 	/**
 	 * @param update update request handle
 	 */
-	public void handleUpdate(Update update)
+	private void handleUpdate(Update update)
 	{
 		System.out.println("update " + update.toUpdate.getClass().toString());
 		update.toUpdate.saveToDatabase();
@@ -238,7 +239,7 @@ public class EchoServer extends AbstractServer
 	 * @param cmap map creation that come from the client
 	 * @return create map object the sent to the client
 	 */
-	public CreateMap handleMapCreation(CreateMap cmap)
+	private CreateMap handleMapCreation(CreateMap cmap)
 	{
 		Map map = new Map(cmap.cityId, cmap.name, cmap.info, cmap.imgURL);
 		map.saveToDatabase();
@@ -254,7 +255,7 @@ public class EchoServer extends AbstractServer
 	 * @param cpoi point of interest creation that come from the client
 	 * @return create point of interest object the sent to the client
 	 */
-	public CreatePOI handlePOICreation(CreatePOI cpoi)
+	private CreatePOI handlePOICreation(CreatePOI cpoi)
 	{
 		PlaceOfInterest poi = new PlaceOfInterest(cpoi.cityId, cpoi.name, cpoi.type, cpoi.placeDescription,
 				cpoi.accessibilityToDisabled);
@@ -272,7 +273,7 @@ public class EchoServer extends AbstractServer
 	 * @param croute route creation that come from the client
 	 * @return create route object the sent to the client
 	 */
-	public CreateRoute handleRouteCreation(CreateRoute croute)
+	private CreateRoute handleRouteCreation(CreateRoute croute)
 	{
 		Route route = new Route(croute.cityId, croute.name, croute.info);
 		route.saveToDatabase();
@@ -288,7 +289,7 @@ public class EchoServer extends AbstractServer
 	 * @param cstops route stop creation that come from the client
 	 * @return create route stop object the sent to the client
 	 */
-	public CreateRouteStops handleRouteStopsCreation(CreateRouteStops cstops)
+	private CreateRouteStops handleRouteStopsCreation(CreateRouteStops cstops)
 	{
 		cstops.idList = new ArrayList<Integer>();
 		for (RouteStop stop : cstops.stopList)
@@ -306,13 +307,12 @@ public class EchoServer extends AbstractServer
 	 * handle delete request from the client 
 	 * @param del the delete request from the client 
 	 */
-	public void handleDelete(Delete del)
+	private void handleDelete(Delete del)
 	{
 		System.out.println("delete " + del.toDelete.getClass().toString() + " " + del.toDelete.getId());
 		del.toDelete.deleteFromDatabase();
 	}
 	
-
 
 	/**
 	 * handle add statistics request from the client 
@@ -350,7 +350,7 @@ public class EchoServer extends AbstractServer
 		}
 	}
 
-	public FetchSights handleFetchSights(FetchSights fs)
+	private FetchSights handleFetchSights(FetchSights fs)
 	{
 		System.out.println("fetch " + fs.sightType.toString());
 		if (fs.sightType.isAssignableFrom(MapSight.class))
@@ -362,6 +362,12 @@ public class EchoServer extends AbstractServer
 		else
 			System.err.println("Wrong class type");
 		return fs;
+	}
+
+	private void handlePurchase(CityPurchase cp)
+	{
+		cp._setId(Database.generateIdCityPurchase());
+		cp.saveToDatabase();
 	}
 	
 	/**
@@ -417,6 +423,8 @@ public class EchoServer extends AbstractServer
 				handleAddStat((AddStat) msg);
 			else if (msg instanceof FetchSights)
 				client.sendToClient(handleFetchSights((FetchSights) msg));
+			else if (msg instanceof CityPurchase)
+				handlePurchase((CityPurchase) msg);
 			else
 				System.out.println(msg.getClass().toString() + '\n' + msg.toString());
 		}
@@ -444,6 +452,17 @@ public class EchoServer extends AbstractServer
 			serverUI.display(message);
 			this.sendToAllClients("SERVER MSG> " + message);
 		}
+	}
+
+	/**
+	 * handle statistics request  from the client and return the result
+	 * @param statboi the statistics request from the client
+	 * @return statistics result to the client 
+	 */
+	public Statboi handleStatistics(Statboi statboi)
+	{
+		statboi.statboi = InformationSystem.getRangeSumStatistics(statboi.cityId, statboi.from, statboi.end);
+		return statboi;
 	}
 
 	/**
@@ -505,17 +524,6 @@ public class EchoServer extends AbstractServer
 
 		System.out.println(msg);
 		this.sendToAllClients(msg);
-	}
-
-	/**
-	 * handle statistics request  from the client and return the result
-	 * @param statboi the statistics request from the client
-	 * @return statistics result to the client 
-	 */
-	public Statboi handleStatistics(Statboi statboi)
-	{
-		statboi.statboi = InformationSystem.getRangeSumStatistics(statboi.cityId, statboi.from, statboi.end);
-		return statboi;
 	}
 
 	/**

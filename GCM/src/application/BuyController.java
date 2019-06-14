@@ -1,6 +1,8 @@
 package application;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.util.Calendar;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -11,6 +13,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import objectClasses.OneTimePurchase;
+import objectClasses.Subscription;
 
 /**
  * @author tomer
@@ -65,11 +69,16 @@ public class BuyController {
     	if (RadioOneTime.isSelected())
     	{
     		double price = oneTimePrice; // TODO send price to server
+    		Connector.client.sendToServer(OneTimePurchase._createOneTimePurchase(-1, Connector.selectedCity.getId(), Connector.user.getId(), new Date(Calendar.getInstance().getTime().getTime()), price, price, true)); // TODO kohavi
     		Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.OneTimePurcahse);
     	}
     	else
     	{
     		double price = monthPrice * MonthBox.getValue(); // TODO send price to server
+    		Date start = new Date(Calendar.getInstance().getTime().getTime());
+    		Date end = new Date(Calendar.getInstance().getTime().getTime());
+    		end.setMonth(end.getMonth() + MonthBox.getValue());
+    		Connector.client.sendToServer(Subscription._createSubscription(-1, Connector.selectedCity.getId(), Connector.user.getId(), start, price, price, end)); // TODO kohavi
     		Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.Subscription);
     	}
     	
