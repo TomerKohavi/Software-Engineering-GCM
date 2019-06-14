@@ -20,6 +20,14 @@ public class RouteSight implements ClassMustProperties, Serializable {
 
 	private Route temp_route;
 
+	/**
+	 * This is a private constructor of route sight object
+	 * 
+	 * @param id route sight id
+	 * @param cityDataVersionId the city data version id
+	 * @param routeId the route id
+	 * @param isFavorite if the route sight is favorite or not
+	 */
 	private RouteSight(int id, int cityDataVersionId, int routeId,boolean isFavorite) {
 		this.id = id;
 		this.cityDataVersionId = cityDataVersionId;
@@ -28,10 +36,27 @@ public class RouteSight implements ClassMustProperties, Serializable {
 		reloadTempsFromDatabase();
 	}
 
+	/**
+	 * This function create route sight object according to all the inputs (supposed to be
+	 * used only in Database)
+	 * 
+	 * @param id route sight id
+	 * @param cityDataVersionId the city data version id
+	 * @param routeId the route id
+	 * @param isFavorite if the route sight is favorite or not
+	 * @return new route sight object
+	 */
 	public static RouteSight _createRouteSight(int id, int cityDataVersionId, int routeId,boolean isFavorite) { // friend to Database
 		return new RouteSight(id, cityDataVersionId, routeId,isFavorite);
 	}
 
+	/**
+	 * This is the normal public constructor for route sight object
+	 * 
+	 * @param cdvId the city data version id
+	 * @param r the route object
+	 * @param isFavorite if the route sight is favorite or not
+	 */
 	public RouteSight(int cdvId, Route r,boolean isFavorite) {
 		this.id = Database.generateIdRouteSight();
 		this.cityDataVersionId = cdvId;
@@ -52,26 +77,56 @@ public class RouteSight implements ClassMustProperties, Serializable {
 		this.temp_route = Database.getRouteById(routeId);
 	}
 
+	/**
+	 * Returns the route sight id
+	 * 
+	 * @return the route sight id
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * Returns the city data version id of the route sight
+	 * 
+	 * @return the city data version id of the route sight
+	 */
 	public int getCityDataVersionId() {
 		return cityDataVersionId;
 	}
 
+	/**
+	 * Returns the route id
+	 * 
+	 * @return the route id
+	 */
 	public int getRouteId() {
 		return routeId;
 	}
 
+	/**
+	 * Returns copied route object
+	 * 
+	 * @return copied route object
+	 */
 	public Route getCopyRoute() {
 		return temp_route;
 	}
 
+	/**
+	 * Returns if the route sight is favorite or not
+	 * 
+	 * @return if the route sight is favorite or not
+	 */
 	public boolean getIsFavorite() {
 		return isFavorite;
 	}
 
+	/**
+	 * Sets the route sight favorite
+	 * 
+	 * @param cityName the new favorite of the route sight
+	 */
 	public void setFavorite(boolean favorite) {
 		isFavorite = favorite;
 	}
