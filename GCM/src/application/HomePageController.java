@@ -371,7 +371,6 @@ public class HomePageController
 			try {
 				Connector.client.addStat(city.getId(), InformationSystem.Ops.Visit);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -903,11 +902,11 @@ public class HomePageController
 		try
 		{
 			if (Connector.listType.equals("Map"))
-				Connector.client.deleteObject(Connector.searchMapResult.remove(index));
+				Connector.client.deleteObject(Connector.searchMapResult.remove(index)); // TODO CHECK creation
 			else if (Connector.listType.equals("POI"))
-				Connector.client.deleteObject(Connector.searchPOIResult.remove(index));
+				Connector.client.deleteObject(Connector.searchPOIResult.remove(index)); // TODO DO DO
 			else if (Connector.listType.equals("Route"))
-				Connector.client.deleteObject(Connector.searchRouteResult.remove(index));
+				Connector.client.deleteObject(Connector.searchRouteResult.remove(index)); // TODO DO DO DO
 		}
 		catch (IOException e)
 		{

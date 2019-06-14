@@ -262,6 +262,7 @@ public class EchoServer extends AbstractServer
 
 		PlaceOfInterestSight poiS = new PlaceOfInterestSight(cpoi.cdvId, poi);
 		poiS.saveToDatabase();
+		System.out.println(poi.getId() + " " + poiS.getId());
 
 		cpoi.poiS = poiS;
 		return cpoi;
@@ -276,8 +277,7 @@ public class EchoServer extends AbstractServer
 		Route route = new Route(croute.cityId, croute.info);
 		route.saveToDatabase();
 
-		RouteSight routeS = new RouteSight(croute.cdvId, route, false);// sigal look at this false. I didn't know how to
-																		// treat this
+		RouteSight routeS = new RouteSight(croute.cdvId, route, false);// TODO handle is favorite
 		routeS.saveToDatabase();
 
 		croute.routeS = routeS;
