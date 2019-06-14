@@ -78,7 +78,7 @@ public class InitDatebase {
 	private static void haifa() {
 		City c1 = new City("Haifa", "The third largest city in Israel. As of 2016, the city is a major seaport "
 				+ "located on Israel's Mediterranean coastline in the Bay of Haifa covering 63.7 square kilometres.");
-		PlaceOfInterest p0 = new PlaceOfInterest(c1.getId(), "University of Haifa", PlaceOfInterest.PlaceType.MUSEUM,
+		PlaceOfInterest p0 = new PlaceOfInterest(c1.getId(), "University of Haifa", PlaceOfInterest.PlaceType.PUBLIC,
 				"A public research university on the top of Mount Carmel in Haifa, Israel. "
 						+ "The university was founded in 1963 by the mayor of its host city, Abba Hushi,"
 						+ " to operate under the academic auspices of the Hebrew University of Jerusalem.",
@@ -141,7 +141,7 @@ public class InitDatebase {
 		MapSight ms1 = new MapSight(cdv.getId(), m1);
 		ms1.saveToDatabase();
 
-		Route r = new Route(c1.getId(), "Small route");
+		Route r = new Route(c1.getId(), "Education route", "A route that passes through the best academic institutions in Haifa.");
 		RouteStop rstop1 = new RouteStop(r, p0, new Time(1, 25, 0));
 		r.addRouteStop(rstop1);
 		RouteStop rstop2 = new RouteStop(r, p1, new Time(0, 50, 0));
@@ -150,7 +150,7 @@ public class InitDatebase {
 		RouteSight rs = new RouteSight(cdv.getId(), r, true);
 		rs.saveToDatabase();
 
-		Route r1 = new Route(c1.getId(), "Big route");
+		Route r1 = new Route(c1.getId(), "Nice family trip","A route that designed for a vatction day for all ages.");
 		RouteStop rstop3 = new RouteStop(r1, p2, new Time(4, 0, 0));
 		r1.addRouteStop(rstop3);
 		RouteStop rstop4 = new RouteStop(r1, p3, new Time(0, 20, 0));
@@ -230,7 +230,7 @@ public class InitDatebase {
 		m1.saveToDatabase();
 		MapSight ms1 = new MapSight(cdv.getId(), m1);
 		ms1.saveToDatabase();
-		Route r = new Route(c1.getId(), "Small route");
+		Route r = new Route(c1.getId(), "Shopping and resturant tour","A tour that pass throught the best shopping attractions in town.");
 		RouteStop rstop1 = new RouteStop(r, p0, new Time(4, 30, 0));
 		r.addRouteStop(rstop1);
 		RouteStop rstop2 = new RouteStop(r, p1, new Time(2, 0, 0));
@@ -239,7 +239,7 @@ public class InitDatebase {
 		RouteSight rs = new RouteSight(cdv.getId(), r, true);
 		rs.saveToDatabase();
 
-		Route r1 = new Route(c1.getId(), "Big route");
+		Route r1 = new Route(c1.getId(), "Random route","A route with a wide variety of attractions types.");
 		RouteStop rstop3 = new RouteStop(r1, p2, new Time(0, 40, 0));
 		r1.addRouteStop(rstop3);
 		RouteStop rstop4 = new RouteStop(r1, p3, new Time(2, 20, 0));
@@ -314,7 +314,7 @@ public class InitDatebase {
 		MapSight ms0 = new MapSight(cdv.getId(), m0);
 		ms0.saveToDatabase();
 
-		Route r1 = new Route(city.getId(), "Historical attractions");
+		Route r1 = new Route(city.getId(), "Historical attractions","A route that pass throught the best historical attractions in town.");
 		RouteStop rstop1 = new RouteStop(r1, p0, new Time(0, 40, 0));
 		r1.addRouteStop(rstop1);
 		RouteStop rstop2 = new RouteStop(r1, p2, new Time(1, 30, 0));
@@ -388,7 +388,7 @@ public class InitDatebase {
 		} else
 			System.out.println("Something weird is happening :( check rome() in InitDatabase");
 
-		Route r3 = new Route(city.getId(), "Museums are amazing!!");
+		Route r3 = new Route(city.getId(), "Museums are amazing!!","Best museums in the city can be found here.");
 		RouteStop rstop25 = new RouteStop(r3, p5, new Time(2, 27, 0));
 		r3.addRouteStop(rstop25);
 		RouteStop rstop24 = new RouteStop(r3, p6, new Time(0, 53, 0));
@@ -480,7 +480,7 @@ public class InitDatebase {
 		MapSight ms0 = new MapSight(cdv.getId(), m0);
 		ms0.saveToDatabase();
 
-		Route r1 = new Route(city.getId(), "Historical trip");
+		Route r1 = new Route(city.getId(), "Historical trip","A trip that emphasis the historical attraction in the city.");
 		RouteStop rstop1 = new RouteStop(r1, p0, new Time(0, 40, 0));
 		r1.addRouteStop(rstop1);
 		RouteStop rstop2 = new RouteStop(r1, p1, new Time(1, 30, 0));
@@ -555,7 +555,7 @@ public class InitDatebase {
 		} else
 			System.out.println("Something weird is happening :( check rome() in InitDatabase");
 
-		Route r3 = new Route(city.getId(), "Fun trip not boring :-)");
+		Route r3 = new Route(city.getId(), "Fun trip not boring :-)","Trip that is best suited for ages 10-20.");
 		RouteStop rstop23 = new RouteStop(r3, p3, new Time(0, 40, 0));
 		r3.addRouteStop(rstop23);
 		RouteStop rstop25 = new RouteStop(r3, p5, new Time(2, 27, 0));
