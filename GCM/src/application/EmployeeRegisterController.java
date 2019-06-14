@@ -102,6 +102,7 @@ public class EmployeeRegisterController
 	}
 
 	/**
+	 * Opens a login page. 
 	 * @param event load the employee login scene
 	 * @throws IOException
 	 */
@@ -112,6 +113,7 @@ public class EmployeeRegisterController
 	}
 
 	/**
+	 * Handle register event- allows a new employee to register.
 	 * @param event user click on register
 	 * @throws IOException cannot registe the user
 	 */
