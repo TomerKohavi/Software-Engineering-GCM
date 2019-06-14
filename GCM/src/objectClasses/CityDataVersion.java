@@ -322,7 +322,6 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 	 */
 	public static ArrayList<RouteSight> _generateRouteSights(int cdvId) {
 		ArrayList<Integer> ids = Database.searchRouteSight(cdvId, null,null);
->>>>>>> origin/master
 		ArrayList<RouteSight> arrList = new ArrayList<RouteSight>();
 		for (int id : ids)
 		{
