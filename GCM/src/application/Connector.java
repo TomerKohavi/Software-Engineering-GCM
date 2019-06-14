@@ -163,10 +163,21 @@ public class Connector {
 	 * @param customers the list of customers to check
 	 * @return list of customers
 	 */
-	public static ArrayList<Customer> getCustomersSubscibeToCity(int cityId, ArrayList<Customer> customers) {
-		ArrayList<Customer> ans = new ArrayList<Customer>(customers);
-		for (Customer c : customers) {
-			if (c.getActiveSubscriptionsByCity(cityId).size() > 0)
+	public static ArrayList<Customer> getCustomersSubscibeToCity() {
+		if (Connector.customerList == null)
+		{
+			try
+			{
+				Connector.customerList = Connector.client.customersRquest();
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		ArrayList<Customer> ans = new ArrayList<Customer>(customerList);
+		for (Customer c : customerList) {
+			if (c.getActiveSubscriptionsByCity(selectedCity.getId()).size() > 0)
 				ans.add(c);
 		}
 		return ans;
