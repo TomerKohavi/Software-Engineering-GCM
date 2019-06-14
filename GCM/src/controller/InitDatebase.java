@@ -581,13 +581,28 @@ public class InitDatebase {
 		e.saveToDatabase();
 		Customer cust = new Customer("yosi11", "LDCyosiiii!", "yosi@gmail.com", "yosi", "ben asser", "0523322123",
 				"5495681338665894", "07/24", "896");
-		Subscription sub0 = new Subscription(cust, 1, new Date(119, 5, 8), 201.8, 199.9, new Date(119, 11, 8));
+		Subscription sub0 = new Subscription(cust, 1, new Date(119, 3, 8), 201.8, 199.9, new Date(119, 5, 8));
 		cust.addSubscription(sub0);
-		Subscription sub1 = new Subscription(cust, 2, new Date(119, 8, 7), 171.8, 112.9, new Date(119, 12, 7));
+		InformationSystem.addSubscription(1, new Date(119, 3, 8));
+		InformationSystem.addSubDownload(1,new Date(119, 3, 21));
+		InformationSystem.addSubDownload(1,new Date(119, 4, 15));
+		InformationSystem.addSubDownload(1,new Date(119, 5, 6));
+		
+		for(int i=0;i<11;i++)
+			InformationSystem.addVisit(1, new Date(119, 3, 8+i*4));
+		
+		Subscription sub1 = new Subscription(cust, 2, new Date(119, 6, 7), 171.8, 112.9, new Date(119, 12, 7));
 		cust.addSubscription(sub1);
+		InformationSystem.addSubscription(2, new Date(119, 6, 7));
+		InformationSystem.addSubDownload(2,new Date(119, 6, 20));
 
-		OneTimePurchase otp = new OneTimePurchase(cust, 1, new Date(119, 8, 6), 20, 19);
+		for(int i=0;i<11;i++)
+			InformationSystem.addVisit(2, new Date(119, 6, 7+i*3));
+		
+		OneTimePurchase otp = new OneTimePurchase(cust, 1, new Date(119, 6, 17), 20, 19);
 		otp.updateToWasDownload();
+		InformationSystem.addVisit(1, new Date(119, 6, 17));
+		InformationSystem.addOneTimePurchase(1, new Date(119, 6, 17));
 		cust.addOneTimePurchase(otp);
 		cust.saveToDatabase();
 	}
@@ -601,13 +616,30 @@ public class InitDatebase {
 		e.saveToDatabase();
 		Customer cust = new Customer("dan", "masterDan%", "dannyf.post@gmail.com", "dan", "feldman", "0523325686",
 				"5495655558665894", "01/23", "354");
-		Subscription sub0 = new Subscription(cust, 1, new Date(119, 8, 8), 211.8, 189.9, new Date(119, 11, 8));
+		Subscription sub0 = new Subscription(cust, 1, new Date(119, 7, 7), 211.8, 189.9, new Date(119, 11, 8));
 		cust.addSubscription(sub0);
-		Subscription sub1 = new Subscription(cust, 3, new Date(119, 3, 3), 131.8, 111.9, new Date(119, 8, 3));
+		InformationSystem.addSubscription(1, new Date(119, 7, 7));
+		InformationSystem.addSubDownload(1,new Date(119, 7, 9));
+		
+		for(int i=0;i<2;i++)
+			InformationSystem.addVisit(1, new Date(119, 7, 7+i*3));
+		
+		Subscription sub1 = new Subscription(cust, 4, new Date(119, 3, 3), 131.8, 111.9, new Date(119, 4, 3));
 		cust.addSubscription(sub1);
+		InformationSystem.addSubscription(4, new Date(119, 3, 3));
+		
+		Subscription sub2 = new Subscription(cust, 4, new Date(119, 4, 3), 131.8, 100.7, new Date(119, 5, 3));
+		cust.addSubscription(sub2);
+		InformationSystem.addSubscriptionRenewal(4,new Date(119, 4, 3));
+		InformationSystem.addSubDownload(4,new Date(119, 5, 1));
+		
+		for(int i=0;i<11;i++)
+			InformationSystem.addVisit(4, new Date(119, 3, 3+i*5));
 
-		OneTimePurchase otp = new OneTimePurchase(cust, 2, new Date(119, 8, 6), 19, 18);
+		OneTimePurchase otp = new OneTimePurchase(cust, 2, new Date(119, 7, 10), 19, 18);
 		otp.updateToWasDownload();
+		InformationSystem.addVisit(2, new Date(119, 7, 10));
+		InformationSystem.addOneTimePurchase(2, new Date(119, 7, 10));
 		cust.addOneTimePurchase(otp);
 		cust.saveToDatabase();
 	}
@@ -623,9 +655,16 @@ public class InitDatebase {
 				"5495123458665894", "01/25", "891");
 		Subscription sub = new Subscription(cust, 1, new Date(118, 7, 8), 53.2, 50.9, new Date(118, 9, 8));
 		cust.addSubscription(sub);
+		InformationSystem.addSubscription(1, new Date(119, 7, 8));
+		InformationSystem.addSubDownload(1,new Date(119, 7, 11));
 
-		OneTimePurchase otp = new OneTimePurchase(cust, 2, new Date(119, 8, 6), 9, 8);
+		for(int i=0;i<3;i++)
+			InformationSystem.addVisit(1, new Date(119, 7, 8+i*2));
+		
+		OneTimePurchase otp = new OneTimePurchase(cust, 2, new Date(119, 5, 6), 9, 8);
 		otp.updateToWasDownload();
+		InformationSystem.addVisit(2, new Date(119, 5, 6));
+		InformationSystem.addOneTimePurchase(2, new Date(119, 5, 6));
 		cust.addOneTimePurchase(otp);
 		cust.saveToDatabase();
 	}
@@ -641,9 +680,17 @@ public class InitDatebase {
 				"5495123458612894", "02/25", "821");
 		Subscription sub = new Subscription(cust, 3, new Date(119, 7, 6), 63.2, 50.9, new Date(119, 9, 8));
 		cust.addSubscription(sub);
+		InformationSystem.addSubscription(3, new Date(119, 7, 6));
+		InformationSystem.addSubDownload(3,new Date(119, 7, 10));
+		InformationSystem.addSubDownload(3,new Date(119, 7, 13));
+		
+		for(int i=0;i<2;i++)
+			InformationSystem.addVisit(3, new Date(119, 7, 6+i*2));
 
 		OneTimePurchase otp = new OneTimePurchase(cust, 1, new Date(119, 7, 6), 19, 8);
 		otp.updateToWasDownload();
+		InformationSystem.addVisit(1, new Date(119, 7, 6));
+		InformationSystem.addOneTimePurchase(1, new Date(119, 7, 6));
 		cust.addOneTimePurchase(otp);
 		cust.saveToDatabase();
 	}
@@ -656,34 +703,79 @@ public class InitDatebase {
 		e.saveToDatabase();
 		Customer cust = new Customer("q", "q", "q@gmail.com", "q", "q q", "0523022100", "5495681338665894", "07/24",
 				"000");
-		Subscription sub0 = new Subscription(cust, 3, new Date(112, 2, 25), 201.8, 199.9, new Date(119, 5, 25));
+		Subscription sub0 = new Subscription(cust, 3, new Date(119, 2, 25), 201.8, 199.9, new Date(119, 4, 25));
 		cust.addSubscription(sub0);
-		Subscription sub1 = new Subscription(cust, 3, new Date(115, 2, 28), 171.8, 112.9, new Date(119, 12, 15));
+		InformationSystem.addSubscription(3, new Date(119, 2, 25));
+		InformationSystem.addSubDownload(3,new Date(119, 2, 29));
+		InformationSystem.addSubDownload(3,new Date(119, 3, 17));
+		InformationSystem.addSubDownload(3,new Date(119, 3, 21));
+		Subscription sub2 = new Subscription(cust, 3, new Date(119, 4, 25), 201.8, 179.9, new Date(119, 6, 25));
+		cust.addSubscription(sub2);
+		InformationSystem.addSubscriptionRenewal(3,new Date(119, 4, 25));
+		InformationSystem.addSubDownload(3,new Date(119, 5, 11));
+		InformationSystem.addSubDownload(3,new Date(119, 6, 20));
+		
+		for(int i=0;i<27;i++)
+			InformationSystem.addVisit(3, new Date(119, 2, 25+i*4));
+		
+		Subscription sub1 = new Subscription(cust, 1, new Date(119, 2, 28), 171.8, 112.9, new Date(119, 6, 15));
 		cust.addSubscription(sub1);
+		InformationSystem.addSubscription(1, new Date(119, 2, 28));
+		InformationSystem.addSubDownload(1,new Date(119, 3, 20));
+		InformationSystem.addSubDownload(1,new Date(119, 5, 17));
+		
+		for(int i=0;i<20;i++)
+			InformationSystem.addVisit(1, new Date(119, 2, 28+i*4));
 
-		OneTimePurchase otp = new OneTimePurchase(cust, 1, new Date(119, 12, 13), 15, 9);
+		OneTimePurchase otp = new OneTimePurchase(cust, 4, new Date(119, 6, 20), 15, 9);
 		otp.updateToWasDownload();
+		InformationSystem.addVisit(4, new Date(119, 6, 20));
+		InformationSystem.addOneTimePurchase(4, new Date(119, 6, 20));
 		cust.addOneTimePurchase(otp);
 		cust.saveToDatabase();
 	}
 
+	
 	/**
-	 * Initializing the statistics in database
+	 * Return the number of maps in the city
+	 * @param cityId the city id
+	 * @return the number of maps
 	 */
-	private static void initStatistics() {
-		// TODO: Ron need to fill real sattistics only once all the other init is done
-		InformationSystem.addOneTimePurchase(1, new Date(119, 6, 6));
-		InformationSystem.addOneTimePurchase(1, new Date(118, 6, 6));
-		InformationSystem.addOneTimePurchase(1, new Date(118, 9, 9));
-		InformationSystem.addSubDownload(1);
-		InformationSystem.addSubDownload(1);
-		InformationSystem.addSubDownload(1);
-		InformationSystem.addSubscription(1, new Date(119, 5, 5));
-		InformationSystem.addSubscriptionRenewal(1);
-		InformationSystem.addSubscriptionRenewal(1);
-		InformationSystem.addVisit(1);
-		InformationSystem.newVersionWasPublished(1, new Date(119, 4, 4));
-		InformationSystem.setNumMaps(1, 2);
+	private static int getNumMapsOfCitiy(int cityId) {
+		City c=Database.getCityById(cityId);
+		if(c==null) return 0;
+		CityDataVersion cdv=c.getCopyPublishedVersion();
+		if(cdv==null) return 0;
+		return cdv.getNumMapSights();	
+	}
+	
+	/**
+	 * Initializing some of the statistics in database
+	 */
+	private static void initStatistics() {		
+		//city 1
+		InformationSystem.setNumMaps(1, 0 ,new Date(119, 2, 10));
+		InformationSystem.newVersionWasPublished(1, new Date(119, 2, 25));
+		InformationSystem.setNumMaps(1, 1,new Date(119, 2, 25));
+		InformationSystem.newVersionWasPublished(1, new Date(119, 5, 30));
+		InformationSystem.setNumMaps(1, getNumMapsOfCitiy(1),new Date(119, 5, 30));
+		
+		//city 2
+		InformationSystem.setNumMaps(2, 0 ,new Date(119, 5, 1));
+		InformationSystem.newVersionWasPublished(2, new Date(119, 5, 5));
+		InformationSystem.setNumMaps(2, 1,new Date(119, 5, 5));
+		InformationSystem.newVersionWasPublished(2, new Date(119, 6, 30));
+		InformationSystem.setNumMaps(2, getNumMapsOfCitiy(2),new Date(119, 5, 30));
+		
+		//city 3
+		InformationSystem.setNumMaps(3, 0 ,new Date(119, 2, 10));
+		InformationSystem.newVersionWasPublished(3, new Date(119, 2, 20));
+		InformationSystem.setNumMaps(3, getNumMapsOfCitiy(3),new Date(119, 5, 30));
+		
+		//city 4
+		InformationSystem.setNumMaps(4, 0 ,new Date(119, 2, 1));
+		InformationSystem.newVersionWasPublished(4, new Date(119, 2, 27));
+		InformationSystem.setNumMaps(4, getNumMapsOfCitiy(4),new Date(119, 2, 27));
 	}
 
 }

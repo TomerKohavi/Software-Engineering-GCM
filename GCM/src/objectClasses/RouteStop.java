@@ -20,6 +20,8 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 	private int numStop;
 	public Time recommendedTime;
 	private String placeName;
+	
+	private PlaceOfInterest temp_place;
 
 	/**
 	 * This is a private constructor of route stop object
@@ -106,6 +108,7 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 		this.id = Database.generateIdRouteStop();
 		this.routeId = r.getId();
 		this.placeId = p.getId();
+		this.temp_place=p;
 		this.recommendedTime = recommendedTime;
 		this.numStop = -1;
 	}
@@ -122,7 +125,8 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 
 	public void reloadTempsFromDatabase()
 	{
-		this.placeName = Database.getPlaceOfInterestById(placeId).getName();
+		this.temp_place=Database.getPlaceOfInterestById(placeId);
+		this.placeName = temp_place.getName();
 	}
 
 	/**
@@ -232,7 +236,7 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 	 */
 	public PlaceOfInterest getCopyPlace()
 	{
-		return Database.getPlaceOfInterestById(placeId);
+		return this.temp_place;
 	}
 
 	/**

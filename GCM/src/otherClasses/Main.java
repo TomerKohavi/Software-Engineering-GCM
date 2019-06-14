@@ -66,7 +66,7 @@ public class Main {
 						
 			
 		}catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		Database.closeConnection();
 		System.out.println("Done");

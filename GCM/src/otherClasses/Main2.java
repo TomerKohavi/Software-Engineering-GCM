@@ -14,8 +14,9 @@ public class Main2 {
 		Database.createConnection();
 		try 
 		{
-
-			Customer cust = new Customer("t", "t", "t@gmail.com", "t", "t t", "0523002100", "0095681338665894", "07/24",
+			//Date today = new Date(Calendar.getInstance().getTime().getTime());
+			System.out.println(new Date(119,0,14));
+			/*Customer cust = new Customer("t", "t", "t@gmail.com", "t", "t t", "0523002100", "0095681338665894", "07/24",
 					"000");
 			
 			Database.saveSecuredCustomer(cust);
@@ -25,7 +26,7 @@ public class Main2 {
 			
 			System.out.println(Database.searchSecuredCustomer("t", "s"));
 			
-			cust.deleteFromDatabase();
+			cust.deleteFromDatabase();*/
 //			Date today = new Date(Calendar.getInstance().getTime().getTime());
 //			long start = System.currentTimeMillis();
 //			System.out.println("ss");

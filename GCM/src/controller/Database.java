@@ -675,7 +675,7 @@ public class Database {
 				su.setString(2, p.getInfo());
 				su.setInt(3, p.getNumStops());
 				su.setInt(4, p.getCityId());
-				su.setString(4, p.getName());
+				su.setString(5, p.getName());
 				su.executeUpdate();
 				return false;
 			}
