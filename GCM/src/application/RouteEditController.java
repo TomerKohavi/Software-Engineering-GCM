@@ -113,7 +113,7 @@ public class RouteEditController
 		if (Connector.isEdit) // if its edit, load the data
 		{
 			route = Connector.selectedRoute;
-			Name.setText("Route " + route.getId());
+			Name.setText(route.getName());
 			InfoBox.setText(route.getInfo());
 
 			stopList = route.getCopyRouteStops();
@@ -246,13 +246,14 @@ public class RouteEditController
 
 			if (Connector.isEdit)
 			{
+				route.setName(Name.getText());
 				route.setInfo(InfoBox.getText());
 				route.setRouteStops(new ArrayList<RouteStop>());
 				Connector.client.update(route);
 			}
 			else
 			{
-				RouteSight routeS = Connector.client.createRoute(Connector.selectedCity.getId(), InfoBox.getText(),
+				RouteSight routeS = Connector.client.createRoute(Connector.selectedCity.getId(), Name.getText(), InfoBox.getText(),
 						Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId());
 				Connector.selectedRoute = route = routeS.getCopyRoute();
 				Connector.searchRouteResult.add(routeS);
