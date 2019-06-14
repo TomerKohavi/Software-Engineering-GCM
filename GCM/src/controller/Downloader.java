@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
+import javafx.scene.chart.PieChart.Data;
 import objectClasses.City;
 import objectClasses.CityDataVersion;
 import objectClasses.Customer;
@@ -68,7 +69,7 @@ public final class Downloader
 
 	/**
 	 * Downloads reports of update cities versions that intended to and classified
-	 * by customers
+	 * by customers today
 	 * 
 	 * @param path the path to download the report
 	 * @return if the download succeeded

@@ -13,15 +13,30 @@ import otherClasses.ClassMustProperties;
  */
 @SuppressWarnings("serial")
 public class PlaceOfInterest implements ClassMustProperties, Serializable {
+	/**
+	 * enum that contains the place types 
+	 * @author Ron Cohen
+	 *
+	 */
 	public enum PlaceType {
 		HISTORICAL(0), MUSEUM(1), HOTEL(2), RESTAURANT(3), PUBLIC(4), PARK(5), STORE(6), CINEMA(7);
 
 		private final int value;
 
+		/**
+		 * Constructor that get value and return the enum 
+		 * 
+		 * @param nv value of the enum
+		 */
 		PlaceType(final int nv) {
 			value = nv;
 		}
 
+		/**
+		 * Return the value of the enum object
+		 * 
+		 * @return the value of the enum object
+		 */
 		public int getValue() {
 			return value;
 		}
@@ -51,6 +66,16 @@ public class PlaceOfInterest implements ClassMustProperties, Serializable {
 	private String placeDescription;
 	private boolean accessibilityToDisabled;
 
+	/**
+	 * This is a private constructor of place of interest object
+	 * 
+	 * @param id the place of interest id
+	 * @param cityId the city id that contains the place of interest
+	 * @param name the place of interest name
+	 * @param type the place of interest type
+	 * @param placeDescription the place of interest description
+	 * @param accessibilityToDisabled if the place of interest is accessibility to disabled or not
+	 */
 	private PlaceOfInterest(int id, int cityId, String name, PlaceType type, String placeDescription,
 			boolean accessibilityToDisabled) {
 		this.id = id;
@@ -61,11 +86,32 @@ public class PlaceOfInterest implements ClassMustProperties, Serializable {
 		this.accessibilityToDisabled = accessibilityToDisabled;
 	}
 
+	/**
+	 * This function create place of interest object according to all the inputs (supposed to be
+	 * used only in Database)
+	 * 
+	 * @param id the place of interest id
+	 * @param cityId the city id that contains the place of interest
+	 * @param name the place of interest name
+	 * @param type the place of interest type
+	 * @param placeDescription the place of interest description
+	 * @param accessibilityToDisabled if the place of interest is accessibility to disabled or not
+	 * @return the new place of interest object
+	 */
 	public static PlaceOfInterest _createPlaceOfInterest(int id, int cityId, String name, PlaceType type,
 			String placeDescription, boolean accessibilityToDisabled) { // friend to Database
 		return new PlaceOfInterest(id, cityId, name, type, placeDescription, accessibilityToDisabled);
 	}
 
+	/**
+	 * This is the normal public constructor for City object
+	 * 
+	 * @param cityId the city id that contains the place of interest
+	 * @param name the place of interest name
+	 * @param type the place of interest type
+	 * @param placeDescription the place of interest description
+	 * @param accessibilityToDisabled if the place of interest is accessibility to disabled or not
+	 */
 	public PlaceOfInterest(int cityId, String name, PlaceType type, String info, boolean accessibilityToDisabled) {
 		this.id = Database.generateIdPlaceOfInterest();
 		this.cityId = cityId;
@@ -107,42 +153,92 @@ public class PlaceOfInterest implements ClassMustProperties, Serializable {
 	public void reloadTempsFromDatabase() {
 	}
 
+	/**
+	 * Returns the place of interest id
+	 * 
+	 * @return the place of interest id
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * Returns the place of interest name
+	 * 
+	 * @return the place of interest name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Returns the place of interest place type
+	 * 
+	 * @return the place of interest place type
+	 */
 	public PlaceType getType() {
 		return type;
 	}
 
+	/**
+	 * Returns the place of interest description
+	 * 
+	 * @return the place of interest description
+	 */
 	public String getPlaceDescription() {
 		return placeDescription;
 	}
 
+	/**
+	 * Returns if the point of interest is accessibility to disabled
+	 * 
+	 * @return the city id
+	 */
 	public boolean isAccessibilityToDisabled() {
 		return accessibilityToDisabled;
 	}
 
+	/**
+	 * Sets the point of interest name
+	 * 
+	 * @param name the point of interest name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Sets the point of interest place type
+	 * 
+	 * @param type the point of interest place type
+	 */
 	public void setType(PlaceType type) {
 		this.type = type;
 	}
 
+	/**
+	 * Sets the point of interest description 
+	 * 
+	 * @param placeDescription the point of interest description 
+	 */
 	public void setPlaceDescription(String placeDescription) {
 		this.placeDescription = placeDescription;
 	}
 
+	/**
+	 * Sets the point of interest accessibility to disabled 
+	 * 
+	 * @param accessibilityToDisabled the point of interest accessibility to disabled
+	 */
 	public void setAccessibilityToDisabled(boolean accessibilityToDisabled) {
 		this.accessibilityToDisabled = accessibilityToDisabled;
 	}
 
+	/**
+	 * Returns the city id that contains the place of interest
+	 * 
+	 * @return the city id that contains the place of interest
+	 */
 	public int getCityId() {
 		return cityId;
 	}
