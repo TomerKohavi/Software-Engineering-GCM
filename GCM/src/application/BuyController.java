@@ -13,11 +13,16 @@ import controller.Downloader;
 import controller.InformationSystem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import objectClasses.OneTimePurchase;
 import objectClasses.Subscription;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * @author tomer
@@ -52,6 +57,24 @@ public class BuyController {
     private JFXButton BuyButton; // Value injected by FXMLLoader
 
     /**
+	 * open new page
+	 * @param FXMLpage new fxml page
+	 * @throws IOException cannot open the file
+	 */
+	void openNewPage(String FXMLpage) throws IOException
+	{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLpage));
+		Stage stage = new Stage();
+		stage.initModality(Modality.WINDOW_MODAL);
+		stage.initOwner(mainPane.getScene().getWindow());
+		stage.setScene(new Scene((Parent) loader.load()));
+		stage.setResizable(false);
+
+		// showAndWait will block execution until the window closes...
+		stage.showAndWait();
+	}
+    
+    /**
 	 * initialize variables
      */
     public void initialize() {
@@ -76,6 +99,7 @@ public class BuyController {
     		Connector.client.sendToServer(OneTimePurchase._createOneTimePurchase(-1, Connector.selectedCity.getId(), Connector.user.getId(), new Date(Calendar.getInstance().getTime().getTime()), price, price, true)); // TODO kohavi
     		Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.OneTimePurcahse);
     		Connector.downloadCity();
+    		openNewPage("DownloadCompleteScene.fxml");
     	}
     	else
     	{

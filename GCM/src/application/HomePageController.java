@@ -395,10 +395,6 @@ public class HomePageController
 		Text1.setText("Maps Found: " + Connector.cityData.getNumMapSights()); // #Maps for the city
 		Text2.setText("POI Found: " + Connector.cityData.getNumPlaceOfInterestSights()); // #POI for the city
 		Text3.setText("Routes Found: " + Connector.cityData.getNumRouteSights()); // #Routes for the city
-
-//		Connector.searchMapResult = cityData.getCopyMapSights();
-//		Connector.searchPOIResult = cityData.getCopyPlaceSights();
-//		Connector.searchRouteResult = cityData.getCopyRouteSights();
 		
 		BuyButton.setVisible(true);
 		if (Connector.user != null)
