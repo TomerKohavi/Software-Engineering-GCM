@@ -141,7 +141,7 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 	}
 
 	/**
-	 * Returns the customer one time purchase lise
+	 * Returns the customer one time purchase list
 	 * @return list of one time purchase object of the customer
 	 */
 	private ArrayList<OneTimePurchase> generateOneTimePurchases() {

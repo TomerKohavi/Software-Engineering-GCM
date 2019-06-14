@@ -85,6 +85,8 @@ public class ChatClient extends AbstractClient
 	
 	FetchSights fs;
 	
+	FetchCustomer fc;
+	
 	/**
 	 * Constructs an instance of the chat client.
 	 *
@@ -376,6 +378,13 @@ public class ChatClient extends AbstractClient
 		this.semAcquire();
 		return fs.sightList;
 	}
+	
+	public User fetchUser(int id) throws IOException
+	{
+		sendToServer(new FetchCustomer(id));
+		this.semAcquire();
+		return this.fc.user;
+	}
 
 	// Instance methods ***********************************************
 	/**
@@ -410,6 +419,8 @@ public class ChatClient extends AbstractClient
 			this.statboi = (Statboi) msg;
 		else if (msg instanceof FetchSights)
 			this.fs = (FetchSights) msg;
+		else if (msg instanceof FetchCustomer)
+			this.fc = ((FetchCustomer) msg);
 		if (msg instanceof Command)
 			this.semaphore.release();
 		else
