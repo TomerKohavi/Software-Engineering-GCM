@@ -7,6 +7,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 
@@ -52,6 +53,9 @@ public class RouteEditController
 
 	@FXML // fx:id="InfoBox"
 	private TextArea InfoBox; // Value injected by FXMLLoader
+	
+	@FXML // fx:id="FavoriteBox"
+    private JFXCheckBox FavoriteBox; // Value injected by FXMLLoader
 
 	@FXML // fx:id="UpButton"
 	private JFXButton UpButton; // Value injected by FXMLLoader
@@ -115,7 +119,7 @@ public class RouteEditController
 			route = Connector.selectedRoute;
 			Name.setText(route.getName());
 			InfoBox.setText(route.getInfo());
-
+//			FavoriteBox.setSelected(route.getIs); // TODO get isFavorite (is in RouteSight but not in Route - Blame Ronen)
 			stopList = route.getCopyRouteStops();
 		}
 		else
@@ -259,7 +263,7 @@ public class RouteEditController
 			else
 			{
 				RouteSight routeS = Connector.client.createRoute(Connector.selectedCity.getId(), Name.getText(), InfoBox.getText(),
-						Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId(), true); // TODO kohavi get isFavorite route
+						Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId(), FavoriteBox.isSelected());
 				Connector.selectedRoute = route = routeS.getCopyRoute();
 				Connector.searchRouteResult.add(routeS);
 			}
