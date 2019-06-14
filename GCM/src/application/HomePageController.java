@@ -412,10 +412,16 @@ public class HomePageController
 					BuyButton.setText("Change Price");
 				else
 					BuyButton.setVisible(false);
-				if (role == Role.CEO && city.getManagerNeedsToPublish())
+				if (role == Role.MANAGER && city.getManagerNeedsToPublish())
+				{
 					PublishButton.setVisible(true);
-				else
-					PublishButton.setVisible(false);
+					PublishButton.setText("Publish Version");
+				}
+				if (role == Role.REGULAR)
+				{
+					PublishButton.setVisible(true);
+					PublishButton.setText("Commit Version");
+				}
 				SideMap.setVisible(true);
 				SidePOI.setVisible(true);
 				SideRoutes.setVisible(true);
@@ -747,7 +753,7 @@ public class HomePageController
 			List<Location> locList = Connector.selectedMap.getCopyLocations();
 			for (Location loc : locList)
 			{
-				POIImage poiImage = new POIImage(false, true, loc.getCopyPlaceOfInterest().getName());
+				POIImage poiImage = new POIImage(false, true, loc.getCopyPlaceOfInterest().getName(), loc);
 				poiImage.image.setX(loc.getCoordinates()[0] + boundsInScene.getMinX());
 				poiImage.image.setY(loc.getCoordinates()[1] + boundsInScene.getMinY());
 				Connector.imageList.add(poiImage);
@@ -1015,10 +1021,18 @@ public class HomePageController
 	void callPublish(ActionEvent event) throws IOException
 	{
 		// publish the unpublished version
-		System.out.println("Published"); // TODO Sigal
-		Connector.selectedCity.setManagerNeedsToPublish(false); // TODO needs to send to database it they don't do it themselves
-		Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.VersionPublish);
-		Connector.client.addStat(Connector.selectedCity.getId(), Connector.selectedCity.getCopyPublishedVersion().getNumMapSights());
+		if (PublishButton.getText().equals("Publish Version"))
+		{
+			System.out.println("Published"); // TODO Sigal
+			Connector.selectedCity.setManagerNeedsToPublish(false); // TODO needs to send to database it they don't do it themselves
+			Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.VersionPublish);
+			Connector.client.addStat(Connector.selectedCity.getId(), Connector.selectedCity.getCopyPublishedVersion().getNumMapSights());
+			openNewPage("InformCustomersPublishScene.fxml");
+		}
+		else
+		{
+			// TODO Sigal Set to database that the map is ready to be published (.setManagerNeedsToPublish(true))
+		}
 	}
 
 	/**

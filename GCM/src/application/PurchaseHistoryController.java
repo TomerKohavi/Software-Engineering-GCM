@@ -47,11 +47,11 @@ public class PurchaseHistoryController {
 		ObservableList<Subscription> acL = FXCollections.observableArrayList(Connector.selectedCustomer.getCopyActiveSubscription());
 		ObservableList<Subscription> usL = FXCollections.observableArrayList(Connector.selectedCustomer.getCopyUnactiveSubscription());
 		
-		for (Subscription sub : acL)
-			sub.getNumMonths();
-		
-		for (Subscription sub : usL)
-			sub.getNumMonths();
+//		for (Subscription sub : acL)
+//			sub.getNumMonths();
+//		
+//		for (Subscription sub : usL)
+//			sub.getNumMonths();
 		
 		
 		TableColumn<OneTimePurchase, String> oneCityColumn = new TableColumn<>("City");
