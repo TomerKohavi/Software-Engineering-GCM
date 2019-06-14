@@ -163,6 +163,7 @@ public class MapEditController
 	}
 
 	/**
+	 * Handle add map request.
 	 * @param event user ask for add new image
 	 * @throws FileNotFoundException cannot add the image
 	 */
@@ -195,6 +196,7 @@ public class MapEditController
 	}
 
 	/**
+	 * Apply the changes tracked.
 	 * @param event user click on edit map
 	 */
 	@FXML
@@ -232,6 +234,7 @@ public class MapEditController
 	}
 
 	/**
+	 * Handle add POI location event. We will try to define a new location on the location the user clicked on.
 	 * @param event user click on add new point of interest to the map
 	 * @throws IOException cannot add the new point of interest to the map
 	 */
