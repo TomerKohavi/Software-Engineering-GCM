@@ -149,6 +149,7 @@ public class RouteEditController
 	}
 
 	/**
+	 * Change route order.
 	 * @param event user click to up route
 	 */
 	@FXML
@@ -161,6 +162,7 @@ public class RouteEditController
 	}
 
 	/**
+	 * Change route order.
 	 * @param event user click to down route
 	 */
 	@FXML
@@ -187,7 +189,8 @@ public class RouteEditController
 	}
 
 	/**
-	 * @param event add the point of interest to the route
+	 * Adds a POI to the route.
+	 * @param event add the place of interest to the route
 	 */
 	@FXML
 	void addPOI(ActionEvent event)
@@ -213,6 +216,7 @@ public class RouteEditController
 	}
 
 	/**
+	 * Removes a POI from a route.
 	 * @param event remove the point of interest from the route
 	 */
 	@FXML
@@ -234,6 +238,7 @@ public class RouteEditController
 	}
 
 	/**
+	 * Applies all the changes defined.
 	 * @param event appaly changes
 	 */
 	@FXML
