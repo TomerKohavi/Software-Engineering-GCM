@@ -29,6 +29,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
+import com.sun.xml.internal.bind.v2.runtime.Name;
+
 import application.Connector;
 
 /**
@@ -292,9 +294,9 @@ public class ChatClient extends AbstractClient
 	 * @return route sight object of the new route
 	 * @throws IOException if there is problem with the semaphore
 	 */
-	public RouteSight createRoute(int cityId, String info, int cdvId) throws IOException
+	public RouteSight createRoute(int cityId, String name, String info, int cdvId) throws IOException
 	{
-		sendToServer(new CreateRoute(cityId, info, cdvId));
+		sendToServer(new CreateRoute(cityId, name, info, cdvId));
 		this.semAcquire();
 		return this.croute.routeS;
 	}
