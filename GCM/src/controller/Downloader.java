@@ -17,8 +17,26 @@ import objectClasses.PlaceOfInterestSight;
 import objectClasses.Subscription;
 import otherClasses.Pair;
 
+/**
+ * Class that handles all the downloads
+ * @author Ron Cohen
+ *
+ */
 public final class Downloader
 {
+	/**
+	 * change the default constructor to private,
+	 * this class cannot be created as object.
+	 */
+	private Downloader() {
+	}
+	
+	/**
+     * Downloads the places of interest of the city data version
+     * @param cdv the city data version
+     * @param path the path to download
+     * @return if the download succeeded
+     */
     public static boolean downloadPOIs(CityDataVersion cdv,String path)
     {
         if(cdv==null) return false;
@@ -44,6 +62,11 @@ public final class Downloader
         }
     }
     
+    /**
+     * Downloads reports of update cities versions that intended to and classified by customers
+     * @param path the path to download the report
+     * @return if the download succeeded
+     */
     public static boolean downloadReportsUpdateVersions(String path)
     {
     	Date today=new Date(Calendar.getInstance().getTime().getTime());

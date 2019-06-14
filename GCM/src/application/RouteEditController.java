@@ -129,7 +129,7 @@ public class RouteEditController
 
 		poiColumn = new TableColumn<RouteStop, String>("POI");
 		poiColumn.setMinWidth(212);
-		poiColumn.setCellValueFactory(new PropertyValueFactory<>("placeName")); // TODO Fix Sigal stupid
+		poiColumn.setCellValueFactory(new PropertyValueFactory<>("placeName"));
 		poiColumn.setSortable(false);
 
 		timeColumn = new TableColumn<RouteStop, Time>("Time");
@@ -254,7 +254,7 @@ public class RouteEditController
 			{
 				RouteSight routeS = Connector.client.createRoute(Connector.selectedCity.getId(), InfoBox.getText(),
 						Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId());
-				route = routeS.getCopyRoute();
+				Connector.selectedRoute = route = routeS.getCopyRoute();
 				Connector.searchRouteResult.add(routeS);
 			}
 

@@ -5,6 +5,9 @@ import java.util.regex.Pattern;
 
 public class RegCheck {
 
+	/**
+	 * Enum that describe the problems with the registration input
+	 */
 	public enum Res {
 		UName("Illegal username. Username should contain only letters and numbers, at least 2 chars long, and less than 32 chars long."),
 		Pass("Illegal password- " + "it must be at least 8 char long, less than 32 char long " + "with lower case and upper case letters, "

@@ -6,11 +6,11 @@ import controller.Database;
 import otherClasses.ClassMustProperties;
 
 /**
- * @author ron
- * TODO: fix
+ * @author ron TODO: fix
  */
 @SuppressWarnings("serial")
-public class Location implements ClassMustProperties, Serializable {
+public class Location implements ClassMustProperties, Serializable
+{
 	private int id;
 	private int mapId;
 	private int placeOfInterestId;
@@ -21,12 +21,13 @@ public class Location implements ClassMustProperties, Serializable {
 	/**
 	 * This is a private constructor of location object
 	 * 
-	 * @param id the id of the location
-	 * @param mapId the map id that contains the location
+	 * @param id                the id of the location
+	 * @param mapId             the map id that contains the location
 	 * @param placeOfInterestId the place of interest id that contains the location
-	 * @param coordinates the coordinates of the location  
+	 * @param coordinates       the coordinates of the location
 	 */
-	private Location(int id, int mapId, int placeOfInterestId, double[] coordinates) {
+	private Location(int id, int mapId, int placeOfInterestId, double[] coordinates)
+	{
 		this.id = id;
 		this.mapId = mapId;
 		this.placeOfInterestId = placeOfInterestId;
@@ -35,45 +36,71 @@ public class Location implements ClassMustProperties, Serializable {
 	}
 
 	/**
-	 * This function create location object according to all the inputs (supposed to be
-	 * used only in Database)
+	 * This function create location object according to all the inputs (supposed to
+	 * be used only in Database)
 	 * 
-	 * @param id the id of the location
-	 * @param mapId the map id that contains the location
+	 * @param id                the id of the location
+	 * @param mapId             the map id that contains the location
 	 * @param placeOfInterestId the place of interest id that contains the location
-	 * @param coordinates the coordinates of the location  
+	 * @param coordinates       the coordinates of the location
 	 * @return the new location object
 	 */
-	public static Location _createLocation(int id, int mapId, int placeOfInterestId, double[] coordinates) { // friend
-																												// to
-																												// Database
+	public static Location _createLocation(int id, int mapId, int placeOfInterestId, double[] coordinates)
+	{ // friend
+		// to
+		// Database
 		return new Location(id, mapId, placeOfInterestId, coordinates);
 	}
 
 	/**
 	 * Create location by given map, point of interest and coordinates
 	 * 
-	 * @param m the map 
-	 * @param p the point of interest
+	 * @param m           the map
+	 * @param p           the point of interest
 	 * @param coordinates the coordinates of the location
 	 */
-	public Location(int mapId, PlaceOfInterest p, double[] coordinates) {
+	public Location(Map m, PlaceOfInterest p, double[] coordinates)
+	{
 		this.id = Database.generateIdLocation();
-		this.mapId = mapId;
+		this.mapId = m.getId();
 		this.placeOfInterestId = p.getId();
 		this.coordinates = coordinates;
 		this.temp_place = p;
 	}
+	
+	/**
+	 * Create location by given map, point of interest and coordinates
+	 * 
+	 * @param m           the map
+	 * @param p           the point of interest
+	 * @param coordinates the coordinates of the location
+	 */
+	private Location(int id, Map m, PlaceOfInterest p, double[] coordinates)
+	{
+		this.id = id;
+		this.mapId = m.getId();
+		this.placeOfInterestId = p.getId();
+		this.coordinates = coordinates;
+		this.temp_place = p;
+	}
+	
+	public Location _createLocalLocation(Map m, PlaceOfInterest p, double[] coordinates)
+	{
+		return new Location(-1, m, p, coordinates);
+	}
 
-	public void saveToDatabase() {
+	public void saveToDatabase()
+	{
 		Database._saveLocation(this);
 	}
 
-	public void deleteFromDatabase() {
+	public void deleteFromDatabase()
+	{
 		Database._deleteLocation(this.getId());
 	}
 
-	public void reloadTempsFromDatabase() {
+	public void reloadTempsFromDatabase()
+	{
 		this.temp_place = Database.getPlaceOfInterestById(this.placeOfInterestId);
 	}
 
@@ -82,7 +109,8 @@ public class Location implements ClassMustProperties, Serializable {
 	 * 
 	 * @return the location id
 	 */
-	public int getId() {
+	public int getId()
+	{
 		return id;
 	}
 
@@ -91,7 +119,8 @@ public class Location implements ClassMustProperties, Serializable {
 	 * 
 	 * @return the map id
 	 */
-	public int getMapId() {
+	public int getMapId()
+	{
 		return mapId;
 	}
 
@@ -100,16 +129,18 @@ public class Location implements ClassMustProperties, Serializable {
 	 * 
 	 * @return the place of interest id
 	 */
-	public int getPlaceOfInterestId() {
+	public int getPlaceOfInterestId()
+	{
 		return placeOfInterestId;
 	}
-	
+
 	/**
 	 * Return the coordinates of the location
 	 * 
 	 * @return the coordinates of the location
 	 */
-	public double[] getCoordinates() {
+	public double[] getCoordinates()
+	{
 		return coordinates;
 	}
 
@@ -118,7 +149,8 @@ public class Location implements ClassMustProperties, Serializable {
 	 * 
 	 * @return copied place of interest
 	 */
-	public PlaceOfInterest getCopyPlaceOfInterest() {
+	public PlaceOfInterest getCopyPlaceOfInterest()
+	{
 		return temp_place;
 	}
 
@@ -127,12 +159,14 @@ public class Location implements ClassMustProperties, Serializable {
 	 * 
 	 * @param coordinates the new coordinates of the location
 	 */
-	public void setCoordinates(double[] coordinates) {
+	public void setCoordinates(double[] coordinates)
+	{
 		this.coordinates = coordinates;
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(Object o)
+	{
 		return o instanceof Location && ((Location) o).getId() == this.getId();
 	}
 }

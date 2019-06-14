@@ -9,17 +9,43 @@ import objectClasses.CityDataVersion;
 import objectClasses.PlaceOfInterest;
 import objectClasses.PlaceOfInterestSight;
 
+/**
+ * Controller class that handles the search city query 
+ * 
+ * @author Ron Cohen
+ */
 public final class SearchCatalog {
+	/**
+	 * change the default constructor to private,
+	 * this class cannot be created as object.
+	 */
 	private SearchCatalog() {
 	}
 
+	/**
+	 * Function that search the database for the desired cities with the properties of this function input (search only published versions).
+	 * @param cityName the city name (or part of it)
+	 * @param cityDescription the city description (or words it contains)
+	 * @param placeName the place of interest that in the city name (or part of it)
+	 * @param placeDescription the place of interest that in the city description (or words it contains)
+	 * @return search result- list of cities that was found
+	 */
 	public static ArrayList<City> SearchCity(String cityName, String cityDescription, String placeName,
 											 String placeDescription)
 	{
 		return SearchCity( cityName,  cityDescription,  placeName,
 				 placeDescription,false);
 	}
-
+	
+	/**
+	 * Function that search the database for the desired cities with the properties of this function input.
+	 * @param cityName the city name (or part of it)
+	 * @param cityDescription the city description (or words it contains)
+	 * @param placeName the place of interest that in the city name (or part of it)
+	 * @param placeDescription the place of interest that in the city description (or words it contains)
+	 * @param useUnpublished if to also search in the unpublished versions of the cities
+	 * @return search result- list of cities that was found
+	 */
 	public static ArrayList<City> SearchCity(String cityName, String cityDescription, String placeName,
 			String placeDescription,boolean useUnpublished) // they can be null
 	{

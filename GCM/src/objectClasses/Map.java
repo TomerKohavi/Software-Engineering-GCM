@@ -48,7 +48,7 @@ public class Map implements ClassMustProperties, Serializable {
 		this.imgURL = other.imgURL;
 		this.temp_locations = new ArrayList<>();
 		for(Location l:other.getCopyLocations()) {
-			Location newL=new Location(this.id, l.getCopyPlaceOfInterest(), l.getCoordinates());
+			Location newL=new Location(this, l.getCopyPlaceOfInterest(), l.getCoordinates());
 			temp_locations.add(newL);
 		}
 		this.temp_removeLocations = new ArrayList<>();

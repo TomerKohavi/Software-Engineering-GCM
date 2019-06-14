@@ -86,6 +86,14 @@ public class Database
 	}
 
 	/**
+	 * change the default constructor to private,
+	 * this class cannot be created as object.
+	 */
+	private Database() {
+		
+	}
+	
+	/**
 	 * returns all the customers
 	 * 
 	 * @return List of all the customers
@@ -2251,7 +2259,7 @@ public class Database
 	 * 
 	 */
 	public static ArrayList<Integer> searchStatistic(Integer cityId, Date date, Date dateFrom, Date dateEnd,
-			Boolean newVersionPublished)
+			Boolean newVersionPublished,Boolean validNumMaps)
 	{
 		try
 		{
