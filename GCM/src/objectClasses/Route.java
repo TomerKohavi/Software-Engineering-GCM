@@ -17,30 +17,33 @@ public class Route implements ClassMustProperties, Serializable
 {
 	private int id;
 	private int cityId;
+	private String name;
 	private String info;
 
 	ArrayList<RouteStop> temp_routeStops;
 
 	ArrayList<RouteStop> temp_removeRouteStops;
 
-	private Route(int id, int cityId, String info)
+	private Route(int id, int cityId,String name, String info)
 	{
 		this.id = id;
 		this.cityId = cityId;
+		this.name=name;
 		this.info = info;
 		reloadTempsFromDatabase();
 	}
 
-	public static Route _createRoute(int id, int cityId, String info)
+	public static Route _createRoute(int id, int cityId,String name, String info)
 	{ // friend to
 		// Database
-		return new Route(id, cityId, info);
+		return new Route(id, cityId,name, info);
 	}
 
-	public Route(int cityId, String info)
+	public Route(int cityId,String name, String info)
 	{
 		this.id = Database.generateIdRoute();
 		this.cityId = cityId;
+		this.name=name;
 		this.info = info;
 		this.temp_routeStops = new ArrayList<>();
 		this.temp_removeRouteStops = new ArrayList<>();
@@ -216,6 +219,14 @@ public class Route implements ClassMustProperties, Serializable
 	public int getNumStops()
 	{
 		return temp_routeStops.size();
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public void setName(String name) {
+		this.name=name;
 	}
 
 	public int getCityId()
