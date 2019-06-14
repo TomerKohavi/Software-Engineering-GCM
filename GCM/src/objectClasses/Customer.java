@@ -264,6 +264,19 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 				return otp;
 		return null;
 	}
+	
+	/**
+	 * get the active subscriptions of the city
+	 * @param cityId the city id
+	 * @return list of subscriptions
+	 */
+	public ArrayList<Subscription> getActiveSubscriptionsByCity(int cityId) {
+		ArrayList<Subscription> subs=new ArrayList<Subscription>();
+		for (Subscription s : temp_activeSubscription)
+			if (s.getCityId()==cityId)
+				subs.add(s);
+		return subs;
+	}
 
 	/**
 	 * remove subscription with given id
