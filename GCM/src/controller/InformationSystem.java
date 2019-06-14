@@ -13,16 +13,29 @@ import otherClasses.Pair;
 public final class InformationSystem
 {
 	
+	/**
+	 * Enum that describe the events can be added to statistic "counters"
+	 */
 	public enum Ops
 	{
 		OneTimePurcahse, Subscription, SubRenewal, Visit, SubDownload, VersionPublish
 	}
 	
+	/**
+	 * change the default constructor to private,
+	 * this class cannot be created as object.
+	 */
 	private InformationSystem()
 	{
 	}
 
-	// list of Statistic
+	/**
+	 * Returns statistic with the city id and the date,
+	 * if none was found return null.
+	 * @param cityId the city id
+	 * @param d the date of the statistic
+	 * @return the statistic that was found
+	 */
 	public static Statistic getStatistic(int cityId, Date d)
 	{
 		ArrayList<Integer> ids = Database.searchStatistic((Integer) cityId, d, null, null, null);
@@ -32,16 +45,31 @@ public final class InformationSystem
 		return s;
 	}
 
+	/**
+	 * Calc and return a "sum" of all the statistic in the 
+	 * date range and have the city id.
+	 * @param cityId the city id, can be null to request all cities id
+	 * @param from date range from
+	 * @param end date range to
+	 * @return the statistic "sum" of all the statistics in range
+	 */
 	public static Statistic getRangeSumStatistics(Integer cityId, Date from, Date end)
 	{
-		ArrayList<Integer> ids = Database.searchStatistic((Integer) cityId, null, from, end, null);
+		ArrayList<Integer> ids = Database.searchStatistic((Integer) cityId, null, from, end, null,null);
 		Statistic sum = Statistic.createBlankStatistic();
-		ArrayList<Statistic> statisticsNumMaps = new ArrayList<Statistic>();
+		//calc sum
 		for (int id : ids)
 		{
 			Statistic s = Database._getStatisticById(id);
 			if (s == null) continue;
 			sum = Statistic.addStatistics(sum, s);
+		}
+		//calc num maps, need to go on all the statistics :(
+		ArrayList<Integer> allValidNumMapsStatisticsIds = Database.searchStatistic((Integer) cityId, null, null, end, null,true);
+		ArrayList<Statistic> statisticsNumMaps = new ArrayList<Statistic>();
+		for(int id:allValidNumMapsStatisticsIds)
+		{
+			Statistic s = Database._getStatisticById(id);
 			if(s.getNumMaps() >= 0)
 				statisticsNumMaps.add(s);
 		}
@@ -56,7 +84,7 @@ public final class InformationSystem
 
 	public static ArrayList<Pair<Pair<Date, Date>, Integer>> getRangeNumMaps(Integer cityId, Date from, Date end)
 	{
-		ArrayList<Integer> ids = Database.searchStatistic((Integer) cityId, null, from, end, null);
+		ArrayList<Integer> ids = Database.searchStatistic((Integer) cityId, null, null, end, null,true);
 		ArrayList<Pair<Pair<Date, Date>, Integer>> ans = new ArrayList<Pair<Pair<Date, Date>, Integer>>();
 		ArrayList<Statistic> statistics = new ArrayList<Statistic>();
 		for (int id : ids)
@@ -71,11 +99,14 @@ public final class InformationSystem
 		for (int i = 0; i < statistics.size(); i++)
 		{
 			Date fromRange = statistics.get(i).getDate();
+			if(fromRange.before(from))
+				fromRange =from;
 			Date toRange;
 			if (i < statistics.size() - 1)
 				toRange = statistics.get(i + 1).getDate();
 			else
 				toRange = new Date(Calendar.getInstance().getTime().getTime());
+			if(toRange.before(from)) continue; // if we are not in the range dont add the pair
 			Pair<Date, Date> datesRange = new Pair<Date, Date>(fromRange, toRange);
 			map.put(statistics.get(i).getCityId(), statistics.get(i).getNumMaps());
 			int numMaps = sumMapList(map);

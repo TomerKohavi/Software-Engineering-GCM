@@ -22,9 +22,13 @@ import objectClasses.Subscription;
 /**
  * Class that in charge of initialize the data base
  * 
- * @author Myself
+ *
+ * @author 
+ * @author 
+ * @author 
  *
  */
+//TODO: fill authors
 public class InitDatebase {
 	
 	/**
