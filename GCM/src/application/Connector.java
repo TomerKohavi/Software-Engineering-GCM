@@ -75,6 +75,8 @@ public class Connector {
 	public static Text poiNameTextArea = new Text("");
 	
 	/**
+	 * A function that gets a list of cities and displays the cities' name. 
+	 * If the user is an employee then it would mark the cities waiting for approval.
 	 * @param cityList list of city to we want to get
 	 * @return list of names of the cities.
 	 */
@@ -92,6 +94,7 @@ public class Connector {
 	}
 	
 	/**
+	 * A function that gets a list of maps and displays the maps' name. 
 	 * @param mapList list of map to we want to get
 	 * @return list of names of the maps.
 	 */
@@ -104,7 +107,8 @@ public class Connector {
 	}
 
 	/**
-	 * @param mapList list of point of interest to we want to get
+	 * A function that gets a list of POIs and displays the POIs' name. 
+	 * @param poiList list of point of interest to we want to get
 	 * @return list of names of the points of interest.
 	 */
 	public static ArrayList<String> getPOIsNames(ArrayList<PlaceOfInterestSight> poiList)
@@ -116,7 +120,8 @@ public class Connector {
 	}
 	
 	/**
-	 * @param mapList list of route to we want to get
+	 * A function that gets a list of routes and displays the routes' name. 
+	 * @param routeList list of route to we want to get
 	 * @return list of names of the routes.
 	 */
 	public static ArrayList<String> getRoutesNames(ArrayList<RouteSight> routeList)
@@ -132,6 +137,9 @@ public class Connector {
 		return nameList;
 	}
 	
+	/**
+	 * Downloads the city details to the user's computer.
+	 */
 	public static void downloadCity()
 	{
 		DirectoryChooser chooser = new DirectoryChooser();
