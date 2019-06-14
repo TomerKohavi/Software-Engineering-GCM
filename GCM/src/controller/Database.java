@@ -2276,10 +2276,10 @@ public class Database
 				sql += "CityId=? AND ";
 
 			if (dateFrom != null)
-				sql += "(Date > ?) AND ";
+				sql += "(Date >= ?) AND ";
 			
 			if (dateEnd != null)
-				sql += "(Date < ?) AND ";
+				sql += "(Date <= ?) AND ";
 
 			if (date != null)
 				sql += "Date=? AND ";
