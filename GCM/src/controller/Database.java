@@ -2259,7 +2259,7 @@ public class Database
 	 * 
 	 */
 	public static ArrayList<Integer> searchStatistic(Integer cityId, Date date, Date dateFrom, Date dateEnd,
-			Boolean newVersionPublished,Boolean validNumMaps)
+			Boolean newVersionPublished, Boolean validNumMaps)
 	{
 		try
 		{
@@ -2275,14 +2275,20 @@ public class Database
 			if (cityId != null)
 				sql += "CityId=? AND ";
 
-			if (dateFrom != null && dateEnd != null)
-				sql += "(Date BETWEEN ? AND ?) AND ";
+			if (dateFrom != null)
+				sql += "(Date > ?) AND ";
+			
+			if (dateEnd != null)
+				sql += "(Date < ?) AND ";
 
-			else if (date != null)
+			if (date != null)
 				sql += "Date=? AND ";
 
 			if (newVersionPublished != null)
 				sql += "NVP=? AND ";
+			
+			if (validNumMaps != null)
+				sql += "NumMaps>=0 AND ";
 
 			sql = sql.substring(0, sql.length() - 4);
 
@@ -2294,12 +2300,13 @@ public class Database
 			if (cityId != null)
 				gt.setInt(counter++, cityId);
 
-			if (dateFrom != null && dateEnd != null)
-			{
+			if (dateFrom != null)
 				gt.setDate(counter++, dateFrom);
+			
+			if (dateEnd != null)
 				gt.setDate(counter++, dateEnd);
-			}
-			else if (date != null)
+			
+			if (date != null)
 				gt.setDate(counter++, date);
 
 			if (newVersionPublished != null)
@@ -2558,10 +2565,8 @@ public class Database
 			ResultSet res = get(Table.RouteStop.getValue(), id);
 			if (res == null)
 				return null;
-			Time temp = res.getTime("Time");
-			temp.setHours(temp.getHours());
 			return RouteStop._createRouteStop(res.getInt("ID"), res.getInt("RouteID"), res.getInt("PlaceID"),
-					res.getInt("NumStops"), temp);
+					res.getInt("NumStops"), res.getTime("Time"));
 		}
 		catch (Exception e)
 		{
