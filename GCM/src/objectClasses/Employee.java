@@ -6,8 +6,8 @@ import controller.Database;
 import otherClasses.ClassMustProperties;
 
 /**
- * @author ron
- * TODO: fix 
+ * Class of employee object
+ * @author Ron Cohen
  */
 @SuppressWarnings("serial")
 public class Employee extends User implements ClassMustProperties, Serializable {

@@ -6,8 +6,8 @@ import java.sql.Date;
 import controller.Database;
 
 /**
- * @author ron
- * TODO: fix
+ * Abstract class of a general purchase of city
+ * @author Ron Cohen
  */
 @SuppressWarnings("serial")
 public abstract class CityPurchase implements Comparable<CityPurchase>, Serializable {

@@ -6,6 +6,11 @@ import java.util.ArrayList;
 import controller.Database;
 import otherClasses.ClassMustProperties;
 
+/**
+ * class of map object
+ * @author Ron Cohen
+ *
+ */
 @SuppressWarnings("serial")
 public class Map implements ClassMustProperties, Serializable {
 	private int id;
