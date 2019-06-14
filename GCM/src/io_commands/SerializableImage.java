@@ -62,6 +62,7 @@ class SerializableImage implements Serializable {
 	transient BufferedImage image;
 
     /**
+     * Writs the image as a stream.
      * @param out the strem output
      * @throws IOException can be thrown by imageIO
      */

@@ -259,7 +259,7 @@ public class RouteEditController
 			else
 			{
 				RouteSight routeS = Connector.client.createRoute(Connector.selectedCity.getId(), Name.getText(), InfoBox.getText(),
-						Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId());
+						Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId(), true); // TODO kohavi get isFavorite route
 				Connector.selectedRoute = route = routeS.getCopyRoute();
 				Connector.searchRouteResult.add(routeS);
 			}

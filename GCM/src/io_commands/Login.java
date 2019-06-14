@@ -11,6 +11,7 @@ import server.EchoServer.LoginRegisterResult;
 public class Login extends Command {
 
 	/**
+	 * Constructor.
 	 * @param name the name of the user
 	 * @param pass the password of the user
 	 * @param isEmployee if the user is employee or not

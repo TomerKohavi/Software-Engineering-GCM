@@ -2107,6 +2107,8 @@ public class Database {
 	 * @param date     the data we want to search
 	 * @param dateFrom the data from we want to search
 	 * @param dateEnd  the data end we want to search
+	 * @param newVersionPublished the new version published we want to search
+	 * @param validNumMaps the number of valid maps we want to search
 	 * @return the result list.
 	 * 
 	 */
