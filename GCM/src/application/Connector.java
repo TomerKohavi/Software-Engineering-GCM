@@ -147,7 +147,7 @@ public class Connector {
 		File defaultDirectory = new File("c:/");
 		chooser.setInitialDirectory(defaultDirectory);
 		File selectedDirectory = chooser.showDialog(null);
-		Downloader.downloadPOIs(Connector.selectedCity.getCopyPublishedVersion(),
+		Downloader.downloadPOIs(Connector.client.fetchSights(Connector.selectedCity.getCopyPublishedVersion(), PlaceOfInterestSight.class),
 				selectedDirectory.getPath() + "\\" + Connector.selectedCity.getCityName() + " "
 						+ Connector.selectedCity.getCopyPublishedVersion().getVersionName() + ".txt");
 	}
