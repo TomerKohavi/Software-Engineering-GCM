@@ -8,7 +8,6 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
-import javafx.scene.chart.PieChart.Data;
 import objectClasses.City;
 import objectClasses.CityDataVersion;
 import objectClasses.Customer;
@@ -34,9 +33,9 @@ public final class Downloader
 	}
 
 	/**
-	 * Downloads the places of interest of the city data version
+	 * Downloads the places of interest
 	 * 
-	 * @param cdv  the city data version
+	 * @param listPS the list of places of interest
 	 * @param path the path to download
 	 * @return if the download succeeded
 	 */

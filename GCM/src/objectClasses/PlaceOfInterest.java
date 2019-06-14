@@ -109,7 +109,7 @@ public class PlaceOfInterest implements ClassMustProperties, Serializable {
 	 * @param cityId the city id that contains the place of interest
 	 * @param name the place of interest name
 	 * @param type the place of interest type
-	 * @param placeDescription the place of interest description
+	 * @param info the place of interest info
 	 * @param accessibilityToDisabled if the place of interest is accessibility to disabled or not
 	 */
 	public PlaceOfInterest(int cityId, String name, PlaceType type, String info, boolean accessibilityToDisabled) {

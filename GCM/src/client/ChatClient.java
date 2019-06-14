@@ -123,14 +123,13 @@ public class ChatClient extends AbstractClient
 	}
 
 	/**
-	 * Constructs an instance of the chat client.
-	 *
-	 * @param loginID  The user ID.
-	 * @param host     The server to connect to.
-	 * @param port     The port number to connect on.
-	 * @param clientUI The interface type variable.
+	 * Try to login the user
+	 * @param uname user name
+	 * @param pass username password
+	 * @param isEmployee boolean if user is employee
+	 * @return pair of user and the login result
+	 * @throws IOException specific exception
 	 */
-
 	public Pair<User, LoginRegisterResult> login(String uname, String pass, boolean isEmployee) throws IOException
 	{
 		sendToServer(new Login(uname, pass, isEmployee));
@@ -197,9 +196,12 @@ public class ChatClient extends AbstractClient
 		return im;
 	}
 
+	
 	/**
-	 * @param pathname the path of the image we want to save
-	 * @throws IOException problem with the image
+	 * Send image to the server
+	 * @param readpath the path of the image
+	 * @param writepath path to write image
+	 * @throws IOException specific type of exception
 	 */
 	public void sendImage(String readpath, String writepath) throws IOException
 	{
@@ -334,7 +336,8 @@ public class ChatClient extends AbstractClient
 	}
 
 	/**
-	 * @param update user
+	 * Updates the user information
+	 * @param user user
 	 * @throws IOException cannot update
 	 */
 	public void updateUser(User user) throws IOException

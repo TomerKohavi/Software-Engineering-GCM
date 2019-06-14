@@ -53,7 +53,6 @@ public class ImageTransfer extends Command
 
 	/**
 	 * save the image into the server
-	 * @param pathname the path of the image we want to save
 	 * @throws IOException 
 	 */
 	

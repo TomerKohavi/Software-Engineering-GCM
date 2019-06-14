@@ -21,7 +21,7 @@ public abstract class CityPurchase implements Comparable<CityPurchase>, Serializ
 	
 	protected String cityName;
 
-	/** TODO: check
+	/**
 	 * This is a private constructor of city purchase abstract object
 	 * 
 	 * @param id the id of the city purchase
@@ -51,7 +51,7 @@ public abstract class CityPurchase implements Comparable<CityPurchase>, Serializ
 		this.cityName = cityName;
 	}
 
-	/** TODO: check
+	/**
 	 * This is the normal public constructor for city purchase object
 	 * 
 	 * @param userId the user id that buy the city purchase

@@ -125,7 +125,7 @@ public class RouteSight implements ClassMustProperties, Serializable {
 	/**
 	 * Sets the route sight favorite
 	 * 
-	 * @param cityName the new favorite of the route sight
+	 * @param favorite the new favorite of the route sight
 	 */
 	public void setFavorite(boolean favorite) {
 		isFavorite = favorite;

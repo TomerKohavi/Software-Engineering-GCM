@@ -1,1 +1,9 @@
+client
+common
+controller
+io_commands
 objectClasses
+ocsf.client
+ocsf.server
+otherClasses
+server

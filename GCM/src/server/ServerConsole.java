@@ -105,7 +105,7 @@ public class ServerConsole implements ChatIF
 	/**
 	 * This method is responsible for the creation of the Server UI.
 	 *
-	 * @param args[0] The port to connect to.
+	 * @param args The port to connect to.
 	 */
 	public static void main(String[] args)
 	{

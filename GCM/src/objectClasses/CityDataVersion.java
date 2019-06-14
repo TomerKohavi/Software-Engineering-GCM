@@ -93,8 +93,7 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 	}
 
 	/**
-	 * create new city data version with the same details as input and just new
-	 * version name TODO: check if ok
+	 * Copy constructor of city data version with new version name
 	 *
 	 * @param other       the city data version object we want to copy
 	 * @param versionName the new version name

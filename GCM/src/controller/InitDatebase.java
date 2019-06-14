@@ -23,12 +23,12 @@ import objectClasses.Subscription;
  * Class that in charge of initialize the data base
  * 
  *
- * @author 
- * @author 
- * @author 
+ * @author Ron Cohen
+ * @author Lior Weissman
+ * @author Tal Shachnovskieee
  *
  */
-//TODO: fill authors
+
 public class InitDatebase {
 	
 	/**
