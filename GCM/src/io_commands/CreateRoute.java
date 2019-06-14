@@ -14,13 +14,15 @@ public class CreateRoute extends Command
 	 * @param cityId the city id of the route
 	 * @param info the info of the route
 	 * @param cdvId city data version id of the route
+	 * @param isFav is the route favorite
 	 */
-	public CreateRoute(int cityId, String name, String info, int cdvId)
+	public CreateRoute(int cityId, String name, String info, int cdvId, boolean isFav)
 	{
 		this.cityId = cityId;
 		this.name = name;
 		this.info = info;
 		this.cdvId = cdvId;
+		this.isFav = isFav;
 	}
 
 	public void delete()
@@ -32,5 +34,6 @@ public class CreateRoute extends Command
 	public Integer cityId, cdvId;
 	public String info;
 	public String name;
+	public Boolean isFav;
 	public RouteSight routeS;
 }

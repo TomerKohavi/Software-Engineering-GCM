@@ -48,6 +48,8 @@ public class MapEditController
 	private Bounds boundsInScene;
 
 	private String readpath;
+	
+	private List<Location> locList;
 
 	@FXML // fx:id="mainPane"
 	private AnchorPane mainPane; // Value injected by FXMLLoader
@@ -121,7 +123,7 @@ public class MapEditController
 		boundsInScene = MapImage.localToScene(MapImage.getBoundsInLocal());
 		if (Connector.isEdit)
 		{
-			List<Location> locList = map.getCopyLocations();
+			locList = map.getCopyLocations();
 			for (Location loc : locList)
 			{
 				POIImage poiImage = new POIImage(false, false, loc.getCopyPlaceOfInterest().getName());
@@ -250,8 +252,8 @@ public class MapEditController
 			double[] cord = new double[2];
 			cord[0] = poi.image.getX() - boundsInScene.getMinX();
 			cord[1] = poi.image.getY() - boundsInScene.getMinY();
-			Location newLoc = new Location(map, Connector.choosenPOIInLoc, cord); // TODO Sigal
-			newLoc.saveToDatabase();
+			Location newLoc = Location._createLocalLocation(map, Connector.choosenPOIInLoc, cord); // TODO Sigal
+			locList.add(newLoc);
 			poi.image.setImage(realPOI);
 			poi.isNew = false;
 			firstPOIAdded = true;

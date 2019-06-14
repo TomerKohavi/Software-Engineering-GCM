@@ -296,9 +296,9 @@ public class ChatClient extends AbstractClient
 	 * @return route sight object of the new route
 	 * @throws IOException if there is problem with the semaphore
 	 */
-	public RouteSight createRoute(int cityId, String name, String info, int cdvId) throws IOException
+	public RouteSight createRoute(int cityId, String name, String info, int cdvId, boolean isFav) throws IOException
 	{
-		sendToServer(new CreateRoute(cityId, name, info, cdvId));
+		sendToServer(new CreateRoute(cityId, name, info, cdvId, isFav));
 		this.semAcquire();
 		return this.croute.routeS;
 	}
