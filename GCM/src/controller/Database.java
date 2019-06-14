@@ -7,6 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 import javafx.scene.chart.PieChart.Data;
 import objectClasses.City;
@@ -120,6 +123,34 @@ public class Database {
 			list.add(new Pair<>(cName, id));
 		}
 		return list;
+	}
+	
+	/**
+	 * Return list of customers subscribes right now to the city 
+	 * @param cityId the id of the city
+	 * @return list of customers
+	 */
+	public static ArrayList<Customer> getCustomersSubscribesToCity(int cityId)
+	{
+		Date today = new Date(Calendar.getInstance().getTime().getTime());
+		
+		//find relevant subs
+		ArrayList<Integer> subsIds = Database.searchSubscription(null, cityId, today, true);
+		// find relevant customers
+		Set<Integer> customersIds = new HashSet<Integer>();
+		for (int subsId : subsIds){
+			Subscription s = Database._getSubscriptionById(subsId);
+			if (s == null) continue;
+			customersIds.add(s.getUserId());
+		}
+		// load them
+		ArrayList<Customer> customers=new ArrayList<Customer>();
+		for(int id:customersIds) {
+			Customer c=Database.getCustomerById(id);
+			if(c==null) continue;
+			customers.add(c);
+		}
+		return customers;
 	}
 
 	/**
