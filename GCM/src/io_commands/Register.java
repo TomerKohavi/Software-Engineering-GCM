@@ -10,6 +10,7 @@ import server.EchoServer.LoginRegisterResult;
  */
 public class Register extends Command {
 	/**
+	 * Constructor
 	 * @param username the user name of the user
 	 * @param password the password of the user
 	 * @param firstName the firstName of the user

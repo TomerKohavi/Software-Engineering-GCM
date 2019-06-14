@@ -85,7 +85,7 @@ public class Location implements ClassMustProperties, Serializable
 		this.temp_place = p;
 	}
 	
-	public Location _createLocalLocation(Map m, PlaceOfInterest p, double[] coordinates)
+	public static Location _createLocalLocation(Map m, PlaceOfInterest p, double[] coordinates)
 	{
 		return new Location(-1, m, p, coordinates);
 	}

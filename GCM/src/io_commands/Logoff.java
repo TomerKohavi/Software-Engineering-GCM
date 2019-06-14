@@ -7,7 +7,7 @@ package io_commands;
 public class Logoff extends Command {
 
 	/**
-	 * log out
+	 * log out COnstructor.
 	 * @param id id of the user
 	 */
 	public Logoff(int id) {

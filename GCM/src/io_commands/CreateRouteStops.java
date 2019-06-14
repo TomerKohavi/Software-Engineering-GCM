@@ -12,6 +12,7 @@ public class CreateRouteStops extends Command
 {
 	
 	/**
+	 * Constructor.
 	 * @param stopList list of route stop to handle
 	 */
 	public CreateRouteStops(ArrayList<RouteStop> stopList)

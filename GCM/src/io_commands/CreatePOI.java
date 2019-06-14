@@ -11,6 +11,7 @@ public class CreatePOI extends Command
 {
 
 	/**
+	 * Constructor
 	 * @param cityId the city id of the point of interest
 	 * @param name the name of the point of interest
 	 * @param type which type is the point of interest
