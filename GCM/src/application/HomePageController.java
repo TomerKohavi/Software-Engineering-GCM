@@ -204,12 +204,13 @@ public class HomePageController
 
 	/**
 	 * @author tomer
-	 * treat loading animation
+	 * Treat loading animation
 	 */
 	class LoadingAnimation extends Task<Integer>
 	{
 
 		/**
+		 * 
 		 * @return the value of the call
 		 * @throws Exception cannot call
 		 */
@@ -250,7 +251,7 @@ public class HomePageController
 	}
 
 	/**
-	 * loading page
+	 * Loading page
 	 * @throws FileNotFoundException the file wasn't found
 	 */
 	void startLoad() throws FileNotFoundException
@@ -263,7 +264,7 @@ public class HomePageController
 	}
 
 	/**
-	 * the file was end to be loaded
+	 * The file finished loading.
 	 */
 	void endLoad()
 	{
@@ -272,7 +273,7 @@ public class HomePageController
 	}
 
 	/**
-	 * open new page
+	 * Opens new page.
 	 * @param FXMLpage new fxml page
 	 * @throws IOException cannot open the file
 	 */
@@ -290,7 +291,7 @@ public class HomePageController
 	}
 
 	/**
-	 * load page
+	 * Loads page.
 	 * @param FXMLpage the page we want to load
 	 * @throws IOException cannot loat the page
 	 */
@@ -301,7 +302,7 @@ public class HomePageController
 	}
 
 	/**
-	 * set main side button
+	 * Sets main side button.
 	 * @param button button to set
 	 */
 	void setMainSideButton(JFXButton button)
@@ -313,6 +314,7 @@ public class HomePageController
 	}
 
 	/**
+	 * Clears the data collected.
 	 * @param clearList list of object to clear
 	 */
 	void clearInfo(boolean clearList)
@@ -360,7 +362,7 @@ public class HomePageController
 	}
 
 	/**
-	 * add info to city
+	 * Adds info to city. It add will add the maps, POIs and Routes.
 	 * @param city city to add info
 	 */
 	private void fillCityInfo(City city)
@@ -439,7 +441,7 @@ public class HomePageController
 	}
 	
 	/**
-	 * add info to map
+	 * Adds info to map. It will add the image.
 	 * @param map map to add  the info
 	 */
 	private void fillMapInfo(Map map)
@@ -466,7 +468,7 @@ public class HomePageController
 	}
 	
 	/**
-	 * add info to point of interest
+	 * Adds info to point of interest.
 	 * @param poi point of interest to add  the info
 	 */
 	private void fillPOIInfo(PlaceOfInterest poi)
@@ -477,7 +479,7 @@ public class HomePageController
 	}
 	
 	/**
-	 * add info to route
+	 * Adds info to route.
 	 * @param route route to add  the info
 	 */
 	@SuppressWarnings("unchecked")
@@ -643,7 +645,7 @@ public class HomePageController
 	}
 
 	/**
-	 * search
+	 * Handle search event. 
 	 * @param event object to search
 	 * @throws IOException cannot find the object
 	 * @throws InterruptedException problem
@@ -689,7 +691,7 @@ public class HomePageController
 	}
 
 	/**
-	 * more details
+	 * 
 	 * @param event click on watch
 	 */
 	@FXML
@@ -712,7 +714,7 @@ public class HomePageController
 	}
 
 	/**
-	 * view purchase history
+	 * Opens purchase history page.
 	 * @param event click on view purchase history
 	 * @throws IOException cannot see history
 	 */
@@ -723,6 +725,7 @@ public class HomePageController
 	}
 
 	/**
+	 * Displays the map.
 	 * @param event user click on show map image
 	 * @throws FileNotFoundException cannot find the image
 	 */
@@ -758,6 +761,7 @@ public class HomePageController
 	}
 
 	/**
+	 * Shows the search page results.
 	 * @param event user click on show search event
 	 */
 	@FXML
@@ -774,6 +778,7 @@ public class HomePageController
 	}
 
 	/**
+	 * Loads login page.
 	 * @param event login page
 	 * @throws IOException cannot login
 	 */
@@ -792,7 +797,7 @@ public class HomePageController
 	}
 
 	/**
-	 * edit user details
+	 * Opens edit user details scene.
 	 * @param event user want to edit his details
 	 * @throws IOException cannot edit user
 	 */
@@ -803,6 +808,7 @@ public class HomePageController
 	}
 
 	/**
+	 * Displays a list of the maps.
 	 * @param event show map his clicked
 	 * @throws IOException cannot show map
 	 */
@@ -818,6 +824,7 @@ public class HomePageController
 	}
 
 	/**
+	 * Displays a list of the POIs.
 	 * @param event show point of interest his clicked
 	 * @throws IOException cannot show point of interest
 	 */
@@ -833,6 +840,7 @@ public class HomePageController
 	}
 
 	/**
+	 * Displays a list of the Routes.
 	 * @param event show route his clicked
 	 * @throws IOException cannot show route
 	 */
@@ -848,6 +856,7 @@ public class HomePageController
 	}
 
 	/**
+	 * Displays the reports asked for.
 	 * @param event show report his clicked
 	 * @throws IOException cannot show report
 	 */
@@ -864,6 +873,7 @@ public class HomePageController
 	}
 
 	/**
+	 * Displays a list of the users.
 	 * @param event show users his clicked
 	 * @throws IOException cannot show users
 	 */
@@ -888,6 +898,7 @@ public class HomePageController
 	}
 
 	/**
+	 * Handles remove scenario.
 	 * @param event remove
 	 */
 	@FXML
@@ -916,6 +927,7 @@ public class HomePageController
 	}
 
 	/**
+	 * Handles create scenario.
 	 * @param event create is called
 	 * @throws IOException cannot create
 	 */
@@ -938,6 +950,7 @@ public class HomePageController
 	}
 
 	/**
+	 * Handles an edit scenario.
 	 * @param event edit is called
 	 * @throws IOException cannot edit
 	 */
@@ -964,6 +977,7 @@ public class HomePageController
 	}
 
 	/**
+	 * Nothing
 	 * @param event need to unpublished 
 	 * @throws IOException cannot unpublished
 	 */
@@ -977,6 +991,7 @@ public class HomePageController
 	}
 	
 	/**
+	 * Opens resubscribe page.
 	 * @param event need to resubscribe
 	 * @throws IOException cannot resubscribe
 	 */
@@ -987,6 +1002,7 @@ public class HomePageController
 	}
 
 	/**
+	 * Publish an unpublished version.
 	 * @param event need to publish 
 	 * @throws IOException cannot publish
 	 */
@@ -1000,7 +1016,7 @@ public class HomePageController
 	}
 
 	/**
-	 * open but window
+	 * Opens buy window.
 	 * @param event user want to buy
 	 * @throws IOException cannot open the buy window
 	 */
