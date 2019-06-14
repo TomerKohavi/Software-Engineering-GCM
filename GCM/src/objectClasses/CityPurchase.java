@@ -4,13 +4,14 @@ import java.io.Serializable;
 import java.sql.Date;
 
 import controller.Database;
+import otherClasses.ClassMustProperties;
 
 /**
  * Abstract class of a general purchase of city
  * @author Ron Cohen
  */
 @SuppressWarnings("serial")
-public abstract class CityPurchase implements Comparable<CityPurchase>, Serializable {
+public abstract class CityPurchase implements Comparable<CityPurchase>, Serializable, ClassMustProperties {
 	private int id;
 	private int cityId;
 	private int userId;
@@ -18,7 +19,6 @@ public abstract class CityPurchase implements Comparable<CityPurchase>, Serializ
 	private double fullPrice;
 	private double pricePayed;
 	
-	protected String temp_cityName;
 
 	/** TODO: check
 	 * This is a private constructor of city purchase abstract object
@@ -37,7 +37,6 @@ public abstract class CityPurchase implements Comparable<CityPurchase>, Serializ
 		this.purchaseDate = purchaseDate;
 		this.fullPrice = fullPrice;
 		this.pricePayed = pricePayed;
-		reloadTempsFromDatabase();
 	}
 
 	/** TODO: check
@@ -62,9 +61,7 @@ public abstract class CityPurchase implements Comparable<CityPurchase>, Serializ
 	/**
 	 * reload temporal city purchase from the data base
 	 */
-	public void reloadTempsFromDatabase(){
-		this.temp_cityName=Database.getCityNameById(cityId);
-    }
+	public void reloadTempsFromDatabase() {}
 
 	/**
 	 * Returns the user id
@@ -73,6 +70,11 @@ public abstract class CityPurchase implements Comparable<CityPurchase>, Serializ
 	 */
 	public int getUserId() {
 		return userId;
+	}
+	
+	public void _setId(int id)
+	{
+		this.id = id;
 	}
 
 	/**
@@ -154,15 +156,6 @@ public abstract class CityPurchase implements Comparable<CityPurchase>, Serializ
 	 */
 	public void setPurchaseDate(Date purchaseDate) {
 		this.purchaseDate = purchaseDate;
-	}
-	
-	/**
-	 * Returns the city name
-	 * 
-	 * @return the city name
-	 */
-	public String getCityName() {
-		return this.temp_cityName;
 	}
 
 	/**
