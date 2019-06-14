@@ -57,9 +57,9 @@ public class Location implements ClassMustProperties, Serializable {
 	 * @param p the point of interest
 	 * @param coordinates the coordinates of the location
 	 */
-	public Location(Map m, PlaceOfInterest p, double[] coordinates) {
+	public Location(int mapId, PlaceOfInterest p, double[] coordinates) {
 		this.id = Database.generateIdLocation();
-		this.mapId = m.getId();
+		this.mapId = mapId;
 		this.placeOfInterestId = p.getId();
 		this.coordinates = coordinates;
 		this.temp_place = p;
