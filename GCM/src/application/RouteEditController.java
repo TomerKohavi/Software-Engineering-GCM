@@ -91,20 +91,6 @@ public class RouteEditController
 	@FXML
 	public void initialize() throws IOException
 	{
-//		ImageView upImg = new ImageView(new Image(new FileInputStream("Pics\\up_arrow.png")));
-//		ImageView downImg = new ImageView(new Image(new FileInputStream("Pics\\down_arrow.png")));
-//		upImg.setFitHeight(25);
-//		upImg.setFitWidth(25);
-//		downImg.setFitHeight(25);
-//		downImg.setFitWidth(25);
-//		
-//		UpButton.setGraphic(upImg);
-//		DownButton.setGraphic(downImg);
-//		DownButton.setMinWidth(25);
-//		DownButton.setMaxWidth(25);
-//		DownButton.setMinHeight(25);
-//		DownButton.setMaxHeight(25);
-
 		ReadOnlyIntegerProperty selectedIndex = StopsBox.getSelectionModel().selectedIndexProperty();
 
 		UpButton.disableProperty().bind(selectedIndex.lessThanOrEqualTo(0));
