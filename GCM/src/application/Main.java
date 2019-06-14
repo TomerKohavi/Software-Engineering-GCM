@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application
 {
+
 	public void start(Stage primaryStage) throws IOException
 	{
 
@@ -34,6 +35,7 @@ public class Main extends Application
 	{
 		Main.launch((String[]) args);
 	}
+
 
 	@FXML
 	public void exitApplication(ActionEvent event)

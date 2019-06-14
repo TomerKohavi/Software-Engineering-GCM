@@ -118,6 +118,7 @@ public class RegisterController
 	}
 	
 	/**
+	 * Loads login page.
 	 * @param event user click on login scene
 	 * @throws IOException cannot load the login scene page
 	 */
@@ -128,6 +129,7 @@ public class RegisterController
 	}
 
 	/**
+	 * Handles register events.
 	 * @param event user click on register
 	 * @throws IOException cannot register
 	 */
