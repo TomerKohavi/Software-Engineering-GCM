@@ -9,21 +9,33 @@ import otherClasses.ClassMustProperties;
 @SuppressWarnings("serial")
 public class PlaceOfInterest implements ClassMustProperties, Serializable {
 	public enum PlaceType {
-		HISTORICAL("Historical"), MUSEUM("Museum"), HOTEL("HOTEL"), RESTAURANT("Restaurant"), PUBLIC("Public"), PARK("Park"), STORE("Store"), CINEMA("Cinema");
+		HISTORICAL(0), MUSEUM(1), HOTEL(2), RESTAURANT(3), PUBLIC(4), PARK(5), STORE(6), CINEMA(7);
 
-		private final String value;
+		private final int value;
 
-		PlaceType(final String nv) {
+		PlaceType(final int nv) {
 			value = nv;
 		}
 
-		public String getValue() {
+		public int getValue() {
 			return value;
 		}
-		
+
+
 		@Override
 		public String toString() {
-			return this.value;
+			switch (this)
+			{
+				case HISTORICAL: return "Historical";
+				case MUSEUM: return "Museum";
+				case HOTEL: return "HOTEL";
+				case RESTAURANT: return "Restaurant";
+				case PUBLIC: return "Public";
+				case PARK: return "Park";
+				case STORE: return "Store";
+				case CINEMA: return "Cinema";
+				default: return "unknown type";
+			}
 		}
 	}
 
