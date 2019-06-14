@@ -488,7 +488,7 @@ public class HomePageController
 	private void fillRouteInfo(Route route)
 	{
 		Connector.selectedRoute = route;
-		ResultName.setText("Route " + route.getId());// set name and type
+		ResultName.setText(route.getName());// set name and type
 		ResultInfo.setText(route.getInfo()); // set info
 
 		ArrayList<RouteStop> list = route.getCopyRouteStops();
