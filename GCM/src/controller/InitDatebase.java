@@ -443,6 +443,12 @@ public class InitDatebase {
 				"A stately mansion set in the middle of Rome, this is an oasis of old-fashioned charm and calm. It’s a picture of classic elegance with antique furniture, polished wood and traditionally furnished rooms. Outside, the manicured gardens are a lovely place to relax.",
 				true);
 		p6.saveToDatabase();
+		PlaceOfInterest p7 = new PlaceOfInterest(city.getId(), "Stadio Olimpico ",
+				PlaceOfInterest.PlaceType.PUBLIC,
+				"The Stadio Olimpico is the main and largest sports facility of Rome, Italy."
+				+ " It is located within the Foro Italico sports complex, north of the city.",
+				true);
+		p7.saveToDatabase();
 
 		// cdv
 		CityDataVersion cdv = new CityDataVersion(city, "1.0", 40, 135);
@@ -452,6 +458,8 @@ public class InitDatebase {
 		ps1.saveToDatabase();
 		PlaceOfInterestSight ps5 = new PlaceOfInterestSight(cdv.getId(), p5);
 		ps5.saveToDatabase();
+		PlaceOfInterestSight ps7 = new PlaceOfInterestSight(cdv.getId(), p7);
+		ps7.saveToDatabase();
 
 		Map m0 = new Map(city.getId(), "All Rome", "general map of all the city.", "roma.png");
 		double[] coords0 = { 400, 200 };
