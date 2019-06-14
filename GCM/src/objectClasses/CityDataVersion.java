@@ -320,9 +320,14 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 	 * @param cdvId the city data version id we ant to get there route sights
 	 * @return list of route sight object we want to get
 	 */
+<<<<<<< HEAD
 	public static ArrayList<RouteSight> _generateRouteSights(int cdvId)
 	{
 		ArrayList<Integer> ids = Database.searchRouteSight(cdvId, null, null);
+=======
+	public static ArrayList<RouteSight> _generateRouteSights(int cdvId) {
+		ArrayList<Integer> ids = Database.searchRouteSight(cdvId, null,null);
+>>>>>>> origin/master
 		ArrayList<RouteSight> arrList = new ArrayList<RouteSight>();
 		for (int id : ids)
 		{
