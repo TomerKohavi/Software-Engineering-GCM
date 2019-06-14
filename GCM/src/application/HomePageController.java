@@ -382,12 +382,12 @@ public class HomePageController
 		ResultName.setText(city.getCityName()); // set name
 		ResultInfo.setText(city.getCityDescription()); // set info
 		// get QUERIE
-		if (Connector.unpublished) // TODO search unpublished
+		if (Connector.unpublished)
 		{
 			Connector.cityData = city.getCopyUnpublishedVersions().get(0);
 			System.out.println("search unpublished");
 		}
-		else // TODO search published
+		else
 		{
 			Connector.cityData = city.getCopyPublishedVersion();
 			System.out.println("search published");
@@ -484,6 +484,7 @@ public class HomePageController
 	 * add info to route
 	 * @param route route to add  the info
 	 */
+	@SuppressWarnings("unchecked")
 	private void fillRouteInfo(Route route)
 	{
 		Connector.selectedRoute = route;
@@ -556,7 +557,6 @@ public class HomePageController
 		MainList.setOnMouseClicked(new EventHandler<MouseEvent>()
 		{
 
-			@SuppressWarnings("unchecked")
 			@Override
 			public void handle(MouseEvent click)
 			{
@@ -600,7 +600,7 @@ public class HomePageController
 								catch (IOException e)
 								{
 									e.printStackTrace();
-								} // TODO
+								}
 								ReportCityName.setText("All Cities");
 							}
 							else
@@ -615,7 +615,7 @@ public class HomePageController
 								catch (IOException e)
 								{
 									e.printStackTrace();
-								} // TODO
+								}
 								ReportCityName.setText(Connector.allCities.get(selectedIndex - 1).a);
 
 							}
@@ -669,12 +669,12 @@ public class HomePageController
 		if (Connector.searchCityResult != null && !Connector.searchCityResult.isEmpty())
 		{
 
-			if (UnpublishSearch.isSelected()) // TODO search unpublished
+			if (UnpublishSearch.isSelected())
 			{
 				Connector.unpublished = true;
 				System.out.println("search unpublished");
 			}
-			else // TODO search published
+			else
 			{
 				Connector.unpublished = false;
 				System.out.println("search published");
@@ -901,7 +901,11 @@ public class HomePageController
 		MainList.getItems().remove(index);
 		try
 		{
-			if (Connector.listType.equals("Map"))
+			if (Connector.listType.equals("City")) {
+				Connector.client.addStat(Connector.selectedCity.getId(), 0);
+				Connector.client.deleteObject(Connector.searchCityResult.remove(index)); // TODO CHECK creation
+			}
+			else if (Connector.listType.equals("Map"))
 				Connector.client.deleteObject(Connector.searchMapResult.remove(index)); // TODO CHECK creation
 			else if (Connector.listType.equals("POI"))
 				Connector.client.deleteObject(Connector.searchPOIResult.remove(index)); // TODO DO DO
@@ -925,8 +929,10 @@ public class HomePageController
 		Connector.isEdit = false;
 		openNewPage(Connector.listType + "EditScene.fxml");
 		MainList.getItems().clear();
-		if (Connector.listType.equals("City"))
+		if (Connector.listType.equals("City")) {
 			MainList.getItems().addAll(Connector.getCitiesNames(Connector.searchCityResult));
+			Connector.client.addStat(Connector.selectedCity.getId(), 0);
+		}
 		else if (Connector.listType.equals("Map"))
 			MainList.getItems().addAll(Connector.getMapsNames(Connector.searchMapResult));
 		else if (Connector.listType.equals("POI"))
@@ -994,6 +1000,7 @@ public class HomePageController
 		// publish the unpublished version
 		System.out.println("Published"); // TODO Sigal
 		Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.VersionPublish);
+		Connector.client.addStat(Connector.selectedCity.getId(), Connector.selectedCity.getCopyPublishedVersion().getNumMapSights());
 	}
 
 	/**
