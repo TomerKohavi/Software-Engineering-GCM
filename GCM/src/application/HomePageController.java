@@ -1037,6 +1037,7 @@ public class HomePageController
 			}
 			else if (BuyButton.getText().equals("Change Price"))
 				openNewPage("ChangePriceScene.fxml");
+			fillCityInfo(Connector.selectedCity);
 		}
 	}
 

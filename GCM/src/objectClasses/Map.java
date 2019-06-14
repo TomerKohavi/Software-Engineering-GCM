@@ -22,6 +22,15 @@ public class Map implements ClassMustProperties, Serializable {
 	private ArrayList<Location> temp_locations;
 	private ArrayList<Location> temp_removeLocations;
 
+	/**
+	 * This is a private constructor of map object
+	 * 
+	 * @param id the map id
+	 * @param cityId the id of the city that contains the map
+	 * @param name the name of the map
+	 * @param info the info of the map
+	 * @param imgURL the path of the image that in the map
+	 */
 	private Map(int id, int cityId, String name, String info, String imgURL) {
 		this.id = id;
 		this.cityId = cityId;
@@ -31,10 +40,29 @@ public class Map implements ClassMustProperties, Serializable {
 		reloadTempsFromDatabase();
 	}
 
+	/**
+	 * This function create map object according to all the inputs (supposed to be
+	 * used only in Database)
+	 * 
+	 * @param id the map id
+	 * @param cityId the id of the city that contains the map
+	 * @param name the name of the map
+	 * @param info the info of the map
+	 * @param imgURL the path of the image that in the map
+	 * @return the new map object
+	 */
 	public static Map _createMap(int id, int cityId, String name, String info, String imgURL) { // friend to Database
 		return new Map(id, cityId, name, info, imgURL);
 	}
 
+	/**
+	 * This is the normal public constructor for City object
+	 * 
+	 * @param cityId the id of the city that contains the map
+	 * @param name the name of the map
+	 * @param info the info of the map
+	 * @param imgURL the path of the image that in the map
+	 */
 	public Map(int cityId, String name, String info, String imgURL) {
 		this.id = Database.generateIdMap();
 		this.cityId = cityId;
@@ -45,6 +73,11 @@ public class Map implements ClassMustProperties, Serializable {
 		this.temp_removeLocations = new ArrayList<>();
 	}
 	
+	/**
+	 * Copy constructor of class map with new id
+	 * 
+	 * @param other map object to copy
+	 */
 	public Map(Map other) {
 		this.id = Database.generateIdMap();
 		this.cityId = other.cityId;
@@ -59,6 +92,10 @@ public class Map implements ClassMustProperties, Serializable {
 		this.temp_removeLocations = new ArrayList<>();
 	}
 
+	/**
+	 * Returns a list of locations in the map
+	 * @return list of locations in the map
+	 */
 	private ArrayList<Location> generateLocations() {
 		ArrayList<Integer> ids = Database.searchLocation(this.id, null);
 		ArrayList<Location> arrList = new ArrayList<Location>();
@@ -109,10 +146,20 @@ public class Map implements ClassMustProperties, Serializable {
 		this.temp_removeLocations = new ArrayList<>();
 	}
 
+	/**
+	 * Returns the number of locations in the map
+	 * 
+	 * @return the number of locations in the map
+	 */
 	public int getNumLocations() {
 		return temp_locations.size();
 	}
 
+	/**
+	 * Return location object of the point of interest with given id
+	 * @param placeOfInterestId the id of the place of interest we want to look at
+	 * @return the location that of the place of interest 
+	 */
 	public Location getLocationByPlaceOfInterestId(int placeOfInterestId) {
 		for (Location l : temp_locations) {
 			if (l.getPlaceOfInterestId() == placeOfInterestId)
@@ -121,6 +168,12 @@ public class Map implements ClassMustProperties, Serializable {
 		return null;
 	}
 
+	/**
+	 * Return location object by given id
+	 * 
+	 * @param locId the id of the location we search
+	 * @return location object 
+	 */
 	public Location getLocationById(int locId) {
 		for (Location l : temp_locations) {
 			if (l.getId() == locId)
@@ -129,6 +182,12 @@ public class Map implements ClassMustProperties, Serializable {
 		return null;
 	}
 
+	/**
+	 * Add new location to the map and return if the location was added successfully
+	 * 
+	 * @param l location object to add
+	 * @return true if the location is added successfully
+	 */
 	public boolean addLocation(Location l) {
 		if (l.getCopyPlaceOfInterest().getCityId() != this.cityId || l.getMapId() != this.id)
 			return false;
@@ -136,6 +195,12 @@ public class Map implements ClassMustProperties, Serializable {
 		return true;
 	}
 
+	/**
+	 * Remove location from the map by given id and return him
+	 * 
+	 * @param locId id of location to remove
+	 * @return the location object that removed
+	 */
 	public Location removeLocationById(int locId) {
 		for (Location l : new ArrayList<>(temp_locations)) {
 			if (l.getId() == locId) {
@@ -147,38 +212,83 @@ public class Map implements ClassMustProperties, Serializable {
 		return null;
 	}
 
+	/**
+	 * Returns the map id
+	 * 
+	 * @return the map id
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * Returns the name of the map
+	 * 
+	 * @return the name of the map
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Returns the info of the map
+	 * 
+	 * @return the info of the map
+	 */
 	public String getInfo() {
 		return info;
 	}
 
+	/**
+	 * Sets the name of the map
+	 * 
+	 * @param name the new name of the map
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Sets the map info
+	 * 
+	 * @param info the new map info
+	 */
 	public void setInfo(String info) {
 		this.info = info;
 	}
 
+	/**
+	 * Returns the image path of the map
+	 * 
+	 * @return image path of the map
+	 */
 	public String getImgURL() {
 		return imgURL;
 	}
 
+	/**
+	 * Sets the path of the image in the map
+	 * 
+	 * @param imgURL the new image path of the map
+	 */
 	public void setImgURL(String imgURL) {
 		this.imgURL = imgURL;
 	}
 
+	/**
+	 * Returns the city id
+	 * 
+	 * @return the city id
+	 */
 	public int getCityId() {
 		return cityId;
 	}
 
+	/**
+	 * Returns list of copied locations
+	 * 
+	 * @return list of copied locations that in the map
+	 */
 	public ArrayList<Location> getCopyLocations() {
 		return new ArrayList<>(temp_locations);
 	}
