@@ -247,7 +247,7 @@ public class MapEditController
 			double[] cord = new double[2];
 			cord[0] = poi.image.getX() - boundsInScene.getMinX();
 			cord[0] = poi.image.getX() - boundsInScene.getMinY();
-			Location newLoc = new Location(map, Connector.choosenPOIInLoc, cord); // TODO Sigal
+			Location newLoc = new Location(map.getId(), Connector.choosenPOIInLoc, cord); // TODO Sigal
 			newLoc.saveToDatabase();
 			poi.image.setImage(realPOI);
 			poi.isNew = false;

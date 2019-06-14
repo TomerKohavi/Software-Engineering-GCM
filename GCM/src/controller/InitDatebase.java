@@ -22,9 +22,13 @@ import objectClasses.Subscription;
 /**
  * Class that in charge of initialize the data base
  * 
- * @author Myself
+ *
+ * @author 
+ * @author 
+ * @author 
  *
  */
+//TODO: fill authors
 public class InitDatebase {
 	
 	/**
@@ -111,13 +115,13 @@ public class InitDatebase {
 
 		Map m0 = new Map(c1.getId(), "Central city", "First map", "haifa1.png");
 		double[] coords0 = { 121.3, 518.7 };
-		Location l0 = new Location(m0, p0, coords0);
+		Location l0 = new Location(m0.getId(), p0, coords0);
 		m0.addLocation(l0);
 		double[] coords1 = { 411.3, 150.2 };
-		Location l1 = new Location(m0, p1, coords1);
+		Location l1 = new Location(m0.getId(), p1, coords1);
 		m0.addLocation(l1);
 		double[] coords2 = { 43, 350 };
-		Location l2 = new Location(m0, p3, coords2);
+		Location l2 = new Location(m0.getId(), p3, coords2);
 		m0.addLocation(l2);
 		m0.saveToDatabase();
 		MapSight ms0 = new MapSight(cdv.getId(), m0);
@@ -125,13 +129,13 @@ public class InitDatebase {
 
 		Map m1 = new Map(c1.getId(), "Mount Carmel", "Second map", "haifa2.png");
 		double[] coords5 = { 412.3, 285.7 };
-		Location l5 = new Location(m1, p2, coords5);
+		Location l5 = new Location(m1.getId(), p2, coords5);
 		m1.addLocation(l5);
 		double[] coords3 = { 511.3, 449.2 };
-		Location l3 = new Location(m1, p3, coords3);
+		Location l3 = new Location(m1.getId(), p3, coords3);
 		m1.addLocation(l3);
 		double[] coords4 = { 12.3, 519.2 };
-		Location l4 = new Location(m1, p4, coords4);
+		Location l4 = new Location(m1.getId(), p4, coords4);
 		m1.addLocation(l4);
 		m1.saveToDatabase();
 		MapSight ms1 = new MapSight(cdv.getId(), m1);
@@ -204,10 +208,10 @@ public class InitDatebase {
 		ps4.saveToDatabase();
 		Map m0 = new Map(c1.getId(), "North city", "First map", "tel_aviv1.png");
 		double[] coords0 = { 123.3, 354.7 };
-		Location l0 = new Location(m0, p0, coords0);
+		Location l0 = new Location(m0.getId(), p0, coords0);
 		m0.addLocation(l0);
 		double[] coords1 = { 17.3, 452.2 };
-		Location l1 = new Location(m0, p1, coords1);
+		Location l1 = new Location(m0.getId(), p1, coords1);
 		m0.addLocation(l1);
 		m0.saveToDatabase();
 		MapSight ms0 = new MapSight(cdv.getId(), m0);
@@ -215,13 +219,13 @@ public class InitDatebase {
 
 		Map m1 = new Map(c1.getId(), "Downtown", "Second map", "tel_aviv2.png");
 		double[] coords2 = { 117.3, 435.7 };
-		Location l2 = new Location(m1, p2, coords2);
+		Location l2 = new Location(m1.getId(), p2, coords2);
 		m1.addLocation(l2);
 		double[] coords3 = { 212.3, 336.2 };
-		Location l3 = new Location(m1, p3, coords3);
+		Location l3 = new Location(m1.getId(), p3, coords3);
 		m1.addLocation(l3);
 		double[] coords4 = { 477.3, 313.2 };
-		Location l4 = new Location(m1, p4, coords4);
+		Location l4 = new Location(m1.getId(), p4, coords4);
 		m1.addLocation(l4);
 		m1.saveToDatabase();
 		MapSight ms1 = new MapSight(cdv.getId(), m1);
@@ -297,13 +301,13 @@ public class InitDatebase {
 
 		Map m0 = new Map(city.getId(), "All Jerusalem", "general map that shows almost all the city.", "general map jerusalem.png");
 		double[] coords0 = { 400, 200 };
-		Location l0 = new Location(m0, p0, coords0);
+		Location l0 = new Location(m0.getId(), p0, coords0);
 		m0.addLocation(l0);
 		double[] coords1 = { 200, 200 };
-		Location l1 = new Location(m0, p1, coords1);
+		Location l1 = new Location(m0.getId(), p1, coords1);
 		m0.addLocation(l1);
 		double[] coords5 = { 100, 100 };
-		Location l5 = new Location(m0, p5, coords5);
+		Location l5 = new Location(m0.getId(), p5, coords5);
 		m0.addLocation(l5);
 		m0.saveToDatabase();
 
@@ -340,10 +344,10 @@ public class InitDatebase {
 		}
 		if (m1 != null) {
 			double[] coords2 = { 100, 350 };
-			Location l2 = new Location(m1, p2, coords2);
+			Location l2 = new Location(m1.getId(), p2, coords2);
 			m1.addLocation(l2);
 			double[] coords3 = { 70, 420 };
-			Location l3 = new Location(m1, p3, coords3);
+			Location l3 = new Location(m1.getId(), p3, coords3);
 			m1.addLocation(l3);
 			m1.saveToDatabase();
 		} else
@@ -352,18 +356,18 @@ public class InitDatebase {
 		Map m2 = new Map(city.getId(), "Jerusalem the Old City", "A map that describes the old city in it's glory.",
 				"jerusalem-old-city-map.jpg");
 		double[] coords20 = { 100, 300 };
-		Location l20 = new Location(m2, p0, coords20);
+		Location l20 = new Location(m2.getId(), p0, coords20);
 		m2.addLocation(l20);
 		double[] coords25 = { 350, 180 };
-		Location l25 = new Location(m2, p5, coords25);
+		Location l25 = new Location(m2.getId(), p5, coords25);
 		m2.addLocation(l25);
 		m0.saveToDatabase();
 		double[] coords24 = { 270, 420 };
-		Location l24 = new Location(m2, p4, coords24);
+		Location l24 = new Location(m2.getId(), p4, coords24);
 		m2.addLocation(l24);
 		m0.saveToDatabase();
 		double[] coords26 = { 200, 100 };
-		Location l26 = new Location(m2, p6, coords26);
+		Location l26 = new Location(m2.getId(), p6, coords26);
 		m2.addLocation(l26);
 		m0.saveToDatabase();
 
@@ -455,13 +459,13 @@ public class InitDatebase {
 
 		Map m0 = new Map(city.getId(), "All Rome", "general map of all the city.", "roma.png");
 		double[] coords0 = { 400, 200 };
-		Location l0 = new Location(m0, p0, coords0);
+		Location l0 = new Location(m0.getId(), p0, coords0);
 		m0.addLocation(l0);
 		double[] coords1 = { 200, 200 };
-		Location l1 = new Location(m0, p1, coords1);
+		Location l1 = new Location(m0.getId(), p1, coords1);
 		m0.addLocation(l1);
 		double[] coords5 = { 100, 100 };
-		Location l5 = new Location(m0, p5, coords5);
+		Location l5 = new Location(m0.getId(), p5, coords5);
 		m0.addLocation(l5);
 		m0.saveToDatabase();
 
@@ -498,10 +502,10 @@ public class InitDatebase {
 		}
 		if (m1 != null) {
 			double[] coords2 = { 100, 350 };
-			Location l2 = new Location(m1, p2, coords2);
+			Location l2 = new Location(m1.getId(), p2, coords2);
 			m1.addLocation(l2);
 			double[] coords3 = { 70, 420 };
-			Location l3 = new Location(m1, p3, coords3);
+			Location l3 = new Location(m1.getId(), p3, coords3);
 			m1.addLocation(l3);
 			m1.saveToDatabase();
 		} else
@@ -510,18 +514,18 @@ public class InitDatebase {
 		Map m2 = new Map(city.getId(), "Rome Geografic", "Wide range map that shows all the city with satellite imgs.",
 				"rome_terrain.png");
 		double[] coords20 = { 100, 300 };
-		Location l20 = new Location(m2, p0, coords20);
+		Location l20 = new Location(m2.getId(), p0, coords20);
 		m2.addLocation(l20);
 		double[] coords25 = { 350, 180 };
-		Location l25 = new Location(m2, p5, coords25);
+		Location l25 = new Location(m2.getId(), p5, coords25);
 		m2.addLocation(l25);
 		m0.saveToDatabase();
 		double[] coords24 = { 270, 420 };
-		Location l24 = new Location(m2, p4, coords24);
+		Location l24 = new Location(m2.getId(), p4, coords24);
 		m2.addLocation(l24);
 		m0.saveToDatabase();
 		double[] coords26 = { 200, 100 };
-		Location l26 = new Location(m2, p6, coords26);
+		Location l26 = new Location(m2.getId(), p6, coords26);
 		m2.addLocation(l26);
 		m0.saveToDatabase();
 
