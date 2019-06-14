@@ -600,7 +600,7 @@ public class HomePageController
 								catch (IOException e)
 								{
 									e.printStackTrace();
-								} // TODO
+								}
 								ReportCityName.setText("All Cities");
 							}
 							else
@@ -615,7 +615,7 @@ public class HomePageController
 								catch (IOException e)
 								{
 									e.printStackTrace();
-								} // TODO
+								}
 								ReportCityName.setText(Connector.allCities.get(selectedIndex - 1).a);
 
 							}
