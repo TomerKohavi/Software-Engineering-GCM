@@ -7,7 +7,7 @@ import otherClasses.ClassMustProperties;
 
 /**
  * Class of object Map sight 
- * (an object solves the many to many issue with map and version)
+ * (an object solves the many to many issue with map and city version)
  * @author Ron Cohen
  *
  */
