@@ -1019,15 +1019,7 @@ public class HomePageController
 				openNewPage("BuyScene.fxml");
 			else if (BuyButton.getText().equals("Download"))
 			{
-				DirectoryChooser chooser = new DirectoryChooser();
-				chooser.setTitle("Choose Download Location");
-				File defaultDirectory = new File("c:/");
-				chooser.setInitialDirectory(defaultDirectory);
-				File selectedDirectory = chooser.showDialog(null);
-				System.out.println(selectedDirectory.getPath()); // Path to folder
-				Downloader.downloadPOIs(Connector.selectedCity.getCopyPublishedVersion(),
-						selectedDirectory.getPath() + "\\" + Connector.selectedCity.getCityName() + " "
-								+ Connector.selectedCity.getCopyPublishedVersion().getVersionName() + ".txt");
+				Connector.downloadCity();
 				Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.SubDownload);
 				openNewPage("DownloadCompleteScene.fxml");
 			}

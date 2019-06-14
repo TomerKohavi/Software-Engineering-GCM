@@ -1,16 +1,19 @@
 package application;
 
+import java.io.File;
 import java.io.IOException;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
 
+import controller.Downloader;
 import controller.InformationSystem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
 
 /**
  * @author tomer
@@ -64,8 +67,9 @@ public class BuyController {
     void buy(ActionEvent event) throws IOException {
     	if (RadioOneTime.isSelected())
     	{
-    		double price = oneTimePrice; // TODO send price to server
+    		double price = oneTimePrice;
     		Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.OneTimePurcahse);
+    		Connector.downloadCity();
     	}
     	else
     	{

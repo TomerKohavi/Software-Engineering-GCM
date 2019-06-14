@@ -1,11 +1,13 @@
 package application;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.jfoenix.controls.JFXButton;
 
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import objectClasses.City;
 import objectClasses.CityDataVersion;
@@ -20,6 +22,7 @@ import objectClasses.RouteSight;
 import objectClasses.User;
 import otherClasses.Pair;
 import client.ChatClient;
+import controller.Downloader;
 
 /**
  * @author tomer
@@ -127,5 +130,17 @@ public class Connector {
 				nameList.add("Route " + route.getCopyRoute().getId());
 		}
 		return nameList;
+	}
+	
+	public static void downloadCity()
+	{
+		DirectoryChooser chooser = new DirectoryChooser();
+		chooser.setTitle("Choose Download Location");
+		File defaultDirectory = new File("c:/");
+		chooser.setInitialDirectory(defaultDirectory);
+		File selectedDirectory = chooser.showDialog(null);
+		Downloader.downloadPOIs(Connector.selectedCity.getCopyPublishedVersion(),
+				selectedDirectory.getPath() + "\\" + Connector.selectedCity.getCityName() + " "
+						+ Connector.selectedCity.getCopyPublishedVersion().getVersionName() + ".txt");
 	}
 }
