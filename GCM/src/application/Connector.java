@@ -159,8 +159,6 @@ public class Connector {
 	/**
 	 * Get the customers that subscribes to the city
 	 * 
-	 * @param cityId    the city id
-	 * @param customers the list of customers to check
 	 * @return list of customers
 	 */
 	public static ArrayList<Customer> getCustomersSubscibeToCity() {

@@ -300,6 +300,7 @@ public final class InformationSystem
 	/**
 	 * Updates the statistic of the city id that a new version of this city was published in the date
 	 * @param cityId the city id
+	 * @param d the date that was published
 	 */
 	public static void newVersionWasPublished(int cityId, Date d)
 	{

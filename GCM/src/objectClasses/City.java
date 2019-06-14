@@ -47,7 +47,8 @@ public class City implements ClassMustProperties, Serializable
 	 * @param id                 the city id
 	 * @param cityName           the city name
 	 * @param cityDescription    the city description
-	 * @param publishedVersionId the id of the published version of this cirt
+	 * @param publishedVersionId the id of the published version of this city
+	 * @param managerNeedsToPublish approval of managers
 	 * @return the new city object
 	 */
 	public static City _createCity(int id, String cityName, String cityDescription, Integer publishedVersionId,boolean managerNeedsToPublish)

@@ -85,8 +85,8 @@ public class EchoServer extends AbstractServer
 	 *
 	 * @param port     The port number to connect on.
 	 * @param serverUI The interface type variable.
+	 * @throws IOException can be thrown due to session opening 
 	 */
-
 	public EchoServer(int port, ChatIF serverUI) throws IOException
 	{
 		super(port);

@@ -30,6 +30,7 @@ public class POIImage {
 	 * @param _isNew if the point of interest is new
 	 * @param _dontChange if we want to change to point of interest
 	 * @param _poiName the name of the point of interest
+	 * @param _loc location of the POI
 	 * @throws FileNotFoundException cannot find the image or the point of interest
 	 */
 	public POIImage(boolean _isNew, boolean _dontChange, String _poiName, Location _loc) throws FileNotFoundException {

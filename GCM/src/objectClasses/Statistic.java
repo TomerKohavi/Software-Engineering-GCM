@@ -197,6 +197,7 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 	/**
 	 * Returns the number of download subscription
 	 * 
+	 * @param numSubDownloads number of subscription downloads
 	 * @return the number of download subscription
 	 */
 	public int getNumSubDownload(int numSubDownloads) {
