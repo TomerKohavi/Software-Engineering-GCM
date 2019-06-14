@@ -9,6 +9,7 @@ import objectClasses.MapSight;
 public class CreateMap extends Command
 {
 	/**
+	 * Constructor.
 	 * @param cityId the city id of the map
 	 * @param name the name of the map
 	 * @param info the info of the map

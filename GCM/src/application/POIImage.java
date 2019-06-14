@@ -67,7 +67,7 @@ public class POIImage {
     	    			Connector.poiNameTextArea.setVisible(false);
     	    		}
     	    	}
-    	    	if (!Connector.unpublished || isNew || Connector.isEdit)
+    	    	if (!Connector.unpublished || isNew || !Connector.isEdit)
     	    		return;
     	    	isRemovable = !isRemovable;
     	    	if (isRemovable) {
