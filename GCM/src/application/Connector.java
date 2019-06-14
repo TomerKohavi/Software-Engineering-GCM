@@ -83,7 +83,7 @@ public class Connector {
 		ArrayList<String> nameList = new ArrayList<String>();
 		for (City city : cityList)
 		{
-			if (Connector.user != null && ((Employee) Connector.user).getRole() == Employee.Role.CEO && city.getManagerNeedsToPublish())
+			if (Connector.user != null && Connector.user instanceof Employee && ((Employee) Connector.user).getRole() == Employee.Role.CEO && city.getManagerNeedsToPublish())
 				nameList.add("★" + city.getCityName());
 			else
 				nameList.add(city.getCityName());
