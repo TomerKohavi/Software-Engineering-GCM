@@ -4,13 +4,20 @@
 
 package application;
 
+import java.io.IOException;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * @author tomer
@@ -37,14 +44,14 @@ public class ChangePriceController {
 
     @FXML // fx:id="BuyButton"
     private JFXButton BuyButton; // Value injected by FXMLLoader
-
+    
     /**
      * Makes sure that str is a legal number.
      * @param str string to format
      * @return true if the string in the good format
      */
     public static boolean isNumeric(String str) {
-    	  return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
+    	  return str.matches("?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
     }
     
     /**
