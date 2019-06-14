@@ -278,7 +278,7 @@ public class EchoServer extends AbstractServer
 		Route route = new Route(croute.cityId, croute.name, croute.info);
 		route.saveToDatabase();
 
-		RouteSight routeS = new RouteSight(croute.cdvId, route, croute.isFav);// TODO handle is favorite
+		RouteSight routeS = new RouteSight(croute.cdvId, route, croute.isFav);
 		routeS.saveToDatabase();
 
 		croute.routeS = routeS;
