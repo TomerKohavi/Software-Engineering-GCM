@@ -151,7 +151,6 @@ public class MapEditController
 				}
 				catch (FileNotFoundException e)
 				{
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				poiImage.image.setX((click.getX() + boundsInScene.getMinX() - 15));

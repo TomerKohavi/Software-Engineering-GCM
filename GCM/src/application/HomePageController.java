@@ -371,7 +371,6 @@ public class HomePageController
 			try {
 				Connector.client.addStat(city.getId(), InformationSystem.Ops.Visit);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
