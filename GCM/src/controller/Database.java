@@ -627,22 +627,24 @@ public class Database {
 				throw new DatabaseException();
 			}
 			if (existRoute(p.getId())) {
-				String sql = "UPDATE " + Table.Route.getValue() + " SET Info=?, NumStops=?, CityID=? WHERE ID=?";
+				String sql = "UPDATE " + Table.Route.getValue() + " SET Info=?, NumStops=?, CityID=?, Name=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setString(1, p.getInfo());
 				su.setInt(2, p.getNumStops());
 				su.setInt(3, p.getCityId());
-				su.setInt(4, p.getId());
+				su.setString(4, p.getName());
+				su.setInt(5, p.getId());
 				su.executeUpdate();
 				return true;
 			} else {
 				String sql = "INSERT INTO " + Table.Route.getValue()
-						+ " (ID, Info, NumStops, CityID) VALUES (?, ?, ?, ?)";
+						+ " (ID, Info, NumStops, CityID, Name) VALUES (?, ?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getId());
 				su.setString(2, p.getInfo());
 				su.setInt(3, p.getNumStops());
 				su.setInt(4, p.getCityId());
+				su.setString(4, p.getName());
 				su.executeUpdate();
 				return false;
 			}
@@ -2220,7 +2222,7 @@ public class Database {
 			ResultSet res = get(Table.Route.getValue(), id);
 			if (res == null)
 				return null;
-			return Route._createRoute(res.getInt("ID"), res.getInt("CityID"), res.getString("Info"));
+			return Route._createRoute(res.getInt("ID"), res.getInt("CityID"), res.getString("Name"), res.getString("Info"));
 		} catch (Exception e) {
 			// closeConnection();
 			e.printStackTrace();
