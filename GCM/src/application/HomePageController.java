@@ -412,6 +412,10 @@ public class HomePageController
 					BuyButton.setText("Change Price");
 				else
 					BuyButton.setVisible(false);
+				if (role == Role.CEO && city.getManagerNeedsToPublish())
+					PublishButton.setVisible(true);
+				else
+					PublishButton.setVisible(false);
 				SideMap.setVisible(true);
 				SidePOI.setVisible(true);
 				SideRoutes.setVisible(true);
@@ -1012,6 +1016,7 @@ public class HomePageController
 	{
 		// publish the unpublished version
 		System.out.println("Published"); // TODO Sigal
+		Connector.selectedCity.setManagerNeedsToPublish(false); // TODO needs to send to database it they don't do it themselves
 		Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.VersionPublish);
 		Connector.client.addStat(Connector.selectedCity.getId(), Connector.selectedCity.getCopyPublishedVersion().getNumMapSights());
 	}
