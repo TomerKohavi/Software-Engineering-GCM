@@ -2292,7 +2292,8 @@ public class Database
 
 			sql = sql.substring(0, sql.length() - 4);
 
-			if (cityId == null && date == null && dateFrom == null && dateEnd == null && newVersionPublished == null)
+			if (cityId == null && date == null && dateFrom == null && dateEnd == null
+					&& newVersionPublished == null && validNumMaps == null)
 				sql = "SELECT ID FROM " + Table.Statistic.getValue() + " WHERE True";
 
 			PreparedStatement gt = conn.prepareStatement(sql);
