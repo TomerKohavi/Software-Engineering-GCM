@@ -73,7 +73,7 @@ public class BuyController {
     	if (RadioOneTime.isSelected())
     	{
     		double price = oneTimePrice;
-    		Connector.client.sendToServer(OneTimePurchase._createOneTimePurchase(-1, Connector.selectedCity.getId(), Connector.user.getId(), new Date(Calendar.getInstance().getTime().getTime()), price, price, true)); // TODO kohavi
+    		Connector.client.sendToServer(OneTimePurchase._createLocalOneTimePurchase(-1, Connector.selectedCity.getId(), Connector.user.getId(), new Date(Calendar.getInstance().getTime().getTime()), price, price, true, Connector.selectedCity.getCityName())); // TODO kohavi
     		Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.OneTimePurcahse);
     		Connector.downloadCity();
     	}
@@ -83,7 +83,7 @@ public class BuyController {
     		Date start = new Date(Calendar.getInstance().getTime().getTime());
     		Date end = new Date(Calendar.getInstance().getTime().getTime());
     		end.setMonth(end.getMonth() + MonthBox.getValue());
-    		Connector.client.sendToServer(Subscription._createSubscription(-1, Connector.selectedCity.getId(), Connector.user.getId(), start, price, price, end)); // TODO kohavi
+    		Connector.client.sendToServer(Subscription._createLocalSubscription(-1, Connector.selectedCity.getId(), Connector.user.getId(), start, price, price, end, Connector.selectedCity.getCityName())); // TODO kohavi
     		Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.Subscription);
     	}
     	

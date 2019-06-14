@@ -8,82 +8,107 @@ import otherClasses.ClassMustProperties;
 
 import java.sql.Date;
 
-/**
- * Class of subscription object
- * @author Ron Cohen
- *
- */
 @SuppressWarnings("serial")
-public class Subscription extends CityPurchase implements ClassMustProperties, Serializable {
+public class Subscription extends CityPurchase implements ClassMustProperties, Serializable
+{
 
 	public static final Time closeTime = new Time(3 * 24, 0, 0);
 	private Date expirationDate;
-	
-	
-	public int numMonths = -1; //temp_variable
+
+	public int numMonths = -1; // temp_variable
 
 	private Subscription(int id, int cityId, int userId, Date purchaseDate, double fullPrice, double pricePayed,
-			Date expirationDate) {
+			Date expirationDate)
+	{
 		super(id, cityId, userId, purchaseDate, fullPrice, pricePayed);
 		this.expirationDate = expirationDate;
 		this.numMonths = calcNumMonths();
 	}
+	
+	private Subscription(int id, int cityId, int userId, Date purchaseDate, double fullPrice, double pricePayed,
+			Date expirationDate, String cityName)
+	{
+		super(id, cityId, userId, purchaseDate, fullPrice, pricePayed, cityName);
+		this.expirationDate = expirationDate;
+		this.numMonths = calcNumMonths();
+	}
+
 
 	public static Subscription _createSubscription(int id, int cityId, int userId, Date purchaseDate, double fullPrice,
-			double pricePayed, Date expirationDate) { // friend to Database
+			double pricePayed, Date expirationDate)
+	{ // friend to Database
 		return new Subscription(id, cityId, userId, purchaseDate, fullPrice, pricePayed, expirationDate);
 	}
 
-	public Subscription(Customer u, int cityId, Date purchaseDate, double fullPrice, double pricePayed, Date expirationDate) {
+	public static Subscription _createLocalSubscription(int id, int cityId, int userId, Date purchaseDate, double fullPrice,
+			double pricePayed, Date expirationDate, String cityName)
+	{ // friend to Database
+		return new Subscription(id, cityId, userId, purchaseDate, fullPrice, pricePayed, expirationDate, cityName);
+	}
+	
+	public Subscription(Customer u, int cityId, Date purchaseDate, double fullPrice, double pricePayed,
+			Date expirationDate)
+	{
 		super(u.getId(), cityId, purchaseDate, fullPrice, pricePayed);
 		this.expirationDate = expirationDate;
 		this.numMonths = calcNumMonths();
 	}
 
-	public void saveToDatabase() {
+	public void saveToDatabase()
+	{
 		Database._saveSubscription(this);
 	}
 
-	public void deleteFromDatabase() {
+	public void deleteFromDatabase()
+	{
 		Database._deleteSubscription(this.getId());
 	}
 
-	public boolean isGoingToEnd(Date date) {
+	public boolean isGoingToEnd(Date date)
+	{
 		return expirationDate.getTime() - date.getTime() < closeTime.getTime();
 	}
 
-	public Date getExpirationDate() {
+	public Date getExpirationDate()
+	{
 		return expirationDate;
 	}
 
-	public void setExpirationDate(Date expirationDate) {
+	public void setExpirationDate(Date expirationDate)
+	{
 		this.expirationDate = expirationDate;
 		this.numMonths = calcNumMonths();
 	}
-	
-	private int calcNumMonths() {
-		 int months = (this.expirationDate.getYear()-super.getPurchaseDate().getYear())*12+this.expirationDate.getMonth()-super.getPurchaseDate().getMonth();
-		 return months;
+
+	private int calcNumMonths()
+	{
+		int months = (this.expirationDate.getYear() - super.getPurchaseDate().getYear()) * 12
+				+ this.expirationDate.getMonth() - super.getPurchaseDate().getMonth();
+		return months;
 	}
-	
-	public int getNumMonths() {
+
+	public int getNumMonths()
+	{
 		return this.numMonths;
 	}
 
-	public void setNumMonths(int _months) {
-		 this.numMonths = _months;
-		 Date pd=super.getPurchaseDate();
-		 int newYear=pd.getYear()+_months/12;
-		 int newMonth=pd.getMonth()+_months%12;
-		 if(newMonth>12) {
-			 newYear++;
-			 newMonth=newMonth%12;
-		 }
-		 this.expirationDate=new Date(newYear,newMonth,pd.getDay());
+	public void setNumMonths(int _months)
+	{
+		this.numMonths = _months;
+		Date pd = super.getPurchaseDate();
+		int newYear = pd.getYear() + _months / 12;
+		int newMonth = pd.getMonth() + _months % 12;
+		if (newMonth > 12)
+		{
+			newYear++;
+			newMonth = newMonth % 12;
+		}
+		this.expirationDate = new Date(newYear, newMonth, pd.getDay());
 	}
-	
+
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(Object o)
+	{
 		return o instanceof Subscription && ((Subscription) o).getId() == this.getId();
 	}
 }
