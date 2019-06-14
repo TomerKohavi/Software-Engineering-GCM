@@ -55,6 +55,7 @@ public class LoginController
 	private JFXButton Back; // Value injected by FXMLLoader
 
 	/**
+	 * Loads generic FXML page.
 	 * @param FXMLpage the FXML page 
 	 * @throws IOException can be thrown by FXMLLoader
 	 */
@@ -65,6 +66,7 @@ public class LoginController
 	}
 
 	/**
+	 * Handles Employee access scene.
 	 * @param event the FXML event we are working on
 	 * @throws IOException  can be thrown by loadPage
 	 */
@@ -75,6 +77,7 @@ public class LoginController
 	}
 
 	/**
+	 * Gets password from textbox and saves locally.
 	 * @param event the FXML event we are working on
 	 */
 	@FXML
@@ -84,6 +87,7 @@ public class LoginController
 	}
 
 	/**
+	 * Gets username from textbox and saves locally.
 	 * @param event the FXML event we are working on
 	 */
 	@FXML
@@ -93,6 +97,7 @@ public class LoginController
 	}
 
 	/**
+	 * Handles login try.
 	 * @param event the FXML event we are working on
 	 * @throws IOException can be thrown by clentLogin
 	 */
@@ -116,6 +121,7 @@ public class LoginController
 		}
 	}
 	/**
+	 * Go back to the homepage.
 	 * @param event the FXML event we are working on
 	 * @throws IOException can be thrown by loadPage
 	 */
@@ -126,6 +132,7 @@ public class LoginController
 	}
 
 	/**
+	 * Moves to register scene.
 	 * @param event the FXML event we are working on
 	 * @throws IOException can be thrown by loadPage
 	 */

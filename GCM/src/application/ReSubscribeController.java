@@ -49,6 +49,7 @@ public class ReSubscribeController {
     }
     
     /**
+     * Handles resubcribe event.
      * @param event user click on re subscribe
      * @throws IOException 
      */
