@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import controller.Database;
 import otherClasses.ClassMustProperties;
 
+/**
+ * Class of place of interest sight obect
+ * (an object solves the many to many issue with POI and city version)
+ * @author Ron Cohen
+ *
+ */
 @SuppressWarnings("serial")
 public class PlaceOfInterestSight implements ClassMustProperties, Serializable {
 	private int id;

@@ -7,6 +7,11 @@ import java.util.Collections;
 import controller.Database;
 import otherClasses.ClassMustProperties;
 
+/**
+ * Class of Route object
+ * @author Ron Cohen
+ *
+ */
 @SuppressWarnings("serial")
 public class Route implements ClassMustProperties, Serializable
 {

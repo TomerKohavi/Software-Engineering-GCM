@@ -6,6 +6,11 @@ import java.sql.Date;
 import controller.Database;
 import otherClasses.ClassMustProperties;
 
+/**
+ * class of one time purchase object
+ * @author Ron Cohen
+ *
+ */
 @SuppressWarnings("serial")
 public class OneTimePurchase extends CityPurchase implements ClassMustProperties, Serializable
 {

@@ -8,6 +8,11 @@ import otherClasses.ClassMustProperties;
 
 import java.sql.Date;
 
+/**
+ * Class of subscription object
+ * @author Ron Cohen
+ *
+ */
 @SuppressWarnings("serial")
 public class Subscription extends CityPurchase implements ClassMustProperties, Serializable {
 

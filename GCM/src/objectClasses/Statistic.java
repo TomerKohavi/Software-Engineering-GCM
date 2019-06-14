@@ -5,6 +5,12 @@ import java.sql.Date;
 import controller.Database;
 import otherClasses.ClassMustProperties;
 
+/**
+ * class of statistic object
+ * which describe statistic information of a specific city in a specific date
+ * @author Ron Cohen
+ *
+ */
 @SuppressWarnings("serial")
 public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 	private int id;
