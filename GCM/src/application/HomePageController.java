@@ -76,6 +76,8 @@ public class HomePageController
 	private String cityName, cityInfo, poiName, poiInfo;
 
 	static private boolean show_map = false;
+	
+	static private boolean isLastCityPublish = true;
 
 	@FXML // fx:id="mainPane"
 	private AnchorPane mainPane; // Value injected by FXMLLoader
@@ -363,7 +365,7 @@ public class HomePageController
 	 */
 	private void fillCityInfo(City city)
 	{
-		if (Connector.selectedCity != city)
+		if ((Connector.selectedCity != null && Connector.selectedCity.getId() != city.getId()) || isLastCityPublish != Connector.unpublished)
 		{
 			Connector.searchMapResult = null;
 			Connector.searchPOIResult = null;
@@ -374,21 +376,20 @@ public class HomePageController
 				e.printStackTrace();
 			}
 		}
+		isLastCityPublish = Connector.unpublished;
 		Connector.selectedCity = city;
 		InfoPane.setVisible(true);
 		ResultName.setText(city.getCityName()); // set name
 		ResultInfo.setText(city.getCityDescription()); // set info
 		// get QUERIE
-		if (UnpublishSearch.isSelected()) // TODO search unpublished
+		if (Connector.unpublished) // TODO search unpublished
 		{
 			Connector.cityData = city.getCopyUnpublishedVersions().get(0);
-			Connector.unpublished = true;
 			System.out.println("search unpublished");
 		}
 		else // TODO search published
 		{
 			Connector.cityData = city.getCopyPublishedVersion();
-			Connector.unpublished = false;
 			System.out.println("search published");
 		}
 		Text1.setText("Maps Found: " + Connector.cityData.getNumMapSights()); // #Maps for the city
@@ -568,8 +569,7 @@ public class HomePageController
 						InfoPane.setVisible(true);
 						if (Connector.listType.equals("City")) // City
 						{
-							Connector.selectedCity = Connector.searchCityResult.get(selectedIndex);
-							fillCityInfo(Connector.selectedCity);
+							fillCityInfo(Connector.searchCityResult.get(selectedIndex));
 						}
 						else if (Connector.listType.equals("POI")) // POI
 						{
@@ -968,10 +968,10 @@ public class HomePageController
 	@FXML
 	void unpublishedPressed(ActionEvent event) throws IOException
 	{
-		if (UnpublishSearch.isSelected())
-			CreateButton.setVisible(true);
-		else
-			CreateButton.setVisible(false);
+//		if (UnpublishSearch.isSelected())
+//			Connector.unpublished = true;
+//		else
+//			Connector.unpublished = false;
 	}
 	
 	/**
