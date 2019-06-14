@@ -39,6 +39,7 @@ public class ChangePriceController {
     private JFXButton BuyButton; // Value injected by FXMLLoader
 
     /**
+     * Makes sure that str is a legal number.
      * @param str string to format
      * @return true if the string in the good format
      */
@@ -57,6 +58,7 @@ public class ChangePriceController {
     }
     
     /**
+     * Applies the price change event defined.
      * @param event event from the UI that said to change the price
      */
     @FXML
@@ -71,7 +73,7 @@ public class ChangePriceController {
     }
 
     /**
-     * go to the back page
+     * go to the back page.
      * @param event user click event
      */
     @FXML
