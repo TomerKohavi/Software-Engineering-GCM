@@ -9,8 +9,8 @@ import controller.Database;
 import otherClasses.ClassMustProperties;
 
 /**
- * @author ron
- * TODO: fix
+ * Class of customer properties
+ * @author Ron Cohen
  */
 @SuppressWarnings("serial")
 public class Customer extends User implements ClassMustProperties, Serializable {

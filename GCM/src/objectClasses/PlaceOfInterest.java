@@ -6,6 +6,11 @@ import java.util.ArrayList;
 import controller.Database;
 import otherClasses.ClassMustProperties;
 
+/**
+ * class of place of interest object
+ * @author Ron Cohen
+ *
+ */
 @SuppressWarnings("serial")
 public class PlaceOfInterest implements ClassMustProperties, Serializable {
 	public enum PlaceType {

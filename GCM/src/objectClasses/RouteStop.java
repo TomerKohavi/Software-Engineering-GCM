@@ -6,6 +6,11 @@ import java.sql.Time;
 import controller.Database;
 import otherClasses.ClassMustProperties;
 
+/**
+ * Class of a single route stop object
+ * @author Ron Cohen
+ *
+ */
 @SuppressWarnings("serial")
 public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Serializable
 {

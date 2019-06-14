@@ -6,7 +6,8 @@ import controller.Database;
 import otherClasses.ClassMustProperties;
 
 /**
- * @author ron TODO: fix
+ * Class of location object, a POI + cords in map
+ * @author Ron Cohen
  */
 @SuppressWarnings("serial")
 public class Location implements ClassMustProperties, Serializable

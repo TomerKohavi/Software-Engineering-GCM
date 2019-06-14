@@ -5,6 +5,12 @@ import java.io.Serializable;
 import controller.Database;
 import otherClasses.ClassMustProperties;
 
+/**
+ * Class of Route sight object
+ * (an object solves the many to many issue with route and city version)
+ * @author Ron Cohen
+ *
+ */
 @SuppressWarnings("serial")
 public class RouteSight implements ClassMustProperties, Serializable {
 	private int id;

@@ -5,6 +5,12 @@ import java.io.Serializable;
 import controller.Database;
 import otherClasses.ClassMustProperties;
 
+/**
+ * Class of object Map sight 
+ * (an object solves the many to many issue with map and city version)
+ * @author Ron Cohen
+ *
+ */
 @SuppressWarnings("serial")
 public class MapSight implements ClassMustProperties, Serializable {
 	private int id;

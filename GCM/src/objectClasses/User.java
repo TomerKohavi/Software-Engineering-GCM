@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 import controller.Database;
 
+/**
+ * Abstract class of general user object
+ * @author Ron Cohen
+ *
+ */
 @SuppressWarnings("serial")
 public abstract class User implements Serializable {
 
