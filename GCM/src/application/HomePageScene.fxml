@@ -88,7 +88,7 @@
             </TableView>
             <JFXButton fx:id="EditButton" layoutX="74.0" layoutY="547.0" onAction="#callEdit" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Edit" />
             <JFXButton fx:id="RemoveButton" layoutX="250.0" layoutY="547.0" onAction="#callRemove" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Remove" />
-            <JFXButton fx:id="BuyButton" layoutX="435.0" layoutY="547.0" onAction="#openBuyWindodw" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Buy" visible="false" />
+            <JFXButton fx:id="BuyButton" layoutX="435.0" layoutY="547.0" onAction="#openBuyWindow" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Buy" visible="false" />
             <JFXButton fx:id="ReSubscribeButton" layoutX="250.0" layoutY="547.0" onAction="#callReSubscribe" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #41e0d0;" text="Re-Subscribe" visible="false" />
             <JFXButton fx:id="PublishButton" layoutX="208.0" layoutY="456.0" onAction="#callPublish" prefHeight="40.0" prefWidth="184.0" style="-fx-background-color: #41e0d0;" text="Publish Version" visible="false">
                <font>

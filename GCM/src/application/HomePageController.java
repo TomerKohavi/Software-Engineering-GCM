@@ -1021,7 +1021,7 @@ public class HomePageController
 	 * @throws IOException cannot open the buy window
 	 */
 	@FXML
-	void openBuyWindodw(ActionEvent event) throws IOException
+	void openBuyWindow(ActionEvent event) throws IOException
 	{
 		if (Connector.user == null) // check if logged in
 			openNewPage("LoginErrorScene.fxml");
