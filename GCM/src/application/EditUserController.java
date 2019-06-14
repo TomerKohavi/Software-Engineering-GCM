@@ -114,6 +114,7 @@ public class EditUserController
 	}
 
 	/**
+	 * Tries opening a new page.
 	 * @param FXMLpage the page we want to open
 	 * @throws IOException if we can't open the page
 	 */
@@ -131,6 +132,7 @@ public class EditUserController
 	}
 
 	/**
+	 * Applies the changes the user requested.
 	 * @param event user click on change 
 	 * @throws IOException there is problem with those changes
 	 */
@@ -201,6 +203,7 @@ public class EditUserController
 
 
 	/**
+	 * Displays the purchase history.
 	 * @param event user click on watch history
 	 * @throws IOException can't get to the history
 	 */
