@@ -1,6 +1,7 @@
 package objectClasses;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import controller.Database;
 import otherClasses.ClassMustProperties;
@@ -39,6 +40,31 @@ public class PlaceOfInterestSight implements ClassMustProperties, Serializable {
 
 	public void deleteFromDatabase() {
 		Database._deletePlaceOfInterestSight(this.id);
+		// delete locations
+		ArrayList<Integer> mapSIds = Database.searchMapSight(this.cityDataVersionId,null);
+		for (int mId : mapSIds) {
+			MapSight ms=Database._getMapSightById(mId);
+			if(ms==null) continue;
+			ArrayList<Integer> locationIds=Database.searchPlaceOfInterestSight(ms.getMapId(), this.placeOfInterestId);
+			for(int id:locationIds) {
+				Location l = Database._getLocationById(id);
+				if (l != null)
+					l.deleteFromDatabase();
+			}
+		}
+		// delete routeStops
+		ArrayList<Integer> routeSIds = Database.searchRouteSight(this.cityDataVersionId,null,null);
+		for (int rsId : routeSIds) {
+			RouteSight rs=Database._getRouteSightById(rsId);
+			if(rs==null) continue;
+			Route r=rs.getCopyRoute();
+			if(r==null) continue;
+			for(RouteStop rStop:r.getCopyRouteStops())
+			{
+				if (rStop != null)
+					rStop.deleteFromDatabase();
+			}
+		}
 	}
 
 	public void reloadTempsFromDatabase() {

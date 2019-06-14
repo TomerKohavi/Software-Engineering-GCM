@@ -8,7 +8,8 @@ import controller.Database;
 import otherClasses.ClassMustProperties;
 
 /**
- * @author ron TODO: FIX
+ * Class of a version of city and all its content
+ * @author Ron Cohen
  */
 @SuppressWarnings("serial")
 public class CityDataVersion implements ClassMustProperties, Serializable
