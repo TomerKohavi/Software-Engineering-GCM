@@ -1,6 +1,7 @@
 package application;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -147,8 +148,15 @@ public class Connector {
 		File defaultDirectory = new File("c:/");
 		chooser.setInitialDirectory(defaultDirectory);
 		File selectedDirectory = chooser.showDialog(null);
-		Downloader.downloadPOIs(Connector.selectedCity.getCopyPublishedVersion(),
-				selectedDirectory.getPath() + "\\" + Connector.selectedCity.getCityName() + " "
-						+ Connector.selectedCity.getCopyPublishedVersion().getVersionName() + ".txt");
+		try
+		{
+			Downloader.downloadPOIs((ArrayList<PlaceOfInterestSight>) Connector.client.fetchSights(Connector.selectedCity.getCopyPublishedVersion().getId(), PlaceOfInterestSight.class),
+					selectedDirectory.getPath() + "\\" + Connector.selectedCity.getCityName() + " "
+							+ Connector.selectedCity.getCopyPublishedVersion().getVersionName() + ".txt");
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 }

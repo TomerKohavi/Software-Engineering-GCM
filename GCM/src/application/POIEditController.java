@@ -66,7 +66,8 @@ public class POIEditController
 	}
 
 	/**
-	 * @param event user click on edit poin of intreset
+	 * Applies the edit of the POI.
+	 * @param event user click on edit place of interset
 	 */
 	@FXML
 	void apply(ActionEvent event)

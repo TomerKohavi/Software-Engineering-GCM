@@ -24,6 +24,7 @@ public class POIImage {
 	private String poiName;
 	
 	/**
+	 * Constructor.
 	 * @param _isNew if the point of interest is new
 	 * @param _dontChange if we want to change to point of interest
 	 * @param _poiName the name of the point of interest
