@@ -24,10 +24,6 @@ import java.util.*;
 *
 * Project Name: OCSF (Object Client-Server Framework)<p>
 *
-* @author Dr. Robert Lagani&egrave;re
-* @author Dr. Timothy C. Lethbridge
-* @author Fran&ccedil;ois  B&eacutel;langer
-* @author Paul Holden
 * @version February 2001 (2.12)
 */
 public abstract class AbstractClient implements Runnable

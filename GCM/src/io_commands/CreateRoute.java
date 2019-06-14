@@ -12,6 +12,7 @@ public class CreateRoute extends Command
 	/**
 	 * Constructor
 	 * @param cityId the city id of the route
+	 * @param name name of the route
 	 * @param info the info of the route
 	 * @param cdvId city data version id of the route
 	 * @param isFav is the route favorite

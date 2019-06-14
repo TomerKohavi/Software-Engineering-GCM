@@ -22,8 +22,8 @@ public class AddStat extends Command
 	
 	/**
 	 * Constructor with numMaps.
-	 * @param cityId
-	 * @param numMaps
+	 * @param cityId city ID
+	 * @param numMaps number of maps
 	 */
 	public AddStat(int cityId, int numMaps)
 	{

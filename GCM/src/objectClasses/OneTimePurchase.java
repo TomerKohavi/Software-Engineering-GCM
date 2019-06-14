@@ -98,10 +98,10 @@ public class OneTimePurchase extends CityPurchase implements ClassMustProperties
 	 * This is the normal public constructor for City object
 	 * 
 	 * @param u the customer that buy the one time purchase
-	 * @param cityId
-	 * @param purchaseDate
-	 * @param fullPrice
-	 * @param pricePayed
+	 * @param cityId city ID
+	 * @param purchaseDate purchase date
+	 * @param fullPrice full price of the map
+	 * @param pricePayed priced payed
 	 */
 	public OneTimePurchase(Customer u, int cityId, Date purchaseDate, double fullPrice, double pricePayed)
 	{

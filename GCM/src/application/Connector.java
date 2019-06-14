@@ -38,7 +38,7 @@ public class Connector {
 
 	public static ChatClient client;
 
-	public static final int PORT = 5555;
+	public static final int PORT = 5556;
 	public static final String LOCAL_HOST = "localhost";
 
 	public static boolean isEdit = true;
@@ -159,8 +159,6 @@ public class Connector {
 	/**
 	 * Get the customers that subscribes to the city
 	 * 
-	 * @param cityId    the city id
-	 * @param customers the list of customers to check
 	 * @return list of customers
 	 */
 	public static ArrayList<Customer> getCustomersSubscibeToCity() {

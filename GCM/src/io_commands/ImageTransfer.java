@@ -16,6 +16,7 @@ public class ImageTransfer extends Command
 	/**
 	 * Constructor
 	 * @param readpath  the path of the image we want to transfer
+	 * @param writepath the path that the image will be saved to on the receiver side
 	 * @param requested load/save
 	 */
 	public ImageTransfer(String readpath, String writepath, boolean requested)

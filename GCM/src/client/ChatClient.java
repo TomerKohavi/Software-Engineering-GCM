@@ -93,6 +93,7 @@ public class ChatClient extends AbstractClient
 	 * @param host     The server to connect to.
 	 * @param port     The port number to connect on.
 	 * @param clientUI The interface type variable.
+	 * @throws IOException due to IO communication *****
 	 */
 
 	public ChatClient(String host, int port, ChatIF clientUI) throws IOException
@@ -293,8 +294,10 @@ public class ChatClient extends AbstractClient
 
 	/**
 	 * @param cityId the id of the city that contained the route
+	 * @param name name of the route
 	 * @param info the info of the route
 	 * @param cdvId city data version id of the route
+	 * @param isFav is the route favorite
 	 * @return route sight object of the new route
 	 * @throws IOException if there is problem with the semaphore
 	 */
