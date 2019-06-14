@@ -64,6 +64,7 @@ public class BuyController {
     }
     
     /**
+     * Handles buy event.
      * @param event user click on buy
      * @throws IOException 
      */
@@ -89,7 +90,8 @@ public class BuyController {
     	mainPane.getScene().getWindow().hide();
     }
 
-    /**
+    /** 
+     * Handle One time purchase choose event.
      * @param event user choose the one time
      */
     @FXML
@@ -99,6 +101,7 @@ public class BuyController {
     }
 
     /**
+     * Handle One time purchase choose event.
      * @param event user click on choose subscribe
      */
     @FXML
@@ -109,6 +112,7 @@ public class BuyController {
     }
     
     /**
+     * Handle price update event.
      * @param event user click on update parice
      */
     @FXML
