@@ -10,6 +10,7 @@ import controller.InformationSystem.Ops;
 public class AddStat extends Command
 {
 	/**
+	 * Constructor with Ops.
 	 * @param cityId the city id of the statistics
 	 * @param op the kind of the statistics
 	 */
@@ -19,6 +20,11 @@ public class AddStat extends Command
 		this.op = op;
 	}
 	
+	/**
+	 * Constructor with numMaps.
+	 * @param cityId
+	 * @param numMaps
+	 */
 	public AddStat(int cityId, int numMaps)
 	{
 		this.cityId = cityId;

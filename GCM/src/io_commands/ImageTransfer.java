@@ -14,6 +14,7 @@ public class ImageTransfer extends Command
 {
 
 	/**
+	 * Constructor
 	 * @param readpath  the path of the image we want to transfer
 	 * @param requested load/save
 	 */
@@ -42,6 +43,7 @@ public class ImageTransfer extends Command
 	}
 
 	/**
+	 * returns the actual image.
 	 * @return the image from the server
 	 */
 	public BufferedImage getImage()
@@ -51,7 +53,6 @@ public class ImageTransfer extends Command
 
 	/**
 	 * save the image into the server
-	 * 
 	 * @param pathname the path of the image we want to save
 	 * @throws IOException 
 	 */

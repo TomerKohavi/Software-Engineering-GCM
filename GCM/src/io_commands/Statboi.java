@@ -12,6 +12,7 @@ import objectClasses.Statistic;
 public class Statboi extends Command
 {
 	/**
+	 * Constructor.
 	 * @param cityId the city id of the statistics 
 	 * @param from from when that statistics is start to be taken
 	 * @param end until when that statistics is taken

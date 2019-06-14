@@ -11,6 +11,7 @@ import objectClasses.City;
 public class Search extends Command
 {
 	/**
+	 * Constructor
 	 * @param cityName the name of the city we search
 	 * @param cityInfo the info of the city we search
 	 * @param poiName the name of the point of interest

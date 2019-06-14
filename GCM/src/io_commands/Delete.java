@@ -9,6 +9,7 @@ import otherClasses.ClassMustProperties;
 public class Delete extends Command
 {
 	/**
+	 * Constructor.
 	 * @param toDelete object to delete
 	 */
 	public Delete(ClassMustProperties toDelete)
