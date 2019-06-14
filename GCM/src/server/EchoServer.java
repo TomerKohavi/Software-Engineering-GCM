@@ -370,6 +370,13 @@ public class EchoServer extends AbstractServer
 		cp.saveToDatabase();
 	}
 	
+	
+	private FetchCustomer handleFetchUser(FetchCustomer fc)
+	{
+		fc.user = Database.getCustomerById(fc.id);
+		return fc;
+	}
+	
 	/**
 	 * This method handles any messages received from the client.
 	 *
@@ -425,6 +432,8 @@ public class EchoServer extends AbstractServer
 				client.sendToClient(handleFetchSights((FetchSights) msg));
 			else if (msg instanceof CityPurchase)
 				handlePurchase((CityPurchase) msg);
+			else if (msg instanceof FetchCustomer)
+				client.sendToClient(handleFetchUser((FetchCustomer) msg));			
 			else
 				System.out.println(msg.getClass().toString() + '\n' + msg.toString());
 		}

@@ -110,7 +110,7 @@ public class BuyController {
     		Connector.client.sendToServer(Subscription._createLocalSubscription(-1, Connector.selectedCity.getId(), Connector.user.getId(), start, price, price, end, Connector.selectedCity.getCityName())); // TODO kohavi
     		Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.Subscription);
     	}
-    	
+    	Connector.user = Connector.client.fetchUser(Connector.user.getId());
     	mainPane.getScene().getWindow().hide();
     }
 

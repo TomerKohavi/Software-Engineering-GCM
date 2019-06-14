@@ -141,7 +141,7 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 	}
 
 	/**
-	 * Returns the customer one time purchase lise
+	 * Returns the customer one time purchase list
 	 * @return list of one time purchase object of the customer
 	 */
 	private ArrayList<OneTimePurchase> generateOneTimePurchases() {
@@ -263,6 +263,19 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 			if (otp.getCityId() == cityId && !otp.getWasDownload())
 				return otp;
 		return null;
+	}
+	
+	/**
+	 * get the active subscriptions of the city
+	 * @param cityId the city id
+	 * @return list of subscriptions
+	 */
+	public ArrayList<Subscription> getActiveSubscriptionsByCity(int cityId) {
+		ArrayList<Subscription> subs=new ArrayList<Subscription>();
+		for (Subscription s : temp_activeSubscription)
+			if (s.getCityId()==cityId)
+				subs.add(s);
+		return subs;
 	}
 
 	/**
