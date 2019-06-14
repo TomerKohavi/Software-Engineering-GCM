@@ -14,9 +14,10 @@ public class CreateRoute extends Command
 	 * @param info the info of the route
 	 * @param cdvId city data version id of the route
 	 */
-	public CreateRoute(int cityId, String info, int cdvId)
+	public CreateRoute(int cityId, String name, String info, int cdvId)
 	{
 		this.cityId = cityId;
+		this.name = name;
 		this.info = info;
 		this.cdvId = cdvId;
 	}
@@ -29,5 +30,6 @@ public class CreateRoute extends Command
 
 	public Integer cityId, cdvId;
 	public String info;
+	public String name;
 	public RouteSight routeS;
 }
