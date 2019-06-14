@@ -304,19 +304,20 @@ public class EchoServer extends AbstractServer
 	}
 
 	/**
-	 * handle delete request from the client 
-	 * @param del the delete request from the client 
+	 * handle delete request from the client
+	 * 
+	 * @param del the delete request from the client
 	 */
 	private void handleDelete(Delete del)
 	{
 		System.out.println("delete " + del.toDelete.getClass().toString() + " " + del.toDelete.getId());
 		del.toDelete.deleteFromDatabase();
 	}
-	
 
 	/**
-	 * handle add statistics request from the client 
-	 * @param stat the statistics request from the client 
+	 * handle add statistics request from the client
+	 * 
+	 * @param stat the statistics request from the client
 	 */
 	private void handleAddStat(AddStat stat)
 	{
@@ -339,14 +340,14 @@ public class EchoServer extends AbstractServer
 			InformationSystem.addSubDownload(stat.cityId);
 			break;
 		case VersionPublish:
-				InformationSystem.newVersionWasPublished(stat.cityId);
+			InformationSystem.newVersionWasPublished(stat.cityId);
 			break;
 		default:
-			{
-			if(stat.numMaps!=null)
+		{
+			if (stat.numMaps != null)
 				InformationSystem.setNumMaps(stat.cityId, stat.numMaps);
 			break;
-			}
+		}
 		}
 	}
 
@@ -369,14 +370,13 @@ public class EchoServer extends AbstractServer
 		cp._setId(Database.generateIdCityPurchase());
 		cp.saveToDatabase();
 	}
-	
-	
+
 	private FetchCustomer handleFetchUser(FetchCustomer fc)
 	{
 		fc.user = Database.getCustomerById(fc.id);
 		return fc;
 	}
-	
+
 	/**
 	 * This method handles any messages received from the client.
 	 *
@@ -433,7 +433,7 @@ public class EchoServer extends AbstractServer
 			else if (msg instanceof CityPurchase)
 				handlePurchase((CityPurchase) msg);
 			else if (msg instanceof FetchCustomer)
-				client.sendToClient(handleFetchUser((FetchCustomer) msg));			
+				client.sendToClient(handleFetchUser((FetchCustomer) msg));
 			else
 				System.out.println(msg.getClass().toString() + '\n' + msg.toString());
 		}
@@ -464,9 +464,10 @@ public class EchoServer extends AbstractServer
 	}
 
 	/**
-	 * handle statistics request  from the client and return the result
+	 * handle statistics request from the client and return the result
+	 * 
 	 * @param statboi the statistics request from the client
-	 * @return statistics result to the client 
+	 * @return statistics result to the client
 	 */
 	public Statboi handleStatistics(Statboi statboi)
 	{
