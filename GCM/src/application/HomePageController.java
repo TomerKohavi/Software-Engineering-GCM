@@ -398,6 +398,10 @@ public class HomePageController
 		Text2.setText("POI Found: " + Connector.cityData.getNumPlaceOfInterestSights()); // #POI for the city
 		Text3.setText("Routes Found: " + Connector.cityData.getNumRouteSights()); // #Routes for the city
 		
+		SideMap.setVisible(false);
+		SidePOI.setVisible(false);
+		SideRoutes.setVisible(false);
+		
 		BuyButton.setVisible(true);
 		if (Connector.user != null)
 		{
@@ -435,9 +439,6 @@ public class HomePageController
 		else
 			BuyButton.setText("Buy");
 		ShowMapButton.setVisible(false);
-		SideMap.setDisable(false);
-		SidePOI.setDisable(false);
-		SideRoutes.setDisable(false);
 	}
 	
 	/**
