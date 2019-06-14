@@ -367,7 +367,7 @@ public class CityDataVersion implements ClassMustProperties, Serializable {
 	 * @return list of route sight object we want to get
 	 */
 	public static ArrayList<RouteSight> _generateRouteSights(int cdvId) {
-		ArrayList<Integer> ids = Database.searchPlaceOfInterestSight(cdvId, null);
+		ArrayList<Integer> ids = Database.searchRouteSight(cdvId, null,null);
 		ArrayList<RouteSight> arrList = new ArrayList<RouteSight>();
 		for (int id : ids) {
 			RouteSight o = Database._getRouteSightById(id);
