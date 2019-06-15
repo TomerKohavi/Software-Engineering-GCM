@@ -12,6 +12,7 @@ import com.jfoenix.controls.JFXButton;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -40,6 +41,8 @@ public class Connector
 	public static User user;
 
 	public static Stage mainStage;
+	
+	public static AnchorPane mainPaneForClient;
 
 	public static JFXButton sideButton;
 
