@@ -73,7 +73,6 @@ public class CityEditController
 			{
 				e.printStackTrace();
 			}
-			mainPane.getScene().getWindow().hide();
 		}
 		else
 		{
@@ -89,6 +88,7 @@ public class CityEditController
 				e.printStackTrace();
 			}
 		}
+		mainPane.getScene().getWindow().hide();
 	}
 
 	/**

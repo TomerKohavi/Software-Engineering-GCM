@@ -258,7 +258,7 @@ public class MapEditController
 				if (ChooseCityBox.getValue().equals("New City"))
 				{
 					int numOfCity = Connector.searchCityResult.size();
-					openNewPage("CityEditScene");
+					openNewPage("CityEditScene.fxml");
 					if (numOfCity >= Connector.searchCityResult.size()) // didn't really add new city
 						return;
 					my_city = Connector.searchCityResult.get(Connector.searchCityResult.size() - 1);
