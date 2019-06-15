@@ -157,7 +157,7 @@ public class EditUserController
 				Integer expM = ExperationMonth.getValue();
 				Integer expY = ExperationYear.getValue();
 
-				check = RegCheck.isValidCustomer(uname, pass, fname, lname, email, phone, ccard, cvc).getValue();
+				check = RegCheck.isValidCustomer(uname, pass, fname, lname, email, phone, ccard, expY, expM, cvc).getValue();
 				if (check.equals("All Good"))
 				{
 					Connector.user.setUserName(uname);
