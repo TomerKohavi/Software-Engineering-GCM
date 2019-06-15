@@ -37,7 +37,7 @@ public class CitySearchTestSingle
 		{
 			if (c.getCopyUnpublishedVersions().size() == 0)
 			{
-				cdv = new CityDataVersion(c, randomNum + ".0", 100, 200);
+				cdv = new CityDataVersion(c, randomNum + ".0");
 				c.addUnpublishedCityDataVersion(cdv);
 			}
 			else
@@ -49,7 +49,7 @@ public class CitySearchTestSingle
 			cdv = c.getPublishedVersion();
 			if (cdv == null)
 			{
-				cdv = new CityDataVersion(c, randomNum + ".2", 100, 200);
+				cdv = new CityDataVersion(c, randomNum + ".2");
 				c.addPublishedCityDataVersion(cdv);
 			}
 		}
@@ -68,19 +68,19 @@ public class CitySearchTestSingle
 		// create cities
 		Random rand = new Random();
 		int randomNum = rand.nextInt(9999);
-		c1 = new City("Haifa" + randomNum, "very boring city");
+		c1 = new City("Haifa" + randomNum, "very boring city",100, 200);
 		p1 = createAndAddPOI(c1, "Tomer", "just a simple description", true);
 		p2 = createAndAddPOI(c1, "Boby", "house blue in the sea", false);
 		c1.saveToDatabase();
-		c2 = new City("TelAviv" + randomNum, "exciting city in the middle of israel");
+		c2 = new City("TelAviv" + randomNum, "exciting city in the middle of israel",100, 200);
 		p3 = createAndAddPOI(c2, "Tal", "error 404 description not found", false);
 		p4 = createAndAddPOI(c2, "Tomer", "tree growing by the river", false);
 		c2.saveToDatabase();
-		c3 = new City("New York" + randomNum, "very boring city");
+		c3 = new City("New York" + randomNum, "very boring city",100, 200);
 		p5 = createAndAddPOI(c3, "Sigal", "just a simple description", false);
 		p6 = createAndAddPOI(c3, "Ron", "random sentance", true);
 		c3.saveToDatabase();
-		c4 = new City("New York" + randomNum, "not that bad");
+		c4 = new City("New York" + randomNum, "not that bad",100, 200);
 		c4.saveToDatabase();
 	}
 

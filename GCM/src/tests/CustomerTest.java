@@ -27,9 +27,9 @@ public class CustomerTest {
         		Date today = new Date(Calendar.getInstance().getTime().getTime());
         		int randomNum=rand.nextInt(9999);
         		//create citys
-        		City c=new City("Haifa"+randomNum, "boring city");
+        		City c=new City("Haifa"+randomNum, "boring city",100, 200);
         		c.saveToDatabase();
-        		City c2=new City("TelAviv"+randomNum, "less boring city");
+        		City c2=new City("TelAviv"+randomNum, "less boring city",100, 200);
         		c2.saveToDatabase();
         		//create customer
         		Customer cust = new Customer("Tal"+randomNum, "11235", "a@a.com"+randomNum, "Tal", "Shahnov", "055","5495681338665894","07/24", "896");
@@ -62,7 +62,7 @@ public class CustomerTest {
         		Date today = new Date(Calendar.getInstance().getTime().getTime());
         		Database.createConnection();
         		//create citys
-        		City c=new City("Haifa", "boring city");
+        		City c=new City("Haifa", "boring city",100, 200);
         		c.saveToDatabase();
         		//create customer
         		int randomNum=rand.nextInt(9999);
