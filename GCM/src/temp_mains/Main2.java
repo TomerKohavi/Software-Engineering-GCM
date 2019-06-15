@@ -14,7 +14,7 @@ public class Main2 {
 		try 
 		{
 			LocalDate today = LocalDate.now();
-			LocalDate yesturday= today.plusDays(1);
+			LocalDate yesturday= today.minusDays(1);
 			System.out.println(today.getMonth());
 			Statistic s=InformationSystem.getRangeSumStatistics(4, today, today);
 			System.out.println(s.getNumOneTimePurchases());
