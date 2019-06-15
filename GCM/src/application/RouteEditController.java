@@ -250,6 +250,7 @@ public class RouteEditController
 				route.setName(Name.getText());
 				route.setInfo(InfoBox.getText());
 				route.setRouteStops(new ArrayList<RouteStop>());
+				route.setFavorite(FavoriteBox.isSelected());
 				Connector.client.update(route);
 			}
 			else

@@ -352,18 +352,21 @@ public class HomePageController
 		PublishButton.setVisible(false);
 		if (Connector.unpublished)
 		{
-			CreateButton.setVisible(true);
 			if (Connector.listType.equals("Map") || Connector.listType.equals("POI")
 					|| Connector.listType.equals("Route"))
 			{
 				EditButton.setVisible(true);
 				RemoveButton.setVisible(true);
+				CreateButton.setVisible(true);
 			}
 			else
 			{
 				EditButton.setVisible(false);
 				RemoveButton.setVisible(false);
+				CreateButton.setVisible(false);
 			}
+			if (Connector.listType.equals("City"))
+				CreateButton.setVisible(true);
 		}
 		else
 		{
@@ -412,7 +415,7 @@ public class HomePageController
 		SideMap.setVisible(false);
 		SidePOI.setVisible(false);
 		SideRoutes.setVisible(false);
-		
+		ReSubscribeButton.setVisible(false);
 		BuyButton.setVisible(true);
 		if (Connector.user != null)
 		{
