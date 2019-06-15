@@ -88,6 +88,7 @@ public class RouteEditController
 	 * initialize variables
 	 * @throws IOException in/out exception
 	 */
+	@SuppressWarnings("unchecked")
 	@FXML
 	public void initialize() throws IOException
 	{
@@ -105,7 +106,7 @@ public class RouteEditController
 			route = Connector.selectedRoute;
 			Name.setText(route.getName());
 			InfoBox.setText(route.getInfo());
-//			FavoriteBox.setSelected(route.getIs); // TODO get isFavorite (is in RouteSight but not in Route - Blame Ronen)
+			FavoriteBox.setSelected(route.getIsFavorite());
 			stopList = route.getCopyRouteStops();
 		}
 		else
@@ -195,6 +196,7 @@ public class RouteEditController
 				if (selectedIdx >= 0)
 				{
 					PlaceOfInterest poi = Connector.searchPOIResult.get(selectedIdx).getCopyPlace();
+					@SuppressWarnings("deprecation")
 					RouteStop newRouteStop = RouteStop._createRouteStop(-1, -1, poi.getId(), poi.getName(), 0,
 							new Time((time / 60), time % 60, 0));
 					stopList.add(newRouteStop);
