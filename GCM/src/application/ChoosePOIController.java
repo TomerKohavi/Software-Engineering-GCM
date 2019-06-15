@@ -4,12 +4,16 @@
 
 package application;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import com.jfoenix.controls.JFXButton;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
+import objectClasses.PlaceOfInterestSight;
 
 /**
  * @author tomer
@@ -29,7 +33,10 @@ public class ChoosePOIController {
     @FXML // fx:id="AddButton"
     private JFXButton AddButton; // Value injected by FXMLLoader
 
-    public void initialize() {
+    @SuppressWarnings("unchecked")
+	public void initialize() throws IOException {
+    	if (Connector.searchPOIResult == null)
+    		Connector.searchPOIResult = Connector.searchPOIResult = (ArrayList<PlaceOfInterestSight>) Connector.client.fetchSights(Connector.cityData.getId(), PlaceOfInterestSight.class);
     	POIList.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
     }
     

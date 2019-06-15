@@ -71,7 +71,7 @@ public class ChangePriceController {
     @FXML
     void applyChanges(ActionEvent event) {
     	if (isNumeric(OneTimeField.getText()) && isNumeric(MonthField.getText())) {
-	    	// send price to server
+	    	// TODO send price to server
 	    	mainPane.getScene().getWindow().hide();
     	} else {
     		NotValid.setVisible(true);

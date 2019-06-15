@@ -304,7 +304,7 @@ public class MapEditController
 					toDelete.add(img.getLoc());
 				}
 			}
-			catch (IOException e)
+			catch (Exception e)
 			{
 				e.printStackTrace();
 			}
