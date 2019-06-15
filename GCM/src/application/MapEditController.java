@@ -210,10 +210,17 @@ public class MapEditController
 	 * Apply the changes tracked.
 	 * 
 	 * @param event user click on edit map
+	 * @throws IOException 
 	 */
 	@FXML
-	void apply(ActionEvent event)
+	void apply(ActionEvent event) throws IOException
 	{
+		if (!Connector.isEdit && !changedImage)
+		{
+			Connector.errorMsg = "New map doesn't have picture.";
+			openNewPage("ErrorScene.fxml");
+			return;
+		}
 		try
 		{
 			if (Connector.isEdit)
