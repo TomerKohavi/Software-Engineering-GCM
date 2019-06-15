@@ -103,7 +103,7 @@ public class BuyController {
     	{
 			double price = monthPrice * MonthBox.getValue();
     		LocalDate start = LocalDate.now();
-    		LocalDate end = LocalDate.now();
+    		LocalDate end = start.plusMonths(MonthBox.getValue());
     		end.plusMonths(MonthBox.getValue());
     		Connector.client.sendToServer(Subscription._createLocalSubscription(-1, Connector.selectedCity.getId(), Connector.user.getId(), start, price, price, end, Connector.selectedCity.getCityName()));
     		Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.Subscription);
