@@ -619,24 +619,24 @@ public class InitDatebase {
 		Employee e = new Employee("adiel", "adiel1", "statman.adiel@gmail.com", "adiel", "statman", "0525952726",
 				Employee.Role.REGULAR);
 		e.saveToDatabase();
-		Customer cust = new Customer("dan", "masterDan%", "dannyf.post@gmail.com", "dan", "feldman", "0523325686",
+		Customer cust = new Customer("dan", "masterDan#1", "dannyf.post@gmail.com", "dan", "feldman", "0523325686",
 				"5495655558665894", "01/23", "354");
-		Subscription sub0 = new Subscription(cust, 1, LocalDate.of(2019, 6, 7), 211.8, 189.9, LocalDate.of(2019, 10, 7));
+		Subscription sub0 = new Subscription(cust, 1, LocalDate.of(2019, 3, 17), 211.8, 189.9, LocalDate.of(2019, 6, 17));
 		cust.addSubscription(sub0);
-		InformationSystem.addSubscription(1, LocalDate.of(2019, 6, 7));
-		InformationSystem.addSubDownload(1,LocalDate.of(2019, 6, 9));
+		InformationSystem.addSubscription(1, LocalDate.of(2019, 3, 17));
+		InformationSystem.addSubDownload(1,LocalDate.of(2019, 4, 30));
 		
 		for(int i=0;i<2;i++)
 			InformationSystem.addVisit(1, LocalDate.of(2019, 6, 7).plusDays(i*3));
 		
-		Subscription sub1 = new Subscription(cust, 4, LocalDate.of(2019, 2, 3), 131.8, 111.9, LocalDate.of(2019, 3, 3));
+		Subscription sub1 = new Subscription(cust, 4, LocalDate.of(2019, 2, 3), 131.8, 111.9, LocalDate.of(2019, 5, 3));
 		cust.addSubscription(sub1);
 		InformationSystem.addSubscription(4, LocalDate.of(2019, 2, 3));
 		
-		Subscription sub2 = new Subscription(cust, 4, LocalDate.of(2019, 3, 3), 131.8, 100.7, LocalDate.of(2019, 4, 3));
+		Subscription sub2 = new Subscription(cust, 4, LocalDate.of(2019, 5, 4), 131.8, 100.7, LocalDate.of(2019, 8, 4));
 		cust.addSubscription(sub2);
-		InformationSystem.addSubscriptionRenewal(4,LocalDate.of(2019, 3, 3));
-		InformationSystem.addSubDownload(4,LocalDate.of(2019, 4, 1));
+		InformationSystem.addSubscriptionRenewal(4,LocalDate.of(2019, 5, 4));
+		InformationSystem.addSubDownload(4,LocalDate.of(2019, 5, 20));
 		
 		for(int i=0;i<11;i++)
 			InformationSystem.addVisit(4, LocalDate.of(2019, 2, 3).plusDays(i*5));
@@ -656,7 +656,7 @@ public class InitDatebase {
 		Employee e = new Employee("ben", "benbon&ALAA", "bengordoncshaifa@gmail.com", "ben", "musa", "0508322726",
 				Employee.Role.MANAGER);
 		e.saveToDatabase();
-		Customer cust = new Customer("gadi", "gadiHAVIV!@", "gadi@gmail.com", "gadi", "landau", "0524867726",
+		Customer cust = new Customer("gadi", "gadi11@", "gadi@gmail.com", "gadi", "landau", "0524867726",
 				"5495123458665894", "01/25", "891");
 		Subscription sub = new Subscription(cust, 1, LocalDate.of(118, 6, 8), 53.2, 50.9, LocalDate.of(118, 8, 8));
 		cust.addSubscription(sub);
@@ -714,9 +714,9 @@ public class InitDatebase {
 		InformationSystem.addSubDownload(3,LocalDate.of(2019, 1, 29));
 		InformationSystem.addSubDownload(3,LocalDate.of(2019, 2, 17));
 		InformationSystem.addSubDownload(3,LocalDate.of(2019, 2, 21));
-		Subscription sub2 = new Subscription(cust, 3, LocalDate.of(2019, 3, 25), 201.8, 179.9, LocalDate.of(2019, 5, 25));
+		Subscription sub2 = new Subscription(cust, 3, LocalDate.of(2019, 3, 18), 201.8, 179.9, LocalDate.of(2019, 6, 18));
 		cust.addSubscription(sub2);
-		InformationSystem.addSubscriptionRenewal(3,LocalDate.of(2019, 3, 25));
+		InformationSystem.addSubscriptionRenewal(3,LocalDate.of(2019, 3, 18));
 		InformationSystem.addSubDownload(3,LocalDate.of(2019, 4, 11));
 		InformationSystem.addSubDownload(3,LocalDate.of(2019, 5, 20));
 		
