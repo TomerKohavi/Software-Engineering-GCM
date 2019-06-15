@@ -48,7 +48,7 @@ public class MapEditController
 
 	private Bounds boundsInScene;
 
-	private String readpath; // TODO Kohavi make sure one cant save map w/out image
+	private String readpath;
 
 	private List<Location> locList;
 
