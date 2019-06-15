@@ -7,7 +7,7 @@ import objectClasses.Subscription;
  * @author Ron Cohen
  *
  */
-public class Resub 
+public class Resub extends Command
 {
 	public Subscription subAlmostEnd;
 	public double newFullPrice;
@@ -25,4 +25,8 @@ public class Resub
 		this.newPayedPrice=newPayedPrice;
 	}
 
+	/**
+	 * delete the request
+	 */
+	public void delete(){}
 }
