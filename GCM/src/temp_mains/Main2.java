@@ -1,6 +1,7 @@
 package temp_mains;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -15,9 +16,10 @@ public class Main2 {
 		{
 			LocalDate today = LocalDate.now();
 			LocalDate yesturday= today.minusDays(1);
-			System.out.println(today.getMonth());
-			Statistic s=InformationSystem.getRangeSumStatistics(4, today, today);
-			System.out.println(s.getNumOneTimePurchases());
+			System.out.println(today);
+			System.out.println(ChronoUnit.DAYS.between(yesturday, today));
+			System.out.println(ChronoUnit.DAYS.between(today, yesturday));
+			//System.out.println(s.getNumOneTimePurchases());
 			/*Customer cust = new Customer("t", "t", "t@gmail.com", "t", "t t", "0523002100", "0095681338665894", "07/24",
 					"000");
 			
