@@ -659,24 +659,26 @@ public class Database {
 				throw new DatabaseException();
 			}
 			if (existRoute(p.getId())) {
-				String sql = "UPDATE " + Table.Route.getValue() + " SET Info=?, NumStops=?, CityID=?, Name=? WHERE ID=?";
+				String sql = "UPDATE " + Table.Route.getValue() + " SET Info=?, NumStops=?, CityID=?, Name=?, IsFavorite=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setString(1, p.getInfo());
 				su.setInt(2, p.getNumStops());
 				su.setInt(3, p.getCityId());
 				su.setString(4, p.getName());
 				su.setInt(5, p.getId());
+				su.setBoolean(6, p.getIsFavorite());
 				su.executeUpdate();
 				return true;
 			} else {
 				String sql = "INSERT INTO " + Table.Route.getValue()
-						+ " (ID, Info, NumStops, CityID, Name) VALUES (?, ?, ?, ?, ?)";
+						+ " (ID, Info, NumStops, CityID, Name, IsFavorite) VALUES (?, ?, ?, ?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getId());
 				su.setString(2, p.getInfo());
 				su.setInt(3, p.getNumStops());
 				su.setInt(4, p.getCityId());
 				su.setString(5, p.getName());
+				su.setBoolean(6, p.getIsFavorite());
 				su.executeUpdate();
 				return false;
 			}
@@ -1117,22 +1119,20 @@ public class Database {
 			}
 			if (existRouteSight(p.getId())) {
 				String sql = "UPDATE " + Table.RouteSight.getValue()
-						+ " SET CityDataVersions=?, RouteID=?, IsFavorite=? WHERE ID=?";
+						+ " SET CityDataVersions=?, RouteID=?  WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityDataVersionId());
 				su.setInt(2, p.getRouteId());
-				su.setBoolean(3, p.getIsFavorite());
 				su.setInt(4, p.getId());
 				su.executeUpdate();
 				return true;
 			} else {
 				String sql = "INSERT INTO " + Table.RouteSight.getValue()
-						+ " (ID,CityDataVersions, RouteID, IsFavorite) VALUES (?, ?, ?, ?)";
+						+ " (ID,CityDataVersions, RouteID) VALUES (?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getId());
 				su.setInt(2, p.getCityDataVersionId());
 				su.setInt(3, p.getRouteId());
-				su.setBoolean(4, p.getIsFavorite());
 				su.executeUpdate();
 				return false;
 			}
@@ -2256,7 +2256,7 @@ public class Database {
 			ResultSet res = get(Table.Route.getValue(), id);
 			if (res == null)
 				return null;
-			return Route._createRoute(res.getInt("ID"), res.getInt("CityID"), res.getString("Name"), res.getString("Info"));
+			return Route._createRoute(res.getInt("ID"), res.getInt("CityID"), res.getString("Name"), res.getString("Info"),res.getBoolean("IsFavorite"));
 		} catch (Exception e) {
 			// closeConnection();
 			e.printStackTrace();
@@ -2436,8 +2436,7 @@ public class Database {
 			ResultSet res = get(Table.RouteSight.getValue(), id);
 			if (res == null)
 				return null;
-			return RouteSight._createRouteSight(res.getInt("ID"), res.getInt("CityDataVersions"), res.getInt("RouteID"),
-					res.getBoolean("IsFavorite"));
+			return RouteSight._createRouteSight(res.getInt("ID"), res.getInt("CityDataVersions"), res.getInt("RouteID"));
 		} catch (Exception e) {
 			// closeConnection();
 			e.printStackTrace();
