@@ -1,7 +1,7 @@
 
 package objectClasses;
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDate;
 
 import controller.Database;
 import otherClasses.ClassMustProperties;
@@ -15,7 +15,7 @@ public abstract class CityPurchase implements Comparable<CityPurchase>, Serializ
 	private int id;
 	private int cityId;
 	private int userId;
-	private Date purchaseDate;
+	private LocalDate purchaseDate;
 	private double fullPrice;
 	private double pricePayed;
 	
@@ -31,7 +31,7 @@ public abstract class CityPurchase implements Comparable<CityPurchase>, Serializ
 	 * @param fullPrice the full price of the buy
 	 * @param pricePayed how much payed for the buy
 	 */
-	protected CityPurchase(int id, int cityId, int userId, Date purchaseDate, double fullPrice, double pricePayed) {
+	protected CityPurchase(int id, int cityId, int userId, LocalDate purchaseDate, double fullPrice, double pricePayed) {
 		this.id = id;
 		this.cityId = cityId;
 		this.userId = userId;
@@ -41,7 +41,7 @@ public abstract class CityPurchase implements Comparable<CityPurchase>, Serializ
 		reloadTempsFromDatabase();
 	}
 	
-	protected CityPurchase(int id, int cityId, int userId, Date purchaseDate, double fullPrice, double pricePayed, String cityName) {
+	protected CityPurchase(int id, int cityId, int userId, LocalDate purchaseDate, double fullPrice, double pricePayed, String cityName) {
 		this.id = id;
 		this.cityId = cityId;
 		this.userId = userId;
@@ -60,7 +60,7 @@ public abstract class CityPurchase implements Comparable<CityPurchase>, Serializ
 	 * @param fullPrice the full price of the buy
 	 * @param pricePayed how much payed for the buy
 	 */
-	public CityPurchase(int userId, int cityId, Date purchaseDate, double fullPrice, double pricePayed) {
+	public CityPurchase(int userId, int cityId, LocalDate purchaseDate, double fullPrice, double pricePayed) {
 		this.id = Database.generateIdCityPurchase();
 		this.cityId = cityId;
 		this.userId = userId;
@@ -161,7 +161,7 @@ public abstract class CityPurchase implements Comparable<CityPurchase>, Serializ
 	 * 
 	 * @return the purchase date
 	 */
-	public Date getPurchaseDate() {
+	public LocalDate getPurchaseDate() {
 		return purchaseDate;
 	}
 
@@ -170,7 +170,7 @@ public abstract class CityPurchase implements Comparable<CityPurchase>, Serializ
 	 * 
 	 * @param purchaseDate the purchase date
 	 */
-	public void setPurchaseDate(Date purchaseDate) {
+	public void setPurchaseDate(LocalDate purchaseDate) {
 		this.purchaseDate = purchaseDate;
 	}
 	
