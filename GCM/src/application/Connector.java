@@ -164,6 +164,8 @@ public class Connector {
 							Connector.selectedCity.getCopyPublishedVersion().getId(), PlaceOfInterestSight.class),
 					selectedDirectory.getPath() + "\\" + Connector.selectedCity.getCityName() + " "
 							+ Connector.selectedCity.getCopyPublishedVersion().getVersionName() + ".txt");
+			if (searchMapResult == null)
+				Connector.searchMapResult = (ArrayList<MapSight>) Connector.client.fetchSights(Connector.cityData.getId(), MapSight.class);
 			for (MapSight mapS : searchMapResult)
 			{
 				Map map = mapS.getCopyMap();
