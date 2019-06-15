@@ -146,7 +146,7 @@ public class RegisterController
 		Integer expM = ExperationMonth.getValue();
 		Integer expY = ExperationYear.getValue();
 		String cvv = CVC.getText();
-		String errorMsg = RegCheck.isValidCustomer(usr, pass, first, last, emailAdd, phoneNumber, creditCard, cvv)
+		String errorMsg = RegCheck.isValidCustomer(usr, pass, first, last, emailAdd, phoneNumber, creditCard, expY, expM ,cvv)
 				.getValue();
 		if (!errorMsg.equals("All Good"))
 		{
