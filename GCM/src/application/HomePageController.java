@@ -1057,6 +1057,7 @@ public class HomePageController
 	void callReSubscribe(ActionEvent event) throws IOException
 	{
 		openNewPage("ReSubscribeScene.fxml");
+		fillCityInfo(Connector.selectedCity);
 	}
 	
 
