@@ -418,12 +418,12 @@ public class HomePageController
 					BuyButton.setText("Change Price");
 				else
 					BuyButton.setVisible(false);
-				if (role == Role.MANAGER && city.getManagerNeedsToPublish())
+				if (Connector.unpublished && role == Role.MANAGER && city.getManagerNeedsToPublish())
 				{
 					PublishButton.setVisible(true);
 					PublishButton.setText("Publish Version");
 				}
-				if (role == Role.REGULAR)
+				if (Connector.unpublished && role == Role.REGULAR)
 				{
 					PublishButton.setVisible(true);
 					PublishButton.setText("Commit Version");
@@ -1034,9 +1034,8 @@ public class HomePageController
 		if (PublishButton.getText().equals("Publish Version"))
 		{
 			System.out.println("Published");
-			Connector.selectedCity.addPublishedCityDataVersion(Connector.cityData); // TODO make sure this is the correct CDV to publish
-//			Connector.selectedCity.setManagerNeedsToPublish(false); // TODO needs to send to database it they don't do it themselves
-//			// TODO need to ask Ronen if update to false after publish is necessary. TODO UNCOMMENT ABOVE IF Ronen says yes to above
+			Connector.selectedCity.addPublishedCityDataVersion(Connector.cityData);
+			Connector.selectedCity.setManagerNeedsToPublish(false);
 			Connector.client.update(Connector.selectedCity);
 			Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.VersionPublish);
 			Connector.client.addStat(Connector.selectedCity.getId(), Connector.selectedCity.getCopyPublishedVersion().getNumMapSights());
@@ -1046,7 +1045,6 @@ public class HomePageController
 		{
 			Connector.selectedCity.setManagerNeedsToPublish(true);
 			Connector.client.update(Connector.selectedCity);
-			// TODO Kohavi make sure it's what you meant, seems to0 easy
 		}
 	}
 
