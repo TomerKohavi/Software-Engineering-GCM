@@ -23,7 +23,7 @@ import javafx.stage.Stage;
 
 /**
  * @author tomer
- * controller that treat the buy 
+ * Controller that treat the buy 
  */
 public class BuyController {
 	
@@ -54,7 +54,7 @@ public class BuyController {
     private JFXButton BuyButton; // Value injected by FXMLLoader
 
     /**
-	 * open new page
+	 * Open new page
 	 * @param FXMLpage new fxml page
 	 * @throws IOException cannot open the file
 	 */
@@ -72,7 +72,7 @@ public class BuyController {
 	}
     
     /**
-	 * initialize variables
+	 * Initialize variables
      */
     public void initialize() {
     	MonthBox.getItems().addAll(1,2,3,4,5,6);
@@ -143,7 +143,7 @@ public class BuyController {
     }
 
     /**
-     * go to the previous page
+     * Go to the previous page
      * @param event user click go previous page
      */
     @FXML

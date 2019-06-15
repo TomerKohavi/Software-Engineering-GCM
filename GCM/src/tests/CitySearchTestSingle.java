@@ -14,6 +14,11 @@ import objectClasses.CityDataVersion;
 import objectClasses.PlaceOfInterest;
 import objectClasses.PlaceOfInterestSight;
 
+/**
+ * @author ron
+ * @author tal
+ * JUnit for test single city search 
+ */
 public class CitySearchTestSingle
 {
 
@@ -28,6 +33,14 @@ public class CitySearchTestSingle
 	public static PlaceOfInterest p5;
 	public static PlaceOfInterest p6;
 
+	/**
+	 * Add point of interest to the city
+	 * @param c the city we test
+	 * @param name the name of the city
+	 * @param info the city info
+	 * @param publish if the city is published
+	 * @return the place of interest that add to the city
+	 */
 	private static PlaceOfInterest createAndAddPOI(City c, String name, String info, boolean publish)
 	{
 		Random rand = new Random();
@@ -60,6 +73,9 @@ public class CitySearchTestSingle
 		return p;
 	}
 
+	/**
+	 * init the data base
+	 */
 	@BeforeClass
 	public static void initDatabaseConnection()
 	{
@@ -84,6 +100,9 @@ public class CitySearchTestSingle
 		c4.saveToDatabase();
 	}
 
+	/**
+	 * Test if the search by city is working good
+	 */
 	@Test
 	public void testSearchByCity()
 	{
@@ -108,6 +127,9 @@ public class CitySearchTestSingle
 		assertFalse(searchResult3.contains(c4));
 	}
 
+	/**
+	 * Test if the search by point of interest is working good
+	 */
 	@Test
 	public void testSearchByPOI()
 	{
@@ -134,6 +156,9 @@ public class CitySearchTestSingle
 		assertFalse(searchResult3.contains(c3));
 	}
 
+	/**
+	 * Test if the search by point of interest & city is working good
+	 */
 	@Test
 	public void testSearchByBoth()
 	{
@@ -156,6 +181,9 @@ public class CitySearchTestSingle
 		assertFalse(searchResult3.contains(c3));
 	}
 
+	/**
+	 * Close the connection to the database
+	 */
 	@AfterClass
 	public static void closeDatabaseConnection()
 	{

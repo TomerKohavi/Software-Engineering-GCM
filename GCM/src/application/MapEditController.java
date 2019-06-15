@@ -265,7 +265,7 @@ public class MapEditController
 				}
 				else
 					my_city = Connector.selectedCity;
-				String generatedPath = "Pics\\" + my_city.getCityName() + generateRandomString(15) + ".png";
+				String generatedPath = Connector.selectedCity.getCityName() + " " + generateRandomString(15) + ".png";
 			
 				MapSight mapS = Connector.client.createMap(my_city.getId(), Name.getText(),
 						InfoBox.getText(), generatedPath, my_city.getCopyUnpublishedVersions().get(0).getId());

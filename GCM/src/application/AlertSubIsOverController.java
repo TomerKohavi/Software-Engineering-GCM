@@ -10,7 +10,7 @@ import javafx.scene.text.Text;
 
 /**
  * @author tomer
- * treat errors in login page
+ * Treat errors in login page
  */
 public class AlertSubIsOverController {
 
@@ -24,7 +24,7 @@ public class AlertSubIsOverController {
     private Text MainText; // Value injected by FXMLLoader
 
     /**
-     * initialize the variables
+     * Initialize the variables
      */
     public void initialize()
     {
@@ -32,7 +32,7 @@ public class AlertSubIsOverController {
     }
     
     /**
-     * go to the previous page
+     * Go to the previous page
      * @param event user click go previous page
      */
     @FXML

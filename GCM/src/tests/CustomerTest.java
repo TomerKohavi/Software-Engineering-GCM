@@ -14,6 +14,11 @@ import objectClasses.Customer;
 import objectClasses.OneTimePurchase;
 import objectClasses.Subscription;
  
+/**
+ * @author ron
+ * @author tal
+ * JUnit for customer test
+ */
 public class CustomerTest {
           
             @BeforeClass
@@ -21,6 +26,9 @@ public class CustomerTest {
             	Database.createConnection();
             }
             
+            /**
+             * Check if the customer subscription is fine
+             */
             @Test
         	public void testSubscription() {
         		Random rand = new Random();
@@ -56,6 +64,9 @@ public class CustomerTest {
         		c2.deleteFromDatabase();
         	}
             
+        	/**
+        	 * Check if the customer one time purchase is fine
+        	 */
         	@Test
         	public void testOneTimePurchase() {
         		Random rand = new Random();
@@ -86,6 +97,9 @@ public class CustomerTest {
         		c.deleteFromDatabase();
         	}
             
+            /**
+             * Close database connection
+             */
             @AfterClass 
             public static void closeDatabaseConnection() {
             	Database.closeConnection();
