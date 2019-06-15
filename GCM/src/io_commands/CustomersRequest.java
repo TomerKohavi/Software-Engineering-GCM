@@ -10,6 +10,9 @@ import objectClasses.Customer;
  */
 public class CustomersRequest extends Command
 {
+	/**
+	 * delete the request
+	 */
 	public void delete()
 	{
 	}

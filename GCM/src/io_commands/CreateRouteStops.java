@@ -20,6 +20,9 @@ public class CreateRouteStops extends Command
 		this.stopList = stopList;
 	}
 	
+	/**
+	 * delete the request
+	 */
 	public void delete()
 	{
 		stopList = null;

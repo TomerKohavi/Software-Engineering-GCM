@@ -62,6 +62,9 @@ public class ImageTransfer extends Command
 		ImageIO.write(SrIm.image, "png", new File(this.writepath));
 	}
 	
+	/**
+	 * delete the request
+	 */
 	public void delete()
 	{
 	}

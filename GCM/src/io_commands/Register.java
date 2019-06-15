@@ -39,6 +39,9 @@ public class Register extends Command {
 		this.isEmployee = isEmployee;
 	}
 	
+	/**
+	 * delete the request
+	 */
 	public void delete()
 	{
 		username = password = firstName = lastName = email = phone = null;
