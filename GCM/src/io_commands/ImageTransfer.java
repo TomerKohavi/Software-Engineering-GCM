@@ -67,7 +67,7 @@ public class ImageTransfer extends Command
 	}
 
 	private SerializableImage SrIm;
-	private String readpath;
-	private String writepath;
+	public String readpath;
+	public String writepath;
 	public boolean requested;
 }

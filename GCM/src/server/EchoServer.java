@@ -86,7 +86,7 @@ public class EchoServer extends AbstractServer
 	 *
 	 * @param port     The port number to connect on.
 	 * @param serverUI The interface type variable.
-	 * @throws IOException can be thrown due to session opening 
+	 * @throws IOException can be thrown due to session opening
 	 */
 	public EchoServer(int port, ChatIF serverUI) throws IOException
 	{
@@ -355,6 +355,7 @@ public class EchoServer extends AbstractServer
 
 	/**
 	 * handle fetch sights request from the client
+	 * 
 	 * @param fs the fetch sights request from the client
 	 * @return the fetch sights result that return to the client
 	 */
@@ -374,6 +375,7 @@ public class EchoServer extends AbstractServer
 
 	/**
 	 * handle purchase request from the client
+	 * 
 	 * @param cp the city purchase request from the client
 	 */
 	private void handlePurchase(CityPurchase cp)
@@ -385,6 +387,7 @@ public class EchoServer extends AbstractServer
 
 	/**
 	 * handle fetch customer request from the client
+	 * 
 	 * @param fc the fetch customer request from the client
 	 * @return the fetch customer result that return to the client
 	 */
@@ -397,6 +400,7 @@ public class EchoServer extends AbstractServer
 
 	/**
 	 * handle create location request from the client
+	 * 
 	 * @param clocs the location request
 	 * @return the result of the location request to the client
 	 */
@@ -414,7 +418,7 @@ public class EchoServer extends AbstractServer
 		System.out.println(" ids " + clocs.idList);
 		return clocs;
 	}
-	
+
 	/**
 	 * handle create city request from the client
 	 * 
@@ -424,12 +428,13 @@ public class EchoServer extends AbstractServer
 	private CreateCity handleCityCreation(CreateCity ccity)
 	{ // TODO Ronen make sure its the right way to create cities etc.
 		ccity.city = new City(ccity.name, ccity.info);
-		CityDataVersion cdv = new CityDataVersion(ccity.city, ccity.name = "1.0", ccity.priceOneTime, ccity.pricePeriod);
+		CityDataVersion cdv = new CityDataVersion(ccity.city, ccity.name = "1.0", ccity.priceOneTime,
+				ccity.pricePeriod);
 		ccity.city.addUnpublishedCityDataVersion(cdv);
 		ccity.city.saveToDatabase();
 		return ccity;
 	}
-	
+
 	/**
 	 * This method handles any messages received from the client.
 	 *
@@ -451,11 +456,15 @@ public class EchoServer extends AbstractServer
 				ImageTransfer imTr = (ImageTransfer) msg;
 				if (imTr.requested)
 				{
+					System.out.println("image request " + imTr.readpath);
 					imTr.readImageFromFile();
 					client.sendToClient(imTr);
 				}
 				else
+				{
+					System.out.println("image save " + imTr.writepath);
 					imTr.saveImage();
+				}
 			}
 			else if (msg instanceof Search)
 				client.sendToClient(handleSearch((Search) msg));

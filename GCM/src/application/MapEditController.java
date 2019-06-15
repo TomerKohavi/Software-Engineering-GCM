@@ -230,13 +230,15 @@ public class MapEditController
 			else
 			{
 				String generatedPath = Connector.selectedCity.getCityName() + generateRandomString(15) + ".png";
-				map.setImgURL(generatedPath);
-				Connector.client.sendImage(readpath, generatedPath);
-				
+			
 				MapSight mapS = Connector.client.createMap(Connector.selectedCity.getId(), Name.getText(),
 						InfoBox.getText(), generatedPath, Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId());
 				Connector.searchMapResult.add(mapS);
 				map = mapS.getCopyMap();
+
+				map.setImgURL(generatedPath);
+				Connector.client.sendImage(readpath, generatedPath);
+
 			}
 			for (Location loc : toDelete)
 				Connector.client.deleteObject(loc);
