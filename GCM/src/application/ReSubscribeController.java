@@ -51,7 +51,7 @@ public class ReSubscribeController {
 		ArrayList<Subscription> subscriptList = ((Customer) Connector.user).getCopyActiveSubscription();
 		for (Subscription searchedSub : subscriptList)
 		{
-			if (sub.getCityId() == Connector.selectedCity.getId())
+			if (searchedSub.getCityId() == Connector.selectedCity.getId())
 			{
 				sub = searchedSub;
 				break;
