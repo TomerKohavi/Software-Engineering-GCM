@@ -412,7 +412,7 @@ public class HomePageController
 		SideMap.setVisible(false);
 		SidePOI.setVisible(false);
 		SideRoutes.setVisible(false);
-		
+		ReSubscribeButton.setVisible(false);
 		BuyButton.setVisible(true);
 		if (Connector.user != null)
 		{
