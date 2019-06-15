@@ -45,6 +45,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import jdk.nashorn.internal.objects.annotations.Setter;
 import objectClasses.City;
 import objectClasses.CityDataVersion;
 import objectClasses.Customer;
@@ -722,6 +723,8 @@ public class HomePageController
 		}
 		else
 		{
+			ReportCityName.setText("");
+			ReportInfo.setText("");
 			DateNotValid.setVisible(false);
 			MainList.getItems().clear();
 			MainList.getItems().add("All Cities");
