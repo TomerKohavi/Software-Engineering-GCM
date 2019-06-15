@@ -1,7 +1,9 @@
 package controller;
 
+import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.time.YearMonth;
 
 public class RegCheck {
 
@@ -17,7 +19,8 @@ public class RegCheck {
 		Email("Illegal Email"), Phone("Illegal phone number"),
 		CardNum("The credit card is illegal. Please insert 16 digits, without spaces."),
 		CVV("The CVV value is illegal. Please insert 3 digits."),
-		AllGood("All Good");
+		AllGood("All Good"),
+		Expires("The expires date of the card is illegal.");
 
 		private final String msg;
 
@@ -133,6 +136,19 @@ public class RegCheck {
 		return pat.matcher(cvv).matches();
 	}
 	
+	public static boolean isValidExpires(Integer year,Integer month) 
+	{
+		if(year==null || month==null)
+			return false;
+		
+		LocalDate today=LocalDate.now();
+		YearMonth yearMonth = YearMonth.of(year+2000, month);
+		LocalDate exDate=LocalDate.of(year, month, yearMonth.lengthOfMonth());
+		if(today.isAfter(exDate))
+			return false;
+		return true;
+	}
+	
 	/**
 	 * combine all tests to check result.
 	 * 
@@ -147,7 +163,7 @@ public class RegCheck {
 	 * @return returns error type. Please use .getValue() in order to get the error massage.
 	 */
 	public static Res isValidCustomer(String uname, String pass, String fName, String lName, String eMail, String phone,
-			String cardNum, String cvv) {
+			String cardNum,Integer year,Integer month, String cvv) {
 		if (!isValidUsername(uname))
 			return Res.UName;
 		if (!isValidPassword(pass))
@@ -162,6 +178,8 @@ public class RegCheck {
 			return Res.Phone;
 		if (!isValidCreditCard(cardNum))
 			return Res.CardNum;
+		if(!isValidExpires(year,month))
+			return Res.Expires;
 		if (!isValidCVV(cvv))
 			return Res.CVV;
 		return Res.AllGood;
