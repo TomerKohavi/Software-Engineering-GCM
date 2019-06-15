@@ -99,7 +99,7 @@ public class InitDatebase {
 				false);
 
 		// cdv
-		CityDataVersion cdv = new CityDataVersion(c1, "1.0", 20, 100.9);
+		CityDataVersion cdv = new CityDataVersion(c1, "1.2", 20, 100.9);
 
 		p4.saveToDatabase();
 		PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv.getId(), p0);
@@ -113,7 +113,7 @@ public class InitDatebase {
 		PlaceOfInterestSight ps4 = new PlaceOfInterestSight(cdv.getId(), p4);
 		ps4.saveToDatabase();
 
-		Map m0 = new Map(c1.getId(), "Central city", "First map", "haifa1.png");
+		Map m0 = new Map(c1.getId(), "Central city", "General maps that shows most of the city.", "haifa1.png");
 		double[] coords0 = { 121.3, 518.7 };
 		Location l0 = new Location(m0, p0, coords0);
 		m0.addLocation(l0);
@@ -127,7 +127,7 @@ public class InitDatebase {
 		MapSight ms0 = new MapSight(cdv.getId(), m0);
 		ms0.saveToDatabase();
 
-		Map m1 = new Map(c1.getId(), "Mount Carmel", "Second map", "haifa2.png");
+		Map m1 = new Map(c1.getId(), "Mount Carmel", "A map tha focus of Mount Carmer. Scale of 1-50 in real life.", "haifa2.png");
 		double[] coords5 = { 412.3, 285.7 };
 		Location l5 = new Location(m1, p2, coords5);
 		m1.addLocation(l5);
@@ -162,7 +162,7 @@ public class InitDatebase {
 		rs1.saveToDatabase();
 
 		c1.addPublishedCityDataVersion(cdv);
-		c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv, "2.0"));
+		c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv, "3.1"));
 		c1.saveToDatabase();
 	}
 	
@@ -194,7 +194,7 @@ public class InitDatebase {
 				false);
 
 		// cdv
-		CityDataVersion cdv = new CityDataVersion(c1, "1.0", 15, 100.9);
+		CityDataVersion cdv = new CityDataVersion(c1, "2.1", 15, 100.9);
 		p4.saveToDatabase();
 		PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv.getId(), p0);
 		ps0.saveToDatabase();
@@ -206,7 +206,7 @@ public class InitDatebase {
 		ps3.saveToDatabase();
 		PlaceOfInterestSight ps4 = new PlaceOfInterestSight(cdv.getId(), p4);
 		ps4.saveToDatabase();
-		Map m0 = new Map(c1.getId(), "North city", "First map", "tel_aviv1.png");
+		Map m0 = new Map(c1.getId(), "North city", "Map that focus on the north part of the city, roads and streats.", "tel_aviv1.png");
 		double[] coords0 = { 123.3, 354.7 };
 		Location l0 = new Location(m0, p0, coords0);
 		m0.addLocation(l0);
@@ -251,7 +251,7 @@ public class InitDatebase {
 		rs1.saveToDatabase();
 
 		c1.addPublishedCityDataVersion(cdv);
-		c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv, "2.0"));
+		c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv, "6.888"));
 		c1.saveToDatabase();
 
 	}
@@ -291,7 +291,7 @@ public class InitDatebase {
 				"Then you sift the flour and bake together in the communal tabun (which still exists at the entrance gates to Mishkenot Sha'ananim), and then sit together and eat and enjoy fresh bread and the satisfaction of having a significant, slow and common effort.",
 				true);
 		// cdv
-		CityDataVersion cdv = new CityDataVersion(city, "1.0", 40, 135);
+		CityDataVersion cdv = new CityDataVersion(city, "3.3", 40, 135);
 		PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv.getId(), p0);
 		ps0.saveToDatabase();
 		PlaceOfInterestSight ps1 = new PlaceOfInterestSight(cdv.getId(), p1);
@@ -325,7 +325,7 @@ public class InitDatebase {
 		rs1.saveToDatabase();
 
 		// cdv2
-		CityDataVersion cdv2 = new CityDataVersion(cdv, "2.0");
+		CityDataVersion cdv2 = new CityDataVersion(cdv, "5.2");
 		PlaceOfInterestSight ps2 = new PlaceOfInterestSight(cdv2.getId(), p2);
 		ps0.saveToDatabase();
 		PlaceOfInterestSight ps3 = new PlaceOfInterestSight(cdv2.getId(), p3);
@@ -455,7 +455,7 @@ public class InitDatebase {
 		p7.saveToDatabase();
 
 		// cdv
-		CityDataVersion cdv = new CityDataVersion(city, "1.0", 40, 135);
+		CityDataVersion cdv = new CityDataVersion(city, "6.2", 40, 135);
 		PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv.getId(), p0);
 		ps0.saveToDatabase();
 		PlaceOfInterestSight ps1 = new PlaceOfInterestSight(cdv.getId(), p1);
@@ -491,7 +491,7 @@ public class InitDatebase {
 		rs1.saveToDatabase();
 
 		// cdv2
-		CityDataVersion cdv2 = new CityDataVersion(cdv, "2.0");
+		CityDataVersion cdv2 = new CityDataVersion(cdv, "8.1");
 		PlaceOfInterestSight ps2 = new PlaceOfInterestSight(cdv2.getId(), p2);
 		ps0.saveToDatabase();
 		PlaceOfInterestSight ps3 = new PlaceOfInterestSight(cdv2.getId(), p3);
