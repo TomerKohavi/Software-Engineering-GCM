@@ -91,7 +91,6 @@ public class ChatClient extends AbstractClient
 	FetchSights fs;
 
 	FetchCustomer fc;
-	public HomePageController caller;
 
 	/**
 	 * Constructs an instance of the chat client.
@@ -99,7 +98,7 @@ public class ChatClient extends AbstractClient
 	 * @param host     The server to connect to.
 	 * @param port     The port number to connect on.
 	 * @param clientUI The interface type variable.
-	 * @param caller GUI using the client
+	 * @param caller   GUI using the client
 	 * @throws IOException due to IO communication
 	 */
 
@@ -511,7 +510,7 @@ public class ChatClient extends AbstractClient
 		else if (msg instanceof FetchCustomer)
 			this.fc = ((FetchCustomer) msg);
 		else if (msg instanceof SQLException)
-			this.caller.openLostConnectionWindow();
+			System.out.println("OH HELL NAW");
 		if (msg instanceof Command)
 			this.semaphore.release();
 		else

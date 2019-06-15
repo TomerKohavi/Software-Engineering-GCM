@@ -577,8 +577,6 @@ public class HomePageController
 		Connector.sideButton = SideSearch;
 		Connector.sideButton.setOpacity(1);
 
-		Connector.client.caller = this;
-		
 		if (Connector.user != null)
 		{
 			LoginButton.setText("Log Off");
