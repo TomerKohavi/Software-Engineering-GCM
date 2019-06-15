@@ -206,6 +206,8 @@ public class MapEditController
 		return String.valueOf(arr);
 	}
 
+	// TODO Kohavi can press add POI without pressing on the map
+	
 	/**
 	 * Apply the changes tracked.
 	 * 
@@ -229,9 +231,9 @@ public class MapEditController
 				map.setInfo(InfoBox.getText());
 				if (changedImage)
 				{
-					String generatedPath = "Pics\\" + Connector.selectedCity.getCityName() + generateRandomString(15) + ".png";
+					String generatedPath = Connector.selectedCity.getCityName() + " " + generateRandomString(15) + ".png";
 					map.setImgURL(generatedPath);
-					Connector.client.sendImage(readpath, generatedPath);
+					Connector.client.sendImage(readpath, "Pics\\" + generatedPath);
 				}
 			}
 			else
@@ -244,7 +246,7 @@ public class MapEditController
 				map = mapS.getCopyMap();
 
 				map.setImgURL(generatedPath);
-				Connector.client.sendImage(readpath, generatedPath);
+				Connector.client.sendImage(readpath, "Pics\\" + generatedPath);
 
 			}
 			for (Location loc : toDelete)

@@ -204,9 +204,9 @@ public class EchoServer extends AbstractServer
 		else
 			Database.saveEmployee((Employee) user);
 	}
-	
+
 	/**
-	 * @param  r the resubscribe inputs
+	 * @param r the resubscribe inputs
 	 */
 	private void handleResubscribe(Resub r)
 	{
@@ -285,7 +285,7 @@ public class EchoServer extends AbstractServer
 	 */
 	private CreateRoute handleRouteCreation(CreateRoute croute)
 	{
-		Route route = new Route(croute.cityId, croute.name, croute.info,croute.isFav);
+		Route route = new Route(croute.cityId, croute.name, croute.info, croute.isFav);
 		route.saveToDatabase();
 
 		RouteSight routeS = new RouteSight(croute.cdvId, route);
@@ -354,7 +354,7 @@ public class EchoServer extends AbstractServer
 			InformationSystem.newVersionWasPublished(stat.cityId);
 			break;
 		case NumMaps:
-			if(stat.numMaps!=null)
+			if (stat.numMaps != null)
 				InformationSystem.setNumMaps(stat.cityId, stat.numMaps);
 			break;
 		}
@@ -434,7 +434,7 @@ public class EchoServer extends AbstractServer
 	 */
 	private CreateCity handleCityCreation(CreateCity ccity)
 	{
-		ccity.city = new City(ccity.name, ccity.info,ccity.priceOneTime,ccity.pricePeriod);
+		ccity.city = new City(ccity.name, ccity.info, ccity.priceOneTime, ccity.pricePeriod);
 		CityDataVersion cdv = new CityDataVersion(ccity.city, ccity.name = "1.0");
 		ccity.city.addUnpublishedCityDataVersion(cdv);
 		ccity.city.saveToDatabase();
@@ -506,8 +506,8 @@ public class EchoServer extends AbstractServer
 				client.sendToClient(handleFetchUser((FetchCustomer) msg));
 			else if (msg instanceof CreateCity)
 				client.sendToClient(handleCityCreation((CreateCity) msg));
-			else if(msg instanceof Resub)
-				handleResubscribe((Resub)msg);
+			else if (msg instanceof Resub)
+				handleResubscribe((Resub) msg);
 			else
 				System.out.println(msg.getClass().toString() + '\n' + msg.toString());
 		}

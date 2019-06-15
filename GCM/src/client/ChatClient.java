@@ -77,26 +77,26 @@ public class ChatClient extends AbstractClient
 	CreateRoute croute;
 
 	CreateRouteStops cstops;
-	
+
 	CreateLocations clocs;
-	
+
 	CreateCity ccity;
 
 	Semaphore semaphore;
 
 	Statboi statboi;
-	
+
 	FetchSights fs;
-	
+
 	FetchCustomer fc;
-	
+
 	/**
 	 * Constructs an instance of the chat client.
 	 *
 	 * @param host     The server to connect to.
 	 * @param port     The port number to connect on.
 	 * @param clientUI The interface type variable.
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
 
 	public ChatClient(String host, int port, ChatIF clientUI) throws IOException
@@ -111,7 +111,7 @@ public class ChatClient extends AbstractClient
 	}
 
 	/**
-	 *  Acquire semaphore 
+	 * Acquire semaphore
 	 */
 	public void semAcquire()
 	{
@@ -128,11 +128,12 @@ public class ChatClient extends AbstractClient
 
 	/**
 	 * Try to login the user
-	 * @param uname user name
-	 * @param pass username password
+	 * 
+	 * @param uname      user name
+	 * @param pass       username password
 	 * @param isEmployee boolean if user is employee
 	 * @return pair of user and the login result
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
 	public Pair<User, LoginRegisterResult> login(String uname, String pass, boolean isEmployee) throws IOException
 	{
@@ -159,7 +160,7 @@ public class ChatClient extends AbstractClient
 	 * @param cvv        the user credit card cvv of the new user
 	 * @param isEmployee if the new user if employee or not
 	 * @return the user and the result of the request
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
 	public Pair<User, LoginRegisterResult> register(String username, String password, String firstName, String lastName,
 			String email, String phone, Role role, String ccard, String expires, String cvv, boolean isEmployee)
@@ -175,7 +176,7 @@ public class ChatClient extends AbstractClient
 	/**
 	 * log off the user
 	 * 
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
 	public void logoff() throws IOException
 	{
@@ -189,7 +190,7 @@ public class ChatClient extends AbstractClient
 	/**
 	 * @param pathname the path of the image
 	 * @return image
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
 	public BufferedImage fetchImage(String pathname) throws IOException
 	{
@@ -200,12 +201,12 @@ public class ChatClient extends AbstractClient
 		return im;
 	}
 
-	
 	/**
 	 * Send image to the server
-	 * @param readpath the path of the image
+	 * 
+	 * @param readpath  the path of the image
 	 * @param writepath path to write image
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
 	public void sendImage(String readpath, String writepath) throws IOException
 	{
@@ -220,7 +221,7 @@ public class ChatClient extends AbstractClient
 	 * @param poiName  the name of point of interest we want to search
 	 * @param poiInfo  the info of point of interest we want to search
 	 * @return array list with the city we searched from the server
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
 	public ArrayList<City> search(String cityName, String cityInfo, String poiName, String poiInfo) throws IOException
 	{
@@ -233,7 +234,7 @@ public class ChatClient extends AbstractClient
 
 	/**
 	 * @return send to the server request for the customers
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
 	public ArrayList<Customer> customersRquest() throws IOException
 	{
@@ -252,7 +253,7 @@ public class ChatClient extends AbstractClient
 
 	/**
 	 * @return return all the cities from the server
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
 	public ArrayList<Pair<String, Integer>> allCitiesRequest() throws IOException
 	{
@@ -263,12 +264,12 @@ public class ChatClient extends AbstractClient
 
 	/**
 	 * @param cityId the id of the city that contained the map
-	 * @param name the name of the map
-	 * @param info the data of the city
+	 * @param name   the name of the map
+	 * @param info   the data of the city
 	 * @param imgURL the path of the image
-	 * @param cdvId city data version id of the map
+	 * @param cdvId  city data version id of the map
 	 * @return map sight object of the new map
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
 	public MapSight createMap(int cityId, String name, String info, String imgURL, int cdvId) throws IOException
 	{
@@ -278,14 +279,15 @@ public class ChatClient extends AbstractClient
 	}
 
 	/**
-	 * @param cityId the id of the city that contained the point of interest
-	 * @param name the name of the point of interest
-	 * @param type which type the point of interest
-	 * @param placeDescription the description of the point of interest
-	 * @param accessibilityToDisabled if the point of interest is accessibility 
-	 * @param cdvId city data version id of the point of interest
+	 * @param cityId                  the id of the city that contained the point of
+	 *                                interest
+	 * @param name                    the name of the point of interest
+	 * @param type                    which type the point of interest
+	 * @param placeDescription        the description of the point of interest
+	 * @param accessibilityToDisabled if the point of interest is accessibility
+	 * @param cdvId                   city data version id of the point of interest
 	 * @return point of interest sight object of the new point of interest
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
 	public PlaceOfInterestSight createPOI(int cityId, String name, PlaceType type, String placeDescription,
 			boolean accessibilityToDisabled, int cdvId) throws IOException
@@ -297,12 +299,12 @@ public class ChatClient extends AbstractClient
 
 	/**
 	 * @param cityId the id of the city that contained the route
-	 * @param name name of the route
-	 * @param info the info of the route
-	 * @param cdvId city data version id of the route
-	 * @param isFav is the route favorite
+	 * @param name   name of the route
+	 * @param info   the info of the route
+	 * @param cdvId  city data version id of the route
+	 * @param isFav  is the route favorite
 	 * @return route sight object of the new route
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
 	public RouteSight createRoute(int cityId, String name, String info, int cdvId, boolean isFav) throws IOException
 	{
@@ -314,7 +316,7 @@ public class ChatClient extends AbstractClient
 	/**
 	 * @param newStopList list of route stop to create
 	 * @return list if the ids of the new route stops
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
 	public ArrayList<Integer> createRouteStops(ArrayList<RouteStop> newStopList) throws IOException
 	{
@@ -325,26 +327,27 @@ public class ChatClient extends AbstractClient
 
 	/**
 	 * @param object object to delete
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
 	public void deleteObject(ClassMustProperties object) throws IOException
 	{
 		sendToServer(new Delete(object));
 	}
-	
+
 	/**
-	 * @param subAlmostEnd the subscription that is going to end
-	 * @param newFullPrice the new full price
+	 * @param subAlmostEnd  the subscription that is going to end
+	 * @param newFullPrice  the new full price
 	 * @param newPayedPrice the new payed price
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
-	public void resubscribe(Subscription subAlmostEnd, double newFullPrice, double newPayedPrice) throws IOException {
+	public void resubscribe(Subscription subAlmostEnd, double newFullPrice, double newPayedPrice) throws IOException
+	{
 		sendToServer(new Resub(subAlmostEnd, newFullPrice, newPayedPrice));
 	}
 
 	/**
 	 * @param object update every object that is not user
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
 	public void update(ClassMustProperties object) throws IOException
 	{
@@ -353,8 +356,9 @@ public class ChatClient extends AbstractClient
 
 	/**
 	 * Updates the user information
+	 * 
 	 * @param user user
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
 	public void updateUser(User user) throws IOException
 	{
@@ -363,11 +367,12 @@ public class ChatClient extends AbstractClient
 
 	/**
 	 * get statistics from specific city and time
+	 * 
 	 * @param cityId the city id we want to get the statistic
-	 * @param from from when the statistics is taken
-	 * @param end until when the statistics is taken
+	 * @param from   from when the statistics is taken
+	 * @param end    until when the statistics is taken
 	 * @return statistics object with the relevant data
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
 	public Statistic getStatistics(Integer cityId, LocalDate from, LocalDate end) throws IOException
 	{
@@ -375,36 +380,39 @@ public class ChatClient extends AbstractClient
 		this.semAcquire();
 		return this.statboi.statboi;
 	}
-	
+
 	/**
 	 * Add new statistic to the server by given city id and ops
+	 * 
 	 * @param cityId the city id we want to add the statistics to here
-	 * @param op with  kind of statistics to add 
-	 * @throws IOException due to IO communication 
+	 * @param op     with kind of statistics to add
+	 * @throws IOException due to IO communication
 	 */
 	public void addStat(Integer cityId, Ops op) throws IOException
 	{
 		sendToServer(new AddStat(cityId, op));
 	}
-	
+
 	/**
 	 * Add new statistic to the server by given city id and the number of maps
-	 * @param cityId the city id we want to add the statistics to here
-	 * @param op with  kind of statistics to add 
+	 * 
+	 * @param cityId  the city id we want to add the statistics to here
+	 * @param op      with kind of statistics to add
 	 * @param numMaps the number of maps in the city
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
 	public void addStat(Integer cityId, Ops op, Integer numMaps) throws IOException
 	{
-		sendToServer(new AddStat(cityId,op, numMaps));
+		sendToServer(new AddStat(cityId, op, numMaps));
 	}
-	
+
 	/**
 	 * Fetch new sights into given city data version
-	 * @param cdvId the city data version id we want to fetch
+	 * 
+	 * @param cdvId     the city data version id we want to fetch
 	 * @param sightType which type the sight is
 	 * @return list of new sights
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
 	public ArrayList<?> fetchSights(int cdvId, Class<?> sightType) throws IOException
 	{
@@ -412,12 +420,13 @@ public class ChatClient extends AbstractClient
 		this.semAcquire();
 		return fs.sightList;
 	}
-	
+
 	/**
 	 * Fetch user by given id
+	 * 
 	 * @param id the user id
 	 * @return the user object after fetch
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
 	public User fetchUser(int id) throws IOException
 	{
@@ -425,12 +434,13 @@ public class ChatClient extends AbstractClient
 		this.semAcquire();
 		return this.fc.user;
 	}
-	
+
 	/**
 	 * Create location by given list of location and return the ids of the locations
+	 * 
 	 * @param locList list of location to create
 	 * @return list of ids
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
 	public ArrayList<Integer> createLocations(ArrayList<Location> locList) throws IOException
 	{
@@ -440,15 +450,16 @@ public class ChatClient extends AbstractClient
 		System.out.println(this.clocs);
 		return this.clocs.idList;
 	}
-	
+
 	/**
 	 * Create city in the server
-	 * @param name the city name
-	 * @param info the city info
+	 * 
+	 * @param name         the city name
+	 * @param info         the city info
 	 * @param priceOneTime the city price for one time purchase
-	 * @param pricePeriod the city price for a period
+	 * @param pricePeriod  the city price for a period
 	 * @return city object and the city data version
-	 * @throws IOException due to IO communication 
+	 * @throws IOException due to IO communication
 	 */
 	public City createCity(String name, String info, double priceOneTime, double pricePeriod) throws IOException
 	{
@@ -456,6 +467,7 @@ public class ChatClient extends AbstractClient
 		this.semAcquire();
 		return ccity.city;
 	}
+
 	// Instance methods ***********************************************
 	/**
 	 * This method handles all data that comes in from the server.

@@ -4,7 +4,7 @@ import objectClasses.Subscription;
 
 /**
  * Treat resubscribe request
- * @author Israel_Cohen
+ * @author Ron Cohen
  *
  */
 public class Resub 
