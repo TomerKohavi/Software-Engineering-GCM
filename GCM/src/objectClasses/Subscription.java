@@ -30,7 +30,6 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 	 * @param purchaseDate the subscription purchase date
 	 * @param fullPrice the full price of the subscription
 	 * @param pricePayed how much is actually for the subscription
-	 * @param expirationDate when does the subscription is expired
 	 */
 	private Subscription(int id, int cityId, int userId, LocalDate purchaseDate, double fullPrice, double pricePayed,
 			LocalDate expirationDate)
@@ -130,7 +129,7 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 			return false;
 		LocalDate today = LocalDate.now();
 		LocalDate exDate=today.plusMonths(sub.getNumMonths());
-		Subscription newSub= new Subscription(Database.generateIdCityPurchase(),sub.getUserId(), sub.getCityId(), today,fullPrice, payedPrice,exDate);
+		Subscription newSub= new Subscription(Database.generateIdCityPurchase(),sub.getCityId(),sub.getUserId(), today,fullPrice, payedPrice,exDate);
 		newSub.saveToDatabase();
 		LocalDate yesturday=today.minusDays(1);
 		LocalDate purDate=yesturday.minusMonths(sub.getNumMonths());
