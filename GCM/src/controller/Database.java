@@ -1170,7 +1170,7 @@ public class Database {
 			}
 			if (existCityDataVersion(p.getId())) {
 				String sql = "UPDATE " + Table.CityDataVersion.getValue()
-						+ " SET CityID=?, VersionName=?, WHERE ID=?";
+						+ " SET CityID=?, VersionName=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityId());
 				su.setString(2, p.getVersionName());
