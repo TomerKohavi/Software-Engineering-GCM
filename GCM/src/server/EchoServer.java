@@ -353,12 +353,10 @@ public class EchoServer extends AbstractServer
 		case VersionPublish:
 			InformationSystem.newVersionWasPublished(stat.cityId);
 			break;
-		default:
-		{
-			if (stat.numMaps != null)
+		case NumMaps:
+			if(stat.numMaps!=null)
 				InformationSystem.setNumMaps(stat.cityId, stat.numMaps);
 			break;
-		}
 		}
 	}
 

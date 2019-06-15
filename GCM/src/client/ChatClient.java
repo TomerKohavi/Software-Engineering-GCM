@@ -390,12 +390,13 @@ public class ChatClient extends AbstractClient
 	/**
 	 * Add new statistic to the server by given city id and the number of maps
 	 * @param cityId the city id we want to add the statistics to here
+	 * @param op with  kind of statistics to add 
 	 * @param numMaps the number of maps in the city
 	 * @throws IOException due to IO communication 
 	 */
-	public void addStat(Integer cityId, Integer numMaps) throws IOException
+	public void addStat(Integer cityId, Ops op, Integer numMaps) throws IOException
 	{
-		sendToServer(new AddStat(cityId, numMaps));
+		sendToServer(new AddStat(cityId,op, numMaps));
 	}
 	
 	/**

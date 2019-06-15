@@ -25,11 +25,11 @@ public class AddStat extends Command
 	 * @param cityId city ID
 	 * @param numMaps number of maps
 	 */
-	public AddStat(int cityId, int numMaps)
+	public AddStat(int cityId,Ops op, int numMaps)
 	{
 		this.cityId = cityId;
 		this.numMaps=numMaps;
-		this.op = null;
+		this.op = op;
 	}
 
 	public void delete()
