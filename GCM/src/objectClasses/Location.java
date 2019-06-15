@@ -76,18 +76,18 @@ public class Location implements ClassMustProperties, Serializable
 	 * @param p           the point of interest
 	 * @param coordinates the coordinates of the location
 	 */
-	private Location(int id, Map m, PlaceOfInterest p, double[] coordinates)
+	private Location(int id, int mapId, PlaceOfInterest p, double[] coordinates)
 	{
 		this.id = id;
-		this.mapId = m.getId();
+		this.mapId = mapId;
 		this.placeOfInterestId = p.getId();
 		this.coordinates = coordinates;
 		this.temp_place = p;
 	}
 	
-	public static Location _createLocalLocation(Map m, PlaceOfInterest p, double[] coordinates)
+	public static Location _createLocalLocation( PlaceOfInterest p, double[] coordinates)
 	{
-		return new Location(-1, m, p, coordinates);
+		return new Location(-1, -1, p, coordinates);
 	}
 
 	public void saveToDatabase()
@@ -174,5 +174,10 @@ public class Location implements ClassMustProperties, Serializable
 	public void _setId(int id)
 	{
 		this.id = id;
+	}
+	
+	public void _setMapId(int mapId)
+	{
+		this.mapId = mapId;
 	}
 }

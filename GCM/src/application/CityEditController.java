@@ -80,7 +80,7 @@ public class CityEditController
 			double priceOneTime = 0, pricePeriod = 0; // TODO kohavi give prices
 			try
 			{
-				Pair<City, CityDataVersion> newCity = Connector.client.createCity(Name.getText(), InfoBox.getText(), priceOneTime,
+				City newCity = Connector.client.createCity(Name.getText(), InfoBox.getText(), priceOneTime,
 						pricePeriod);
 				// TODO kohavi not sure what to do with them
 			}

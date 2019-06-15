@@ -48,7 +48,7 @@ public class MapEditController
 
 	private Bounds boundsInScene;
 
-	private String readpath;
+	private String readpath; // TODO Kohavi make sure one cant save map w/out image
 
 	private List<Location> locList;
 
@@ -83,7 +83,7 @@ public class MapEditController
 	private JFXButton RemoveSelectedButton; // Value injected by FXMLLoader
 
 	private ArrayList<Location> toDelete;
-	
+
 	private boolean changedImage;
 
 	/**
@@ -114,7 +114,7 @@ public class MapEditController
 	{
 		changedImage = false;
 		toDelete = new ArrayList<Location>();
-		
+
 		realPOI = new Image(new FileInputStream("Pics\\POI.png"));
 
 		if (Connector.isEdit) // if its edit, load the data
@@ -229,21 +229,31 @@ public class MapEditController
 			}
 			else
 			{
+				String generatedPath = Connector.selectedCity.getCityName() + generateRandomString(15) + ".png";
+				map.setImgURL(generatedPath);
+				Connector.client.sendImage(readpath, generatedPath);
+				
 				MapSight mapS = Connector.client.createMap(Connector.selectedCity.getId(), Name.getText(),
-						InfoBox.getText(), null, Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId());
+						InfoBox.getText(), generatedPath, Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId());
 				Connector.searchMapResult.add(mapS);
 				map = mapS.getCopyMap();
 			}
+			for (Location loc : toDelete)
+				Connector.client.deleteObject(loc);
 			ArrayList<Location> toCreate = new ArrayList<Location>();
 			for (POIImage poi : Connector.imageList)
 			{
-				// TODO sigal update the map ID
+				poi.getLoc()._setMapId(map.getId());
 				toCreate.add(poi.getLoc());
 			}
-			Connector.client.createLocations(toCreate);
+			ArrayList<Integer> idList = Connector.client.createLocations(toCreate);
+			for (int i = 0; i < idList.size(); i++)
+				toCreate.get(i)._setId(idList.get(i));
+			map._setLocationsList(new ArrayList<Location>());
 			Connector.client.update(map);
+			map._setLocationsList(toCreate);
+
 			// TODO sigal create removal list for route edit
-			// TODO NOT FINISHED
 		}
 		catch (IOException e)
 		{
@@ -279,7 +289,7 @@ public class MapEditController
 			cord[1] = poi.image.getY() - boundsInScene.getMinY();
 			poi.image.setImage(realPOI);
 			poi.isNew = false;
-			poi.setLoc(Location._createLocalLocation(Connector.selectedMap, Connector.choosenPOIInLoc, cord));
+			poi.setLoc(Location._createLocalLocation(Connector.choosenPOIInLoc, cord));
 			firstPOIAdded = true;
 			Connector.imageList.add(poi);
 		}

@@ -423,7 +423,9 @@ public class ChatClient extends AbstractClient
 	public ArrayList<Integer> createLocations(ArrayList<Location> locList) throws IOException
 	{
 		sendToServer(new CreateLocations(locList));
+		System.out.println(this.clocs);
 		this.semAcquire();
+		System.out.println(this.clocs);
 		return this.clocs.idList;
 	}
 	
@@ -436,11 +438,11 @@ public class ChatClient extends AbstractClient
 	 * @return city object and the city data version
 	 * @throws IOException due to IO communication 
 	 */
-	public Pair<City, CityDataVersion> createCity(String name, String info, double priceOneTime, double pricePeriod) throws IOException
+	public City createCity(String name, String info, double priceOneTime, double pricePeriod) throws IOException
 	{
 		sendToServer(new CreateCity(name, info, priceOneTime, pricePeriod));
 		this.semAcquire();
-		return new Pair<City, CityDataVersion>(ccity.city, ccity.cdv);
+		return ccity.city;
 	}
 	// Instance methods ***********************************************
 	/**
@@ -473,6 +475,8 @@ public class ChatClient extends AbstractClient
 			this.cstops = (CreateRouteStops) msg;
 		else if (msg instanceof CreateCity)
 			this.ccity = (CreateCity) msg;
+		else if (msg instanceof CreateLocations)
+			this.clocs = (CreateLocations) msg;
 		else if (msg instanceof Statboi)
 			this.statboi = (Statboi) msg;
 		else if (msg instanceof FetchSights)

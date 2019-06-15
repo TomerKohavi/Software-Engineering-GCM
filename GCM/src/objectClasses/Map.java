@@ -292,6 +292,15 @@ public class Map implements ClassMustProperties, Serializable {
 	public ArrayList<Location> getCopyLocations() {
 		return new ArrayList<>(temp_locations);
 	}
+	
+	
+	/**
+	 * empties the locations list (so no overwrites will be done)
+	 */
+	public void _setLocationsList(ArrayList<Location> locList)
+	{
+		this.temp_locations = locList;
+	}
 
 	@Override
 	public boolean equals(Object o) {

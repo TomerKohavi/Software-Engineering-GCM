@@ -293,14 +293,15 @@ public class EchoServer extends AbstractServer
 	private CreateRouteStops handleRouteStopsCreation(CreateRouteStops cstops)
 	{
 		cstops.idList = new ArrayList<Integer>();
+		System.out.print("create route stops");
 		for (RouteStop stop : cstops.stopList)
 		{
 			if (stop.getId() == -1)
 				stop._setId(Database.generateIdRouteStop());
 			cstops.idList.add(stop.getId());
-			System.out.println(stop.getId());
 			stop.saveToDatabase();
 		}
+		System.out.println(" ids " + cstops.idList);
 		return cstops;
 	}
 
@@ -377,6 +378,7 @@ public class EchoServer extends AbstractServer
 	 */
 	private void handlePurchase(CityPurchase cp)
 	{
+		System.out.println("purchase " + cp.getCityName());
 		cp._setId(Database.generateIdCityPurchase());
 		cp.saveToDatabase();
 	}
@@ -388,6 +390,7 @@ public class EchoServer extends AbstractServer
 	 */
 	private FetchCustomer handleFetchUser(FetchCustomer fc)
 	{
+		System.out.println("fetch customer " + fc.id);
 		fc.user = Database.getCustomerById(fc.id);
 		return fc;
 	}
@@ -400,28 +403,30 @@ public class EchoServer extends AbstractServer
 	private CreateLocations handleLocationsCreation(CreateLocations clocs)
 	{
 		clocs.idList = new ArrayList<Integer>();
+		System.out.println("create locations");
 		for (Location loc : clocs.locList)
 		{
 			if (loc.getId() == -1)
 				loc._setId(Database.generateIdRouteStop());
 			clocs.idList.add(loc.getId());
-			System.out.println(loc.getId());
 			loc.saveToDatabase();
 		}
+		System.out.println(" ids " + clocs.idList);
 		return clocs;
 	}
 	
 	/**
 	 * handle create city request from the client
+	 * 
 	 * @param clocs the city request
 	 * @return the result of the city request to the client
 	 */
 	private CreateCity handleCityCreation(CreateCity ccity)
 	{ // TODO Ronen make sure its the right way to create cities etc.
 		ccity.city = new City(ccity.name, ccity.info);
+		CityDataVersion cdv = new CityDataVersion(ccity.city, ccity.name = "1.0", ccity.priceOneTime, ccity.pricePeriod);
+		ccity.city.addUnpublishedCityDataVersion(cdv);
 		ccity.city.saveToDatabase();
-		ccity.cdv = new CityDataVersion(ccity.city, ccity.name = " 1.0", ccity.priceOneTime, ccity.pricePeriod);
-		ccity.cdv.saveToDatabase();
 		return ccity;
 	}
 	
