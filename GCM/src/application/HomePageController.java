@@ -449,6 +449,9 @@ public class HomePageController
 		else
 			BuyButton.setText("Buy");
 		ShowMapButton.setVisible(false);
+		SideMap.setDisable(false);
+		SidePOI.setDisable(false);
+		SideRoutes.setDisable(false);
 	}
 	
 	/**
@@ -519,7 +522,6 @@ public class HomePageController
 
 	}
 	
-
 	/**
 	 * initialize variables
 	 */
