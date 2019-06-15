@@ -178,6 +178,9 @@ public class HomePageController
 
 	@FXML // fx:id="UserInfoButton"
 	private JFXButton UserInfoButton; // Value injected by FXMLLoader
+	
+    @FXML // fx:id="AlertButton"
+    private JFXButton AlertButton; // Value injected by FXMLLoader
 
 	@FXML // fx:id="MapImage"
 	private ImageView MapImage; // Value injected by FXMLLoader
@@ -414,8 +417,10 @@ public class HomePageController
 			if (Connector.user instanceof Employee)
 			{
 				Role role = ((Employee) Connector.user).getRole();
-				if (role == Role.MANAGER || role == Role.CEO)
+				if (role == Role.MANAGER)
 					BuyButton.setText("Change Price");
+				else if (role == Role.CEO)
+					BuyButton.setText("Checkout Price");
 				else
 					BuyButton.setVisible(false);
 				if (Connector.unpublished && role == Role.MANAGER && city.getManagerNeedsToPublish())
@@ -534,10 +539,6 @@ public class HomePageController
 	 */
 	public void initialize() throws IOException
 	{
-//		LoadingAnimation la = new LoadingAnimation();
-//		Thread t = new Thread(la);
-//		t.start();
-
 		Connector.sideButton = SideSearch;
 		Connector.sideButton.setOpacity(1);
 
@@ -545,18 +546,6 @@ public class HomePageController
 		{
 			LoginButton.setText("Log Off");
 			UserInfoButton.setVisible(true);
-			if (Connector.user instanceof Customer)
-			{
-				ArrayList<Subscription> subscriptList = ((Customer) Connector.user).getCopyActiveSubscription();
-				for (Subscription sub : subscriptList)
-				{
-					if (sub.isGoingToEnd(new Date(new java.util.Date().getTime())))
-					{
-						Connector.subNameToAlert = sub.getCityName();
-						openNewPage("AlertSubIsOverScene.fxml");
-					}
-				}
-			}
 		}
 		else
 			LoginButton.setText("Login");
@@ -582,7 +571,21 @@ public class HomePageController
 
 		Connector.poiNameTextArea.setVisible(false);
 		Connector.poiNameTextArea.setTextAlignment(TextAlignment.CENTER);
-		mainPane.getChildren().add(Connector.poiNameTextArea);
+		mainPane.getChildren().add(Connector.poiNameTextArea); // TODO poi name
+		
+		if (Connector.user != null && Connector.user instanceof Customer)
+		{
+			Date today = new Date(new java.util.Date().getTime());
+			ArrayList<Subscription> subscriptList = ((Customer) Connector.user).getCopyActiveSubscription();
+			for (Subscription sub : subscriptList)
+			{
+				if (sub.isGoingToEnd(today))
+				{
+					AlertButton.setVisible(true);
+					break;
+				}
+			}
+		}
 
 		MainList.setOnMouseClicked(new EventHandler<MouseEvent>()
 		{
@@ -675,6 +678,27 @@ public class HomePageController
 			}
 		});
 	}
+	
+	/**
+	 * Pops up an alert for each ending subscription. 
+	 * @param event object to search
+	 * @throws IOException 
+	 */
+	@FXML
+	void openAlertWindows (ActionEvent event) throws IOException
+	{
+		Date today = new Date(new java.util.Date().getTime());
+		ArrayList<Subscription> subscriptList = ((Customer) Connector.user).getCopyActiveSubscription();
+		for (Subscription sub : subscriptList)
+		{
+			if (sub.isGoingToEnd(today))
+			{
+				Connector.subNameToAlert = sub.getCityName();
+				openNewPage("AlertSubIsOverScene.fxml");
+			}
+		}
+		AlertButton.setVisible(false);
+	}
 
 	/**
 	 * Handle search event. 
@@ -746,6 +770,7 @@ public class HomePageController
 		}
 
 	}
+	
 
 	/**
 	 * Opens purchase history page.
@@ -757,6 +782,7 @@ public class HomePageController
 	{
 		openNewPage("PurchaseHistoryScene.fxml");
 	}
+	
 
 	/**
 	 * Displays the map.
@@ -793,6 +819,7 @@ public class HomePageController
 			Connector.imageList.clear();
 		}
 	}
+	
 
 	/**
 	 * Shows the search page results.
@@ -810,6 +837,7 @@ public class HomePageController
 				fillCityInfo(Connector.selectedCity); // the index of the chosen city
 		}
 	}
+	
 
 	/**
 	 * Loads login page.
@@ -829,6 +857,7 @@ public class HomePageController
 		}
 
 	}
+	
 
 	/**
 	 * Opens edit user details scene.
@@ -840,6 +869,7 @@ public class HomePageController
 	{
 		openNewPage("EditUserScene.fxml");
 	}
+	
 
 	/**
 	 * Displays a list of the maps.
@@ -856,6 +886,7 @@ public class HomePageController
 			Connector.searchMapResult = (ArrayList<MapSight>) Connector.client.fetchSights(Connector.cityData.getId(), MapSight.class);
 		MainList.getItems().addAll(Connector.getMapsNames(Connector.searchMapResult));
 	}
+	
 
 	/**
 	 * Displays a list of the POIs.
@@ -872,6 +903,7 @@ public class HomePageController
 			Connector.searchPOIResult = (ArrayList<PlaceOfInterestSight>) Connector.client.fetchSights(Connector.cityData.getId(), PlaceOfInterestSight.class);
 		MainList.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
 	}
+	
 
 	/**
 	 * Displays a list of the Routes.
@@ -888,6 +920,7 @@ public class HomePageController
 			Connector.searchRouteResult = (ArrayList<RouteSight>) Connector.client.fetchSights(Connector.cityData.getId(), RouteSight.class);
 		MainList.getItems().addAll(Connector.getRoutesNames(Connector.searchRouteResult));
 	}
+	
 
 	/**
 	 * Displays the reports asked for.
@@ -905,6 +938,7 @@ public class HomePageController
 		if (Connector.allCities == null)
 			Connector.allCities = Connector.client.allCitiesRequest();
 	}
+	
 
 	/**
 	 * Displays a list of the users.
@@ -930,6 +964,7 @@ public class HomePageController
 		for (Customer cust : Connector.customerList)
 			MainList.getItems().add(cust.getUserName());
 	}
+	
 
 	/**
 	 * Handles remove scenario.
@@ -959,6 +994,7 @@ public class HomePageController
 		}
 		clearInfo(false);
 	}
+	
 
 	/**
 	 * Handles create scenario.
@@ -982,6 +1018,7 @@ public class HomePageController
 		else if (Connector.listType.equals("Route"))
 			MainList.getItems().addAll(Connector.getRoutesNames(Connector.searchRouteResult));
 	}
+	
 
 	/**
 	 * Handles an edit scenario.
@@ -1011,20 +1048,6 @@ public class HomePageController
 	}
 
 	/**
-	 * Nothing
-	 * @param event need to unpublished 
-	 * @throws IOException cannot unpublished
-	 */
-	@FXML
-	void unpublishedPressed(ActionEvent event) throws IOException
-	{
-//		if (UnpublishSearch.isSelected())
-//			Connector.unpublished = true;
-//		else
-//			Connector.unpublished = false;
-	}
-	
-	/**
 	 * Opens resubscribe page.
 	 * @param event need to resubscribe
 	 * @throws IOException cannot resubscribe
@@ -1034,6 +1057,7 @@ public class HomePageController
 	{
 		openNewPage("ReSubscribeScene.fxml");
 	}
+	
 
 	/**
 	 * Publish an unpublished version.
@@ -1060,6 +1084,7 @@ public class HomePageController
 			Connector.client.update(Connector.selectedCity);
 		}
 	}
+	
 
 	/**
 	 * Opens buy window.
@@ -1085,6 +1110,8 @@ public class HomePageController
 			}
 			else if (BuyButton.getText().equals("Change Price"))
 				openNewPage("ChangePriceScene.fxml");
+			else if (BuyButton.getText().equals("Checkout Price"))
+				openNewPage("CheckoutPriceScene.fxml");
 			fillCityInfo(Connector.selectedCity);
 		}
 	}

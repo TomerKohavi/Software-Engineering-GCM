@@ -26,6 +26,7 @@
             <Font size="18.0" />
          </font>
       </JFXButton>
+      <JFXButton fx:id="AlertButton" layoutX="1029.0" layoutY="137.0" onAction="#openAlertWindows" style="-fx-border-color: #000000;" text="! New Alert" visible="false" />
       <Text fill="#41e0d0" layoutX="199.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search">
          <font>
             <Font size="30.0" />

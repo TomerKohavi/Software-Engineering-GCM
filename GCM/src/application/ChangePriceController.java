@@ -58,8 +58,8 @@ public class ChangePriceController {
      * initialize the variables
      */
     public void initialize() {
-    	oneTimePrice = 5;
-    	monthPrice = 10;
+    	oneTimePrice = Connector.cityData.getPriceOneTime();
+    	monthPrice = Connector.cityData.getPricePeriod();
     	OneTimeField.setText(String.format("%.02f", oneTimePrice));
     	MonthField.setText(String.format("%.02f", monthPrice));
     }
@@ -67,12 +67,15 @@ public class ChangePriceController {
     /**
      * Applies the price change event defined.
      * @param event event from the UI that said to change the price
+     * @throws IOException 
      */
     @FXML
-    void applyChanges(ActionEvent event) {
-    	if (isNumeric(OneTimeField.getText()) && isNumeric(MonthField.getText())) {
-	    	// TODO send price to server
+    void applyChanges(ActionEvent event) throws IOException {
+    	if (isNumeric(OneTimeField.getText()) && isNumeric(MonthField.getText()) && Integer.parseInt(OneTimeField.getText()) > 0 && Integer.parseInt(MonthField.getText()) > 0) {  // TODO Change Price to city (Ron)
 	    	mainPane.getScene().getWindow().hide();
+    		Connector.cityData.setPriceOneTime(Integer.parseInt(OneTimeField.getText()));
+    		Connector.cityData.setPricePeriod(Integer.parseInt(MonthField.getText()));
+    		Connector.client.update(Connector.selectedCity);
     	} else {
     		NotValid.setVisible(true);
     	}
