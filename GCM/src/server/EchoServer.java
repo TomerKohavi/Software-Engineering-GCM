@@ -527,6 +527,18 @@ public class EchoServer extends AbstractServer
 		{
 			e.printStackTrace();
 		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				client.sendToClient(e);
+			}
+			catch (IOException e1)
+			{
+				e1.printStackTrace();
+			}
+		}
 
 	}
 

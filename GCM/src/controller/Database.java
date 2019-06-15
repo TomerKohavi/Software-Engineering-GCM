@@ -43,7 +43,8 @@ import java.security.MessageDigest;
  * @author tal20
  * @author Lior Weissman
  */
-public class Database {
+public class Database
+{
 	static private final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 
 	// update USER, PASS and DB URL according to credentials provided by the
@@ -62,7 +63,8 @@ public class Database {
 	 * @author Lior Weissman
 	 * 
 	 */
-	public enum Counter {
+	public enum Counter
+	{
 		PlaceOfInterest(0), User(1), Map(2), Location(3), CityDataVersion(4), Route(5), CityPurchase(6), City(7),
 		RouteStop(8), MapSight(9), PlaceOfInterestSight(10), RouteSight(11), Statistic(12);
 
@@ -74,7 +76,8 @@ public class Database {
 		 * @param nv: Integer that hold the value
 		 * @return A Counter object.
 		 */
-		Counter(final int nv) {
+		Counter(final int nv)
+		{
 			value = nv;
 		}
 
@@ -83,7 +86,8 @@ public class Database {
 		 * 
 		 * @return Returns the value
 		 */
-		public int getValue() {
+		public int getValue()
+		{
 			return value;
 		}
 	}
@@ -92,7 +96,8 @@ public class Database {
 	 * change the default constructor to private, this class cannot be created as
 	 * object.
 	 */
-	private Database() {
+	private Database()
+	{
 
 	}
 
@@ -102,10 +107,12 @@ public class Database {
 	 * @return List of all the customers
 	 * @throws SQLException if the access to database failed
 	 */
-	public static ArrayList<Customer> getAllCustomers() throws SQLException {
+	public static ArrayList<Customer> getAllCustomers() throws SQLException
+	{
 		ArrayList<Integer> ids = searchCustomer(null, null);
 		ArrayList<Customer> custs = new ArrayList<Customer>();
-		for (int id : ids) {
+		for (int id : ids)
+		{
 			Customer c = Database.getCustomerById(id);
 			if (c != null)
 				custs.add(c);
@@ -119,10 +126,12 @@ public class Database {
 	 * @return List of all the cities
 	 * @throws SQLException if the access to database failed
 	 */
-	public static ArrayList<Pair<String, Integer>> getAllCitiesNameId() throws SQLException {
+	public static ArrayList<Pair<String, Integer>> getAllCitiesNameId() throws SQLException
+	{
 		ArrayList<Integer> ids = searchCity(null, null);
 		ArrayList<Pair<String, Integer>> list = new ArrayList<Pair<String, Integer>>();
-		for (int id : ids) {
+		for (int id : ids)
+		{
 			String cName = Database.getCityNameById(id);
 			if (cName == null)
 				continue;
@@ -138,14 +147,16 @@ public class Database {
 	 * @return list of customers
 	 * @throws SQLException if the access to database failed
 	 */
-	public static ArrayList<Customer> getCustomersSubscribesToCity(int cityId) throws SQLException {
+	public static ArrayList<Customer> getCustomersSubscribesToCity(int cityId) throws SQLException
+	{
 		LocalDate today = LocalDate.now();
 
 		// find relevant subs
 		ArrayList<Integer> subsIds = Database.searchSubscription(null, cityId, today, true);
 		// find relevant customers
 		Set<Integer> customersIds = new HashSet<Integer>();
-		for (int subsId : subsIds) {
+		for (int subsId : subsIds)
+		{
 			Subscription s = Database._getSubscriptionById(subsId);
 			if (s == null)
 				continue;
@@ -153,7 +164,8 @@ public class Database {
 		}
 		// load them
 		ArrayList<Customer> customers = new ArrayList<Customer>();
-		for (int id : customersIds) {
+		for (int id : customersIds)
+		{
 			Customer c = Database.getCustomerById(id);
 			if (c == null)
 				continue;
@@ -165,7 +177,8 @@ public class Database {
 	/**
 	 * @author tal20 This enum maps from full table names and local names.
 	 */
-	public enum Table {
+	public enum Table
+	{
 		PlaceOfInterest("POIs"), Map("Maps"), Route("Routes"), City("Cities"), Customer("Customers"),
 		Employee("Employees"), Location("Locations"), RouteStop("RouteStop"), MapSight("MapSights"),
 		PlaceOfInterestSight("POISights"), RouteSight("RouteSights"), CityDataVersion("CityDataVersions"),
@@ -178,14 +191,16 @@ public class Database {
 		 * 
 		 * @param envUrl
 		 */
-		Table(final String envUrl) {
+		Table(final String envUrl)
+		{
 			url = envUrl;
 		}
 
 		/**
 		 * @return the table name
 		 */
-		public String getValue() {
+		public String getValue()
+		{
 			return url;
 		}
 	}
@@ -193,13 +208,21 @@ public class Database {
 	/**
 	 * Create a new database connection.
 	 * 
-	 * @throws SQLException           if the access to database failed
-	 * @throws ClassNotFoundException cannot find the class
+	 * @throws SQLException if the access to database failed
 	 */
-	public static void createConnection() throws SQLException, ClassNotFoundException {
+	public static void createConnection() throws SQLException
+	{
 
-		if (conn == null) {
-			Class.forName(JDBC_DRIVER);
+		if (conn == null)
+		{
+			try
+			{
+				Class.forName(JDBC_DRIVER);
+			}
+			catch (ClassNotFoundException e)
+			{
+				e.printStackTrace();
+			}
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 			System.out.println("connection opening");
 		}
@@ -210,8 +233,10 @@ public class Database {
 	 * 
 	 * @throws SQLException if the access to database failed
 	 */
-	public static void closeConnection() throws SQLException {
-		if (conn != null) {
+	public static void closeConnection() throws SQLException
+	{
+		if (conn != null)
+		{
 			conn.close();
 			conn = null;
 			System.out.println("connection closing");
@@ -227,7 +252,8 @@ public class Database {
 	 * @return true if the data base is reset
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean resetAll(String name, String pass) throws SQLException {
+	public static boolean resetAll(String name, String pass) throws SQLException
+	{
 		String sql = "SELECT Name FROM Team WHERE Name=? AND Password=?";
 		PreparedStatement check = conn.prepareStatement(sql);
 		check.setString(1, name);
@@ -236,13 +262,15 @@ public class Database {
 		// check if there is exciting row in table before insert
 		if (!res.next())
 			return false;
-		for (Table table : Table.values()) {
+		for (Table table : Table.values())
+		{
 			sql = "DELETE FROM " + table.getValue() + " WHERE TRUE";
 			PreparedStatement gt = conn.prepareStatement(sql);
 			gt.executeUpdate();
 		}
 
-		for (Counter type : Counter.values()) {
+		for (Counter type : Counter.values())
+		{
 			PreparedStatement su = conn.prepareStatement("UPDATE `Counters` SET Counter=0 WHERE Object=?");
 			su.setInt(1, type.getValue());
 			su.executeUpdate();
@@ -260,8 +288,10 @@ public class Database {
 	 * @return the ID of this table
 	 * @throws SQLException if the access to database failed
 	 */
-	private static int generateId(int type) throws SQLException {
-		if (conn == null) {
+	private static int generateId(int type) throws SQLException
+	{
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
@@ -282,7 +312,8 @@ public class Database {
 	 * @return the ID of the next user
 	 * @throws SQLException if the access to database failed
 	 */
-	public static int generateIdUser() throws SQLException {
+	public static int generateIdUser() throws SQLException
+	{
 		return generateId(Counter.User.getValue());
 	}
 
@@ -290,7 +321,8 @@ public class Database {
 	 * @return the ID of the next POI
 	 * @throws SQLException if the access to database failed
 	 */
-	public static int generateIdPlaceOfInterest() throws SQLException {// first example
+	public static int generateIdPlaceOfInterest() throws SQLException
+	{// first example
 		return generateId(Counter.PlaceOfInterest.getValue());
 
 	}
@@ -299,7 +331,8 @@ public class Database {
 	 * @return the ID of the next map
 	 * @throws SQLException if the access to database failed
 	 */
-	public static int generateIdMap() throws SQLException {
+	public static int generateIdMap() throws SQLException
+	{
 		return generateId(Counter.Map.getValue());
 	}
 
@@ -307,7 +340,8 @@ public class Database {
 	 * @return the ID of the next location
 	 * @throws SQLException if the access to database failed
 	 */
-	public static int generateIdLocation() throws SQLException {
+	public static int generateIdLocation() throws SQLException
+	{
 		return generateId(Counter.Location.getValue());
 	}
 
@@ -315,7 +349,8 @@ public class Database {
 	 * @return the ID of the next city data version
 	 * @throws SQLException if the access to database failed
 	 */
-	public static int generateIdCityDataVersion() throws SQLException {
+	public static int generateIdCityDataVersion() throws SQLException
+	{
 		return generateId(Counter.CityDataVersion.getValue());
 	}
 
@@ -323,7 +358,8 @@ public class Database {
 	 * @return the ID of the next route
 	 * @throws SQLException if the access to database failed
 	 */
-	public static int generateIdRoute() throws SQLException {
+	public static int generateIdRoute() throws SQLException
+	{
 		return generateId(Counter.Route.getValue());
 	}
 
@@ -331,7 +367,8 @@ public class Database {
 	 * @return the ID of the next city purchase
 	 * @throws SQLException if the access to database failed
 	 */
-	public static int generateIdCityPurchase() throws SQLException {
+	public static int generateIdCityPurchase() throws SQLException
+	{
 		return generateId(Counter.CityPurchase.getValue());
 	}
 
@@ -339,7 +376,8 @@ public class Database {
 	 * @return the ID of the next city
 	 * @throws SQLException if the access to database failed
 	 */
-	public static int generateIdCity() throws SQLException {
+	public static int generateIdCity() throws SQLException
+	{
 		return generateId(Counter.City.getValue());
 	}
 
@@ -347,7 +385,8 @@ public class Database {
 	 * @return the ID of the next route stop
 	 * @throws SQLException if the access to database failed
 	 */
-	public static int generateIdRouteStop() throws SQLException {
+	public static int generateIdRouteStop() throws SQLException
+	{
 		return generateId(Counter.RouteStop.getValue());
 	}
 
@@ -355,7 +394,8 @@ public class Database {
 	 * @return the ID of the next map sight
 	 * @throws SQLException if the access to database failed
 	 */
-	public static int generateIdMapSight() throws SQLException {
+	public static int generateIdMapSight() throws SQLException
+	{
 		return generateId(Counter.MapSight.getValue());
 	}
 
@@ -363,7 +403,8 @@ public class Database {
 	 * @return the ID of the next POI sight
 	 * @throws SQLException if the access to database failed
 	 */
-	public static int generateIdPlaceOfInterestSight() throws SQLException {
+	public static int generateIdPlaceOfInterestSight() throws SQLException
+	{
 		return generateId(Counter.PlaceOfInterestSight.getValue());
 	}
 
@@ -371,7 +412,8 @@ public class Database {
 	 * @return the ID of the next route sight
 	 * @throws SQLException if the access to database failed
 	 */
-	public static int generateIdRouteSight() throws SQLException {
+	public static int generateIdRouteSight() throws SQLException
+	{
 		return generateId(Counter.RouteSight.getValue());
 	}
 
@@ -379,7 +421,8 @@ public class Database {
 	 * @return the ID of the next statistic
 	 * @throws SQLException if the access to database failed
 	 */
-	public static int generateIdStatistic() throws SQLException {
+	public static int generateIdStatistic() throws SQLException
+	{
 		return generateId(Counter.Statistic.getValue());
 	}
 
@@ -389,9 +432,11 @@ public class Database {
 	 * @return true if exists, false else.
 	 * @throws SQLException if the access to database failed
 	 */
-	private static boolean exist(String table, int id) throws SQLException {
+	private static boolean exist(String table, int id) throws SQLException
+	{
 
-		if (conn == null) {
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
@@ -414,7 +459,8 @@ public class Database {
 	 * @return whether there is a POI with this ID.
 	 * @throws SQLException if the access to database failed
 	 */
-	private static boolean existPlaceOfInterest(int id) throws SQLException {
+	private static boolean existPlaceOfInterest(int id) throws SQLException
+	{
 		return exist(Table.PlaceOfInterest.getValue(), id);
 	}
 
@@ -425,7 +471,8 @@ public class Database {
 	 * @return whether there is a map with this ID.
 	 * @throws SQLException if the access to database failed
 	 */
-	private static boolean existMap(int id) throws SQLException {
+	private static boolean existMap(int id) throws SQLException
+	{
 		return exist(Table.Map.getValue(), id);
 	}
 
@@ -436,7 +483,8 @@ public class Database {
 	 * @return whether there is a route with this ID.
 	 * @throws SQLException if the access to database failed
 	 */
-	private static boolean existRoute(int id) throws SQLException {
+	private static boolean existRoute(int id) throws SQLException
+	{
 		return exist(Table.Route.getValue(), id);
 	}
 
@@ -447,7 +495,8 @@ public class Database {
 	 * @return whether there is a city with this ID.
 	 * @throws SQLException if the access to database failed
 	 */
-	private static boolean existCity(int id) throws SQLException {
+	private static boolean existCity(int id) throws SQLException
+	{
 		return exist(Table.City.getValue(), id);
 	}
 
@@ -458,7 +507,8 @@ public class Database {
 	 * @return whether there is a customer with this ID.
 	 * @throws SQLException if the access to database failed
 	 */
-	private static boolean existCustomer(int id) throws SQLException {
+	private static boolean existCustomer(int id) throws SQLException
+	{
 		return exist(Table.Customer.getValue(), id);
 	}
 
@@ -469,7 +519,8 @@ public class Database {
 	 * @return whether there is a employee with this ID.
 	 * @throws SQLException if the access to database failed
 	 */
-	private static boolean existEmployee(int id) throws SQLException {
+	private static boolean existEmployee(int id) throws SQLException
+	{
 		return exist(Table.Employee.getValue(), id);
 	}
 
@@ -480,7 +531,8 @@ public class Database {
 	 * @return whether there is a location with this ID.
 	 * @throws SQLException if the access to database failed
 	 */
-	private static boolean existLocation(int id) throws SQLException {
+	private static boolean existLocation(int id) throws SQLException
+	{
 		return exist(Table.Location.getValue(), id);
 	}
 
@@ -491,7 +543,8 @@ public class Database {
 	 * @return whether there is a route stop with this ID.
 	 * @throws SQLException if the access to database failed
 	 */
-	private static boolean existRouteStop(int id) throws SQLException {
+	private static boolean existRouteStop(int id) throws SQLException
+	{
 		return exist(Table.RouteStop.getValue(), id);
 	}
 
@@ -502,7 +555,8 @@ public class Database {
 	 * @return whether there is a map sight with this ID.
 	 * @throws SQLException if the access to database failed
 	 */
-	private static boolean existMapSight(int id) throws SQLException {
+	private static boolean existMapSight(int id) throws SQLException
+	{
 		return exist(Table.MapSight.getValue(), id);
 	}
 
@@ -513,7 +567,8 @@ public class Database {
 	 * @return whether there is a POI sight with this ID.
 	 * @throws SQLException if the access to database failed
 	 */
-	private static boolean existPlaceOfInterestSight(int id) throws SQLException {
+	private static boolean existPlaceOfInterestSight(int id) throws SQLException
+	{
 		return exist(Table.PlaceOfInterestSight.getValue(), id);
 	}
 
@@ -524,7 +579,8 @@ public class Database {
 	 * @return whether there is a route sight with this ID.
 	 * @throws SQLException if the access to database failed
 	 */
-	private static boolean existRouteSight(int id) throws SQLException {
+	private static boolean existRouteSight(int id) throws SQLException
+	{
 		return exist(Table.RouteSight.getValue(), id);
 	}
 
@@ -535,7 +591,8 @@ public class Database {
 	 * @return whether there is a city data version with this ID.
 	 * @throws SQLException if the access to database failed
 	 */
-	private static boolean existCityDataVersion(int id) throws SQLException {
+	private static boolean existCityDataVersion(int id) throws SQLException
+	{
 		return exist(Table.CityDataVersion.getValue(), id);
 	}
 
@@ -546,7 +603,8 @@ public class Database {
 	 * @return whether there is a subscription with this ID.
 	 * @throws SQLException if the access to database failed
 	 */
-	private static boolean existSubscription(int id) throws SQLException {
+	private static boolean existSubscription(int id) throws SQLException
+	{
 		return exist(Table.Subscription.getValue(), id);
 	}
 
@@ -557,7 +615,8 @@ public class Database {
 	 * @return whether there is a one time purchase with this ID.
 	 * @throws SQLException if the access to database failed
 	 */
-	private static boolean existOneTimePurchase(int id) throws SQLException {
+	private static boolean existOneTimePurchase(int id) throws SQLException
+	{
 		return exist(Table.OneTimePurchase.getValue(), id);
 	}
 
@@ -568,7 +627,8 @@ public class Database {
 	 * @return whether there is a statistic with this ID.
 	 * @throws SQLException if the access to database failed
 	 */
-	private static boolean existStatistic(int id) throws SQLException {
+	private static boolean existStatistic(int id) throws SQLException
+	{
 		return exist(Table.Statistic.getValue(), id);
 	}
 
@@ -579,13 +639,16 @@ public class Database {
 	 * @return true if an updated was made. false for new element.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean savePlaceOfInterest(PlaceOfInterest p) throws SQLException {
-		if (conn == null) {
+	public static boolean savePlaceOfInterest(PlaceOfInterest p) throws SQLException
+	{
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
 		}
-		if (existPlaceOfInterest(p.getId())) {
+		if (existPlaceOfInterest(p.getId()))
+		{
 			String sql = "UPDATE " + Table.PlaceOfInterest.getValue()
 					+ " SET CityID=?, Name=?, Type=?, Description=?, ATD=? WHERE ID=?";
 			PreparedStatement su = conn.prepareStatement(sql);
@@ -597,7 +660,9 @@ public class Database {
 			su.setInt(6, p.getId());
 			su.executeUpdate();
 			return true;
-		} else {
+		}
+		else
+		{
 			String sql = "INSERT INTO " + Table.PlaceOfInterest.getValue()
 					+ " (ID,CityID, Name, Type, Description, ATD) VALUES (?,?, ?, ?, ?, ?)";
 			PreparedStatement su = conn.prepareStatement(sql);
@@ -619,12 +684,15 @@ public class Database {
 	 * @return true if an updated was made. false for new element.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean saveMap(Map p) throws SQLException {
-		if (conn == null) {
+	public static boolean saveMap(Map p) throws SQLException
+	{
+		if (conn == null)
+		{
 			System.err.println("No connection found");
 			throw new DatabaseException();
 		}
-		if (existMap(p.getId())) {
+		if (existMap(p.getId()))
+		{
 			String sql = "UPDATE " + Table.Map.getValue() + " SET Name=?, Info=?, imgURL=?, CityID=? WHERE ID=?";
 			PreparedStatement su = conn.prepareStatement(sql);
 			su.setString(1, p.getName());
@@ -634,7 +702,9 @@ public class Database {
 			su.setInt(5, p.getId());
 			su.executeUpdate();
 			return true;
-		} else {
+		}
+		else
+		{
 			String sql = "INSERT INTO " + Table.Map.getValue()
 					+ " (ID,Name, Info, imgURL, CityID) VALUES (?,?, ?, ?, ?)";
 			PreparedStatement su = conn.prepareStatement(sql);
@@ -655,13 +725,16 @@ public class Database {
 	 * @return true if an updated was made. false for new element.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean saveRoute(Route p) throws SQLException {
-		if (conn == null) {
+	public static boolean saveRoute(Route p) throws SQLException
+	{
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
 		}
-		if (existRoute(p.getId())) {
+		if (existRoute(p.getId()))
+		{
 			String sql = "UPDATE " + Table.Route.getValue()
 					+ " SET Info=?, NumStops=?, CityID=?, Name=?, IsFavorite=? WHERE ID=?";
 			PreparedStatement su = conn.prepareStatement(sql);
@@ -673,7 +746,9 @@ public class Database {
 			su.setBoolean(6, p.getIsFavorite());
 			su.executeUpdate();
 			return true;
-		} else {
+		}
+		else
+		{
 			String sql = "INSERT INTO " + Table.Route.getValue()
 					+ " (ID, Info, NumStops, CityID, Name, IsFavorite) VALUES (?, ?, ?, ?, ?, ?)";
 			PreparedStatement su = conn.prepareStatement(sql);
@@ -695,13 +770,16 @@ public class Database {
 	 * @return true if an updated was made. false for new element.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean saveCity(City p) throws SQLException {
-		if (conn == null) {
+	public static boolean saveCity(City p) throws SQLException
+	{
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
 		}
-		if (existCity(p.getId())) {
+		if (existCity(p.getId()))
+		{
 			String sql = "UPDATE " + Table.City.getValue()
 					+ " SET Name=?, Description=?, VersionID=?, MNtP=?, PriceOneTime=?, PricePeriod=?, CEONTAP=?, TBPriceOneTime=?, TBPricePeriod=?  WHERE ID=?";
 			PreparedStatement su = conn.prepareStatement(sql);
@@ -717,7 +795,9 @@ public class Database {
 			su.setInt(10, p.getId());
 			su.executeUpdate();
 			return true;
-		} else {
+		}
+		else
+		{
 			String sql = "INSERT INTO " + Table.City.getValue()
 					+ " (ID,Name, Description, VersionID, MNtP,PriceOneTime, PricePeriod, CEONTAP, TBPriceOneTime, TBPricePeriod) VALUES (?,?, ?, ?, ?,?,?,?,?,?)";
 			PreparedStatement su = conn.prepareStatement(sql);
@@ -743,13 +823,16 @@ public class Database {
 	 * @return if the customer is secured or not
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean saveSecuredCustomer(Customer p) throws SQLException {
-		if (conn == null) {
+	public static boolean saveSecuredCustomer(Customer p) throws SQLException
+	{
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
 		}
-		if (existCustomer(p.getId())) {
+		if (existCustomer(p.getId()))
+		{
 			String sql = "UPDATE " + Table.Customer.getValue()
 					+ " SET Username=?, Password=?, Email=?, FirstName=?, LastName=?,"
 					+ " PhoneNumber=?, CardNum=?, CVC=?, Exp=? WHERE ID=?";
@@ -766,7 +849,9 @@ public class Database {
 			su.setInt(10, p.getId());
 			su.executeUpdate();
 			return true;
-		} else {
+		}
+		else
+		{
 			String sql = "INSERT INTO " + Table.Customer.getValue() + " "
 					+ "(ID,Username, Password, Email, FirstName, LastName, PhoneNumber, CardNum, CVC, Exp) VALUES "
 					+ "(?, ?, MD5(?), ?, ?, ?, ?, ?, ?, ?)";
@@ -796,8 +881,10 @@ public class Database {
 	 * @throws SQLException if the access to database failed
 	 */
 	private static ArrayList<Integer> searchUserSecured(String userName, String password, String table)
-			throws SQLException {
-		if (conn == null) {
+			throws SQLException
+	{
+		if (conn == null)
+		{
 			System.err.println("No connection found");
 			throw new DatabaseException();
 		}
@@ -830,7 +917,8 @@ public class Database {
 	 * @return list of ids of the secured customers
 	 * @throws SQLException if the access to database failed
 	 */
-	public static ArrayList<Integer> searchSecuredCustomer(String userName, String password) throws SQLException {
+	public static ArrayList<Integer> searchSecuredCustomer(String userName, String password) throws SQLException
+	{
 		return searchUserSecured(userName, password, Table.Customer.getValue());
 	}
 
@@ -841,13 +929,16 @@ public class Database {
 	 * @return true if an updated was made. false for new element.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean saveCustomer(Customer p) throws SQLException {
-		if (conn == null) {
+	public static boolean saveCustomer(Customer p) throws SQLException
+	{
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
 		}
-		if (existCustomer(p.getId())) {
+		if (existCustomer(p.getId()))
+		{
 			String sql = "UPDATE " + Table.Customer.getValue()
 					+ " SET Username=?, Password=?, Email=?, FirstName=?, LastName=?,"
 					+ " PhoneNumber=?, CardNum=?, CVC=?, Exp=? WHERE ID=?";
@@ -864,7 +955,9 @@ public class Database {
 			su.setInt(10, p.getId());
 			su.executeUpdate();
 			return true;
-		} else {
+		}
+		else
+		{
 			String sql = "INSERT INTO " + Table.Customer.getValue() + " "
 					+ "(ID,Username, Password, Email, FirstName, LastName, PhoneNumber, CardNum, CVC, Exp) VALUES "
 					+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -891,13 +984,16 @@ public class Database {
 	 * @return true if an updated was made. false for new element.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean saveEmployee(Employee p) throws SQLException {
-		if (conn == null) {
+	public static boolean saveEmployee(Employee p) throws SQLException
+	{
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
 		}
-		if (existEmployee(p.getId())) {
+		if (existEmployee(p.getId()))
+		{
 			String sql = "UPDATE " + Table.Employee.getValue() + " Username=?,"
 					+ " Password=?, Email=?, FirstName=?, LastName=?, PhoneNumber=?, Role=? WHERE ID=?";
 			PreparedStatement su = conn.prepareStatement(sql);
@@ -910,7 +1006,9 @@ public class Database {
 			su.setInt(7, p.getRole().getValue());
 			su.executeUpdate();
 			return true;
-		} else {
+		}
+		else
+		{
 			String sql = "INSERT INTO " + Table.Employee.getValue()
 					+ " (ID,Username, Password, Email, FirstName, LastName, PhoneNumber, Role)"
 					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -937,12 +1035,14 @@ public class Database {
 	 */
 	public static boolean _saveLocation(Location p) throws SQLException // friend to Map
 	{
-		if (conn == null) {
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
 		}
-		if (existLocation(p.getId())) {
+		if (existLocation(p.getId()))
+		{
 			String sql = "UPDATE " + Table.Location.getValue() + " SET MapID=?, POIID=?, x=?, y=? WHERE ID=?";
 			PreparedStatement su = conn.prepareStatement(sql);
 			su.setInt(1, p.getMapId());
@@ -952,7 +1052,9 @@ public class Database {
 			su.setInt(5, p.getId());
 			su.executeUpdate();
 			return true;
-		} else {
+		}
+		else
+		{
 			String sql = "INSERT INTO " + Table.Location.getValue()
 					+ " (ID, MapID, POIID, x, y) VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement su = conn.prepareStatement(sql);
@@ -976,12 +1078,14 @@ public class Database {
 	 */
 	public static boolean _saveRouteStop(RouteStop p) throws SQLException// friend to Route
 	{
-		if (conn == null) {
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
 		}
-		if (existRouteStop(p.getId())) {
+		if (existRouteStop(p.getId()))
+		{
 			String sql = "UPDATE " + Table.RouteStop.getValue()
 					+ " SET RouteID=?, PlaceID=?, NumStops=?, Time=? WHERE ID=?";
 			PreparedStatement su = conn.prepareStatement(sql);
@@ -992,7 +1096,9 @@ public class Database {
 			su.setInt(5, p.getId());
 			su.executeUpdate();
 			return true;
-		} else {
+		}
+		else
+		{
 			String sql = "INSERT INTO " + Table.RouteStop.getValue()
 					+ " (ID,RouteID, PlaceID, NumStops, Time) VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement su = conn.prepareStatement(sql);
@@ -1015,12 +1121,14 @@ public class Database {
 	 */
 	public static boolean _saveMapSight(MapSight p) throws SQLException // friend to MapSight
 	{
-		if (conn == null) {
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
 		}
-		if (existMapSight(p.getId())) {
+		if (existMapSight(p.getId()))
+		{
 			String sql = "UPDATE " + Table.MapSight.getValue() + " SET MapID=?, CityDataVersionID=? WHERE ID=?";
 			PreparedStatement su = conn.prepareStatement(sql);
 			su.setInt(1, p.getMapId());
@@ -1028,7 +1136,9 @@ public class Database {
 			su.setInt(3, p.getId());
 			su.executeUpdate();
 			return true;
-		} else {
+		}
+		else
+		{
 			String sql = "INSERT INTO " + Table.MapSight.getValue() + " (ID,MapID, CityDataVersionID) VALUES (?, ?, ?)";
 			PreparedStatement su = conn.prepareStatement(sql);
 			su.setInt(1, p.getId());
@@ -1049,12 +1159,14 @@ public class Database {
 	public static boolean _savePlaceOfInterestSight(PlaceOfInterestSight p) throws SQLException// friend to
 																								// CityDataVersion
 	{
-		if (conn == null) {
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
 		}
-		if (existPlaceOfInterestSight(p.getId())) {
+		if (existPlaceOfInterestSight(p.getId()))
+		{
 			String sql = "UPDATE " + Table.PlaceOfInterestSight.getValue()
 					+ " SET CityDataVersions=?, POIID=? WHERE ID=?";
 			PreparedStatement su = conn.prepareStatement(sql);
@@ -1063,7 +1175,9 @@ public class Database {
 			su.setInt(3, p.getId());
 			su.executeUpdate();
 			return true;
-		} else {
+		}
+		else
+		{
 			String sql = "INSERT INTO " + Table.PlaceOfInterestSight.getValue()
 					+ " (ID,CityDataVersions, POIID) VALUES (?, ?, ?)";
 			PreparedStatement su = conn.prepareStatement(sql);
@@ -1084,12 +1198,14 @@ public class Database {
 	 */
 	public static boolean _saveRouteSight(RouteSight p) throws SQLException// friend to CityDataVersion
 	{
-		if (conn == null) {
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
 		}
-		if (existRouteSight(p.getId())) {
+		if (existRouteSight(p.getId()))
+		{
 			String sql = "UPDATE " + Table.RouteSight.getValue() + " SET CityDataVersions=?, RouteID=?  WHERE ID=?";
 			PreparedStatement su = conn.prepareStatement(sql);
 			su.setInt(1, p.getCityDataVersionId());
@@ -1097,7 +1213,9 @@ public class Database {
 			su.setInt(4, p.getId());
 			su.executeUpdate();
 			return true;
-		} else {
+		}
+		else
+		{
 			String sql = "INSERT INTO " + Table.RouteSight.getValue()
 					+ " (ID,CityDataVersions, RouteID) VALUES (?, ?, ?)";
 			PreparedStatement su = conn.prepareStatement(sql);
@@ -1118,12 +1236,14 @@ public class Database {
 	 */
 	public static boolean _saveCityDataVersion(CityDataVersion p) throws SQLException// friend to City
 	{
-		if (conn == null) {
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
 		}
-		if (existCityDataVersion(p.getId())) {
+		if (existCityDataVersion(p.getId()))
+		{
 			String sql = "UPDATE " + Table.CityDataVersion.getValue() + " SET CityID=?, VersionName=? WHERE ID=?";
 			PreparedStatement su = conn.prepareStatement(sql);
 			su.setInt(1, p.getCityId());
@@ -1131,7 +1251,9 @@ public class Database {
 			su.setInt(3, p.getId());
 			su.executeUpdate();
 			return true;
-		} else {
+		}
+		else
+		{
 			String sql = "INSERT INTO " + Table.CityDataVersion.getValue()
 					+ " (ID,CityID, VersionName) VALUES (?, ?, ?)";
 			PreparedStatement su = conn.prepareStatement(sql);
@@ -1152,12 +1274,14 @@ public class Database {
 	 */
 	public static boolean _saveSubscription(Subscription p) throws SQLException // friend to Customer
 	{
-		if (conn == null) {
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
 		}
-		if (existSubscription(p.getId())) {
+		if (existSubscription(p.getId()))
+		{
 			String sql = "UPDATE " + Table.Subscription.getValue()
 					+ " SET CityID=?, UserID=?, PurchaseDate=?, FullPrice=?, PricePayed=?, ExpDate=? WHERE ID=?";
 			PreparedStatement su = conn.prepareStatement(sql);
@@ -1170,7 +1294,9 @@ public class Database {
 			su.setInt(7, p.getId());
 			su.executeUpdate();
 			return true;
-		} else {
+		}
+		else
+		{
 			String sql = "INSERT INTO " + Table.Subscription.getValue()
 					+ " (ID,CityID, UserID, PurchaseDate, FullPrice, PricePayed, ExpDate) VALUES (?,?,?, ?, ?, ?, ?)";
 			PreparedStatement su = conn.prepareStatement(sql);
@@ -1195,12 +1321,14 @@ public class Database {
 	 */
 	public static boolean _saveOneTimePurchase(OneTimePurchase p) throws SQLException // friend to Customer
 	{
-		if (conn == null) {
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
 		}
-		if (existOneTimePurchase(p.getId())) {
+		if (existOneTimePurchase(p.getId()))
+		{
 			String sql = "UPDATE " + Table.OneTimePurchase.getValue()
 					+ " SET CityID=?, UserID=?, PurchaseDate=?, FullPrice=?, PricePayed=?, WasDownloaded=? WHERE ID=?";
 			PreparedStatement su = conn.prepareStatement(sql);
@@ -1213,7 +1341,9 @@ public class Database {
 			su.setInt(7, p.getId());
 			su.executeUpdate();
 			return true;
-		} else {
+		}
+		else
+		{
 			String sql = "INSERT INTO " + Table.OneTimePurchase.getValue()
 					+ " (ID,CityID, UserID, PurchaseDate, FullPrice, PricePayed, WasDownloaded) VALUES (?,?, ?, ?, ?, ?,?)";
 			PreparedStatement su = conn.prepareStatement(sql);
@@ -1236,13 +1366,16 @@ public class Database {
 	 * @return true if an updated was made. false for new element.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean _saveStatistic(Statistic p) throws SQLException {
-		if (conn == null) {
+	public static boolean _saveStatistic(Statistic p) throws SQLException
+	{
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
 		}
-		if (existStatistic(p.getId())) {
+		if (existStatistic(p.getId()))
+		{
 			String sql = "UPDATE " + Table.Statistic.getValue()
 					+ " SET CityID=?, Date=?, NOTP=?, NS=?, NSR=?, NV=?, NSD=?, NVP=?, NumMaps=? WHERE ID=?";
 			PreparedStatement su = conn.prepareStatement(sql);
@@ -1258,7 +1391,9 @@ public class Database {
 			su.setInt(10, p.getId());
 			su.executeUpdate();
 			return true;
-		} else {
+		}
+		else
+		{
 			String sql = "INSERT INTO " + Table.Statistic.getValue()
 					+ " (ID, CityID, Date, NOTP, NS, NSR, NV, NSD, NVP, NumMaps) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement su = conn.prepareStatement(sql);
@@ -1282,8 +1417,10 @@ public class Database {
 	 * @param id:    the id to delete
 	 * @return true if deleted, false else.
 	 */
-	private static boolean delete(String table, int id) throws SQLException {
-		if (conn == null) {
+	private static boolean delete(String table, int id) throws SQLException
+	{
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
@@ -1300,7 +1437,8 @@ public class Database {
 	 * @return true if deleted, false else.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean deletePlaceOfInterest(int id) throws SQLException {
+	public static boolean deletePlaceOfInterest(int id) throws SQLException
+	{
 		return delete(Table.PlaceOfInterest.getValue(), id);
 	}
 
@@ -1309,7 +1447,8 @@ public class Database {
 	 * @return true if deleted, false else.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean deleteMap(int id) throws SQLException {
+	public static boolean deleteMap(int id) throws SQLException
+	{
 		return delete(Table.Map.getValue(), id);
 	}
 
@@ -1318,7 +1457,8 @@ public class Database {
 	 * @return true if deleted, false else.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean deleteRoute(int id) throws SQLException {
+	public static boolean deleteRoute(int id) throws SQLException
+	{
 		return delete(Table.Route.getValue(), id);
 	}
 
@@ -1327,7 +1467,8 @@ public class Database {
 	 * @return true if deleted, false else.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean deleteCity(int id) throws SQLException {
+	public static boolean deleteCity(int id) throws SQLException
+	{
 		return delete(Table.City.getValue(), id);
 	}
 
@@ -1336,7 +1477,8 @@ public class Database {
 	 * @return true if deleted, false else.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean deleteCustomer(int id) throws SQLException {
+	public static boolean deleteCustomer(int id) throws SQLException
+	{
 		return delete(Table.Customer.getValue(), id);
 	}
 
@@ -1345,7 +1487,8 @@ public class Database {
 	 * @return true if deleted, false else.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean deleteEmployee(int id) throws SQLException {
+	public static boolean deleteEmployee(int id) throws SQLException
+	{
 		return delete(Table.Employee.getValue(), id);
 	}
 
@@ -1354,7 +1497,8 @@ public class Database {
 	 * @return true if deleted, false else.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean _deleteLocation(int id) throws SQLException {
+	public static boolean _deleteLocation(int id) throws SQLException
+	{
 		return delete(Table.Location.getValue(), id);
 	}
 
@@ -1363,7 +1507,8 @@ public class Database {
 	 * @return true if deleted, false else.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean _deleteRouteStop(int id) throws SQLException {
+	public static boolean _deleteRouteStop(int id) throws SQLException
+	{
 		return delete(Table.RouteStop.getValue(), id);
 	}
 
@@ -1372,7 +1517,8 @@ public class Database {
 	 * @return true if deleted, false else.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean _deleteMapSight(int id) throws SQLException {
+	public static boolean _deleteMapSight(int id) throws SQLException
+	{
 		return delete(Table.MapSight.getValue(), id);
 	}
 
@@ -1381,7 +1527,8 @@ public class Database {
 	 * @return true if deleted, false else.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean _deletePlaceOfInterestSight(int id) throws SQLException {
+	public static boolean _deletePlaceOfInterestSight(int id) throws SQLException
+	{
 		return delete(Table.PlaceOfInterestSight.getValue(), id);
 	}
 
@@ -1390,7 +1537,8 @@ public class Database {
 	 * @return true if deleted, false else.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean _deleteRouteSight(int id) throws SQLException {
+	public static boolean _deleteRouteSight(int id) throws SQLException
+	{
 		return delete(Table.RouteSight.getValue(), id);
 	}
 
@@ -1399,7 +1547,8 @@ public class Database {
 	 * @return true if deleted, false else.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean _deleteCityDataVersion(int id) throws SQLException {
+	public static boolean _deleteCityDataVersion(int id) throws SQLException
+	{
 		return delete(Table.CityDataVersion.getValue(), id);
 	}
 
@@ -1408,7 +1557,8 @@ public class Database {
 	 * @return true if deleted, false else.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean _deleteSubscription(int id) throws SQLException {
+	public static boolean _deleteSubscription(int id) throws SQLException
+	{
 		return delete(Table.Subscription.getValue(), id);
 	}
 
@@ -1417,7 +1567,8 @@ public class Database {
 	 * @return true if deleted, false else.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean _deleteOneTimePurchase(int id) throws SQLException {
+	public static boolean _deleteOneTimePurchase(int id) throws SQLException
+	{
 		return delete(Table.OneTimePurchase.getValue(), id);
 	}
 
@@ -1426,7 +1577,8 @@ public class Database {
 	 * @return true if deleted, false else.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean _deleteStatistic(int id) throws SQLException {
+	public static boolean _deleteStatistic(int id) throws SQLException
+	{
 		return delete(Table.Statistic.getValue(), id);
 	}
 
@@ -1435,7 +1587,8 @@ public class Database {
 	 * @return returns the list of the results.
 	 * @throws SQLException if the access to database failed
 	 */
-	private static ArrayList<Integer> queryToList(PreparedStatement gt) throws SQLException {
+	private static ArrayList<Integer> queryToList(PreparedStatement gt) throws SQLException
+	{
 		ResultSet res = gt.executeQuery();
 		ArrayList<Integer> IDs = new ArrayList<>();
 		while (res.next())
@@ -1455,8 +1608,10 @@ public class Database {
 	 * @throws SQLException if the access to database failed
 	 */
 	public static ArrayList<Integer> searchPlaceOfInterest(String placeName, String placeDescription, Integer cityId)
-			throws SQLException {
-		if (conn == null) {
+			throws SQLException
+	{
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
@@ -1501,10 +1656,12 @@ public class Database {
 	 * @throws SQLException if the access to database failed
 	 */
 	public static ArrayList<Integer> searchMap(Integer cityId, String name, String info, String imgURL)
-			throws SQLException {
+			throws SQLException
+	{
 		int counter = 1;
 
-		if (conn == null) {
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
@@ -1543,10 +1700,12 @@ public class Database {
 	 * @return the result list.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static ArrayList<Integer> searchRoute(Integer cityId, String info) throws SQLException {
+	public static ArrayList<Integer> searchRoute(Integer cityId, String info) throws SQLException
+	{
 		int counter = 1;
 
-		if (conn == null) {
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
@@ -1577,10 +1736,12 @@ public class Database {
 	 * @return the result list.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static ArrayList<Integer> searchCity(String cityName, String cityDescription) throws SQLException {
+	public static ArrayList<Integer> searchCity(String cityName, String cityDescription) throws SQLException
+	{
 		int counter = 1;
 
-		if (conn == null) {
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
@@ -1622,9 +1783,11 @@ public class Database {
 	 * @return the result list.
 	 * @throws SQLException if the access to database failed
 	 */
-	private static ArrayList<Integer> searchUser(String userName, String password, String table) throws SQLException {
+	private static ArrayList<Integer> searchUser(String userName, String password, String table) throws SQLException
+	{
 
-		if (conn == null) {
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
@@ -1659,7 +1822,8 @@ public class Database {
 	 * @return the result list.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static ArrayList<Integer> searchCustomer(String userName, String password) throws SQLException {
+	public static ArrayList<Integer> searchCustomer(String userName, String password) throws SQLException
+	{
 		return searchUser(userName, password, Table.Customer.getValue());
 	}
 
@@ -1671,7 +1835,8 @@ public class Database {
 	 * @return the result list.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static ArrayList<Integer> searchEmployee(String userName, String password) throws SQLException {
+	public static ArrayList<Integer> searchEmployee(String userName, String password) throws SQLException
+	{
 		return searchUser(userName, password, Table.Employee.getValue());
 	}
 
@@ -1683,9 +1848,11 @@ public class Database {
 	 * @return the result list.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static ArrayList<Integer> searchLocation(Integer mapId, Integer placeId) throws SQLException {
+	public static ArrayList<Integer> searchLocation(Integer mapId, Integer placeId) throws SQLException
+	{
 
-		if (conn == null) {
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
@@ -1719,9 +1886,11 @@ public class Database {
 	 * @throws SQLException if the access to database failed
 	 */
 	public static ArrayList<Integer> searchRouteStop(Integer routeId, Integer placeId, Integer numStop)
-			throws SQLException {
+			throws SQLException
+	{
 
-		if (conn == null) {
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
@@ -1758,9 +1927,11 @@ public class Database {
 	 * @return the result list.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static ArrayList<Integer> searchMapSight(Integer cityDataVersionId, Integer mapId) throws SQLException {
+	public static ArrayList<Integer> searchMapSight(Integer cityDataVersionId, Integer mapId) throws SQLException
+	{
 
-		if (conn == null) {
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
@@ -1793,9 +1964,11 @@ public class Database {
 	 * @throws SQLException if the access to database failed
 	 */
 	public static ArrayList<Integer> searchPlaceOfInterestSight(Integer cityDataVersionId, Integer placeId)
-			throws SQLException {
+			throws SQLException
+	{
 
-		if (conn == null) {
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
@@ -1828,9 +2001,11 @@ public class Database {
 	 * @throws SQLException if the access to database failed
 	 */
 	public static ArrayList<Integer> searchRouteSight(Integer cityDataVersionId, Integer routeId, Boolean isFavorite)
-			throws SQLException {
+			throws SQLException
+	{
 
-		if (conn == null) {
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
@@ -1866,9 +2041,11 @@ public class Database {
 	 * @return the result list.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static ArrayList<Integer> searchCityDataVersion(Integer cityId) throws SQLException {
+	public static ArrayList<Integer> searchCityDataVersion(Integer cityId) throws SQLException
+	{
 
-		if (conn == null) {
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
@@ -1898,9 +2075,11 @@ public class Database {
 	 * @throws SQLException if the access to database failed
 	 */
 	public static ArrayList<Integer> searchSubscription(Integer userId, Integer cityId, LocalDate date, Boolean active)
-			throws SQLException {
+			throws SQLException
+	{
 
-		if (conn == null) {
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
@@ -1911,7 +2090,8 @@ public class Database {
 			sql += "UserID=? AND ";
 		if (cityId != null)
 			sql += "CityID=? AND ";
-		if (active != null) {
+		if (active != null)
+		{
 			if (active)
 				sql += "(? BETWEEN PurchaseDate AND ExpDate) AND ";
 			else
@@ -1948,9 +2128,11 @@ public class Database {
 	 * @throws SQLException if the access to database failed
 	 */
 	public static ArrayList<Integer> searchOneTimePurchase(Integer userId, Integer cityId, LocalDate purchaseDate,
-			Boolean wasDownload) throws SQLException {
+			Boolean wasDownload) throws SQLException
+	{
 
-		if (conn == null) {
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
@@ -1997,8 +2179,10 @@ public class Database {
 	 * 
 	 */
 	public static ArrayList<Integer> searchStatistic(Integer cityId, LocalDate date, LocalDate dateFrom,
-			LocalDate dateEnd, Boolean newVersionPublished, Boolean validNumMaps) throws SQLException {
-		if (conn == null) {
+			LocalDate dateEnd, Boolean newVersionPublished, Boolean validNumMaps) throws SQLException
+	{
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
@@ -2057,9 +2241,11 @@ public class Database {
 	 * @return last element from result set
 	 * @throws SQLException if the access to database failed
 	 */
-	private static ResultSet get(String table, int id) throws SQLException {
+	private static ResultSet get(String table, int id) throws SQLException
+	{
 
-		if (conn == null) {
+		if (conn == null)
+		{
 
 			System.err.println("No connection found");
 			throw new DatabaseException();
@@ -2082,7 +2268,8 @@ public class Database {
 	 * @return the new object
 	 * @throws SQLException if the access to database failed
 	 */
-	public static PlaceOfInterest getPlaceOfInterestById(int id) throws SQLException {
+	public static PlaceOfInterest getPlaceOfInterestById(int id) throws SQLException
+	{
 
 		ResultSet res = get(Table.PlaceOfInterest.getValue(), id);
 		if (res == null)
@@ -2100,7 +2287,8 @@ public class Database {
 	 * @return the new object
 	 * @throws SQLException if the access to database failed
 	 */
-	public static Map getMapById(int id) throws SQLException {
+	public static Map getMapById(int id) throws SQLException
+	{
 
 		ResultSet res = get(Table.Map.getValue(), id);
 		if (res == null)
@@ -2117,7 +2305,8 @@ public class Database {
 	 * @return the new object
 	 * @throws SQLException if the access to database failed
 	 */
-	public static Route getRouteById(int id) throws SQLException {
+	public static Route getRouteById(int id) throws SQLException
+	{
 
 		ResultSet res = get(Table.Route.getValue(), id);
 		if (res == null)
@@ -2134,7 +2323,8 @@ public class Database {
 	 * @return the name of the city
 	 * @throws SQLException if the access to database failed
 	 */
-	public static String getCityNameById(int id) throws SQLException {
+	public static String getCityNameById(int id) throws SQLException
+	{
 
 		ResultSet res = get(Table.City.getValue(), id);
 		if (res == null)
@@ -2150,7 +2340,8 @@ public class Database {
 	 * @return the new object
 	 * @throws SQLException if the access to database failed
 	 */
-	public static City getCityById(int id) throws SQLException {
+	public static City getCityById(int id) throws SQLException
+	{
 
 		ResultSet res = get(Table.City.getValue(), id);
 		if (res == null)
@@ -2169,7 +2360,8 @@ public class Database {
 	 * @return the new object
 	 * @throws SQLException if the access to database failed
 	 */
-	public static Customer getCustomerById(int id) throws SQLException {
+	public static Customer getCustomerById(int id) throws SQLException
+	{
 
 		ResultSet res = get(Table.Customer.getValue(), id);
 		if (res == null)
@@ -2187,7 +2379,8 @@ public class Database {
 	 * @return the new object
 	 * @throws SQLException if the access to database failed
 	 */
-	public static Employee getEmployeeById(int id) throws SQLException {
+	public static Employee getEmployeeById(int id) throws SQLException
+	{
 
 		ResultSet res = get(Table.Employee.getValue(), id);
 		if (res == null)
@@ -2205,7 +2398,8 @@ public class Database {
 	 * @return the new object
 	 * @throws SQLException if the access to database failed
 	 */
-	public static Location _getLocationById(int id) throws SQLException {
+	public static Location _getLocationById(int id) throws SQLException
+	{
 
 		ResultSet res = get(Table.Location.getValue(), id);
 		if (res == null)
@@ -2222,7 +2416,8 @@ public class Database {
 	 * @return the new object
 	 * @throws SQLException if the access to database failed
 	 */
-	public static RouteStop _getRouteStopById(int id) throws SQLException {
+	public static RouteStop _getRouteStopById(int id) throws SQLException
+	{
 
 		ResultSet res = get(Table.RouteStop.getValue(), id);
 		if (res == null)
@@ -2239,7 +2434,8 @@ public class Database {
 	 * @return the new object
 	 * @throws SQLException if the access to database failed
 	 */
-	public static MapSight _getMapSightById(int id) throws SQLException {
+	public static MapSight _getMapSightById(int id) throws SQLException
+	{
 
 		ResultSet res = get(Table.MapSight.getValue(), id);
 		if (res == null)
@@ -2255,7 +2451,8 @@ public class Database {
 	 * @return the new object
 	 * @throws SQLException if the access to database failed
 	 */
-	public static PlaceOfInterestSight _getPlaceOfInterestSightById(int id) throws SQLException {
+	public static PlaceOfInterestSight _getPlaceOfInterestSightById(int id) throws SQLException
+	{
 
 		ResultSet res = get(Table.PlaceOfInterestSight.getValue(), id);
 		if (res == null)
@@ -2272,7 +2469,8 @@ public class Database {
 	 * @return the new object
 	 * @throws SQLException if the access to database failed
 	 */
-	public static RouteSight _getRouteSightById(int id) throws SQLException {
+	public static RouteSight _getRouteSightById(int id) throws SQLException
+	{
 
 		ResultSet res = get(Table.RouteSight.getValue(), id);
 		if (res == null)
@@ -2288,7 +2486,8 @@ public class Database {
 	 * @return the new object
 	 * @throws SQLException if the access to database failed
 	 */
-	public static CityDataVersion _getCityDataVersionById(int id) throws SQLException {
+	public static CityDataVersion _getCityDataVersionById(int id) throws SQLException
+	{
 
 		ResultSet res = get(Table.CityDataVersion.getValue(), id);
 		return CityDataVersion._createCityDataVersion(res.getInt("ID"), res.getInt("CityID"),
@@ -2303,7 +2502,8 @@ public class Database {
 	 * @return the new object
 	 * @throws SQLException if the access to database failed
 	 */
-	public static Subscription _getSubscriptionById(int id) throws SQLException {
+	public static Subscription _getSubscriptionById(int id) throws SQLException
+	{
 
 		ResultSet res = get(Table.Subscription.getValue(), id);
 //			if (res == null) System.out.println("why god why");
@@ -2320,7 +2520,8 @@ public class Database {
 	 * @return the new object
 	 * @throws SQLException if the access to database failed
 	 */
-	public static OneTimePurchase _getOneTimePurchaseById(int id) throws SQLException {
+	public static OneTimePurchase _getOneTimePurchaseById(int id) throws SQLException
+	{
 
 		ResultSet res = get(Table.OneTimePurchase.getValue(), id);
 		return OneTimePurchase._createOneTimePurchase(res.getInt("ID"), res.getInt("CityID"), res.getInt("UserID"),
@@ -2336,7 +2537,8 @@ public class Database {
 	 * @return the new object
 	 * @throws SQLException if the access to database failed
 	 */
-	public static Statistic _getStatisticById(int id) throws SQLException {
+	public static Statistic _getStatisticById(int id) throws SQLException
+	{
 		ResultSet res = get(Table.Statistic.getValue(), id);
 		return Statistic._createStatistic(res.getInt("ID"), res.getInt("CityID"), res.getDate("Date").toLocalDate(),
 				res.getInt("NOTP"), res.getInt("NS"), res.getInt("NSR"), res.getInt("NV"), res.getInt("NSD"),
@@ -2350,7 +2552,8 @@ public class Database {
 	 * @see java.lang.Object#finalize() clean the connection when finished.
 	 */
 	@Override
-	protected void finalize() throws Throwable {
+	protected void finalize() throws Throwable
+	{
 		closeConnection();
 	}
 }

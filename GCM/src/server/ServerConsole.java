@@ -49,7 +49,7 @@ public class ServerConsole implements ChatIF
 		{
 			server = new EchoServer(port, this);
 		}
-		catch (IOException exception)
+		catch (Exception exception)
 		{
 			System.out.println("Error: Can't setup connection!" + " Terminating client.");
 			System.exit(1);

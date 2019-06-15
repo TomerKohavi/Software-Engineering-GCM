@@ -8,24 +8,27 @@ import java.util.Calendar;
 import controller.*;
 import objectClasses.*;
 
-public class Main2 {
-	public static void main(String [] args)
+public class Main2
+{
+	public static void main(String[] args)
 	{
-		Database.createConnection();
-		try 
+		try
 		{
-			//System.out.println(s.getNumOneTimePurchases());
-			/*Customer cust = new Customer("t", "t", "t@gmail.com", "t", "t t", "0523002100", "0095681338665894", "07/24",
-					"000");
-			
-			Database.saveSecuredCustomer(cust);
-			
-			Customer res = Database.getCustomerById(cust.getId());
-			System.out.println(res.getPassword());
-			
-			System.out.println(Database.searchSecuredCustomer("t", "s"));
-			
-			cust.deleteFromDatabase();*/
+			Database.createConnection();
+			// System.out.println(s.getNumOneTimePurchases());
+			/*
+			 * Customer cust = new Customer("t", "t", "t@gmail.com", "t", "t t",
+			 * "0523002100", "0095681338665894", "07/24", "000");
+			 * 
+			 * Database.saveSecuredCustomer(cust);
+			 * 
+			 * Customer res = Database.getCustomerById(cust.getId());
+			 * System.out.println(res.getPassword());
+			 * 
+			 * System.out.println(Database.searchSecuredCustomer("t", "s"));
+			 * 
+			 * cust.deleteFromDatabase();
+			 */
 //			Date today = new Date(Calendar.getInstance().getTime().getTime());
 //			long start = System.currentTimeMillis();
 //			System.out.println("ss");
@@ -50,10 +53,12 @@ public class Main2 {
 //			long finish = System.currentTimeMillis();
 //			long timeElapsed = (finish - start)/1000;
 //			System.out.println("took "+timeElapsed+" sec");
+
+			Database.closeConnection();
 		}
-		catch (Exception e) {
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
-		Database.closeConnection();
 	}
 }

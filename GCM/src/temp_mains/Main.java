@@ -7,12 +7,14 @@ import java.util.Calendar;
 import controller.Database;
 import controller.InitDatebase;
 
-public class Main {
+public class Main
+{
 
-	public static void main(String [] args)
+	public static void main(String[] args)
 	{
-		Database.createConnection();
-		try {
+		try
+		{
+			Database.createConnection();
 			InitDatebase.initDatabase("Tal", "11235813");
 //			Date today = new Date(Calendar.getInstance().getTime().getTime());
 //			City c=new City("Haifa", "boring city");
@@ -63,12 +65,14 @@ public class Main {
 //			rs.deleteFromDatabase();
 //			cdv2.deleteFromDatabase();
 //Database.resetAll("Tal", "11235813");
-						
-			
-		}catch (Exception e) {
+
+			Database.closeConnection();
+			System.out.println("Done");
+
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
-		Database.closeConnection();
-		System.out.println("Done");
 	}
 }
