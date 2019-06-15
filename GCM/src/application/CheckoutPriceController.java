@@ -23,7 +23,7 @@ import javafx.stage.Stage;
  * @author tomer
  * send message to the client with change price request
  */
-public class ChangePriceController {
+public class CheckoutPriceController {
 	
 	private double oneTimePrice, monthPrice;
 
@@ -58,7 +58,7 @@ public class ChangePriceController {
      * initialize the variables
      */
     public void initialize() {
-    	oneTimePrice = Connector.cityData.getPriceOneTime();
+    	oneTimePrice = Connector.cityData.getPriceOneTime(); // TODO get the ToBe prices
     	monthPrice = Connector.cityData.getPricePeriod();
     	OneTimeField.setText(String.format("%.02f", oneTimePrice));
     	MonthField.setText(String.format("%.02f", monthPrice));

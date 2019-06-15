@@ -168,7 +168,7 @@ public class Connector {
 			{
 				Map map = mapS.getCopyMap();
 				BufferedImage bufIm = Connector.client.fetchImage("Pics\\" + map.getImgURL());
-				ImageIO.write(bufIm, "png", new File(selectedDirectory.getPath() + "\\" + map.getName()));
+				ImageIO.write(bufIm, "png", new File(selectedDirectory.getPath() + "\\" + map.getName() + ".png"));
 			}
 			return true;
 		}
