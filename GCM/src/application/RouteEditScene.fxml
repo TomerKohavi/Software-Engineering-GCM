@@ -44,7 +44,7 @@
          </columns>
       </TableView>
       <JFXListView fx:id="POIBox" layoutX="935.0" layoutY="238.0" prefHeight="464.0" prefWidth="297.0" style="-fx-border-color: #41e0d0;" />
-      <JFXTextField fx:id="StopTime" focusColor="#41e0d0" layoutX="935.0" layoutY="733.0" prefHeight="25.0" prefWidth="80.0" promptText="Time" />
+      <JFXTextField fx:id="StopTime" focusColor="#41e0d0" layoutX="935.0" layoutY="733.0" onAction="#addPOI" prefHeight="25.0" prefWidth="80.0" promptText="Time" />
       <Text layoutX="935.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POI:" underline="true" />
       <Text fx:id="TimeError" fill="RED" layoutX="947.0" layoutY="781.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insert time" />
       <JFXButton fx:id="AddPoiButton" layoutX="1044.0" layoutY="723.0" onAction="#addPOI" prefHeight="45.0" prefWidth="188.0" style="-fx-background-color: #41e0d0;" text="Add POI">
