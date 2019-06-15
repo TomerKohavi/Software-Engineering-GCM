@@ -77,7 +77,7 @@ public class InitDatebase {
 	 */
 	private static void haifa() {
 		City c1 = new City("Haifa", "The third largest city in Israel. As of 2016, the city is a major seaport "
-				+ "located on Israel's Mediterranean coastline in the Bay of Haifa covering 63.7 square kilometres.");
+				+ "located on Israel's Mediterranean coastline in the Bay of Haifa covering 63.7 square kilometres.", 20, 100.9);
 		PlaceOfInterest p0 = new PlaceOfInterest(c1.getId(), "University of Haifa", PlaceOfInterest.PlaceType.PUBLIC,
 				"A public research university on the top of Mount Carmel in Haifa, Israel. "
 						+ "The university was founded in 1963 by the mayor of its host city, Abba Hushi,"
@@ -99,7 +99,7 @@ public class InitDatebase {
 				false);
 
 		// cdv
-		CityDataVersion cdv = new CityDataVersion(c1, "1.2", 20, 100.9);
+		CityDataVersion cdv = new CityDataVersion(c1, "1.2");
 
 		p4.saveToDatabase();
 		PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv.getId(), p0);
@@ -173,7 +173,8 @@ public class InitDatebase {
 	private static void telAviv() {
 
 		City c1 = new City("Tel aviv",
-				"Tel Aviv-Yafo, is the second most populous city in Israel—after Jerusalem—and the most populous city in the conurbation of Gush Dan, Israel's largest metropolitan area. Located on the country's Mediterranean coastline and with a population of 443,939, it is the economic and technological center of the country.");
+				"Tel Aviv-Yafo, is the second most populous city in Israel—after Jerusalem—and the most populous city in the conurbation of Gush Dan, Israel's largest metropolitan area. Located on the country's Mediterranean "
+				+ "coastline and with a population of 443,939, it is the economic and technological center of the country.",15, 100);
 		PlaceOfInterest p0 = new PlaceOfInterest(c1.getId(), "tel aviv carmel market", PlaceOfInterest.PlaceType.PUBLIC,
 				"The Carmel Market (the Shuk Hacarmel) is the largest market, or shuk, in Tel Aviv. A vibrant marketplace where traders sell everything from clothing to spices, and fruit to electronics, visiting the Carmel Market is a fascinating thing to do in Tel Aviv.",
 				false);
@@ -195,7 +196,7 @@ public class InitDatebase {
 				false);
 
 		// cdv
-		CityDataVersion cdv = new CityDataVersion(c1, "2.1", 15, 100.9);
+		CityDataVersion cdv = new CityDataVersion(c1, "2.1");
 		p4.saveToDatabase();
 		PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv.getId(), p0);
 		ps0.saveToDatabase();
@@ -264,7 +265,7 @@ public class InitDatebase {
 	private static void jerusalem() {
 		City city = new City("Jerusalem", 
 				"Jerusalem is a city in the Middle East, located on a plateau in the Judaean Mountains between the Mediterranean and the Dead Sea. "
-						+ "It is one of the oldest cities in the world, and is considered holy to the three major Abrahamic religions—Judaism, Christianity, and Islam.");
+						+ "It is one of the oldest cities in the world, and is considered holy to the three major Abrahamic religions—Judaism, Christianity, and Islam.",40, 182);
 		PlaceOfInterest p0 = new PlaceOfInterest(city.getId(), "Western Wall", PlaceOfInterest.PlaceType.HISTORICAL,
 				"The Western Wall, or “Wailing Wall”, is the most religious site in the world for the Jewish people. Located in the Old City of Jerusalem, it is the western support wall of the Temple Mount.",
 				false);
@@ -293,7 +294,7 @@ public class InitDatebase {
 				"Then you sift the flour and bake together in the communal tabun (which still exists at the entrance gates to Mishkenot Sha'ananim), and then sit together and eat and enjoy fresh bread and the satisfaction of having a significant, slow and common effort.",
 				true);
 		// cdv
-		CityDataVersion cdv = new CityDataVersion(city, "3.3", 40, 135);
+		CityDataVersion cdv = new CityDataVersion(city, "3.3");
 		PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv.getId(), p0);
 		ps0.saveToDatabase();
 		PlaceOfInterestSight ps1 = new PlaceOfInterestSight(cdv.getId(), p1);
@@ -414,7 +415,7 @@ public class InitDatebase {
 				"Rome (Latin and Italian: Roma (About this soundlisten)) is the capital city and a special comune of Italy "
 						+ "(named Comune di Roma Capitale). Rome also serves as the capital of the Lazio region. With 2,872,800 residents in 1,285 km "
 						+ " it is also the country's most populated comune. "
-						+ "It is the fourth most populous city in the European Union by population within city limits. ");
+						+ "It is the fourth most populous city in the European Union by population within city limits. ",40, 135);
 		PlaceOfInterest p0 = new PlaceOfInterest(city.getId(), "Vatican", PlaceOfInterest.PlaceType.HISTORICAL,
 				"Vatican City, " + "officially Vatican City State "
 						+ "is an independent city-state enclaved within Rome, Italy. Established with the Lateran Treaty (1929), "
@@ -458,7 +459,7 @@ public class InitDatebase {
 		p7.saveToDatabase();
 
 		// cdv
-		CityDataVersion cdv = new CityDataVersion(city, "6.2", 40, 135);
+		CityDataVersion cdv = new CityDataVersion(city, "6.2");
 		PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv.getId(), p0);
 		ps0.saveToDatabase();
 		PlaceOfInterestSight ps1 = new PlaceOfInterestSight(cdv.getId(), p1);

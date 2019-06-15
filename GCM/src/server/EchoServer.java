@@ -436,9 +436,8 @@ public class EchoServer extends AbstractServer
 	 */
 	private CreateCity handleCityCreation(CreateCity ccity)
 	{
-		ccity.city = new City(ccity.name, ccity.info);
-		CityDataVersion cdv = new CityDataVersion(ccity.city, ccity.name = "1.0", ccity.priceOneTime,
-				ccity.pricePeriod);
+		ccity.city = new City(ccity.name, ccity.info,ccity.priceOneTime,ccity.pricePeriod);
+		CityDataVersion cdv = new CityDataVersion(ccity.city, ccity.name = "1.0");
 		ccity.city.addUnpublishedCityDataVersion(cdv);
 		ccity.city.saveToDatabase();
 		return ccity;
