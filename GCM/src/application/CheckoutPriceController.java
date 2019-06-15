@@ -64,6 +64,7 @@ public class CheckoutPriceController {
     void applyChanges(ActionEvent event) throws IOException {
 		Connector.selectedCity.setPriceOneTime(oneTimePrice);
 		Connector.selectedCity.setPricePeriod(monthPrice);
+		Connector.selectedCity.setCeoNeedsToApprovePrices(false);
 		Connector.client.update(Connector.selectedCity);
 		mainPane.getScene().getWindow().hide();
     }

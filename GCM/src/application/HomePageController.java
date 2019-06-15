@@ -419,7 +419,7 @@ public class HomePageController
 				Role role = ((Employee) Connector.user).getRole();
 				if (role == Role.MANAGER)
 					BuyButton.setText("Change Price");
-				else if (role == Role.CEO)
+				else if (role == Role.CEO && Connector.selectedCity.isCeoNeedsToApprovePrices())
 					BuyButton.setText("Checkout Price");
 				else
 					BuyButton.setVisible(false);
