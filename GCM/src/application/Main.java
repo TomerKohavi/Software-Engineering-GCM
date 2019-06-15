@@ -22,6 +22,7 @@ public class Main extends Application
 	public void start(Stage primaryStage) throws IOException
 	{
 		// TODO PLEASE divide to packages, will be much easier plus George will like it more.
+		// TODO Gui for reconnection
 		Connector.client = new ChatClient(Connector.LOCAL_HOST, Connector.PORT, new Console());
 		Connector.mainStage = primaryStage;
 		FXMLLoader loader = new FXMLLoader(((Object) ((Object) this)).getClass().getResource("HomePageScene.fxml"));

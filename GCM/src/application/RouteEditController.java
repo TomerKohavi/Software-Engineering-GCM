@@ -144,7 +144,7 @@ public class RouteEditController
 	 * @param event user click to up route
 	 */
 	@FXML
-	void up(ActionEvent event)
+	void up(ActionEvent event) // TODO doesn't work when is new
 	{
 		int index = StopsBox.getSelectionModel().getSelectedIndex();
 		stopList.add(index - 1, stopList.remove(index));

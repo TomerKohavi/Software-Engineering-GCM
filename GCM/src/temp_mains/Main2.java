@@ -14,7 +14,6 @@ public class Main2 {
 		Database.createConnection();
 		try 
 		{
-			
 			//System.out.println(s.getNumOneTimePurchases());
 			/*Customer cust = new Customer("t", "t", "t@gmail.com", "t", "t t", "0523002100", "0095681338665894", "07/24",
 					"000");

@@ -39,7 +39,7 @@ import objectClasses.MapSight;
  */
 public class MapEditController
 {
-
+	// TODO if i add a loc and then remove it i need to remove it twice
 	private boolean firstPOIAdded = true;
 
 	private Image realPOI = null;
@@ -239,7 +239,7 @@ public class MapEditController
 			}
 			else
 			{
-				String generatedPath = "Pics\\" + Connector.selectedCity.getCityName() + generateRandomString(15) + ".png";
+				String generatedPath = Connector.selectedCity.getCityName() + " " + generateRandomString(15) + ".png";
 			
 				MapSight mapS = Connector.client.createMap(Connector.selectedCity.getId(), Name.getText(),
 						InfoBox.getText(), generatedPath, Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId());
