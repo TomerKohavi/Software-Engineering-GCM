@@ -15,7 +15,9 @@ public class Main2 {
 		try 
 		{
 			Date today = new Date(Calendar.getInstance().getTime().getTime());
-			System.out.println(today.getYear());
+			Date yesturday= new Date(today.getYear(),today.getMonth(),today.getDay()+1);
+			Statistic s=InformationSystem.getRangeSumStatistics(4, today, today);
+			System.out.println(s.getNumOneTimePurchases());
 			/*Customer cust = new Customer("t", "t", "t@gmail.com", "t", "t t", "0523002100", "0095681338665894", "07/24",
 					"000");
 			

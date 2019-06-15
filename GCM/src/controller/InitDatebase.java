@@ -732,10 +732,10 @@ public class InitDatebase {
 		for(int i=0;i<20;i++)
 			InformationSystem.addVisit(1, new Date(119, 1, 28+i*4));
 
-		OneTimePurchase otp = new OneTimePurchase(cust, 4, new Date(119, 5, 20), 15, 9);
+		OneTimePurchase otp = new OneTimePurchase(cust, 4, new Date(119, 4, 20), 15, 9);
 		otp.updateToWasDownload();
-		InformationSystem.addVisit(4, new Date(119, 5, 20));
-		InformationSystem.addOneTimePurchase(4, new Date(119, 5, 20));
+		InformationSystem.addVisit(4, new Date(119, 4, 20));
+		InformationSystem.addOneTimePurchase(4, new Date(119, 4, 20));
 		cust.addOneTimePurchase(otp);
 		cust.saveToDatabase();
 	}
