@@ -105,7 +105,7 @@ public class RouteEditController
 			route = Connector.selectedRoute;
 			Name.setText(route.getName());
 			InfoBox.setText(route.getInfo());
-//			FavoriteBox.setSelected(route.getIs); // TODO get isFavorite (is in RouteSight but not in Route - Blame Ronen)
+//			FavoriteBox.setSelected(route.getIs); // TODO get isFavorite (is in RouteSight but not in Route - Blame Ronen) TODO Blaming ronen
 			stopList = route.getCopyRouteStops();
 		}
 		else

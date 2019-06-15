@@ -30,6 +30,7 @@ import objectClasses.Customer;
 import objectClasses.Employee;
 import objectClasses.User;
 import objectClasses.Employee.Role;
+import objectClasses.Location;
 import objectClasses.PlaceOfInterest.PlaceType;
 import objectClasses.PlaceOfInterestSight;
 import objectClasses.Route;
@@ -377,6 +378,29 @@ public class EchoServer extends AbstractServer
 		return fc;
 	}
 
+	private CreateLocations handleLocationsCreation(CreateLocations clocs)
+	{
+		clocs.idList = new ArrayList<Integer>();
+		for (Location loc : clocs.locList)
+		{
+			if (loc.getId() == -1)
+				loc._setId(Database.generateIdRouteStop());
+			clocs.idList.add(loc.getId());
+			System.out.println(loc.getId());
+			loc.saveToDatabase();
+		}
+		return clocs;
+	}
+	
+	private CreateCity handleCityCreation(CreateCity ccity)
+	{ // TODO Ronen make sure its the right way to create cities etc.
+		ccity.city = new City(ccity.name, ccity.info);
+		ccity.city.saveToDatabase();
+		ccity.cdv = new CityDataVersion(ccity.city, ccity.name = " 1.0", ccity.priceOneTime, ccity.pricePeriod);
+		ccity.cdv.saveToDatabase();
+		return ccity;
+	}
+	
 	/**
 	 * This method handles any messages received from the client.
 	 *
@@ -422,6 +446,8 @@ public class EchoServer extends AbstractServer
 				client.sendToClient(handleRouteCreation((CreateRoute) msg));
 			else if (msg instanceof CreateRouteStops)
 				client.sendToClient(handleRouteStopsCreation((CreateRouteStops) msg));
+			else if (msg instanceof CreateLocations)
+				client.sendToClient(handleLocationsCreation((CreateLocations) msg));
 			else if (msg instanceof Delete)
 				handleDelete((Delete) msg);
 			else if (msg instanceof Statboi)
@@ -434,6 +460,8 @@ public class EchoServer extends AbstractServer
 				handlePurchase((CityPurchase) msg);
 			else if (msg instanceof FetchCustomer)
 				client.sendToClient(handleFetchUser((FetchCustomer) msg));
+			else if (msg instanceof CreateCity)
+				client.sendToClient(handleCityCreation((CreateCity) msg));
 			else
 				System.out.println(msg.getClass().toString() + '\n' + msg.toString());
 		}

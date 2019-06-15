@@ -12,74 +12,94 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import objectClasses.City;
+import objectClasses.CityDataVersion;
+import otherClasses.Pair;
 
 /**
- * @author tomer
- * the controller that treat edit city from the user
+ * @author tomer the controller that treat edit city from the user
  */
-public class CityEditController {
+public class CityEditController
+{
 
 	private City city;
 
-    @FXML // fx:id="mainPane"
-    private AnchorPane mainPane; // Value injected by FXMLLoader
+	@FXML // fx:id="mainPane"
+	private AnchorPane mainPane; // Value injected by FXMLLoader
 
-    @FXML // fx:id="Name"
-    private JFXTextField Name; // Value injected by FXMLLoader
+	@FXML // fx:id="Name"
+	private JFXTextField Name; // Value injected by FXMLLoader
 
-    @FXML // fx:id="InfoBox"
-    private TextArea InfoBox; // Value injected by FXMLLoader
+	@FXML // fx:id="InfoBox"
+	private TextArea InfoBox; // Value injected by FXMLLoader
 
-    @FXML // fx:id="ApplyChanges"
-    private JFXButton ApplyChanges; // Value injected by FXMLLoader
+	@FXML // fx:id="ApplyChanges"
+	private JFXButton ApplyChanges; // Value injected by FXMLLoader
 
-    @FXML // fx:id="Back"
-    private JFXButton Back; // Value injected by FXMLLoader
-    
-    /**
-     * initialize the variables
-     */
-    @FXML
-    public void initialize() {
-    	
-    	if (Connector.isEdit)
-    	{
-    		city = Connector.selectedCity;
-    		Name.setText(city.getCityName());
-    		InfoBox.setText(city.getCityDescription());
-    	}
-    	else
-    		city = new City(null, null); // TODO Sigal
-    }
-    
+	@FXML // fx:id="Back"
+	private JFXButton Back; // Value injected by FXMLLoader
 
-    /**
-     * apply edit to city as user click
-     * @param event user click on edit city
-     */
-    @FXML
-    void apply(ActionEvent event) {
-    	Connector.selectedCity.setCityName(Name.getText());
-    	Connector.selectedCity.setCityDescription(InfoBox.getText());
-    	try
+	/**
+	 * initialize the variables
+	 */
+	@FXML
+	public void initialize()
+	{
+
+		if (Connector.isEdit)
 		{
-			Connector.client.update(Connector.selectedCity);
+			city = Connector.selectedCity;
+			Name.setText(city.getCityName());
+			InfoBox.setText(city.getCityDescription());
 		}
-		catch (IOException e)
+	}
+
+	/**
+	 * apply edit to city as user click
+	 * 
+	 * @param event user click on edit city
+	 */
+	@FXML
+	void apply(ActionEvent event)
+	{
+		if (Connector.isEdit)
 		{
-			e.printStackTrace();
+			Connector.selectedCity.setCityName(Name.getText());
+			Connector.selectedCity.setCityDescription(InfoBox.getText());
+			try
+			{
+				Connector.client.update(Connector.selectedCity);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+			mainPane.getScene().getWindow().hide();
 		}
-    	mainPane.getScene().getWindow().hide();
-    }
+		else
+		{
+			double priceOneTime = 0, pricePeriod = 0; // TODO kohavi give prices
+			try
+			{
+				Pair<City, CityDataVersion> newCity = Connector.client.createCity(Name.getText(), InfoBox.getText(), priceOneTime,
+						pricePeriod);
+				// TODO kohavi not sure what to do with them
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
 
-    /**
-     * go to the previous page
-     * @param event user click go previous page
-     */
-    @FXML
-    void goBack(ActionEvent event) {
-    	mainPane.getScene().getWindow().hide();
-    }
+	/**
+	 * go to the previous page
+	 * 
+	 * @param event user click go previous page
+	 */
+	@FXML
+	void goBack(ActionEvent event)
+	{
+		mainPane.getScene().getWindow().hide();
+	}
 
-	
 }

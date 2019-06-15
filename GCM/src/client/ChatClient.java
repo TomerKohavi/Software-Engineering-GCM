@@ -13,9 +13,11 @@ import common.Console;
 import controller.InformationSystem.Ops;
 import io_commands.*;
 import objectClasses.City;
+import objectClasses.CityDataVersion;
 import objectClasses.Customer;
 import objectClasses.User;
 import objectClasses.Employee.Role;
+import objectClasses.Location;
 import objectClasses.MapSight;
 import objectClasses.PlaceOfInterest.PlaceType;
 import objectClasses.PlaceOfInterestSight;
@@ -37,11 +39,7 @@ import application.Connector;
  * This class overrides some of the methods defined in the abstract superclass
  * in order to give more functionality to the client.
  *
- * @author sigal
- */
-/**
- * @author user
- *
+ * @author Yonatan Sigal
  */
 public class ChatClient extends AbstractClient
 {
@@ -78,6 +76,10 @@ public class ChatClient extends AbstractClient
 	CreateRoute croute;
 
 	CreateRouteStops cstops;
+	
+	CreateLocations clocs;
+	
+	CreateCity ccity;
 
 	Semaphore semaphore;
 
@@ -108,7 +110,7 @@ public class ChatClient extends AbstractClient
 	}
 
 	/**
-	 *  active semaphore 
+	 *  Acquire semaphore 
 	 */
 	public void semAcquire()
 	{
@@ -391,7 +393,20 @@ public class ChatClient extends AbstractClient
 		this.semAcquire();
 		return this.fc.user;
 	}
-
+	
+	public ArrayList<Integer> createLocations(ArrayList<Location> locList) throws IOException
+	{
+		sendToServer(new CreateLocations(locList));
+		this.semAcquire();
+		return this.clocs.idList;
+	}
+	
+	public Pair<City, CityDataVersion> createCity(String name, String info, double priceOneTime, double pricePeriod) throws IOException
+	{
+		sendToServer(new CreateCity(name, info, priceOneTime, pricePeriod));
+		this.semAcquire();
+		return new Pair<City, CityDataVersion>(ccity.city, ccity.cdv);
+	}
 	// Instance methods ***********************************************
 	/**
 	 * This method handles all data that comes in from the server.
@@ -421,6 +436,8 @@ public class ChatClient extends AbstractClient
 			this.croute = (CreateRoute) msg;
 		else if (msg instanceof CreateRouteStops)
 			this.cstops = (CreateRouteStops) msg;
+		else if (msg instanceof CreateCity)
+			this.ccity = (CreateCity) msg;
 		else if (msg instanceof Statboi)
 			this.statboi = (Statboi) msg;
 		else if (msg instanceof FetchSights)

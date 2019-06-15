@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -48,7 +49,7 @@ public class MapEditController
 	private Bounds boundsInScene;
 
 	private String readpath;
-	
+
 	private List<Location> locList;
 
 	@FXML // fx:id="mainPane"
@@ -81,6 +82,10 @@ public class MapEditController
 	@FXML // fx:id="RemoveSelectedButton"
 	private JFXButton RemoveSelectedButton; // Value injected by FXMLLoader
 
+	private ArrayList<Location> toDelete;
+	
+	private boolean changedImage;
+
 	/**
 	 * open new fxml page
 	 * 
@@ -107,7 +112,9 @@ public class MapEditController
 	 */
 	public void initialize() throws IOException
 	{
-
+		changedImage = false;
+		toDelete = new ArrayList<Location>();
+		
 		realPOI = new Image(new FileInputStream("Pics\\POI.png"));
 
 		if (Connector.isEdit) // if its edit, load the data
@@ -166,6 +173,7 @@ public class MapEditController
 
 	/**
 	 * Handle add map request.
+	 * 
 	 * @param event user ask for add new image
 	 * @throws FileNotFoundException cannot add the image
 	 */
@@ -178,6 +186,7 @@ public class MapEditController
 		File f = fc.showOpenDialog(null);
 		if (f != null)
 		{
+			changedImage = true; // TODO check if i handled it correctly
 			readpath = f.getAbsolutePath();
 			FileInputStream inputstream = new FileInputStream(readpath);
 			Image image = new Image(inputstream);
@@ -199,6 +208,7 @@ public class MapEditController
 
 	/**
 	 * Apply the changes tracked.
+	 * 
 	 * @param event user click on edit map
 	 */
 	@FXML
@@ -210,17 +220,30 @@ public class MapEditController
 			{
 				map.setName(Name.getText());
 				map.setInfo(InfoBox.getText());
-				String generatedPath = Connector.selectedCity.getCityName() + generateRandomString(15) + ".png";
-				map.setImgURL(generatedPath);
-				Connector.client.sendImage(readpath, generatedPath);
-				Connector.client.update(map);
+				if (changedImage)
+				{
+					String generatedPath = Connector.selectedCity.getCityName() + generateRandomString(15) + ".png";
+					map.setImgURL(generatedPath);
+					Connector.client.sendImage(readpath, generatedPath);
+				}
 			}
 			else
 			{
 				MapSight mapS = Connector.client.createMap(Connector.selectedCity.getId(), Name.getText(),
 						InfoBox.getText(), null, Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId());
 				Connector.searchMapResult.add(mapS);
+				map = mapS.getCopyMap();
 			}
+			ArrayList<Location> toCreate = new ArrayList<Location>();
+			for (POIImage poi : Connector.imageList)
+			{
+				// TODO sigal update the map ID
+				toCreate.add(poi.getLoc());
+			}
+			Connector.client.createLocations(toCreate);
+			Connector.client.update(map);
+			// TODO sigal create removal list for route edit
+			// TODO NOT FINISHED
 		}
 		catch (IOException e)
 		{
@@ -236,7 +259,9 @@ public class MapEditController
 	}
 
 	/**
-	 * Handle add POI location event. We will try to define a new location on the location the user clicked on.
+	 * Handle add POI location event. We will try to define a new location on the
+	 * location the user clicked on.
+	 * 
 	 * @param event user click on add new point of interest to the map
 	 * @throws IOException cannot add the new point of interest to the map
 	 */
@@ -246,7 +271,7 @@ public class MapEditController
 		Connector.choosenPOIInLoc = null;
 		openNewPage("ChoosePOIScene.fxml");
 		if (Connector.choosenPOIInLoc != null)// didn't cancel
-		{ 
+		{
 			POIImage poi = Connector.imageList.get(Connector.imageList.size() - 1);
 			poi.setName(Connector.choosenPOIInLoc.getName());
 			double[] cord = new double[2];
@@ -254,8 +279,9 @@ public class MapEditController
 			cord[1] = poi.image.getY() - boundsInScene.getMinY();
 			poi.image.setImage(realPOI);
 			poi.isNew = false;
-//			poi.setLoc(); // TODO Sigal add location
+			poi.setLoc(Location._createLocalLocation(Connector.selectedMap, Connector.choosenPOIInLoc, cord));
 			firstPOIAdded = true;
+			Connector.imageList.add(poi);
 		}
 	}
 
@@ -269,8 +295,19 @@ public class MapEditController
 	{
 		for (POIImage img : Connector.removablePOIList)
 		{
-//			img.getLoc() // TODO Sigal Remove location
 			mainPane.getChildren().remove(img.image);
+			try
+			{
+				if (img.getLoc().getId() != -1)
+				{
+					System.out.println(img.getLoc().getId());
+					toDelete.add(img.getLoc());
+				}
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
 			Connector.imageList.remove(img);
 		}
 		Connector.removablePOIList.clear();

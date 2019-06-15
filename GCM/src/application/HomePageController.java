@@ -921,7 +921,8 @@ public class HomePageController
 		{
 			if (Connector.listType.equals("City")) {
 				Connector.client.addStat(Connector.selectedCity.getId(), 0);
-				Connector.client.deleteObject(Connector.searchCityResult.remove(index)); // TODO CHECK creation
+				Connector.client.deleteObject(Connector.searchCityResult.remove(index)); // TODO CHECK deletion
+				// TODO Kohavi+Ronen pretty sure deletion of a City is only for CEO or at least manager
 			}
 			else if (Connector.listType.equals("Map"))
 				Connector.client.deleteObject(Connector.searchMapResult.remove(index));
@@ -1023,15 +1024,20 @@ public class HomePageController
 		// publish the unpublished version
 		if (PublishButton.getText().equals("Publish Version"))
 		{
-			System.out.println("Published"); // TODO Sigal
-			Connector.selectedCity.setManagerNeedsToPublish(false); // TODO needs to send to database it they don't do it themselves
+			System.out.println("Published");
+			Connector.selectedCity.addPublishedCityDataVersion(Connector.cityData); // TODO make sure this is the correct CDV to publish
+//			Connector.selectedCity.setManagerNeedsToPublish(false); // TODO needs to send to database it they don't do it themselves
+//			// TODO need to ask Ronen if update to false after publish is necessary. TODO UNCOMMENT ABOVE IF Ronen says yes to above
+			Connector.client.update(Connector.selectedCity);
 			Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.VersionPublish);
 			Connector.client.addStat(Connector.selectedCity.getId(), Connector.selectedCity.getCopyPublishedVersion().getNumMapSights());
 			openNewPage("InformCustomersPublishScene.fxml");
 		}
 		else
 		{
-			// TODO Sigal Set to database that the map is ready to be published (.setManagerNeedsToPublish(true))
+			Connector.selectedCity.setManagerNeedsToPublish(true);
+			Connector.client.update(Connector.selectedCity);
+			// TODO Kohavi make sure it's what you meant, seems to0 easy
 		}
 	}
 

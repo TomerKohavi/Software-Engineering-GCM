@@ -103,7 +103,7 @@ public class BuyController {
     	}
     	else
     	{
-    		double price = monthPrice * MonthBox.getValue(); // TODO send price to server
+			double price = monthPrice * MonthBox.getValue(); // TODO send price to server TODO Isn't the subscription enough??? I dont understand
     		Date start = new Date(Calendar.getInstance().getTime().getTime());
     		Date end = new Date(Calendar.getInstance().getTime().getTime());
     		end.setMonth(end.getMonth() + MonthBox.getValue());

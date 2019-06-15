@@ -170,4 +170,9 @@ public class Location implements ClassMustProperties, Serializable
 	{
 		return o instanceof Location && ((Location) o).getId() == this.getId();
 	}
+
+	public void _setId(int id)
+	{
+		this.id = id;
+	}
 }
