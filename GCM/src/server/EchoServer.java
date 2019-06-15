@@ -36,6 +36,7 @@ import objectClasses.PlaceOfInterestSight;
 import objectClasses.Route;
 import objectClasses.RouteSight;
 import objectClasses.RouteStop;
+import objectClasses.Subscription;
 import objectClasses.Map;
 import objectClasses.MapSight;
 import objectClasses.PlaceOfInterest;
@@ -86,7 +87,7 @@ public class EchoServer extends AbstractServer
 	 *
 	 * @param port     The port number to connect on.
 	 * @param serverUI The interface type variable.
-	 * @throws IOException can be thrown due to session opening 
+	 * @throws IOException can be thrown due to session opening
 	 */
 	public EchoServer(int port, ChatIF serverUI) throws IOException
 	{
@@ -203,6 +204,14 @@ public class EchoServer extends AbstractServer
 		else
 			Database.saveEmployee((Employee) user);
 	}
+	
+	/**
+	 * @param  r the resubscribe inputs
+	 */
+	private void handleResubscribe(Resub r)
+	{
+		Subscription._Resubscribe(r.subAlmostEnd, r.newFullPrice, r.newPayedPrice);
+	}
 
 	/**
 	 * @param cr the customer request we want to handle
@@ -293,14 +302,15 @@ public class EchoServer extends AbstractServer
 	private CreateRouteStops handleRouteStopsCreation(CreateRouteStops cstops)
 	{
 		cstops.idList = new ArrayList<Integer>();
+		System.out.print("create route stops");
 		for (RouteStop stop : cstops.stopList)
 		{
 			if (stop.getId() == -1)
 				stop._setId(Database.generateIdRouteStop());
 			cstops.idList.add(stop.getId());
-			System.out.println(stop.getId());
 			stop.saveToDatabase();
 		}
+		System.out.println(" ids " + cstops.idList);
 		return cstops;
 	}
 
@@ -354,6 +364,7 @@ public class EchoServer extends AbstractServer
 
 	/**
 	 * handle fetch sights request from the client
+	 * 
 	 * @param fs the fetch sights request from the client
 	 * @return the fetch sights result that return to the client
 	 */
@@ -373,58 +384,66 @@ public class EchoServer extends AbstractServer
 
 	/**
 	 * handle purchase request from the client
+	 * 
 	 * @param cp the city purchase request from the client
 	 */
 	private void handlePurchase(CityPurchase cp)
 	{
+		System.out.println("purchase " + cp.getCityName());
 		cp._setId(Database.generateIdCityPurchase());
 		cp.saveToDatabase();
 	}
 
 	/**
 	 * handle fetch customer request from the client
+	 * 
 	 * @param fc the fetch customer request from the client
 	 * @return the fetch customer result that return to the client
 	 */
 	private FetchCustomer handleFetchUser(FetchCustomer fc)
 	{
+		System.out.println("fetch customer " + fc.id);
 		fc.user = Database.getCustomerById(fc.id);
 		return fc;
 	}
 
 	/**
 	 * handle create location request from the client
+	 * 
 	 * @param clocs the location request
 	 * @return the result of the location request to the client
 	 */
 	private CreateLocations handleLocationsCreation(CreateLocations clocs)
 	{
 		clocs.idList = new ArrayList<Integer>();
+		System.out.println("create locations");
 		for (Location loc : clocs.locList)
 		{
 			if (loc.getId() == -1)
 				loc._setId(Database.generateIdRouteStop());
 			clocs.idList.add(loc.getId());
-			System.out.println(loc.getId());
 			loc.saveToDatabase();
 		}
+		System.out.println(" ids " + clocs.idList);
 		return clocs;
 	}
-	
+
 	/**
 	 * handle create city request from the client
+	 * 
 	 * @param clocs the city request
 	 * @return the result of the city request to the client
 	 */
 	private CreateCity handleCityCreation(CreateCity ccity)
 	{
 		ccity.city = new City(ccity.name, ccity.info);
-		ccity.cdv = new CityDataVersion(ccity.city, ccity.name = " 1.0", ccity.priceOneTime, ccity.pricePeriod);
-		ccity.city.addUnpublishedCityDataVersion(ccity.cdv);
+		CityDataVersion cdv = new CityDataVersion(ccity.city, ccity.name = "1.0", ccity.priceOneTime,
+				ccity.pricePeriod);
+		ccity.city.addUnpublishedCityDataVersion(cdv);
 		ccity.city.saveToDatabase();
 		return ccity;
 	}
-	
+
 	/**
 	 * This method handles any messages received from the client.
 	 *
@@ -446,11 +465,15 @@ public class EchoServer extends AbstractServer
 				ImageTransfer imTr = (ImageTransfer) msg;
 				if (imTr.requested)
 				{
+					System.out.println("image request " + imTr.readpath);
 					imTr.readImageFromFile();
 					client.sendToClient(imTr);
 				}
 				else
+				{
+					System.out.println("image save " + imTr.writepath);
 					imTr.saveImage();
+				}
 			}
 			else if (msg instanceof Search)
 				client.sendToClient(handleSearch((Search) msg));
@@ -486,6 +509,8 @@ public class EchoServer extends AbstractServer
 				client.sendToClient(handleFetchUser((FetchCustomer) msg));
 			else if (msg instanceof CreateCity)
 				client.sendToClient(handleCityCreation((CreateCity) msg));
+			else if(msg instanceof Resub)
+				handleResubscribe((Resub)msg);
 			else
 				System.out.println(msg.getClass().toString() + '\n' + msg.toString());
 		}

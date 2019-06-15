@@ -62,12 +62,15 @@ public class ImageTransfer extends Command
 		ImageIO.write(SrIm.image, "png", new File(this.writepath));
 	}
 	
+	/**
+	 * delete the request
+	 */
 	public void delete()
 	{
 	}
 
 	private SerializableImage SrIm;
-	private String readpath;
-	private String writepath;
+	public String readpath;
+	public String writepath;
 	public boolean requested;
 }

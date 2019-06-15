@@ -26,6 +26,9 @@ public class CreateRoute extends Command
 		this.isFav = isFav;
 	}
 
+	/**
+	 * delete the request
+	 */
 	public void delete()
 	{
 		this.cityId = null;

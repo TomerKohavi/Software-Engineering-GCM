@@ -25,6 +25,9 @@ public class CreateMap extends Command
 		this.cdvId = cdvId;
 	}
 	
+	/**
+	 * delete the request
+	 */
 	public void delete() {
 		this.cityId = null;
 		this.name = null;

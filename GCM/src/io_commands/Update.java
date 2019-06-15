@@ -16,6 +16,9 @@ public class Update extends Command
 		this.toUpdate = toUpdate;
 	}
 	
+	/**
+	 * delete the request
+	 */
 	public void delete() {}
 	
 	public ClassMustProperties toUpdate;

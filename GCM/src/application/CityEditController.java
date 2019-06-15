@@ -80,7 +80,7 @@ public class CityEditController
 			double priceOneTime = CityDataVersion.DEFULT_ONE_TIME_PRICE, pricePeriod = CityDataVersion.DEFULT_SUB_MONTH_PRICE;
 			try
 			{
-				Pair<City, CityDataVersion> newCity = Connector.client.createCity(Name.getText(), InfoBox.getText(), priceOneTime,
+				City newCity = Connector.client.createCity(Name.getText(), InfoBox.getText(), priceOneTime,
 						pricePeriod);
 				Connector.searchCityResult.add(newCity.a);
 			}

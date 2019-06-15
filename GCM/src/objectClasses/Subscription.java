@@ -2,7 +2,9 @@ package objectClasses;
 
 import java.io.Serializable;
 import java.sql.Time;
+import java.util.Calendar;
 
+import application.ReSubscribeController;
 import controller.Database;
 import otherClasses.ClassMustProperties;
 
@@ -112,6 +114,28 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 		super(u.getId(), cityId, purchaseDate, fullPrice, pricePayed);
 		this.expirationDate = expirationDate;
 		this.numMonths = calcNumMonths();
+	}
+	
+	/**
+	 * Resubscribe the subscription with the same contract, different price
+	 * @param sub the subscription that is going to end
+	 * @param fullPrice the full price
+	 * @param payedPrice the price after discount (if there is any)
+	 * @return
+	 */
+	public static boolean _Resubscribe(Subscription sub,int fullPrice,int payedPrice) {
+		if(sub==null)
+			return false;
+		Date today = new Date(Calendar.getInstance().getTime().getTime());
+		Date exDate=new Date(today.getYear(),today.getMonth()+sub.getNumMonths(),today.getDay());
+		Subscription newSub= new Subscription(Database.generateIdCityPurchase(),sub.getUserId(), sub.getCityId(), today,fullPrice, payedPrice,exDate);
+		newSub.saveToDatabase();
+		Date yesturday=new Date(today.getYear(),today.getMonth(),today.getDay()-1);
+		Date purDate=new Date(yesturday.getYear(),yesturday.getMonth()-sub.getNumMonths(),yesturday.getDay());
+		sub.setExpirationDate(yesturday);
+		sub.setPurchaseDate(purDate);
+		sub.saveToDatabase();
+		return true;
 	}
 
 	public void saveToDatabase()

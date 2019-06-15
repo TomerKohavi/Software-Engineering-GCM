@@ -14,6 +14,9 @@ public class Logoff extends Command {
 		this.logoffID = id;
 	}
 
+	/**
+	 * delete the request
+	 */
 	public void delete() {
 		this.logoffID = null;
 	}

@@ -34,7 +34,6 @@ public class CreateCity extends Command
 	}
 	
 	public City city;
-	public CityDataVersion cdv;
 	
 	public String name, info;
 	public Double priceOneTime, pricePeriod;
