@@ -5,6 +5,8 @@
 package application;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.util.ArrayList;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -14,6 +16,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import objectClasses.Customer;
+import objectClasses.Subscription;
 
 /**
  * @author tomer
@@ -22,6 +26,8 @@ import javafx.scene.text.Text;
 public class ReSubscribeController {
 
 	private double monthPrice;
+	
+	private Subscription sub = null;
 	
     @FXML // fx:id="mainPane"
     private AnchorPane mainPane; // Value injected by FXMLLoader
@@ -42,10 +48,19 @@ public class ReSubscribeController {
 	 * initialize variables
      */
     public void initialize() {
+		ArrayList<Subscription> subscriptList = ((Customer) Connector.user).getCopyActiveSubscription();
+		for (Subscription searchedSub : subscriptList)
+		{
+			if (sub.getCityId() == Connector.selectedCity.getId())
+			{
+				sub = searchedSub;
+				break;
+			}
+		}
     	MonthBox.getItems().addAll(1,2,3,4,5,6);
-    	MonthBox.setValue(1);
+    	MonthBox.setValue(sub.numMonths);
     	monthPrice = Connector.selectedCity.getPricePeriodWithDiscount();
-    	SubscriptionPrice.setText(String.format("%.02f", monthPrice) + "$");
+    	SubscriptionPrice.setText(String.format("%.02f", monthPrice * sub.numMonths) + "$");
     }
     
     /**
@@ -56,8 +71,8 @@ public class ReSubscribeController {
     @FXML
     void ReSubscribe(ActionEvent event) throws IOException {
     	double price = monthPrice * MonthBox.getValue();
-    	// TODO Sigal add resubscription
-    	Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.Subscription);
+    	Connector.client.resubscribe(sub, price, price);
+    	Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.SubRenewal);
     	Connector.user = Connector.client.fetchUser(Connector.user.getId());
     	mainPane.getScene().getWindow().hide();
     }

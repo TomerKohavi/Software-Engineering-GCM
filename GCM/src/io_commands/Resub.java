@@ -10,8 +10,8 @@ import objectClasses.Subscription;
 public class Resub 
 {
 	public Subscription subAlmostEnd;
-	public int newFullPrice;
-	public int newPayedPrice;
+	public double newFullPrice;
+	public double newPayedPrice;
 	
 	/**
 	 * Constructor with the subscription that is going to end and the new prices
@@ -19,7 +19,7 @@ public class Resub
 	 * @param newFullPrice the new full price
 	 * @param newPayedPrice the new payed price 
 	 */
-	public Resub(Subscription subAlmostEnd,int newFullPrice,int newPayedPrice) {
+	public Resub(Subscription subAlmostEnd,double newFullPrice,double newPayedPrice) {
 		this.subAlmostEnd=subAlmostEnd;
 		this.newFullPrice=newFullPrice;
 		this.newPayedPrice=newPayedPrice;

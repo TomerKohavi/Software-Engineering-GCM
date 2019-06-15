@@ -338,7 +338,7 @@ public class ChatClient extends AbstractClient
 	 * @param newPayedPrice the new payed price
 	 * @throws IOException due to IO communication 
 	 */
-	public void resubscribe(Subscription subAlmostEnd,int newFullPrice,int newPayedPrice) throws IOException {
+	public void resubscribe(Subscription subAlmostEnd, double newFullPrice, double newPayedPrice) throws IOException {
 		sendToServer(new Resub(subAlmostEnd, newFullPrice, newPayedPrice));
 	}
 
