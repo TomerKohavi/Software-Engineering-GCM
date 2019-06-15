@@ -279,6 +279,15 @@ public class HomePageController
 	}
 
 	/**
+	 *  Open a window that informs the user that the connection to the server has been lost, and an option to reconnect
+	 * @throws IOException 
+	 */
+	void openLostConnectionWindow() throws IOException // TODO Sigal call this function when connection is lost
+	{
+		openNewPage("LostConnectionScene.fxml");
+	}
+	
+	/**
 	 * Opens new page.
 	 * @param FXMLpage new fxml page
 	 * @throws IOException cannot open the file
