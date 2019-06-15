@@ -259,17 +259,18 @@ public class MapEditController
 				{
 					int numOfCity = Connector.searchCityResult.size();
 					openNewPage("CityEditScene.fxml");
-					if (numOfCity >= Connector.searchCityResult.size()) // didn't really add new city
+					if (!(numOfCity < Connector.searchCityResult.size())) // didn't really add new city
 						return;
 					my_city = Connector.searchCityResult.get(Connector.searchCityResult.size() - 1);
 				}
 				else
 					my_city = Connector.selectedCity;
-				String generatedPath = Connector.selectedCity.getCityName() + " " + generateRandomString(15) + ".png";
+				String generatedPath = my_city.getCityName() + " " + generateRandomString(15) + ".png";
 			
 				MapSight mapS = Connector.client.createMap(my_city.getId(), Name.getText(),
 						InfoBox.getText(), generatedPath, my_city.getCopyUnpublishedVersions().get(0).getId());
-				Connector.searchMapResult.add(mapS);
+				if (my_city.getId() == Connector.selectedCity.getId())
+					Connector.searchMapResult.add(mapS);
 				map = mapS.getCopyMap();
 
 				map.setImgURL(generatedPath);
