@@ -23,7 +23,7 @@ public final class InformationSystem
 	 */
 	public enum Ops
 	{
-		OneTimePurcahse, Subscription, SubRenewal, Visit, SubDownload, VersionPublish
+		OneTimePurcahse, Subscription, SubRenewal, Visit, SubDownload, VersionPublish, NumMaps
 	}
 	
 	/**
