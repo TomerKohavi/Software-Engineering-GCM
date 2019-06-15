@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
 import javafx.embed.swing.SwingFXUtils;
@@ -30,6 +31,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
+import objectClasses.City;
 import objectClasses.Location;
 import objectClasses.Map;
 import objectClasses.MapSight;
@@ -63,6 +65,9 @@ public class MapEditController
 
 	@FXML // fx:id="ApplyChanges"
 	private JFXButton ApplyChanges; // Value injected by FXMLLoader
+	
+    @FXML // fx:id="ChooseCityBox"
+    private JFXComboBox<String> ChooseCityBox; // Value injected by FXMLLoader
 
 	@FXML // fx:id="Back"
 	private JFXButton Back; // Value injected by FXMLLoader
@@ -112,6 +117,15 @@ public class MapEditController
 	 */
 	public void initialize() throws IOException
 	{
+		ChooseCityBox.getItems().addAll(Connector.getCitiesNames(Connector.searchCityResult));
+		ChooseCityBox.getItems().add("New City");
+		ChooseCityBox.setValue(Connector.selectedCity.getCityName());
+		
+		if (Connector.isEdit)
+			ChooseCityBox.setVisible(false);
+		else
+			ChooseCityBox.setVisible(true);
+		
 		changedImage = false;
 		toDelete = new ArrayList<Location>();
 
@@ -131,6 +145,7 @@ public class MapEditController
 		if (Connector.isEdit)
 		{
 			locList = map.getCopyLocations();
+			System.out.println(locList.size());
 			for (Location loc : locList)
 			{
 				POIImage poiImage = new POIImage(false, false, loc.getCopyPlaceOfInterest().getName(), loc);
@@ -239,10 +254,21 @@ public class MapEditController
 			}
 			else
 			{
-				String generatedPath = "Pics\\" + Connector.selectedCity.getCityName() + generateRandomString(15) + ".png";
+				City my_city = null;
+				if (ChooseCityBox.getValue().equals("New City"))
+				{
+					int numOfCity = Connector.searchCityResult.size();
+					openNewPage("CityEditScene");
+					if (numOfCity >= Connector.searchCityResult.size()) // didn't really add new city
+						return;
+					my_city = Connector.searchCityResult.get(Connector.searchCityResult.size() - 1);
+				}
+				else
+					my_city = Connector.selectedCity;
+				String generatedPath = "Pics\\" + my_city.getCityName() + generateRandomString(15) + ".png";
 			
-				MapSight mapS = Connector.client.createMap(Connector.selectedCity.getId(), Name.getText(),
-						InfoBox.getText(), generatedPath, Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId());
+				MapSight mapS = Connector.client.createMap(my_city.getId(), Name.getText(),
+						InfoBox.getText(), generatedPath, my_city.getCopyUnpublishedVersions().get(0).getId());
 				Connector.searchMapResult.add(mapS);
 				map = mapS.getCopyMap();
 
