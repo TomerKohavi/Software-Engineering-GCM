@@ -36,6 +36,7 @@ import objectClasses.PlaceOfInterestSight;
 import objectClasses.Route;
 import objectClasses.RouteSight;
 import objectClasses.RouteStop;
+import objectClasses.Subscription;
 import objectClasses.Map;
 import objectClasses.MapSight;
 import objectClasses.PlaceOfInterest;
@@ -202,6 +203,14 @@ public class EchoServer extends AbstractServer
 			Database.saveCustomer((Customer) user);
 		else
 			Database.saveEmployee((Employee) user);
+	}
+	
+	/**
+	 * @param  r the resubscribe inputs
+	 */
+	private void handleResubscribe(Resub r)
+	{
+		Subscription._Resubscribe(r.subAlmostEnd, r.newFullPrice, r.newPayedPrice);
 	}
 
 	/**
@@ -486,6 +495,8 @@ public class EchoServer extends AbstractServer
 				client.sendToClient(handleFetchUser((FetchCustomer) msg));
 			else if (msg instanceof CreateCity)
 				client.sendToClient(handleCityCreation((CreateCity) msg));
+			else if(msg instanceof Resub)
+				handleResubscribe((Resub)msg);
 			else
 				System.out.println(msg.getClass().toString() + '\n' + msg.toString());
 		}
