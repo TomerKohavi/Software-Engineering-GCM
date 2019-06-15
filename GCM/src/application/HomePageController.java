@@ -747,6 +747,7 @@ public class HomePageController
 	}
 
 	/**
+	 * Watch the report from the first date to the second date
 	 * 
 	 * @param event click on watch
 	 */
@@ -754,7 +755,7 @@ public class HomePageController
 	void watch(ActionEvent event)
 	{
 		if (FirstDate.getValue() == null || LastDate.getValue() == null
-				|| 0 <= FirstDate.getValue().compareTo(LastDate.getValue())) // date not valid
+				|| 0 < FirstDate.getValue().compareTo(LastDate.getValue())) // date not valid
 		{
 			DateNotValid.setVisible(true);
 		}
