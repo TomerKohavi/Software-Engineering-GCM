@@ -2,6 +2,7 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -92,8 +93,9 @@ public class CitySearchTestTable {
 			 * @param info the point of interest info
 			 * @param publish the point of interest publish
 			 * @return point of interest that created and added
+			 * @throws SQLException if the access to database failed
 			 */
-			private static PlaceOfInterest createAndAddPOI(City c,String name,String info,boolean publish)
+			private static PlaceOfInterest createAndAddPOI(City c,String name,String info,boolean publish) throws SQLException
             {
 		    	Random rand = new Random();
         		int randomNum=rand.nextInt(100);
@@ -127,9 +129,10 @@ public class CitySearchTestTable {
           
             /**
              * Init database connection
+             * @throws SQLException if the access to database failed
              */
             @BeforeClass
-            public static void initDatabaseConnection() {
+            public static void initDatabaseConnection() throws SQLException {
             	//open connection
             	Database.createConnection();
             	//create cities
@@ -155,9 +158,10 @@ public class CitySearchTestTable {
             
             /**
              * Test the search
+             * @throws SQLException if the access to database failed
              */
             @Test
-        	public void testSearchByParms() {
+        	public void testSearchByParms() throws SQLException {
         		//search according to City name
         		ArrayList<City> searchResult=SearchCatalog.SearchCity(cityName, cityDescription, placeName, placeDescription, useUnpublished);
         		assertEquals(expectedC1,searchResult.contains(c1));
@@ -169,9 +173,10 @@ public class CitySearchTestTable {
            
             /**
              * Close database connection
+             * @throws SQLException if the access to database failed
              */
             @AfterClass 
-            public static void closeDatabaseConnection() {
+            public static void closeDatabaseConnection() throws SQLException {
             	//delete cities
             	c1.deleteFromDatabase();
         		c2.deleteFromDatabase();

@@ -2,6 +2,7 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -40,8 +41,9 @@ public class CitySearchTestSingle
 	 * @param info the city info
 	 * @param publish if the city is published
 	 * @return the place of interest that add to the city
+	 * @throws SQLException if the access to database failed
 	 */
-	private static PlaceOfInterest createAndAddPOI(City c, String name, String info, boolean publish)
+	private static PlaceOfInterest createAndAddPOI(City c, String name, String info, boolean publish) throws SQLException
 	{
 		Random rand = new Random();
 		int randomNum = rand.nextInt(100);
@@ -75,9 +77,10 @@ public class CitySearchTestSingle
 
 	/**
 	 * init the data base
+	 * @throws SQLException if the access to database failed
 	 */
 	@BeforeClass
-	public static void initDatabaseConnection()
+	public static void initDatabaseConnection() throws SQLException
 	{
 		// open connection
 		Database.createConnection();
@@ -102,9 +105,10 @@ public class CitySearchTestSingle
 
 	/**
 	 * Test if the search by city is working good
+	 * @throws SQLException if the access to database failed
 	 */
 	@Test
-	public void testSearchByCity()
+	public void testSearchByCity() throws SQLException
 	{
 		// search according to City name
 		ArrayList<City> searchResult1 = SearchCatalog.SearchCity(c1.getCityName(), null, null, null, true);
@@ -129,9 +133,10 @@ public class CitySearchTestSingle
 
 	/**
 	 * Test if the search by point of interest is working good
+	 * @throws SQLException if the access to database failed
 	 */
 	@Test
-	public void testSearchByPOI()
+	public void testSearchByPOI() throws SQLException
 	{
 		// search according to Place name
 		ArrayList<City> searchResult1 = SearchCatalog.SearchCity(null, null, "Tomer", null, true);
@@ -158,9 +163,10 @@ public class CitySearchTestSingle
 
 	/**
 	 * Test if the search by point of interest & city is working good
+	 * @throws SQLException if the access to database failed
 	 */
 	@Test
-	public void testSearchByBoth()
+	public void testSearchByBoth() throws SQLException
 	{
 		// search according to Place name
 		ArrayList<City> searchResult1 = SearchCatalog.SearchCity(c1.getCityName(), null, "Tomer", null, true);
@@ -183,9 +189,10 @@ public class CitySearchTestSingle
 
 	/**
 	 * Close the connection to the database
+	 * @throws SQLException if the access to database failed
 	 */
 	@AfterClass
-	public static void closeDatabaseConnection()
+	public static void closeDatabaseConnection() throws SQLException
 	{
 		// delete cities
 		c1.deleteFromDatabase();
