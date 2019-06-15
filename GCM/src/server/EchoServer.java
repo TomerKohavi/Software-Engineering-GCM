@@ -276,10 +276,10 @@ public class EchoServer extends AbstractServer
 	 */
 	private CreateRoute handleRouteCreation(CreateRoute croute)
 	{
-		Route route = new Route(croute.cityId, croute.name, croute.info);
+		Route route = new Route(croute.cityId, croute.name, croute.info,croute.isFav);
 		route.saveToDatabase();
 
-		RouteSight routeS = new RouteSight(croute.cdvId, route, croute.isFav);
+		RouteSight routeS = new RouteSight(croute.cdvId, route);
 		routeS.saveToDatabase();
 
 		croute.routeS = routeS;

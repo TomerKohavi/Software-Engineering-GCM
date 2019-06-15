@@ -127,7 +127,7 @@ public class Connector {
 	public static ArrayList<String> getRoutesNames(ArrayList<RouteSight> routeList) {
 		ArrayList<String> nameList = new ArrayList<String>();
 		for (RouteSight route : routeList) {
-			if (route.getIsFavorite())
+			if (route.getCopyRoute().getIsFavorite())
 				nameList.add("★" + "Route " + route.getCopyRoute().getId());
 			else
 				nameList.add("Route " + route.getCopyRoute().getId());
