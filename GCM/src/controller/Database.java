@@ -1174,7 +1174,7 @@ public class Database {
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityId());
 				su.setString(2, p.getVersionName());
-				su.setInt(5, p.getId());
+				su.setInt(3, p.getId());
 				su.executeUpdate();
 				return true;
 			} else {
