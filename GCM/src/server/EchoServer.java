@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 // license found at www.lloseng.com 
 
 import java.io.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.imageio.*;
@@ -88,8 +89,10 @@ public class EchoServer extends AbstractServer
 	 * @param port     The port number to connect on.
 	 * @param serverUI The interface type variable.
 	 * @throws IOException can be thrown due to session opening
+	 * @throws SQLException if the access to database failed
+	 * @throws ClassNotFoundException cannot find the class
 	 */
-	public EchoServer(int port, ChatIF serverUI) throws IOException
+	public EchoServer(int port, ChatIF serverUI) throws IOException, ClassNotFoundException, SQLException
 	{
 		super(port);
 		this.serverUI = serverUI;
@@ -100,8 +103,9 @@ public class EchoServer extends AbstractServer
 	/**
 	 * @param login login request
 	 * @return login result
+	 * @throws SQLException if the access to database failed
 	 */
-	private Login handleLogin(Login login)
+	private Login handleLogin(Login login) throws SQLException
 	{
 		System.out.println("login " + login.name + " ");
 		ArrayList<Integer> list;
@@ -150,8 +154,9 @@ public class EchoServer extends AbstractServer
 	/**
 	 * @param reg the register request
 	 * @return the register result
+	 * @throws SQLException if the access to database failed
 	 */
-	private Register handleRegister(Register reg)
+	private Register handleRegister(Register reg) throws SQLException
 	{
 		System.out.println("register " + reg.username);
 		if (Database.searchCustomer(reg.username, null).isEmpty()
@@ -195,8 +200,9 @@ public class EchoServer extends AbstractServer
 
 	/**
 	 * @param user the user request we want to handle
+	 * @throws SQLException if the access to database failed
 	 */
-	private void handleUpdateUser(User user)
+	private void handleUpdateUser(User user) throws SQLException
 	{
 		System.out.print("update " + user.getUserName());
 		if (user instanceof Customer)
@@ -216,8 +222,9 @@ public class EchoServer extends AbstractServer
 	/**
 	 * @param cr the customer request we want to handle
 	 * @return the result of the request
+	 * @throws SQLException if the access to database failed
 	 */
-	private CustomersRequest handleUsersRequest(CustomersRequest cr)
+	private CustomersRequest handleUsersRequest(CustomersRequest cr) throws SQLException
 	{
 		System.out.println("customers list request");
 		cr.custList = Database.getAllCustomers();
@@ -227,8 +234,9 @@ public class EchoServer extends AbstractServer
 	/**
 	 * @param cityReq the get all city request
 	 * @return the result of the request
+	 * @throws SQLException if the access to database failed
 	 */
-	private AllCitiesRequest handleCityRequest(AllCitiesRequest cityReq)
+	private AllCitiesRequest handleCityRequest(AllCitiesRequest cityReq) throws SQLException
 	{
 		System.out.println("cities list request");
 		cityReq.cityList = Database.getAllCitiesNameId();
@@ -298,8 +306,9 @@ public class EchoServer extends AbstractServer
 	/**
 	 * @param cstops route stop creation that come from the client
 	 * @return create route stop object the sent to the client
+	 * @throws SQLException if the access to database failed
 	 */
-	private CreateRouteStops handleRouteStopsCreation(CreateRouteStops cstops)
+	private CreateRouteStops handleRouteStopsCreation(CreateRouteStops cstops) throws SQLException
 	{
 		cstops.idList = new ArrayList<Integer>();
 		System.out.print("create route stops");
@@ -384,8 +393,9 @@ public class EchoServer extends AbstractServer
 	 * handle purchase request from the client
 	 * 
 	 * @param cp the city purchase request from the client
+	 * @throws SQLException if the access to database failed
 	 */
-	private void handlePurchase(CityPurchase cp)
+	private void handlePurchase(CityPurchase cp) throws SQLException
 	{
 		System.out.println("purchase " + cp.getCityName());
 		cp._setId(Database.generateIdCityPurchase());
@@ -397,8 +407,9 @@ public class EchoServer extends AbstractServer
 	 * 
 	 * @param fc the fetch customer request from the client
 	 * @return the fetch customer result that return to the client
+	 * @throws SQLException if the access to database failed
 	 */
-	private FetchCustomer handleFetchUser(FetchCustomer fc)
+	private FetchCustomer handleFetchUser(FetchCustomer fc) throws SQLException
 	{
 		System.out.println("fetch customer " + fc.id);
 		fc.user = Database.getCustomerById(fc.id);
@@ -410,8 +421,9 @@ public class EchoServer extends AbstractServer
 	 * 
 	 * @param clocs the location request
 	 * @return the result of the location request to the client
+	 * @throws SQLException if the access to database failed
 	 */
-	private CreateLocations handleLocationsCreation(CreateLocations clocs)
+	private CreateLocations handleLocationsCreation(CreateLocations clocs) throws SQLException
 	{
 		clocs.idList = new ArrayList<Integer>();
 		System.out.println("create locations");
@@ -638,6 +650,8 @@ public class EchoServer extends AbstractServer
 		}
 		catch (IOException e)
 		{
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		System.exit(0);
 	}
