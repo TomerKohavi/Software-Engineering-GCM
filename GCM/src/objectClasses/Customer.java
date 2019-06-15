@@ -84,9 +84,10 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 	 * @param creditCardNum the customer credit card number
 	 * @param creditCardExpires the customer credit card expires time
 	 * @param cvc the customer credit card cvc
+	 * @throws SQLException if the access to database failed
 	 */
 	public Customer(String userName, String password, String email, String firstName, String lastName,
-			String phoneNumber,String creditCardNum,String creditCardExpires,String cvc) {
+			String phoneNumber,String creditCardNum,String creditCardExpires,String cvc) throws SQLException {
 		super(userName, password, email, firstName, lastName, phoneNumber);
 		this.creditCardNum=creditCardNum;
 		this.creditCardExpires=creditCardExpires;

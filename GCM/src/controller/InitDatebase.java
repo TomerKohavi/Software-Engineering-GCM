@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -74,8 +75,9 @@ public class InitDatebase {
 
 	/**
 	 * Initializing Haifa city in database
+	 * @throws SQLException if the access to database failed
 	 */
-	private static void haifa() {
+	private static void haifa() throws SQLException {
 		City c1 = new City("Haifa", "The third largest city in Israel. As of 2016, the city is a major seaport "
 				+ "located on Israel's Mediterranean coastline in the Bay of Haifa covering 63.7 square kilometres.", 20, 103);
 		PlaceOfInterest p0 = new PlaceOfInterest(c1.getId(), "University of Haifa", PlaceOfInterest.PlaceType.PUBLIC,
@@ -169,8 +171,9 @@ public class InitDatebase {
 	
 	/**
 	 * Initializing Tel Aviv city in database
+	 * @throws SQLException if the access to database failed
 	 */
-	private static void telAviv() {
+	private static void telAviv() throws SQLException {
 
 		City c1 = new City("Tel aviv",
 				"Tel Aviv-Yafo, is the second most populous city in Israel—after Jerusalem—and the most populous city in the conurbation of Gush Dan, Israel's largest metropolitan area. Located on the country's Mediterranean "
@@ -261,8 +264,9 @@ public class InitDatebase {
 	
 	/**
 	 * Initializing Jerusalem city in database
+	 * @throws SQLException if the access to database failed
 	 */
-	private static void jerusalem() {
+	private static void jerusalem() throws SQLException {
 		City city = new City("Jerusalem", 
 				"Jerusalem is a city in the Middle East, located on a plateau in the Judaean Mountains between the Mediterranean and the Dead Sea. "
 						+ "It is one of the oldest cities in the world, and is considered holy to the three major Abrahamic religions—Judaism, Christianity, and Islam.",40, 182);
@@ -409,8 +413,9 @@ public class InitDatebase {
 
 	/**
 	 * Initializing Rome city in database
+	 * @throws SQLException if the access to database failed
 	 */
-	private static void rome() {
+	private static void rome() throws SQLException {
 		City city = new City("Rome",
 				"Rome (Latin and Italian: Roma (About this soundlisten)) is the capital city and a special comune of Italy "
 						+ "(named Comune di Roma Capitale). Rome also serves as the capital of the Lazio region. With 2,872,800 residents in 1,285 km "
@@ -579,8 +584,9 @@ public class InitDatebase {
 
 	/**
 	 * Initializing Lior and Yosi users in database
+	 * @throws SQLException if the access to database failed
 	 */
-	private static void liorAndYosi() {
+	private static void liorAndYosi() throws SQLException {
 		Employee e = new Employee("Lior", "Lior_strong1!", "lior@gmail.com", "lior", "wiessman", "0523322726",
 				Employee.Role.CEO);
 		e.saveToDatabase();
@@ -614,8 +620,9 @@ public class InitDatebase {
 	
 	/**
 	 * Initializing Dan and adiel users in database
+	 * @throws SQLException if the access to database failed
 	 */
-	private static void danAndAdiel() {
+	private static void danAndAdiel() throws SQLException {
 		Employee e = new Employee("adiel", "adiel1", "statman.adiel@gmail.com", "adiel", "statman", "0525952726",
 				Employee.Role.REGULAR);
 		e.saveToDatabase();
@@ -651,8 +658,9 @@ public class InitDatebase {
 
 	/**
 	 * Initializing Ben and Gadi users in database
+	 * @throws SQLException if the access to database failed
 	 */
-	private static void benAndGadi() {
+	private static void benAndGadi() throws SQLException {
 		Employee e = new Employee("ben", "benbon&ALAA", "bengordoncshaifa@gmail.com", "ben", "musa", "0508322726",
 				Employee.Role.MANAGER);
 		e.saveToDatabase();
@@ -676,8 +684,9 @@ public class InitDatebase {
 
 	/**
 	 * Initializing Sigal and Tomer employees in database
+	 * @throws SQLException if the access to database failed
 	 */
-	private static void sigalAndTomer() {
+	private static void sigalAndTomer() throws SQLException {
 		Employee e = new Employee("sigal", "sigalIsNoob!", "yonatan.sigal11@gmail.com", "yonatan", "sigal",
 				"0508322126", Employee.Role.REGULAR);
 		e.saveToDatabase();
@@ -702,8 +711,9 @@ public class InitDatebase {
 
 	/**
 	 * Initializing A and B employees in database
+	 * @throws SQLException if the access to database failed
 	 */
-	private static void aAndB() {
+	private static void aAndB() throws SQLException {
 		Employee e = new Employee("a", "a", "a@gmail.com", "aa", "aa", "0500000000", Employee.Role.CEO);
 		e.saveToDatabase();
 		Customer cust = new Customer("q", "q", "q@gmail.com", "q", "q q", "0523022100", "5495681338665894", "07/24",
@@ -745,8 +755,9 @@ public class InitDatebase {
 	 * Return the number of maps in the city
 	 * @param cityId the city id
 	 * @return the number of maps
+	 * @throws SQLException if the access to database failed
 	 */
-	private static int getNumMapsOfCitiy(int cityId) {
+	private static int getNumMapsOfCitiy(int cityId) throws SQLException {
 		City c=Database.getCityById(cityId);
 		if(c==null) return 0;
 		CityDataVersion cdv=c.getCopyPublishedVersion();
@@ -756,8 +767,9 @@ public class InitDatebase {
 	
 	/**
 	 * Initializing some of the statistics in database
+	 * @throws SQLException if the access to database failed
 	 */
-	private static void initStatistics() {		
+	private static void initStatistics() throws SQLException {		
 		//city 1
 		InformationSystem.setNumMaps(1, 0 ,LocalDate.of(2019, 1, 10));
 		InformationSystem.newVersionWasPublished(1, LocalDate.of(2019, 1, 25));

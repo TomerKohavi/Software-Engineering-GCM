@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import objectClasses.Statistic;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Calendar;
 import otherClasses.Pair;
@@ -40,8 +41,9 @@ public final class InformationSystem
 	 * @param cityId the city id
 	 * @param d the LocalDate of the statistic
 	 * @return the statistic that was found
+	 * @throws SQLException if the access to database failed
 	 */
-	public static Statistic getStatistic(int cityId, LocalDate d)
+	public static Statistic getStatistic(int cityId, LocalDate d) throws SQLException
 	{
 		ArrayList<Integer> ids = Database.searchStatistic((Integer) cityId, d, null, null, null,null);
 		if (ids.size() == 0)
@@ -57,8 +59,9 @@ public final class InformationSystem
 	 * @param from LocalDate range from
 	 * @param end LocalDate range to
 	 * @return the statistic "sum" of all the statistics in range
+	 * @throws SQLException if the access to database failed
 	 */
-	public static Statistic getRangeSumStatistics(Integer cityId, LocalDate from, LocalDate end)
+	public static Statistic getRangeSumStatistics(Integer cityId, LocalDate from, LocalDate end) throws SQLException
 	{
 		ArrayList<Integer> ids = Database.searchStatistic((Integer) cityId, null, from, end, null,null);
 		Statistic sum = Statistic.createBlankStatistic();
@@ -93,8 +96,9 @@ public final class InformationSystem
 	 * @param from LocalDate range from
 	 * @param end LocalDate range to
 	 * @return list of the num maps and the LocalDate range it was relevant
+	 * @throws SQLException if the access to database failed
 	 */
-	public static ArrayList<Pair<Pair<LocalDate, LocalDate>, Integer>> getRangeNumMaps(Integer cityId, LocalDate from, LocalDate end)
+	public static ArrayList<Pair<Pair<LocalDate, LocalDate>, Integer>> getRangeNumMaps(Integer cityId, LocalDate from, LocalDate end) throws SQLException
 	{
 		ArrayList<Integer> ids = Database.searchStatistic((Integer) cityId, null, null, end, null,true);
 		ArrayList<Pair<Pair<LocalDate, LocalDate>, Integer>> ans = new ArrayList<Pair<Pair<LocalDate, LocalDate>, Integer>>();
@@ -151,8 +155,9 @@ public final class InformationSystem
 	/**
 	 * Adds an one time purchase to the statistic of the city id and today date
 	 * @param cityId the city id
+	 * @throws SQLException if the access to database failed
 	 */
-	public static void addOneTimePurchase(int cityId)
+	public static void addOneTimePurchase(int cityId) throws SQLException
 	{
 		LocalDate today=LocalDate.now();
 		addOneTimePurchase(cityId, today);
@@ -162,8 +167,9 @@ public final class InformationSystem
 	 * Adds an one time purchase to the statistic of the city id and the date
 	 * @param cityId the city id 
 	 * @param d the date
+	 * @throws SQLException if the access to database failed
 	 */
-	public static void addOneTimePurchase(int cityId, LocalDate d)
+	public static void addOneTimePurchase(int cityId, LocalDate d) throws SQLException
 	{
 		Statistic s = getStatistic(cityId, d);
 		if (s == null)
@@ -178,8 +184,9 @@ public final class InformationSystem
 	 * Set the n number maps of the statistic with city id and today date
 	 * @param cityId the city id
 	 * @param numMaps the number of maps
+	 * @throws SQLException if the access to database failed
 	 */
-	public static void setNumMaps(int cityId, int numMaps)
+	public static void setNumMaps(int cityId, int numMaps) throws SQLException
 	{
 		setNumMaps(cityId, numMaps, LocalDate.now());
 	}
@@ -189,8 +196,9 @@ public final class InformationSystem
 	 * @param cityId the city id
 	 * @param d the date
 	 * @param numMaps the number of maps
+	 * @throws SQLException if the access to database failed
 	 */
-	public static void setNumMaps(int cityId, int numMaps, LocalDate d)
+	public static void setNumMaps(int cityId, int numMaps, LocalDate d) throws SQLException
 	{
 		Statistic s = getStatistic(cityId, d);
 		if (s == null)
@@ -202,8 +210,9 @@ public final class InformationSystem
 	/**
 	 * Adds a visit to the statistic of the city id and today date
 	 * @param cityId the city id
+	 * @throws SQLException if the access to database failed
 	 */
-	public static void addVisit(int cityId)
+	public static void addVisit(int cityId) throws SQLException
 	{
 		addVisit(cityId, LocalDate.now());
 	}
@@ -212,8 +221,9 @@ public final class InformationSystem
 	 * Adds a visit to the statistic of the city id and the date
 	 * @param cityId the city id 
 	 * @param d the date
+	 * @throws SQLException if the access to database failed
 	 */
-	public static void addVisit(int cityId, LocalDate d)
+	public static void addVisit(int cityId, LocalDate d) throws SQLException
 	{
 		Statistic s = getStatistic(cityId, d);
 		if (s == null)
@@ -225,8 +235,9 @@ public final class InformationSystem
 	/**
 	 * Adds a subscription purchase to the statistic of the city id and today date
 	 * @param cityId the city id
+	 * @throws SQLException if the access to database failed
 	 */
-	public static void addSubscription(int cityId)
+	public static void addSubscription(int cityId) throws SQLException
 	{
 		addSubscription(cityId, LocalDate.now());
 	}
@@ -235,8 +246,9 @@ public final class InformationSystem
 	 * Adds a subscription purchase to the statistic of the city id and the date
 	 * @param cityId the city id 
 	 * @param d the date
+	 * @throws SQLException if the access to database failed
 	 */
-	public static void addSubscription(int cityId, LocalDate d)
+	public static void addSubscription(int cityId, LocalDate d) throws SQLException
 	{
 		Statistic s = getStatistic(cityId, d);
 		if (s == null)
@@ -248,8 +260,9 @@ public final class InformationSystem
 	/**
 	 * Adds a subscription renewal purchase to the statistic of the city id and today date
 	 * @param cityId the city id
+	 * @throws SQLException if the access to database failed
 	 */
-	public static void addSubscriptionRenewal(int cityId)
+	public static void addSubscriptionRenewal(int cityId) throws SQLException
 	{
 		addSubscriptionRenewal(cityId, LocalDate.now());
 	}
@@ -258,8 +271,9 @@ public final class InformationSystem
 	 * Adds a subscription renewal purchase to the statistic of the city id and the date
 	 * @param cityId the city id 
 	 * @param d the date
+	 * @throws SQLException if the access to database failed
 	 */
-	public static void addSubscriptionRenewal(int cityId, LocalDate d)
+	public static void addSubscriptionRenewal(int cityId, LocalDate d) throws SQLException
 	{
 		Statistic s = getStatistic(cityId, d);
 		if (s == null)
@@ -271,8 +285,9 @@ public final class InformationSystem
 	/**
 	 * Adds a subscription download to the statistic of the city id and today date
 	 * @param cityId the city id
+	 * @throws SQLException if the access to database failed
 	 */
-	public static void addSubDownload(int cityId)
+	public static void addSubDownload(int cityId) throws SQLException
 	{
 		addSubDownload(cityId, LocalDate.now());
 	}
@@ -281,8 +296,9 @@ public final class InformationSystem
 	 * Adds a subscription download to the statistic of the city id and the date
 	 * @param cityId the city id 
 	 * @param d the date
+	 * @throws SQLException if the access to database failed
 	 */
-	public static void addSubDownload(int cityId, LocalDate d)
+	public static void addSubDownload(int cityId, LocalDate d) throws SQLException
 	{
 		Statistic s = getStatistic(cityId, d);
 		if (s == null)
@@ -294,8 +310,9 @@ public final class InformationSystem
 	/**
 	 * Updates the statistic of the city id that a new version of this city was published today
 	 * @param cityId the city id
+	 * @throws SQLException if the access to database failed
 	 */
-	public static void newVersionWasPublished(int cityId)
+	public static void newVersionWasPublished(int cityId) throws SQLException
 	{
 		newVersionWasPublished(cityId, LocalDate.now());
 	}
@@ -304,8 +321,9 @@ public final class InformationSystem
 	 * Updates the statistic of the city id that a new version of this city was published in the date
 	 * @param cityId the city id
 	 * @param d the LocalDate that was published
+	 * @throws SQLException if the access to database failed
 	 */
-	public static void newVersionWasPublished(int cityId, LocalDate d)
+	public static void newVersionWasPublished(int cityId, LocalDate d) throws SQLException
 	{
 		Statistic s = getStatistic(cityId, d);
 		if (s == null)
@@ -317,8 +335,9 @@ public final class InformationSystem
 	/**
 	 * Returns list of the statistics id that with today LocalDate and describe cities that has new published version
 	 * @return list of the statistics ids
+	 * @throws SQLException if the access to database failed
 	 */
-	public static ArrayList<Integer> getCitiesWithNewPublishedVersion()
+	public static ArrayList<Integer> getCitiesWithNewPublishedVersion() throws SQLException
 	{
 		return getCitiesWithNewPublishedVersion(LocalDate.now());
 	}
@@ -327,8 +346,9 @@ public final class InformationSystem
 	 * Returns list of the statistics id that with the LocalDate and describe cities that has new published version
 	 * @param d the LocalDate of the statistics
 	 * @return list of the statistics ids
+	 * @throws SQLException if the access to database failed
 	 */
-	public static ArrayList<Integer> getCitiesWithNewPublishedVersion(LocalDate d)
+	public static ArrayList<Integer> getCitiesWithNewPublishedVersion(LocalDate d) throws SQLException
 	{
 		return Database.searchStatistic(null, d, null, null, true,null);
 	}
@@ -336,8 +356,9 @@ public final class InformationSystem
 	/**
 	 * Return a list of all the statistics
 	 * @return list of statisics
+	 * @throws SQLException if the access to database failed
 	 */
-	public static ArrayList<Statistic> getAllStatistics()
+	public static ArrayList<Statistic> getAllStatistics() throws SQLException
 	{
 		ArrayList<Integer> ids = Database.searchStatistic(null, null, null, null, null,null);
 		ArrayList<Statistic> arrList = new ArrayList<Statistic>();

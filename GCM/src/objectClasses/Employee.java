@@ -86,9 +86,10 @@ public class Employee extends User implements ClassMustProperties, Serializable 
 	 * @param lastName the last name of the employee
 	 * @param phoneNumber the phone number of the employee
 	 * @param role the role of the employee
+	 * @throws SQLException if the access to database failed
 	 */
 	public Employee(String userName, String password, String email, String firstName, String lastName,
-			String phoneNumber, Role role) {
+			String phoneNumber, Role role) throws SQLException {
 		super(userName, password, email, firstName, lastName, phoneNumber);
 		this.role = role;
 	}

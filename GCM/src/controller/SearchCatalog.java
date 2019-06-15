@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,9 +30,10 @@ public final class SearchCatalog {
 	 * @param placeName the place of interest that in the city name (or part of it)
 	 * @param placeDescription the place of interest that in the city description (or words it contains)
 	 * @return search result- list of cities that was found
+	 * @throws SQLException if the access to database failed
 	 */
 	public static ArrayList<City> SearchCity(String cityName, String cityDescription, String placeName,
-											 String placeDescription)
+											 String placeDescription) throws SQLException
 	{
 		return SearchCity( cityName,  cityDescription,  placeName,
 				 placeDescription,false);
@@ -45,9 +47,10 @@ public final class SearchCatalog {
 	 * @param placeDescription the place of interest that in the city description (or words it contains)
 	 * @param useUnpublished if to also search in the unpublished versions of the cities
 	 * @return search result- list of cities that was found
+	 * @throws SQLException if the access to database failed
 	 */
 	public static ArrayList<City> SearchCity(String cityName, String cityDescription, String placeName,
-			String placeDescription,boolean useUnpublished) // they can be null
+			String placeDescription,boolean useUnpublished) throws SQLException // they can be null
 	{
 		if (cityName == null && cityDescription == null && placeName == null && placeDescription == null)
 			return null;

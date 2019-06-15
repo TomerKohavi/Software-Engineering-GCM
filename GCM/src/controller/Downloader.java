@@ -2,6 +2,7 @@ package controller;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -72,8 +73,9 @@ public final class Downloader
 	 * 
 	 * @param path the path to download the report
 	 * @return if the download succeeded
+	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean downloadReportsUpdateVersions(String path)
+	public static boolean downloadReportsUpdateVersions(String path) throws SQLException
 	{
 		LocalDate today = LocalDate.now();
 		ArrayList<Integer> citiesIds = InformationSystem.getCitiesWithNewPublishedVersion();
