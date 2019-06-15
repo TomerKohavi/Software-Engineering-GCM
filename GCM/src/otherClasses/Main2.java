@@ -15,7 +15,7 @@ public class Main2 {
 		try 
 		{
 			//Date today = new Date(Calendar.getInstance().getTime().getTime());
-			System.out.println(new Date(119,0,14));
+			System.out.println(new Date(119,1,14));
 			/*Customer cust = new Customer("t", "t", "t@gmail.com", "t", "t t", "0523002100", "0095681338665894", "07/24",
 					"000");
 			
