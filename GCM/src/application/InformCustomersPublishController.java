@@ -40,19 +40,21 @@ public class InformCustomersPublishController {
      * initialize variables
      */
     @SuppressWarnings("unchecked")
-	void initialize ()
+	public void initialize ()
     {
+    	CityText.setText(Connector.selectedCity.getCityName() + " has a new version.");
+    	
     	ObservableList<Customer> customers = FXCollections.observableArrayList(Connector.getCustomersSubscibeToCity());
     	
     	TableColumn<Customer, String> username = new TableColumn<>("Username");
-//    	username.setMinWidth(228);
-//    	username.setMaxWidth(228);
+    	username.setMinWidth(248);
+    	username.setMaxWidth(248);
     	username.setCellValueFactory(new PropertyValueFactory<>("userName"));
 		
 		TableColumn<Customer, String> email = new TableColumn<>("Email");
-//		username.setMinWidth(50);
-//		username.setMaxWidth(50);
-		username.setCellValueFactory(new PropertyValueFactory<>("email"));
+		email.setMinWidth(250);
+		email.setMaxWidth(250);
+		email.setCellValueFactory(new PropertyValueFactory<>("email"));
 		
 		CustomersTable.setItems(customers);
 		
@@ -67,7 +69,7 @@ public class InformCustomersPublishController {
 	 */
     @FXML
     void goBack(ActionEvent event) {
-
+    	mainPane.getScene().getWindow().hide();
     }
 
 }
