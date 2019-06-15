@@ -1,5 +1,6 @@
 package objectClasses;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 import controller.Database;
@@ -81,8 +82,9 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 	 * 
 	 * @param cityId the city id 
 	 * @param date the date of the statistic
+	 * @throws SQLException if the access to database failed
 	 */
-	public Statistic(int cityId, LocalDate date) {
+	public Statistic(int cityId, LocalDate date) throws SQLException {
 		this.id = Database.generateIdStatistic();
 		this.cityId = cityId;
 		this.date = date;
@@ -120,12 +122,12 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 		return s;
 	}
 
-	public void saveToDatabase() {
+	public void saveToDatabase() throws SQLException {
 		if (this.id >= 0)
 			Database._saveStatistic(this);
 	}
 
-	public void deleteFromDatabase() {
+	public void deleteFromDatabase() throws SQLException {
 		if (this.id >= 0)
 			Database._deleteStatistic(this.id);
 	}

@@ -1,6 +1,7 @@
 
 package objectClasses;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 import controller.Database;
@@ -30,8 +31,9 @@ public abstract class CityPurchase implements Comparable<CityPurchase>, Serializ
 	 * @param purchaseDate when does the city purchase bought
 	 * @param fullPrice the full price of the buy
 	 * @param pricePayed how much payed for the buy
+	 * @throws SQLException if the access to database failed
 	 */
-	protected CityPurchase(int id, int cityId, int userId, LocalDate purchaseDate, double fullPrice, double pricePayed) {
+	protected CityPurchase(int id, int cityId, int userId, LocalDate purchaseDate, double fullPrice, double pricePayed) throws SQLException {
 		this.id = id;
 		this.cityId = cityId;
 		this.userId = userId;
@@ -59,8 +61,9 @@ public abstract class CityPurchase implements Comparable<CityPurchase>, Serializ
 	 * @param purchaseDate when does the city purchase bought
 	 * @param fullPrice the full price of the buy
 	 * @param pricePayed how much payed for the buy
+	 * @throws SQLException if the access to database failed
 	 */
-	public CityPurchase(int userId, int cityId, LocalDate purchaseDate, double fullPrice, double pricePayed) {
+	public CityPurchase(int userId, int cityId, LocalDate purchaseDate, double fullPrice, double pricePayed) throws SQLException {
 		this.id = Database.generateIdCityPurchase();
 		this.cityId = cityId;
 		this.userId = userId;
@@ -72,8 +75,9 @@ public abstract class CityPurchase implements Comparable<CityPurchase>, Serializ
 	
 	/**
 	 * reload temporal city purchase from the data base
+	 * @throws SQLException if the access to database failed
 	 */
-	public void reloadTempsFromDatabase(){
+	public void reloadTempsFromDatabase() throws SQLException{
 		this.cityName=Database.getCityNameById(cityId);
     }
 

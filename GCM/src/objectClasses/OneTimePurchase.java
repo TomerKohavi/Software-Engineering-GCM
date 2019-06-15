@@ -1,6 +1,7 @@
 package objectClasses;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 import controller.Database;
@@ -27,9 +28,10 @@ public class OneTimePurchase extends CityPurchase implements ClassMustProperties
 	 * @param fullPrice the full price of the buy
 	 * @param pricePayed how much is actually payed 
 	 * @param wasDownload if the one time purchase was download or not
+	 * @throws SQLException if the access to database failed
 	 */
 	private OneTimePurchase(int id, int cityId, int userId, LocalDate purchaseDate, double fullPrice, double pricePayed,
-			boolean wasDownload)
+			boolean wasDownload) throws SQLException
 	{
 		super(id, cityId, userId, purchaseDate, fullPrice, pricePayed);
 		this.wasDownload = wasDownload;
@@ -66,9 +68,10 @@ public class OneTimePurchase extends CityPurchase implements ClassMustProperties
 	 * @param pricePayed how much is actually payed 
 	 * @param wasDownload if the one time purchase was download or not
 	 * @return new one time purchase object
+	 * @throws SQLException if the access to database failed
 	 */
 	public static OneTimePurchase _createOneTimePurchase(int id, int cityId, int userId, LocalDate purchaseDate,
-			double fullPrice, double pricePayed, boolean wasDownload)
+			double fullPrice, double pricePayed, boolean wasDownload) throws SQLException
 	{ // friend to Database
 		return new OneTimePurchase(id, cityId, userId, purchaseDate, fullPrice, pricePayed, wasDownload);
 	}
@@ -102,19 +105,20 @@ public class OneTimePurchase extends CityPurchase implements ClassMustProperties
 	 * @param purchaseDate purchase date
 	 * @param fullPrice full price of the map
 	 * @param pricePayed priced payed
+	 * @throws SQLException if the access to database failed
 	 */
-	public OneTimePurchase(Customer u, int cityId, LocalDate purchaseDate, double fullPrice, double pricePayed)
+	public OneTimePurchase(Customer u, int cityId, LocalDate purchaseDate, double fullPrice, double pricePayed) throws SQLException
 	{
 		super(u.getId(), cityId, purchaseDate, fullPrice, pricePayed);
 		this.wasDownload = false;
 	}
 
-	public void saveToDatabase()
+	public void saveToDatabase() throws SQLException
 	{
 		Database._saveOneTimePurchase(this);
 	}
 
-	public void deleteFromDatabase()
+	public void deleteFromDatabase() throws SQLException
 	{
 		Database._deleteOneTimePurchase(this.getId());
 	}

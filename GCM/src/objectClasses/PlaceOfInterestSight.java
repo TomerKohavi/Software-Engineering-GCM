@@ -1,6 +1,7 @@
 package objectClasses;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import controller.Database;
@@ -26,8 +27,9 @@ public class PlaceOfInterestSight implements ClassMustProperties, Serializable {
 	 * @param id the id of the place of interest sight
 	 * @param cityDataVersionId the city data version id that contains the place of interest sight
 	 * @param placeOfInterestId the place of interest id
+	 * @throws SQLException if the access to database failed
 	 */
-	private PlaceOfInterestSight(int id, int cityDataVersionId, int placeOfInterestId) {
+	private PlaceOfInterestSight(int id, int cityDataVersionId, int placeOfInterestId) throws SQLException {
 		this.id = id;
 		this.cityDataVersionId = cityDataVersionId;
 		this.placeOfInterestId = placeOfInterestId;
@@ -42,8 +44,9 @@ public class PlaceOfInterestSight implements ClassMustProperties, Serializable {
 	 * @param cityDataVersionId the city data version id that contains the place of interest sight
 	 * @param placeOfInterestId the place of interest id
 	 * @return new place of interest sight object
+	 * @throws SQLException if the access to database failed
 	 */
-	public static PlaceOfInterestSight _PlaceOfInterestSight(int id, int cityDataVersionId, int placeOfInterestId) { // friend
+	public static PlaceOfInterestSight _PlaceOfInterestSight(int id, int cityDataVersionId, int placeOfInterestId) throws SQLException { // friend
 																														// to
 																														// Database
 		return new PlaceOfInterestSight(id, cityDataVersionId, placeOfInterestId);
@@ -54,19 +57,20 @@ public class PlaceOfInterestSight implements ClassMustProperties, Serializable {
 	 * 
 	 * @param cdvId city data version id
 	 * @param p place of interest object
+	 * @throws SQLException if the access to database failed
 	 */
-	public PlaceOfInterestSight(int cdvId, PlaceOfInterest p) {
+	public PlaceOfInterestSight(int cdvId, PlaceOfInterest p) throws SQLException {
 		this.id = Database.generateIdPlaceOfInterestSight();
 		this.cityDataVersionId = cdvId;
 		this.placeOfInterestId = p.getId();
 		this.temp_place = p;
 	}
 
-	public void saveToDatabase() {
+	public void saveToDatabase() throws SQLException {
 		Database._savePlaceOfInterestSight(this);
 	}
 
-	public void deleteFromDatabase() {
+	public void deleteFromDatabase() throws SQLException {
 		Database._deletePlaceOfInterestSight(this.id);
 		// delete locations
 		ArrayList<Integer> mapSIds = Database.searchMapSight(this.cityDataVersionId,null);
@@ -95,7 +99,7 @@ public class PlaceOfInterestSight implements ClassMustProperties, Serializable {
 		}
 	}
 
-	public void reloadTempsFromDatabase() {
+	public void reloadTempsFromDatabase() throws SQLException {
 		this.temp_place = Database.getPlaceOfInterestById(placeOfInterestId);
 	}
 

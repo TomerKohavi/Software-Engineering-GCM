@@ -1,6 +1,7 @@
 package objectClasses;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 
 import controller.Database;
 import otherClasses.ClassMustProperties;
@@ -108,11 +109,11 @@ public class Employee extends User implements ClassMustProperties, Serializable 
 		super(id, userName, password, email, firstName, lastName, phoneNumber);
 	}
 
-	public void saveToDatabase() {
+	public void saveToDatabase() throws SQLException {
 		Database.saveEmployee(this);
 	}
 
-	public void deleteFromDatabase() {
+	public void deleteFromDatabase() throws SQLException {
 		Database.deleteEmployee(super.getId());
 	}
 

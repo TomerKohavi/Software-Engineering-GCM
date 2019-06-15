@@ -1,6 +1,7 @@
 package objectClasses;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 
 import controller.Database;
 import otherClasses.ClassMustProperties;
@@ -25,8 +26,9 @@ public class MapSight implements ClassMustProperties, Serializable {
 	 * @param id the id of the map sight 
 	 * @param mapId the id of the map
 	 * @param cityDataVersionId the id of the city data version
+	 * @throws SQLException if the access to database failed
 	 */
-	private MapSight(int id, int mapId, int cityDataVersionId) {
+	private MapSight(int id, int mapId, int cityDataVersionId) throws SQLException {
 		this.id = id;
 		this.mapId = mapId;
 		this.cityDataVersionId = cityDataVersionId;
@@ -41,8 +43,9 @@ public class MapSight implements ClassMustProperties, Serializable {
 	 * @param mapId the id of the map
 	 * @param cityDataVersionId the id of the city data version
 	 * @return the new map sight object
+	 * @throws SQLException if the access to database failed
 	 */
-	public static MapSight _createMapSight(int id, int mapId, int cityDataVersionId) { // friend to Database
+	public static MapSight _createMapSight(int id, int mapId, int cityDataVersionId) throws SQLException { // friend to Database
 		return new MapSight(id, mapId, cityDataVersionId);
 	}
 
@@ -51,23 +54,24 @@ public class MapSight implements ClassMustProperties, Serializable {
 	 * 
 	 * @param cdvId the id of the city data version
 	 * @param m the map object
+	 * @throws SQLException if the access to database failed
 	 */
-	public MapSight(int cdvId, Map m) {
+	public MapSight(int cdvId, Map m) throws SQLException {
 		this.id = Database.generateIdMapSight();
 		this.mapId = m.getId();
 		this.cityDataVersionId = cdvId;
 		this.temp_map = m;
 	}
 
-	public void saveToDatabase() {
+	public void saveToDatabase() throws SQLException {
 		Database._saveMapSight(this);
 	}
 
-	public void deleteFromDatabase() {
+	public void deleteFromDatabase() throws SQLException {
 		Database._deleteMapSight(this.id);
 	}
 
-	public void reloadTempsFromDatabase() {
+	public void reloadTempsFromDatabase() throws SQLException {
 		this.temp_map = Database.getMapById(mapId);
 	}
 

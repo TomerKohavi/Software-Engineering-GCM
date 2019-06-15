@@ -1,6 +1,7 @@
 package objectClasses;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import controller.Database;
@@ -111,8 +112,9 @@ public class PlaceOfInterest implements ClassMustProperties, Serializable {
 	 * @param type the place of interest type
 	 * @param info the place of interest info
 	 * @param accessibilityToDisabled if the place of interest is accessibility to disabled or not
+	 * @throws SQLException if the access to database failed
 	 */
-	public PlaceOfInterest(int cityId, String name, PlaceType type, String info, boolean accessibilityToDisabled) {
+	public PlaceOfInterest(int cityId, String name, PlaceType type, String info, boolean accessibilityToDisabled) throws SQLException {
 		this.id = Database.generateIdPlaceOfInterest();
 		this.cityId = cityId;
 		this.name = name;
@@ -121,11 +123,11 @@ public class PlaceOfInterest implements ClassMustProperties, Serializable {
 		this.accessibilityToDisabled = accessibilityToDisabled;
 	}
 
-	public void saveToDatabase() {
+	public void saveToDatabase() throws SQLException {
 		Database.savePlaceOfInterest(this);
 	}
 
-	public void deleteFromDatabase() {
+	public void deleteFromDatabase() throws SQLException {
 		Database.deletePlaceOfInterest(this.id);
 		// delete PlacesSights
 		ArrayList<Integer> ids = Database.searchPlaceOfInterestSight(null, this.id);

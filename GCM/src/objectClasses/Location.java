@@ -1,6 +1,7 @@
 package objectClasses;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 
 import controller.Database;
 import otherClasses.ClassMustProperties;
@@ -26,8 +27,9 @@ public class Location implements ClassMustProperties, Serializable
 	 * @param mapId             the map id that contains the location
 	 * @param placeOfInterestId the place of interest id that contains the location
 	 * @param coordinates       the coordinates of the location
+	 * @throws SQLException if the access to database failed
 	 */
-	private Location(int id, int mapId, int placeOfInterestId, double[] coordinates)
+	private Location(int id, int mapId, int placeOfInterestId, double[] coordinates) throws SQLException
 	{
 		this.id = id;
 		this.mapId = mapId;
@@ -45,8 +47,9 @@ public class Location implements ClassMustProperties, Serializable
 	 * @param placeOfInterestId the place of interest id that contains the location
 	 * @param coordinates       the coordinates of the location
 	 * @return the new location object
+	 * @throws SQLException if the access to database failed
 	 */
-	public static Location _createLocation(int id, int mapId, int placeOfInterestId, double[] coordinates)
+	public static Location _createLocation(int id, int mapId, int placeOfInterestId, double[] coordinates) throws SQLException
 	{ // friend
 		// to
 		// Database
@@ -59,8 +62,9 @@ public class Location implements ClassMustProperties, Serializable
 	 * @param m           the map
 	 * @param p           the point of interest
 	 * @param coordinates the coordinates of the location
+	 * @throws SQLException if the access to database failed
 	 */
-	public Location(Map m, PlaceOfInterest p, double[] coordinates)
+	public Location(Map m, PlaceOfInterest p, double[] coordinates) throws SQLException
 	{
 		this.id = Database.generateIdLocation();
 		this.mapId = m.getId();
@@ -90,17 +94,17 @@ public class Location implements ClassMustProperties, Serializable
 		return new Location(-1, -1, p, coordinates);
 	}
 
-	public void saveToDatabase()
+	public void saveToDatabase() throws SQLException
 	{
 		Database._saveLocation(this);
 	}
 
-	public void deleteFromDatabase()
+	public void deleteFromDatabase() throws SQLException
 	{
 		Database._deleteLocation(this.getId());
 	}
 
-	public void reloadTempsFromDatabase()
+	public void reloadTempsFromDatabase() throws SQLException
 	{
 		this.temp_place = Database.getPlaceOfInterestById(this.placeOfInterestId);
 	}

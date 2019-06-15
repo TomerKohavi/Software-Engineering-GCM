@@ -1,6 +1,7 @@
 package objectClasses;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 
 import controller.Database;
 
@@ -51,8 +52,9 @@ public abstract class User implements Serializable {
 	 * @param firstName the user first name
 	 * @param lastName the user last name
 	 * @param phoneNumber the user phone number
+	 * @throws SQLException if the access to database failed
 	 */
-	public User(String userName, String password, String email, String firstName, String lastName, String phoneNumber) {
+	public User(String userName, String password, String email, String firstName, String lastName, String phoneNumber) throws SQLException {
 		this.id = Database.generateIdUser();
 		this.userName = userName;
 		this.password = password;

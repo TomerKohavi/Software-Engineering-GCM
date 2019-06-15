@@ -1,6 +1,7 @@
 package objectClasses;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -32,8 +33,9 @@ public class Route implements ClassMustProperties, Serializable
 	 * @param cityId the city id that contains the route
 	 * @param name the route name
 	 * @param info the route info
+	 * @throws SQLException if the access to database failed
 	 */
-	private Route(int id, int cityId,String name, String info,boolean isFavorite)
+	private Route(int id, int cityId,String name, String info,boolean isFavorite) throws SQLException
 	{
 		this.id = id;
 		this.cityId = cityId;
@@ -52,8 +54,9 @@ public class Route implements ClassMustProperties, Serializable
 	 * @param name the route name
 	 * @param info the route info
 	 * @return new route object
+	 * @throws SQLException if the access to database failed
 	 */
-	public static Route _createRoute(int id, int cityId,String name, String info,boolean isFavorite)
+	public static Route _createRoute(int id, int cityId,String name, String info,boolean isFavorite) throws SQLException
 	{ // friend to
 		// Database
 		return new Route(id, cityId,name, info,isFavorite);
@@ -65,8 +68,9 @@ public class Route implements ClassMustProperties, Serializable
 	 * @param cityId the city id that contains the route
 	 * @param name the route name
 	 * @param info the route info
+	 * @throws SQLException if the access to database failed
 	 */
-	public Route(int cityId,String name, String info,boolean isFavorite)
+	public Route(int cityId,String name, String info,boolean isFavorite) throws SQLException
 	{
 		this.id = Database.generateIdRoute();
 		this.cityId = cityId;
@@ -81,8 +85,9 @@ public class Route implements ClassMustProperties, Serializable
 	 * Copy constructor that generate new id
 	 * 
 	 * @param other route object to copy
+	 * @throws SQLException if the access to database failed
 	 */
-	public Route(Route other) {
+	public Route(Route other) throws SQLException {
 		this.id = Database.generateIdRoute();
 		this.cityId = other.cityId;
 		this.info = other.info;
@@ -100,8 +105,9 @@ public class Route implements ClassMustProperties, Serializable
 	 * Return list of route stops that in the route
 	 * 
 	 * @return list of route stops that in the route
+	 * @throws SQLException if the access to database failed
 	 */
-	private ArrayList<RouteStop> generateRouteStops()
+	private ArrayList<RouteStop> generateRouteStops() throws SQLException
 	{
 		ArrayList<Integer> routeStopsIds = Database.searchRouteStop(this.id, null, null);
 		ArrayList<RouteStop> arrList = new ArrayList<RouteStop>();
@@ -118,7 +124,7 @@ public class Route implements ClassMustProperties, Serializable
 		return arrList;
 	}
 
-	public void saveToDatabase()
+	public void saveToDatabase() throws SQLException
 	{
 		Database.saveRoute(this);
 		// delete removes
@@ -133,7 +139,7 @@ public class Route implements ClassMustProperties, Serializable
 			rs.saveToDatabase();
 	}
 
-	public void deleteFromDatabase()
+	public void deleteFromDatabase() throws SQLException
 	{
 		Database.deleteRoute(this.id);
 		for (RouteStop rs : temp_removeRouteStops)
@@ -151,7 +157,7 @@ public class Route implements ClassMustProperties, Serializable
 		}
 	}
 
-	public void reloadTempsFromDatabase()
+	public void reloadTempsFromDatabase() throws SQLException
 	{
 		this.temp_routeStops = generateRouteStops();
 		this.temp_removeRouteStops = new ArrayList<>();

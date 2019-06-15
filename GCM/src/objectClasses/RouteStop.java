@@ -1,6 +1,7 @@
 package objectClasses;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.time.LocalTime;
 
 import controller.Database;
@@ -31,8 +32,9 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 	 * @param placeId place id of the route stop
 	 * @param numStop the number of the stop in the route
 	 * @param recommendedTime how much time is recommended for this stop
+	 * @throws SQLException if the access to database failed
 	 */
-	private RouteStop(int id, int routeId, int placeId, int numStop, LocalTime recommendedTime)
+	private RouteStop(int id, int routeId, int placeId, int numStop, LocalTime recommendedTime) throws SQLException
 	{
 		this.id = id;
 		this.routeId = routeId;
@@ -52,8 +54,9 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 	 * @param numStop the number of the stop in the route
 	 * @param recommendedTime how much time is recommended for this stop
 	 * @return the new route stop object
+	 * @throws SQLException if the access to database failed
 	 */
-	public static RouteStop _createRouteStop(int id, int routeId, int placeId, int numStop, LocalTime recommendedTime)
+	public static RouteStop _createRouteStop(int id, int routeId, int placeId, int numStop, LocalTime recommendedTime) throws SQLException
 	{ // friend to Database
 		return new RouteStop(id, routeId, placeId, numStop, recommendedTime);
 	}
@@ -102,8 +105,9 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 	 * @param r the route contains the route stop
 	 * @param p the place of interest that in the route stop
 	 * @param recommendedTime the recommended time for the route stop
+	 * @throws SQLException if the access to database failed
 	 */
-	public RouteStop(Route r, PlaceOfInterest p, LocalTime recommendedTime)
+	public RouteStop(Route r, PlaceOfInterest p, LocalTime recommendedTime) throws SQLException
 	{
 		this.id = Database.generateIdRouteStop();
 		this.routeId = r.getId();
@@ -113,17 +117,17 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 		this.numStop = -1;
 	}
 
-	public void saveToDatabase()
+	public void saveToDatabase() throws SQLException
 	{
 		Database._saveRouteStop(this);
 	}
 
-	public void deleteFromDatabase()
+	public void deleteFromDatabase() throws SQLException
 	{
 		Database._deleteRouteStop(this.id);
 	}
 
-	public void reloadTempsFromDatabase()
+	public void reloadTempsFromDatabase() throws SQLException
 	{
 		this.temp_place=Database.getPlaceOfInterestById(placeId);
 		this.placeName = temp_place.getName();
@@ -213,8 +217,9 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 	 * Return the route
 	 * 
 	 * @return the route id
+	 * @throws SQLException if the access to database failed
 	 */
-	public Route getRoute()
+	public Route getRoute() throws SQLException
 	{
 		return Database.getRouteById(routeId);
 	}

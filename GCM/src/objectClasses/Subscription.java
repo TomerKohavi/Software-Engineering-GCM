@@ -1,6 +1,7 @@
 package objectClasses;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.Calendar;
 
@@ -30,9 +31,10 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 	 * @param purchaseDate the subscription purchase date
 	 * @param fullPrice the full price of the subscription
 	 * @param pricePayed how much is actually for the subscription
+	 * @throws SQLException if the access to database failed
 	 */
 	private Subscription(int id, int cityId, int userId, LocalDate purchaseDate, double fullPrice, double pricePayed,
-			LocalDate expirationDate)
+			LocalDate expirationDate) throws SQLException
 	{
 		super(id, cityId, userId, purchaseDate, fullPrice, pricePayed);
 		this.expirationDate = expirationDate;
@@ -72,9 +74,10 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 	 * @param pricePayed how much is actually for the subscription
 	 * @param expirationDate when does the subscription is expired
 	 * @return new subscription object
+	 * @throws SQLException if the access to database failed
 	 */
 	public static Subscription _createSubscription(int id, int cityId, int userId, LocalDate purchaseDate, double fullPrice,
-			double pricePayed, LocalDate expirationDate)
+			double pricePayed, LocalDate expirationDate) throws SQLException
 	{ // friend to Database
 		return new Subscription(id, cityId, userId, purchaseDate, fullPrice, pricePayed, expirationDate);
 	}
@@ -108,9 +111,10 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 	 * @param fullPrice the full price of the subscription
 	 * @param pricePayed how much is actually for the subscription
 	 * @param expirationDate when does the subscription is expired
+	 * @throws SQLException if the access to database failed
 	 */
 	public Subscription(Customer u, int cityId, LocalDate purchaseDate, double fullPrice, double pricePayed,
-			LocalDate expirationDate)
+			LocalDate expirationDate) throws SQLException
 	{
 		super(u.getId(), cityId, purchaseDate, fullPrice, pricePayed);
 		this.expirationDate = expirationDate;
@@ -122,9 +126,10 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 	 * @param sub the subscription that is going to end
 	 * @param fullPrice the full price
 	 * @param payedPrice the price after discount (if there is any)
-	 * @return
+	 * @return if it is a re subscription 
+	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean _Resubscribe(Subscription sub, double fullPrice, double payedPrice) {
+	public static boolean _Resubscribe(Subscription sub, double fullPrice, double payedPrice) throws SQLException {
 		if(sub==null)
 			return false;
 		LocalDate today = LocalDate.now();
@@ -139,12 +144,12 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 		return true;
 	}
 
-	public void saveToDatabase()
+	public void saveToDatabase() throws SQLException
 	{
 		Database._saveSubscription(this);
 	}
 
-	public void deleteFromDatabase()
+	public void deleteFromDatabase() throws SQLException
 	{
 		Database._deleteSubscription(this.getId());
 	}

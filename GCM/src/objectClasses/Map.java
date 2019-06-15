@@ -1,6 +1,7 @@
 package objectClasses;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import controller.Database;
@@ -30,8 +31,9 @@ public class Map implements ClassMustProperties, Serializable {
 	 * @param name the name of the map
 	 * @param info the info of the map
 	 * @param imgURL the path of the image that in the map
+	 * @throws SQLException if the access to database failed
 	 */
-	private Map(int id, int cityId, String name, String info, String imgURL) {
+	private Map(int id, int cityId, String name, String info, String imgURL) throws SQLException {
 		this.id = id;
 		this.cityId = cityId;
 		this.name = name;
@@ -50,8 +52,9 @@ public class Map implements ClassMustProperties, Serializable {
 	 * @param info the info of the map
 	 * @param imgURL the path of the image that in the map
 	 * @return the new map object
+	 * @throws SQLException if the access to database failed
 	 */
-	public static Map _createMap(int id, int cityId, String name, String info, String imgURL) { // friend to Database
+	public static Map _createMap(int id, int cityId, String name, String info, String imgURL) throws SQLException { // friend to Database
 		return new Map(id, cityId, name, info, imgURL);
 	}
 
@@ -62,8 +65,9 @@ public class Map implements ClassMustProperties, Serializable {
 	 * @param name the name of the map
 	 * @param info the info of the map
 	 * @param imgURL the path of the image that in the map
+	 * @throws SQLException if the access to database failed
 	 */
-	public Map(int cityId, String name, String info, String imgURL) {
+	public Map(int cityId, String name, String info, String imgURL) throws SQLException {
 		this.id = Database.generateIdMap();
 		this.cityId = cityId;
 		this.name = name;
@@ -77,8 +81,9 @@ public class Map implements ClassMustProperties, Serializable {
 	 * Copy constructor of class map with new id
 	 * 
 	 * @param other map object to copy
+	 * @throws SQLException if the access to database failed
 	 */
-	public Map(Map other) {
+	public Map(Map other) throws SQLException {
 		this.id = Database.generateIdMap();
 		this.cityId = other.cityId;
 		this.name = other.name;
@@ -95,8 +100,9 @@ public class Map implements ClassMustProperties, Serializable {
 	/**
 	 * Returns a list of locations in the map
 	 * @return list of locations in the map
+	 * @throws SQLException if the access to database failed
 	 */
-	private ArrayList<Location> generateLocations() {
+	private ArrayList<Location> generateLocations() throws SQLException {
 		ArrayList<Integer> ids = Database.searchLocation(this.id, null);
 		ArrayList<Location> arrList = new ArrayList<Location>();
 		for (int id : ids) {
@@ -111,7 +117,7 @@ public class Map implements ClassMustProperties, Serializable {
 		return arrList;
 	}
 
-	public void saveToDatabase() {
+	public void saveToDatabase() throws SQLException {
 		Database.saveMap(this);
 		// delete removes
 		for (Location l : temp_removeLocations) {
@@ -124,7 +130,7 @@ public class Map implements ClassMustProperties, Serializable {
 			l.saveToDatabase();
 	}
 
-	public void deleteFromDatabase() {
+	public void deleteFromDatabase() throws SQLException {
 		Database.deleteMap(this.id);
 		// delete removes
 		for (Location l : temp_removeLocations)
@@ -141,7 +147,7 @@ public class Map implements ClassMustProperties, Serializable {
 		}
 	}
 
-	public void reloadTempsFromDatabase() {
+	public void reloadTempsFromDatabase() throws SQLException {
 		this.temp_locations = generateLocations();
 		this.temp_removeLocations = new ArrayList<>();
 	}

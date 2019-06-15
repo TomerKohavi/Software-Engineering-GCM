@@ -2,6 +2,7 @@
 package objectClasses;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import controller.Database;
@@ -37,8 +38,9 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 	 * @param versionName  the version name of the city data version
 	 * @param priceOneTime the price for one time buy
 	 * @param pricePeriod  the price for period buy
+	 * @throws SQLException if the access to database failed
 	 */
-	private CityDataVersion(int id, int cityId, String versionName)
+	private CityDataVersion(int id, int cityId, String versionName) throws SQLException
 	{
 		this.id = id;
 		this.cityId = cityId;
@@ -56,8 +58,9 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 	 * @param priceOneTime the price for one time buy
 	 * @param pricePeriod  the price for period buy
 	 * @return new city data version object
+	 * @throws SQLException if the access to database failed
 	 */
-	public static CityDataVersion _createCityDataVersion(int id, int cityId, String versionName)
+	public static CityDataVersion _createCityDataVersion(int id, int cityId, String versionName) throws SQLException
 	{ // friend Database
 		return new CityDataVersion(id, cityId, versionName);
 	}
@@ -69,8 +72,9 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 	 * @param versionName  the version name of the city data version
 	 * @param priceOneTime the price for one time buy
 	 * @param pricePeriod  the price for period buy
+	 * @throws SQLException if the access to database failed
 	 */
-	public CityDataVersion(City c, String versionName)
+	public CityDataVersion(City c, String versionName) throws SQLException
 	{
 		this.id = Database.generateIdCityDataVersion();
 		this.versionName = versionName;
@@ -91,8 +95,9 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 	 *
 	 * @param other       the city data version object we want to copy
 	 * @param versionName the new version name
+	 * @throws SQLException if the access to database failed
 	 */
-	public CityDataVersion(CityDataVersion other, String versionName)
+	public CityDataVersion(CityDataVersion other, String versionName) throws SQLException
 	{
 		this.id = Database.generateIdCityDataVersion();
 		this.versionName = versionName;
@@ -142,7 +147,10 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 		this.temp_numRoutes = other.temp_numRoutes;
 	}
 
-	public void saveToDatabase()
+	/**
+	 * Save the city data version to the data base
+	 */
+	public void saveToDatabase() throws SQLException
 	{
 		Database._saveCityDataVersion(this);
 		// delete removes
@@ -170,7 +178,10 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 		 */
 	}
 
-	public void deleteFromDatabase()
+	/**
+	 * Delete the city data version from the data base
+	 */
+	public void deleteFromDatabase() throws SQLException
 	{
 		Database._deleteCityDataVersion(this.id);
 		// delete removes
@@ -193,7 +204,7 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 			rs.deleteFromDatabase();
 	}
 
-	public void reloadTempsFromDatabase()
+	public void reloadTempsFromDatabase() throws SQLException
 	{
 		/*
 		 * this.temp_placeSights = generatePlaceOfInterestSights();
@@ -215,8 +226,9 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 	 * 
 	 * @param cdvId the city data version id we ant to get there map sights
 	 * @return list of map sight object we want to get
+	 * @throws SQLException if the access to database failed
 	 */
-	public static ArrayList<MapSight> _generateMapSights(int cdvId)
+	public static ArrayList<MapSight> _generateMapSights(int cdvId) throws SQLException
 	{
 		ArrayList<Integer> ids = Database.searchMapSight(cdvId, null);
 		ArrayList<MapSight> arrList = new ArrayList<MapSight>();
@@ -264,8 +276,9 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 	 * 
 	 * @param cdvId the city data version id we ant to get there point of interest
 	 * @return list of point of interest object we want to get
+	 * @throws SQLException if the access to database failed
 	 */
-	public static ArrayList<PlaceOfInterestSight> _generatePlaceSights(int cdvId)
+	public static ArrayList<PlaceOfInterestSight> _generatePlaceSights(int cdvId) throws SQLException
 	{
 		ArrayList<Integer> ids = Database.searchPlaceOfInterestSight(cdvId, null);
 		ArrayList<PlaceOfInterestSight> arrList = new ArrayList<PlaceOfInterestSight>();
@@ -311,8 +324,9 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 	 * 
 	 * @param cdvId the city data version id we ant to get there route sights
 	 * @return list of route sight object we want to get
+	 * @throws SQLException if the access to database failed
 	 */
-	public static ArrayList<RouteSight> _generateRouteSights(int cdvId) {
+	public static ArrayList<RouteSight> _generateRouteSights(int cdvId) throws SQLException {
 		ArrayList<Integer> ids = Database.searchRouteSight(cdvId, null,null);
 		ArrayList<RouteSight> arrList = new ArrayList<RouteSight>();
 		for (int id : ids)

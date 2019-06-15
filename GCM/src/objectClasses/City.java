@@ -1,6 +1,7 @@
 package objectClasses;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import controller.Database;
@@ -35,9 +36,10 @@ public class City implements ClassMustProperties, Serializable
 	 * @param cityName           the city name
 	 * @param cityDescription    the city description
 	 * @param publishedVersionId the id of the published version of this cirt
+	 * @throws SQLException if the access to database failed
 	 */
 	private City(int id, String cityName, String cityDescription, Integer publishedVersionId,boolean managerNeedsToPublish,
-			double priceOneTime,double pricePeriod, boolean ceoNeedsToApprovePrices, double toBePriceOneTime, double toBePricePeriod)
+			double priceOneTime,double pricePeriod, boolean ceoNeedsToApprovePrices, double toBePriceOneTime, double toBePricePeriod) throws SQLException
 	{
 		this.id = id;
 		this.cityName = cityName;
@@ -62,8 +64,9 @@ public class City implements ClassMustProperties, Serializable
 	 * @param publishedVersionId the id of the published version of this city
 	 * @param managerNeedsToPublish approval of managers
 	 * @return the new city object
+	 * @throws SQLException if the access to database failed
 	 */
-	public static City _createCity(int id, String cityName, String cityDescription, Integer publishedVersionId,boolean managerNeedsToPublish,double priceOneTime,double pricePeriod, boolean ceoNeedsToApprovePrices, double toBePriceOneTime, double toBePricePeriod)
+	public static City _createCity(int id, String cityName, String cityDescription, Integer publishedVersionId,boolean managerNeedsToPublish,double priceOneTime,double pricePeriod, boolean ceoNeedsToApprovePrices, double toBePriceOneTime, double toBePricePeriod) throws SQLException
 	{
 		return new City(id, cityName, cityDescription, publishedVersionId,managerNeedsToPublish, priceOneTime, pricePeriod,  ceoNeedsToApprovePrices,  toBePriceOneTime,  toBePricePeriod);
 	}
@@ -73,8 +76,9 @@ public class City implements ClassMustProperties, Serializable
 	 * 
 	 * @param cityName        the city name
 	 * @param cityDescription the city description
+	 * @throws SQLException if the access to database failed
 	 */
-	public City(String cityName, String cityDescription,double priceOneTime, double pricePeriod)
+	public City(String cityName, String cityDescription,double priceOneTime, double pricePeriod) throws SQLException
 	{
 		this.id = Database.generateIdCity();
 		this.cityName = cityName;
@@ -93,8 +97,9 @@ public class City implements ClassMustProperties, Serializable
 
 	/**
 	 * Saves the City object to the database, and it's data versions
+	 * @throws SQLException if the access to database failed
 	 */
-	public void saveToDatabase()
+	public void saveToDatabase() throws SQLException
 	{
 		Database.saveCity(this);
 		// delete removes
@@ -113,8 +118,9 @@ public class City implements ClassMustProperties, Serializable
 
 	/**
 	 * Deletes this city from the database, and it's data versions
+	 * @throws SQLException if the access to database failed
 	 */
-	public void deleteFromDatabase()
+	public void deleteFromDatabase() throws SQLException
 	{
 		Database.deleteCity(this.getId());
 		// delete removes
@@ -136,8 +142,9 @@ public class City implements ClassMustProperties, Serializable
 
 	/**
 	 * Reload the temps variables from the database
+	 * @throws SQLException if the access to database failed
 	 */
-	public void reloadTempsFromDatabase()
+	public void reloadTempsFromDatabase() throws SQLException
 	{
 		this.temp_unpublishedVersions = generateUnpublishedCityDataVersions();
 		this.temp_removeVersions = new ArrayList<>();
@@ -152,8 +159,9 @@ public class City implements ClassMustProperties, Serializable
 	 * city
 	 * 
 	 * @return list of the unpublished data versions of this city
+	 * @throws SQLException if the access to database failed
 	 */
-	private ArrayList<CityDataVersion> generateUnpublishedCityDataVersions()
+	private ArrayList<CityDataVersion> generateUnpublishedCityDataVersions() throws SQLException
 	{
 		ArrayList<Integer> ids = Database.searchCityDataVersion(this.id);
 		ArrayList<CityDataVersion> arrList = new ArrayList<CityDataVersion>();

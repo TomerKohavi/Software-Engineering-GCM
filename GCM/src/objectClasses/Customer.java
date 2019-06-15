@@ -1,6 +1,7 @@
 package objectClasses;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -38,9 +39,10 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 	 * @param creditCardNum the customer credit card number
 	 * @param creditCardExpires the customer credit card expires time
 	 * @param cvc the customer credit card cvc
+	 * @throws SQLException if the access to database failed
 	 */
 	private Customer(int id, String userName, String password, String email, String firstName, String lastName,
-			String phoneNumber,String creditCardNum,String creditCardExpires,String cvc) {
+			String phoneNumber,String creditCardNum,String creditCardExpires,String cvc) throws SQLException {
 		super(id, userName, password, email, firstName, lastName, phoneNumber);
 		this.creditCardNum=creditCardNum;
 		this.creditCardExpires=creditCardExpires;
@@ -63,9 +65,10 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 	 * @param creditCardExpires the customer credit card expires time
 	 * @param cvc the customer credit card cvc
 	 * @return the new customer object
+	 * @throws SQLException if the access to database failed
 	 */
 	public static Customer _createCustomer(int id, String userName, String password, String email, String firstName,
-			String lastName, String phoneNumber,String creditCardNum,String creditCardExpires,String cvc) { // friend to Database
+			String lastName, String phoneNumber,String creditCardNum,String creditCardExpires,String cvc) throws SQLException { // friend to Database
 		return new Customer(id, userName, password, email, firstName, lastName, phoneNumber,creditCardNum,creditCardExpires,cvc);
 	}
 
@@ -95,7 +98,7 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 		this.temp_removeOneTimePurchase = new ArrayList<>();
 	}
 
-	public void reloadTempsFromDatabase() {
+	public void reloadTempsFromDatabase() throws SQLException {
 		LocalDate today = LocalDate.now();
 		this.temp_activeSubscription = generateActiveSubscriptions(today);
 		this.temp_unactiveSubscription = generateUnactiveSubscriptions(today);
@@ -108,8 +111,9 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 	 * generate active subscriptions from given date
 	 * @param dateToCheck from which date to generate the active subscriptions
 	 * @return list of active subscriptions 
+	 * @throws SQLException if the access to database failed
 	 */
-	private ArrayList<Subscription> generateActiveSubscriptions(LocalDate dateToCheck) {
+	private ArrayList<Subscription> generateActiveSubscriptions(LocalDate dateToCheck) throws SQLException {
 		ArrayList<Integer> ids = Database.searchSubscription(super.getId(), null, dateToCheck, true);
 		return generateListSubscriptions(ids);
 	}
@@ -118,8 +122,9 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 	 * generate unactive subscriptions from given date
 	 * @param dateToCheck from which date to generate the unactive subscriptions
 	 * @return list of unactive subscriptions 
+	 * @throws SQLException if the access to database failed
 	 */
-	private ArrayList<Subscription> generateUnactiveSubscriptions(LocalDate dateToCheck) {
+	private ArrayList<Subscription> generateUnactiveSubscriptions(LocalDate dateToCheck) throws SQLException {
 		ArrayList<Integer> ids = Database.searchSubscription(super.getId(), null, dateToCheck, false);
 		return generateListSubscriptions(ids);
 	}
@@ -128,8 +133,9 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 	 * generate list of subscriptions from given list of ids
 	 * @param ids ids of the subscriptions we want to get
 	 * @return list of subscriptions objects
+	 * @throws SQLException if the access to database failed
 	 */
-	private ArrayList<Subscription> generateListSubscriptions(ArrayList<Integer> ids) {
+	private ArrayList<Subscription> generateListSubscriptions(ArrayList<Integer> ids) throws SQLException {
 		ArrayList<Subscription> arrList = new ArrayList<Subscription>();
 		for (int id : ids) {
 			Subscription o = Database._getSubscriptionById(id);
@@ -143,8 +149,9 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 	/**
 	 * Returns the customer one time purchase list
 	 * @return list of one time purchase object of the customer
+	 * @throws SQLException if the access to database failed
 	 */
-	private ArrayList<OneTimePurchase> generateOneTimePurchases() {
+	private ArrayList<OneTimePurchase> generateOneTimePurchases() throws SQLException {
 		ArrayList<Integer> ids = Database.searchOneTimePurchase(super.getId(), null, null, null);
 		return generateListOneTimePurchases(ids);
 	}
@@ -153,8 +160,9 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 	 * generate list of one time purchase from given list of ids
 	 * @param ids ids of the one time purchase we want to get
 	 * @return list of one time purchase objects
+	 * @throws SQLException if the access to database failed
 	 */
-	private ArrayList<OneTimePurchase> generateListOneTimePurchases(ArrayList<Integer> ids) {
+	private ArrayList<OneTimePurchase> generateListOneTimePurchases(ArrayList<Integer> ids) throws SQLException {
 		ArrayList<OneTimePurchase> arrList = new ArrayList<OneTimePurchase>();
 		for (int id : ids) {
 			OneTimePurchase o = Database._getOneTimePurchaseById(id);
@@ -165,7 +173,7 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 		return arrList;
 	}
 
-	public void saveToDatabase() {
+	public void saveToDatabase() throws SQLException {
 		Database.saveCustomer(this);
 		// delete removes
 		for (Subscription s : temp_removeSubscription) {
@@ -187,7 +195,7 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 			otp.saveToDatabase();
 	}
 
-	public void deleteFromDatabase() {
+	public void deleteFromDatabase() throws SQLException {
 		Database.deleteCustomer(super.getId());
 		for (Subscription s : temp_removeSubscription)
 			s.deleteFromDatabase();
