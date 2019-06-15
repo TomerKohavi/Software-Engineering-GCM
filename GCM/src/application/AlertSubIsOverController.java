@@ -23,6 +23,9 @@ public class AlertSubIsOverController {
     @FXML // fx:id="MainText"
     private Text MainText; // Value injected by FXMLLoader
 
+    /**
+     * initialize the variables
+     */
     public void initialize()
     {
     	MainText.setText("Your subscription for " + Connector.subNameToAlert + " is almost over.");
