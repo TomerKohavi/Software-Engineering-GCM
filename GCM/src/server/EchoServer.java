@@ -352,6 +352,11 @@ public class EchoServer extends AbstractServer
 		}
 	}
 
+	/**
+	 * handle fetch sights request from the client
+	 * @param fs the fetch sights request from the client
+	 * @return the fetch sights result that return to the client
+	 */
 	private FetchSights handleFetchSights(FetchSights fs)
 	{
 		System.out.println("fetch " + fs.sightType.toString());
@@ -366,18 +371,32 @@ public class EchoServer extends AbstractServer
 		return fs;
 	}
 
+	/**
+	 * handle purchase request from the client
+	 * @param cp the city purchase request from the client
+	 */
 	private void handlePurchase(CityPurchase cp)
 	{
 		cp._setId(Database.generateIdCityPurchase());
 		cp.saveToDatabase();
 	}
 
+	/**
+	 * handle fetch customer request from the client
+	 * @param fc the fetch customer request from the client
+	 * @return the fetch customer result that return to the client
+	 */
 	private FetchCustomer handleFetchUser(FetchCustomer fc)
 	{
 		fc.user = Database.getCustomerById(fc.id);
 		return fc;
 	}
 
+	/**
+	 * handle create location request from the client
+	 * @param clocs the location request
+	 * @return the result of the location request to the client
+	 */
 	private CreateLocations handleLocationsCreation(CreateLocations clocs)
 	{
 		clocs.idList = new ArrayList<Integer>();
@@ -392,6 +411,11 @@ public class EchoServer extends AbstractServer
 		return clocs;
 	}
 	
+	/**
+	 * handle create city request from the client
+	 * @param clocs the city request
+	 * @return the result of the city request to the client
+	 */
 	private CreateCity handleCityCreation(CreateCity ccity)
 	{ // TODO Ronen make sure its the right way to create cities etc.
 		ccity.city = new City(ccity.name, ccity.info);
