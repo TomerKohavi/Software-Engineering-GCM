@@ -1,4 +1,4 @@
-package otherClasses;
+package temp_mains;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -14,8 +14,8 @@ public class Main2 {
 		Database.createConnection();
 		try 
 		{
-			//Date today = new Date(Calendar.getInstance().getTime().getTime());
-			System.out.println(new Date(119,1,14));
+			Date today = new Date(Calendar.getInstance().getTime().getTime());
+			System.out.println(today.getYear());
 			/*Customer cust = new Customer("t", "t", "t@gmail.com", "t", "t t", "0523002100", "0095681338665894", "07/24",
 					"000");
 			

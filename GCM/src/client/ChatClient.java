@@ -24,6 +24,7 @@ import objectClasses.PlaceOfInterestSight;
 import objectClasses.RouteSight;
 import objectClasses.RouteStop;
 import objectClasses.Statistic;
+import objectClasses.Subscription;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -329,6 +330,16 @@ public class ChatClient extends AbstractClient
 	public void deleteObject(ClassMustProperties object) throws IOException
 	{
 		sendToServer(new Delete(object));
+	}
+	
+	/**
+	 * @param subAlmostEnd the subscription that is going to end
+	 * @param newFullPrice the new full price
+	 * @param newPayedPrice the new payed price
+	 * @throws IOException due to IO communication 
+	 */
+	public void resubscribe(Subscription subAlmostEnd,int newFullPrice,int newPayedPrice) throws IOException {
+		sendToServer(new Resub(subAlmostEnd, newFullPrice, newPayedPrice));
 	}
 
 	/**

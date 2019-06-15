@@ -17,6 +17,9 @@ public class Delete extends Command
 		this.toDelete = toDelete;
 	}
 	
+	/**
+	 * delete the request
+	 */
 	public void delete() {}
 	
 	public ClassMustProperties toDelete;

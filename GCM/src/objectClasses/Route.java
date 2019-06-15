@@ -19,7 +19,8 @@ public class Route implements ClassMustProperties, Serializable
 	private int cityId;
 	private String name;
 	private String info;
-
+	private boolean isFavorite;
+	
 	ArrayList<RouteStop> temp_routeStops;
 
 	ArrayList<RouteStop> temp_removeRouteStops;
@@ -32,12 +33,13 @@ public class Route implements ClassMustProperties, Serializable
 	 * @param name the route name
 	 * @param info the route info
 	 */
-	private Route(int id, int cityId,String name, String info)
+	private Route(int id, int cityId,String name, String info,boolean isFavorite)
 	{
 		this.id = id;
 		this.cityId = cityId;
 		this.name=name;
 		this.info = info;
+		this.isFavorite=isFavorite;
 		reloadTempsFromDatabase();
 	}
 
@@ -51,10 +53,10 @@ public class Route implements ClassMustProperties, Serializable
 	 * @param info the route info
 	 * @return new route object
 	 */
-	public static Route _createRoute(int id, int cityId,String name, String info)
+	public static Route _createRoute(int id, int cityId,String name, String info,boolean isFavorite)
 	{ // friend to
 		// Database
-		return new Route(id, cityId,name, info);
+		return new Route(id, cityId,name, info,isFavorite);
 	}
 
 	/**
@@ -64,12 +66,13 @@ public class Route implements ClassMustProperties, Serializable
 	 * @param name the route name
 	 * @param info the route info
 	 */
-	public Route(int cityId,String name, String info)
+	public Route(int cityId,String name, String info,boolean isFavorite)
 	{
 		this.id = Database.generateIdRoute();
 		this.cityId = cityId;
 		this.name=name;
 		this.info = info;
+		this.isFavorite=isFavorite;
 		this.temp_routeStops = new ArrayList<>();
 		this.temp_removeRouteStops = new ArrayList<>();
 	}
@@ -84,10 +87,11 @@ public class Route implements ClassMustProperties, Serializable
 		this.cityId = other.cityId;
 		this.info = other.info;
 		this.name=other.name;
+		this.isFavorite=other.isFavorite;
 		this.temp_routeStops = new ArrayList<>();
 		for(RouteStop rs:other.getCopyRouteStops()) {
 			RouteStop newRs=new RouteStop(this, rs.getCopyPlace(), rs.getRecommendedTime());
-			temp_routeStops.add(newRs);
+			this.addRouteStop(newRs);
 		}
 		this.temp_removeRouteStops = new ArrayList<>();
 	}
@@ -349,6 +353,24 @@ public class Route implements ClassMustProperties, Serializable
 	public int getCityId()
 	{
 		return cityId;
+	}
+	
+	/**
+	 * Returns if the route sight is favorite or not
+	 * 
+	 * @return if the route sight is favorite or not
+	 */
+	public boolean getIsFavorite() {
+		return isFavorite;
+	}
+
+	/**
+	 * Sets the route sight favorite
+	 * 
+	 * @param favorite the new favorite of the route sight
+	 */
+	public void setFavorite(boolean favorite) {
+		isFavorite = favorite;
 	}
 
 	@Override

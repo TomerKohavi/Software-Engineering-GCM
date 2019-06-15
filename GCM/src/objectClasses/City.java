@@ -200,6 +200,11 @@ public class City implements ClassMustProperties, Serializable
 	{
 		if (cdv.getCityId() != this.getId())
 			return false;
+		if(cdv.getNumMapSights()==0)
+		{
+			addUnpublishedCityDataVersion(cdv);
+			return false;
+		}
 		if (this.publishedVersionId != null && this.temp_publishedVersion != null)
 			temp_unpublishedVersions.add(temp_publishedVersion);
 		publishedVersionId = cdv.getId();
@@ -227,6 +232,8 @@ public class City implements ClassMustProperties, Serializable
 			}
 		}
 		if (cdv == null)
+			return false;
+		if(cdv.getNumMapSights()==0)
 			return false;
 		setPublishedToUnpublished();
 		this.publishedVersionId = cdv.getId();

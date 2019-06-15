@@ -127,7 +127,7 @@ public class Connector {
 	public static ArrayList<String> getRoutesNames(ArrayList<RouteSight> routeList) {
 		ArrayList<String> nameList = new ArrayList<String>();
 		for (RouteSight route : routeList) {
-			if (route.getIsFavorite())
+			if (route.getCopyRoute().getIsFavorite())
 				nameList.add("★" + "Route " + route.getCopyRoute().getId());
 			else
 				nameList.add("Route " + route.getCopyRoute().getId());
@@ -137,23 +137,26 @@ public class Connector {
 
 	/**
 	 * Downloads the city details to the user's computer.
+	 * @throws IOException 
 	 */
-	@SuppressWarnings("unchecked")
-	public static void downloadCity() {
+	@SuppressWarnings({ "unchecked", "unused" })
+	public static boolean downloadCity() throws IOException {
 		DirectoryChooser chooser = new DirectoryChooser();
 		chooser.setTitle("Choose Download Location");
 		File defaultDirectory = new File("c:/");
 		chooser.setInitialDirectory(defaultDirectory);
 		File selectedDirectory = chooser.showDialog(null);
-		try {
-			Downloader.downloadPOIs(
-					(ArrayList<PlaceOfInterestSight>) Connector.client.fetchSights(
-							Connector.selectedCity.getCopyPublishedVersion().getId(), PlaceOfInterestSight.class),
-					selectedDirectory.getPath() + "\\" + Connector.selectedCity.getCityName() + " "
-							+ Connector.selectedCity.getCopyPublishedVersion().getVersionName() + ".txt");
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (selectedDirectory != null)
+		{
+		Downloader.downloadPOIs(
+				(ArrayList<PlaceOfInterestSight>) Connector.client.fetchSights(
+						Connector.selectedCity.getCopyPublishedVersion().getId(), PlaceOfInterestSight.class),
+				selectedDirectory.getPath() + "\\" + Connector.selectedCity.getCityName() + " "
+						+ Connector.selectedCity.getCopyPublishedVersion().getVersionName() + ".txt");
+			return true;
 		}
+		return false;
+		
 	}
 
 	/**

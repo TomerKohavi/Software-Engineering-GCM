@@ -45,6 +45,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import jdk.nashorn.internal.objects.annotations.Setter;
 import objectClasses.City;
 import objectClasses.CityDataVersion;
 import objectClasses.Customer;
@@ -346,13 +347,18 @@ public class HomePageController
 		PublishButton.setVisible(false);
 		if (Connector.unpublished)
 		{
-			RemoveButton.setVisible(true);
 			CreateButton.setVisible(true);
 			if (Connector.listType.equals("Map") || Connector.listType.equals("POI")
 					|| Connector.listType.equals("Route"))
+			{
 				EditButton.setVisible(true);
+				RemoveButton.setVisible(true);
+			}
 			else
+			{
 				EditButton.setVisible(false);
+				RemoveButton.setVisible(false);
+			}
 		}
 		else
 		{
@@ -412,12 +418,12 @@ public class HomePageController
 					BuyButton.setText("Change Price");
 				else
 					BuyButton.setVisible(false);
-				if (role == Role.MANAGER && city.getManagerNeedsToPublish())
+				if (Connector.unpublished && role == Role.MANAGER && city.getManagerNeedsToPublish())
 				{
 					PublishButton.setVisible(true);
 					PublishButton.setText("Publish Version");
 				}
-				if (role == Role.REGULAR)
+				if (Connector.unpublished && role == Role.REGULAR)
 				{
 					PublishButton.setVisible(true);
 					PublishButton.setText("Commit Version");
@@ -630,7 +636,7 @@ public class HomePageController
 								ReportCityName.setText(Connector.allCities.get(selectedIndex - 1).a);
 
 							}
-							ReportInfo.setText("Number of Maps: " + 100 + "\n" + "Number of One Time Purchases: "
+							ReportInfo.setText("Number of Maps: " + statboi.getNumMaps() + "\n" + "Number of One Time Purchases: "
 									+ statboi.getNumOneTimePurchases() + "\n" + "Number of Subscriptions: "
 									+ statboi.getNumSubscriptions() + "\n" + "Number of Re-Subscriptions: "
 									+ statboi.getNumSubscriptionsRenewal() + "\n" + "Number of Views: "
@@ -717,6 +723,8 @@ public class HomePageController
 		}
 		else
 		{
+			ReportCityName.setText("");
+			ReportInfo.setText("");
 			DateNotValid.setVisible(false);
 			MainList.getItems().clear();
 			MainList.getItems().add("All Cities");
@@ -924,7 +932,6 @@ public class HomePageController
 			if (Connector.listType.equals("City")) {
 				Connector.client.addStat(Connector.selectedCity.getId(), 0);
 				Connector.client.deleteObject(Connector.searchCityResult.remove(index)); // TODO CHECK deletion
-				// TODO Kohavi+Ronen pretty sure deletion of a City is only for CEO or at least manager
 			}
 			else if (Connector.listType.equals("Map"))
 				Connector.client.deleteObject(Connector.searchMapResult.remove(index));
@@ -1027,9 +1034,8 @@ public class HomePageController
 		if (PublishButton.getText().equals("Publish Version"))
 		{
 			System.out.println("Published");
-			Connector.selectedCity.addPublishedCityDataVersion(Connector.cityData); // TODO make sure this is the correct CDV to publish
-//			Connector.selectedCity.setManagerNeedsToPublish(false); // TODO needs to send to database it they don't do it themselves
-//			// TODO need to ask Ronen if update to false after publish is necessary. TODO UNCOMMENT ABOVE IF Ronen says yes to above
+			Connector.selectedCity.addPublishedCityDataVersion(Connector.cityData);
+			Connector.selectedCity.setManagerNeedsToPublish(false);
 			Connector.client.update(Connector.selectedCity);
 			Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.VersionPublish);
 			Connector.client.addStat(Connector.selectedCity.getId(), Connector.selectedCity.getCopyPublishedVersion().getNumMapSights());
@@ -1039,7 +1045,6 @@ public class HomePageController
 		{
 			Connector.selectedCity.setManagerNeedsToPublish(true);
 			Connector.client.update(Connector.selectedCity);
-			// TODO Kohavi make sure it's what you meant, seems to0 easy
 		}
 	}
 
@@ -1059,9 +1064,11 @@ public class HomePageController
 				openNewPage("BuyScene.fxml");
 			else if (BuyButton.getText().equals("Download"))
 			{
-				Connector.downloadCity();
-				Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.SubDownload);
-				openNewPage("DownloadCompleteScene.fxml");
+				if (Connector.downloadCity())
+				{
+					Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.SubDownload);
+					openNewPage("DownloadCompleteScene.fxml");
+				}
 			}
 			else if (BuyButton.getText().equals("Change Price"))
 				openNewPage("ChangePriceScene.fxml");

@@ -24,6 +24,9 @@ public class Statboi extends Command
 		this.end = end;
 	}
 	
+	/**
+	 * delete the request
+	 */
 	public void delete()
 	{
 		cityId = null;

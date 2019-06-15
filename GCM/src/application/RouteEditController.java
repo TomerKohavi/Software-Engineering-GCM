@@ -105,7 +105,7 @@ public class RouteEditController
 			route = Connector.selectedRoute;
 			Name.setText(route.getName());
 			InfoBox.setText(route.getInfo());
-//			FavoriteBox.setSelected(route.getIs); // TODO get isFavorite (is in RouteSight but not in Route - Blame Ronen) TODO Blaming ronen
+//			FavoriteBox.setSelected(route.getIs); // TODO get isFavorite (is in RouteSight but not in Route - Blame Ronen)
 			stopList = route.getCopyRouteStops();
 		}
 		else
@@ -189,17 +189,22 @@ public class RouteEditController
 		if (!timeS.equals("")) // not empty
 		{
 			int time = Integer.parseInt(timeS);
-			int selectedIdx = POIBox.getSelectionModel().getSelectedIndex();
-			if (selectedIdx >= 0)
+			if (time > 0)
 			{
-				PlaceOfInterest poi = Connector.searchPOIResult.get(selectedIdx).getCopyPlace();
-				RouteStop newRouteStop = RouteStop._createRouteStop(-1, -1, poi.getId(), poi.getName(), 0,
-						new Time((time / 60), time % 60, 0));
-				stopList.add(newRouteStop);
-				updateTable();
-				StopTime.setText("");
-				TimeError.setOpacity(0);
+				int selectedIdx = POIBox.getSelectionModel().getSelectedIndex();
+				if (selectedIdx >= 0)
+				{
+					PlaceOfInterest poi = Connector.searchPOIResult.get(selectedIdx).getCopyPlace();
+					RouteStop newRouteStop = RouteStop._createRouteStop(-1, -1, poi.getId(), poi.getName(), 0,
+							new Time((time / 60), time % 60, 0));
+					stopList.add(newRouteStop);
+					updateTable();
+					StopTime.setText("");
+					TimeError.setOpacity(0);
+				}
 			}
+			else
+				TimeError.setOpacity(1);
 		}
 		else
 			TimeError.setOpacity(1);

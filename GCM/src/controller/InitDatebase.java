@@ -99,7 +99,7 @@ public class InitDatebase {
 				false);
 
 		// cdv
-		CityDataVersion cdv = new CityDataVersion(c1, "1.0", 20, 100.9);
+		CityDataVersion cdv = new CityDataVersion(c1, "1.2", 20, 100.9);
 
 		p4.saveToDatabase();
 		PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv.getId(), p0);
@@ -113,7 +113,7 @@ public class InitDatebase {
 		PlaceOfInterestSight ps4 = new PlaceOfInterestSight(cdv.getId(), p4);
 		ps4.saveToDatabase();
 
-		Map m0 = new Map(c1.getId(), "Central city", "First map", "haifa1.png");
+		Map m0 = new Map(c1.getId(), "Central city", "General maps that shows most of the city.", "haifa1.png");
 		double[] coords0 = { 121.3, 518.7 };
 		Location l0 = new Location(m0, p0, coords0);
 		m0.addLocation(l0);
@@ -127,7 +127,7 @@ public class InitDatebase {
 		MapSight ms0 = new MapSight(cdv.getId(), m0);
 		ms0.saveToDatabase();
 
-		Map m1 = new Map(c1.getId(), "Mount Carmel", "Second map", "haifa2.png");
+		Map m1 = new Map(c1.getId(), "Mount Carmel", "A map tha focus of Mount Carmer. Scale of 1-50 in real life.", "haifa2.png");
 		double[] coords5 = { 412.3, 285.7 };
 		Location l5 = new Location(m1, p2, coords5);
 		m1.addLocation(l5);
@@ -141,16 +141,16 @@ public class InitDatebase {
 		MapSight ms1 = new MapSight(cdv.getId(), m1);
 		ms1.saveToDatabase();
 
-		Route r = new Route(c1.getId(), "Education route", "A route that passes through the best academic institutions in Haifa.");
+		Route r = new Route(c1.getId(), "Education route", "A route that passes through the best academic institutions in Haifa.",true);
 		RouteStop rstop1 = new RouteStop(r, p0, new Time(1, 25, 0));
 		r.addRouteStop(rstop1);
 		RouteStop rstop2 = new RouteStop(r, p1, new Time(0, 50, 0));
 		r.addRouteStop(rstop2);
 		r.saveToDatabase();
-		RouteSight rs = new RouteSight(cdv.getId(), r, true);
+		RouteSight rs = new RouteSight(cdv.getId(), r);
 		rs.saveToDatabase();
 
-		Route r1 = new Route(c1.getId(), "Nice family trip","A route that designed for a vatction day for all ages.");
+		Route r1 = new Route(c1.getId(), "Nice family trip","A route that designed for a vatction day for all ages.",false);
 		RouteStop rstop3 = new RouteStop(r1, p2, new Time(4, 0, 0));
 		r1.addRouteStop(rstop3);
 		RouteStop rstop4 = new RouteStop(r1, p3, new Time(0, 20, 0));
@@ -158,11 +158,11 @@ public class InitDatebase {
 		RouteStop rstop5 = new RouteStop(r1, p4, new Time(3, 30, 0));
 		r1.addRouteStop(rstop5);
 		r1.saveToDatabase();
-		RouteSight rs1 = new RouteSight(cdv.getId(), r1, true);
+		RouteSight rs1 = new RouteSight(cdv.getId(), r1);
 		rs1.saveToDatabase();
 
 		c1.addPublishedCityDataVersion(cdv);
-		c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv, "2.0"));
+		c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv, "3.1"));
 		c1.saveToDatabase();
 	}
 	
@@ -194,7 +194,7 @@ public class InitDatebase {
 				false);
 
 		// cdv
-		CityDataVersion cdv = new CityDataVersion(c1, "1.0", 15, 100.9);
+		CityDataVersion cdv = new CityDataVersion(c1, "2.1", 15, 100.9);
 		p4.saveToDatabase();
 		PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv.getId(), p0);
 		ps0.saveToDatabase();
@@ -206,7 +206,7 @@ public class InitDatebase {
 		ps3.saveToDatabase();
 		PlaceOfInterestSight ps4 = new PlaceOfInterestSight(cdv.getId(), p4);
 		ps4.saveToDatabase();
-		Map m0 = new Map(c1.getId(), "North city", "First map", "tel_aviv1.png");
+		Map m0 = new Map(c1.getId(), "North city", "Map that focus on the north part of the city, roads and streats.", "tel_aviv1.png");
 		double[] coords0 = { 123.3, 354.7 };
 		Location l0 = new Location(m0, p0, coords0);
 		m0.addLocation(l0);
@@ -230,16 +230,16 @@ public class InitDatebase {
 		m1.saveToDatabase();
 		MapSight ms1 = new MapSight(cdv.getId(), m1);
 		ms1.saveToDatabase();
-		Route r = new Route(c1.getId(), "Shopping and resturant tour","A tour that pass throught the best shopping attractions in town.");
+		Route r = new Route(c1.getId(), "Shopping and resturant tour","A tour that pass throught the best shopping attractions in town.",false);
 		RouteStop rstop1 = new RouteStop(r, p0, new Time(4, 30, 0));
 		r.addRouteStop(rstop1);
 		RouteStop rstop2 = new RouteStop(r, p1, new Time(2, 0, 0));
 		r.addRouteStop(rstop2);
 		r.saveToDatabase();
-		RouteSight rs = new RouteSight(cdv.getId(), r, true);
+		RouteSight rs = new RouteSight(cdv.getId(), r);
 		rs.saveToDatabase();
 
-		Route r1 = new Route(c1.getId(), "Random route","A route with a wide variety of attractions types.");
+		Route r1 = new Route(c1.getId(), "Random route","A route with a wide variety of attractions types.",true);
 		RouteStop rstop3 = new RouteStop(r1, p2, new Time(0, 40, 0));
 		r1.addRouteStop(rstop3);
 		RouteStop rstop4 = new RouteStop(r1, p3, new Time(2, 20, 0));
@@ -247,11 +247,11 @@ public class InitDatebase {
 		RouteStop rstop5 = new RouteStop(r1, p4, new Time(4, 20, 0));
 		r1.addRouteStop(rstop5);
 		r1.saveToDatabase();
-		RouteSight rs1 = new RouteSight(cdv.getId(), r1, true);
+		RouteSight rs1 = new RouteSight(cdv.getId(), r1);
 		rs1.saveToDatabase();
 
 		c1.addPublishedCityDataVersion(cdv);
-		c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv, "2.0"));
+		c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv, "6.888"));
 		c1.saveToDatabase();
 
 	}
@@ -291,7 +291,7 @@ public class InitDatebase {
 				"Then you sift the flour and bake together in the communal tabun (which still exists at the entrance gates to Mishkenot Sha'ananim), and then sit together and eat and enjoy fresh bread and the satisfaction of having a significant, slow and common effort.",
 				true);
 		// cdv
-		CityDataVersion cdv = new CityDataVersion(city, "1.0", 40, 135);
+		CityDataVersion cdv = new CityDataVersion(city, "3.3", 40, 135);
 		PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv.getId(), p0);
 		ps0.saveToDatabase();
 		PlaceOfInterestSight ps1 = new PlaceOfInterestSight(cdv.getId(), p1);
@@ -314,18 +314,18 @@ public class InitDatebase {
 		MapSight ms0 = new MapSight(cdv.getId(), m0);
 		ms0.saveToDatabase();
 
-		Route r1 = new Route(city.getId(), "Historical attractions","A route that pass throught the best historical attractions in town.");
+		Route r1 = new Route(city.getId(), "Historical attractions","A route that pass throught the best historical attractions in town.",true);
 		RouteStop rstop1 = new RouteStop(r1, p0, new Time(0, 40, 0));
 		r1.addRouteStop(rstop1);
 		RouteStop rstop2 = new RouteStop(r1, p2, new Time(1, 30, 0));
 		r1.addRouteStop(rstop2);
 		r1.saveToDatabase();
 
-		RouteSight rs1 = new RouteSight(cdv.getId(), r1, false);
+		RouteSight rs1 = new RouteSight(cdv.getId(), r1);
 		rs1.saveToDatabase();
 
 		// cdv2
-		CityDataVersion cdv2 = new CityDataVersion(cdv, "2.0");
+		CityDataVersion cdv2 = new CityDataVersion(cdv, "5.2");
 		PlaceOfInterestSight ps2 = new PlaceOfInterestSight(cdv2.getId(), p2);
 		ps0.saveToDatabase();
 		PlaceOfInterestSight ps3 = new PlaceOfInterestSight(cdv2.getId(), p3);
@@ -388,14 +388,14 @@ public class InitDatebase {
 		} else
 			System.out.println("Something weird is happening :( check rome() in InitDatabase");
 
-		Route r3 = new Route(city.getId(), "Museums are amazing!!","Best museums in the city can be found here.");
+		Route r3 = new Route(city.getId(), "Museums are amazing!!","Best museums in the city can be found here.",false);
 		RouteStop rstop25 = new RouteStop(r3, p5, new Time(2, 27, 0));
 		r3.addRouteStop(rstop25);
 		RouteStop rstop24 = new RouteStop(r3, p6, new Time(0, 53, 0));
 		r3.addRouteStop(rstop24);
 		r3.saveToDatabase();
 
-		RouteSight rs2 = new RouteSight(cdv2.getId(), r3, true);
+		RouteSight rs2 = new RouteSight(cdv2.getId(), r3);
 		rs2.saveToDatabase();
 
 		city.addPublishedCityDataVersion(cdv2);
@@ -455,7 +455,7 @@ public class InitDatebase {
 		p7.saveToDatabase();
 
 		// cdv
-		CityDataVersion cdv = new CityDataVersion(city, "1.0", 40, 135);
+		CityDataVersion cdv = new CityDataVersion(city, "6.2", 40, 135);
 		PlaceOfInterestSight ps0 = new PlaceOfInterestSight(cdv.getId(), p0);
 		ps0.saveToDatabase();
 		PlaceOfInterestSight ps1 = new PlaceOfInterestSight(cdv.getId(), p1);
@@ -480,18 +480,18 @@ public class InitDatebase {
 		MapSight ms0 = new MapSight(cdv.getId(), m0);
 		ms0.saveToDatabase();
 
-		Route r1 = new Route(city.getId(), "Historical trip","A trip that emphasis the historical attraction in the city.");
+		Route r1 = new Route(city.getId(), "Historical trip","A trip that emphasis the historical attraction in the city.",true);
 		RouteStop rstop1 = new RouteStop(r1, p0, new Time(0, 40, 0));
 		r1.addRouteStop(rstop1);
 		RouteStop rstop2 = new RouteStop(r1, p1, new Time(1, 30, 0));
 		r1.addRouteStop(rstop2);
 		r1.saveToDatabase();
 
-		RouteSight rs1 = new RouteSight(cdv.getId(), r1, false);
+		RouteSight rs1 = new RouteSight(cdv.getId(), r1);
 		rs1.saveToDatabase();
 
 		// cdv2
-		CityDataVersion cdv2 = new CityDataVersion(cdv, "2.0");
+		CityDataVersion cdv2 = new CityDataVersion(cdv, "8.1");
 		PlaceOfInterestSight ps2 = new PlaceOfInterestSight(cdv2.getId(), p2);
 		ps0.saveToDatabase();
 		PlaceOfInterestSight ps3 = new PlaceOfInterestSight(cdv2.getId(), p3);
@@ -555,7 +555,7 @@ public class InitDatebase {
 		} else
 			System.out.println("Something weird is happening :( check rome() in InitDatabase");
 
-		Route r3 = new Route(city.getId(), "Fun trip not boring :-)","Trip that is best suited for ages 10-20.");
+		Route r3 = new Route(city.getId(), "Fun trip not boring :-)","Trip that is best suited for ages 10-20.",false);
 		RouteStop rstop23 = new RouteStop(r3, p3, new Time(0, 40, 0));
 		r3.addRouteStop(rstop23);
 		RouteStop rstop25 = new RouteStop(r3, p5, new Time(2, 27, 0));
@@ -564,7 +564,7 @@ public class InitDatebase {
 		r3.addRouteStop(rstop24);
 		r3.saveToDatabase();
 
-		RouteSight rs2 = new RouteSight(cdv2.getId(), r3, true);
+		RouteSight rs2 = new RouteSight(cdv2.getId(), r3);
 		rs2.saveToDatabase();
 
 		city.addPublishedCityDataVersion(cdv);

@@ -25,6 +25,9 @@ public class Login extends Command {
 		this.loggedUser = null;
 	}	
 	
+	/**
+	 * delete the request
+	 */
 	public void delete()
 	{
 		name = pass = null;

@@ -36,6 +36,7 @@ import objectClasses.PlaceOfInterestSight;
 import objectClasses.Route;
 import objectClasses.RouteSight;
 import objectClasses.RouteStop;
+import objectClasses.Subscription;
 import objectClasses.Map;
 import objectClasses.MapSight;
 import objectClasses.PlaceOfInterest;
@@ -203,6 +204,14 @@ public class EchoServer extends AbstractServer
 		else
 			Database.saveEmployee((Employee) user);
 	}
+	
+	/**
+	 * @param  r the resubscribe inputs
+	 */
+	private void handleResubscribe(Resub r)
+	{
+		Subscription._Resubscribe(r.subAlmostEnd, r.newFullPrice, r.newPayedPrice);
+	}
 
 	/**
 	 * @param cr the customer request we want to handle
@@ -276,10 +285,10 @@ public class EchoServer extends AbstractServer
 	 */
 	private CreateRoute handleRouteCreation(CreateRoute croute)
 	{
-		Route route = new Route(croute.cityId, croute.name, croute.info);
+		Route route = new Route(croute.cityId, croute.name, croute.info,croute.isFav);
 		route.saveToDatabase();
 
-		RouteSight routeS = new RouteSight(croute.cdvId, route, croute.isFav);
+		RouteSight routeS = new RouteSight(croute.cdvId, route);
 		routeS.saveToDatabase();
 
 		croute.routeS = routeS;
@@ -426,7 +435,7 @@ public class EchoServer extends AbstractServer
 	 * @return the result of the city request to the client
 	 */
 	private CreateCity handleCityCreation(CreateCity ccity)
-	{ // TODO Ronen make sure its the right way to create cities etc.
+	{
 		ccity.city = new City(ccity.name, ccity.info);
 		CityDataVersion cdv = new CityDataVersion(ccity.city, ccity.name = "1.0", ccity.priceOneTime,
 				ccity.pricePeriod);
@@ -500,6 +509,8 @@ public class EchoServer extends AbstractServer
 				client.sendToClient(handleFetchUser((FetchCustomer) msg));
 			else if (msg instanceof CreateCity)
 				client.sendToClient(handleCityCreation((CreateCity) msg));
+			else if(msg instanceof Resub)
+				handleResubscribe((Resub)msg);
 			else
 				System.out.println(msg.getClass().toString() + '\n' + msg.toString());
 		}
