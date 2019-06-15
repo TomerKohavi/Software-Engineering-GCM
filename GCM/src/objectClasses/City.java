@@ -17,6 +17,12 @@ public class City implements ClassMustProperties, Serializable
 	private String cityDescription;
 	private Integer publishedVersionId;
 	private boolean managerNeedsToPublish;
+	
+	private double priceOneTime;
+	private double pricePeriod;
+	private boolean ceoNeedsToApprovePrices;
+	private double toBePriceOneTime;
+	private double toBePricePeriod;
 
 	private ArrayList<CityDataVersion> temp_unpublishedVersions;
 	private ArrayList<CityDataVersion> temp_removeVersions;
@@ -30,13 +36,19 @@ public class City implements ClassMustProperties, Serializable
 	 * @param cityDescription    the city description
 	 * @param publishedVersionId the id of the published version of this cirt
 	 */
-	private City(int id, String cityName, String cityDescription, Integer publishedVersionId,boolean managerNeedsToPublish)
+	private City(int id, String cityName, String cityDescription, Integer publishedVersionId,boolean managerNeedsToPublish,
+			double priceOneTime,double pricePeriod, boolean ceoNeedsToApprovePrices, double toBePriceOneTime, double toBePricePeriod)
 	{
 		this.id = id;
 		this.cityName = cityName;
 		this.cityDescription = cityDescription;
 		this.publishedVersionId = publishedVersionId;
 		this.managerNeedsToPublish=managerNeedsToPublish;
+		this.priceOneTime=priceOneTime;
+		this.pricePeriod=pricePeriod;
+		this.ceoNeedsToApprovePrices=ceoNeedsToApprovePrices;
+		this.toBePriceOneTime=toBePriceOneTime;
+		this.toBePricePeriod=toBePricePeriod;
 		reloadTempsFromDatabase();
 	}
 
@@ -51,9 +63,9 @@ public class City implements ClassMustProperties, Serializable
 	 * @param managerNeedsToPublish approval of managers
 	 * @return the new city object
 	 */
-	public static City _createCity(int id, String cityName, String cityDescription, Integer publishedVersionId,boolean managerNeedsToPublish)
+	public static City _createCity(int id, String cityName, String cityDescription, Integer publishedVersionId,boolean managerNeedsToPublish,double priceOneTime,double pricePeriod, boolean ceoNeedsToApprovePrices, double toBePriceOneTime, double toBePricePeriod)
 	{
-		return new City(id, cityName, cityDescription, publishedVersionId,managerNeedsToPublish);
+		return new City(id, cityName, cityDescription, publishedVersionId,managerNeedsToPublish, priceOneTime, pricePeriod,  ceoNeedsToApprovePrices,  toBePriceOneTime,  toBePricePeriod);
 	}
 
 	/**
@@ -62,12 +74,17 @@ public class City implements ClassMustProperties, Serializable
 	 * @param cityName        the city name
 	 * @param cityDescription the city description
 	 */
-	public City(String cityName, String cityDescription)
+	public City(String cityName, String cityDescription,double priceOneTime, double pricePeriod)
 	{
 		this.id = Database.generateIdCity();
 		this.cityName = cityName;
 		this.cityDescription = cityDescription;
 		this.managerNeedsToPublish=false;
+		this.priceOneTime=priceOneTime;
+		this.pricePeriod=pricePeriod;
+		this.ceoNeedsToApprovePrices=false;
+		this.toBePriceOneTime=priceOneTime;
+		this.toBePricePeriod=pricePeriod;
 		this.publishedVersionId = null;
 		this.temp_unpublishedVersions = new ArrayList<>();
 		this.temp_removeVersions = new ArrayList<>();
@@ -285,6 +302,15 @@ public class City implements ClassMustProperties, Serializable
 	{
 		return getPublishedVersion() != null;
 	}
+	
+	/**
+	 * Approve the to be prices
+	 */
+	public void approveToBePrices() 
+	{
+		this.priceOneTime=this.toBePriceOneTime;
+		this.pricePeriod=this.toBePricePeriod;
+	}
 
 	/**
 	 * Removes city data version by id
@@ -399,6 +425,56 @@ public class City implements ClassMustProperties, Serializable
 	public boolean getManagerNeedsToPublish() {
 		return this.managerNeedsToPublish;
 	}
+	
+	/**
+	 * Returns the price of one time buy
+	 * 
+	 * @return the price of one time buy
+	 */
+	public double getPriceOneTime()
+	{
+		return priceOneTime;
+	}
+
+	/**
+	 * Returns the price of period buy
+	 * 
+	 * @return the price of period buy
+	 */
+	public double getPricePeriod()
+	{
+		return pricePeriod;
+	}
+
+	/**
+	 * Returns the price of period buy after discount
+	 * 
+	 * @return the price of period buy after discount
+	 */
+	public double getPricePeriodWithDiscount()
+	{
+		return pricePeriod * 0.9;
+	}
+
+	/**
+	 * Sets the price of one time buy
+	 * 
+	 * @param priceOneTime the price of one time buy
+	 */
+	public void setPriceOneTime(double priceOneTime)
+	{
+		this.priceOneTime = priceOneTime;
+	}
+
+	/**
+	 * Sets the price of period buy
+	 * 
+	 * @param pricePeriod the price of period buy
+	 */
+	public void setPricePeriod(double pricePeriod)
+	{
+		this.pricePeriod = pricePeriod;
+	}
 
 	/**
 	 * Define the compare to ratio with another City
@@ -410,5 +486,53 @@ public class City implements ClassMustProperties, Serializable
 	public boolean equals(Object o)
 	{
 		return o instanceof City && ((City) o).getId() == this.getId();
+	}
+
+	/**
+	 * Return if CEO needs to approve the new prices
+	 * @return if CEO needs to approve the new prices
+	 */
+	public boolean isCeoNeedsToApprovePrices() {
+		return ceoNeedsToApprovePrices;
+	}
+
+	/**
+	 * Set if CEO needs to approve the new prices
+	 * @param ceoNeedsToApprovePrices if CEO needs to approve the new prices
+	 */
+	public void setCeoNeedsToApprovePrices(boolean ceoNeedsToApprovePrices) {
+		this.ceoNeedsToApprovePrices = ceoNeedsToApprovePrices;
+	}
+
+	/**
+	 * Return the one time purchase price that is not approved
+	 * @return the one time purchase price that is not approved
+	 */
+	public double getToBePriceOneTime() {
+		return toBePriceOneTime;
+	}
+
+	/**
+	 * Set the one time purchase price that is not approved
+	 * @param toBePriceOneTime the one time purchase price that is not approved
+	 */
+	public void setToBePriceOneTime(double toBePriceOneTime) {
+		this.toBePriceOneTime = toBePriceOneTime;
+	}
+
+	/**
+	 * Return the subscription one month purchase price that is not approved
+	 * @return the subscription one month purchase price that is not approved
+	 */
+	public double getToBePricePeriod() {
+		return toBePricePeriod;
+	}
+
+	/**
+	 * Set the subscription one month purchase price that is not approved
+	 * @param toBePricePeriod the subscription one month purchase price that is not approved
+	 */
+	public void setToBePricePeriod(double toBePricePeriod) {
+		this.toBePricePeriod = toBePricePeriod;
 	}
 }

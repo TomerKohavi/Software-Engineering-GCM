@@ -704,24 +704,34 @@ public class Database {
 			}
 			if (existCity(p.getId())) {
 				String sql = "UPDATE " + Table.City.getValue()
-						+ " SET Name=?, Description=?, VersionID=?, MNtP=? WHERE ID=?";
+						+ " SET Name=?, Description=?, VersionID=?, MNtP=?, PriceOneTime=?, PricePeriod=?, CEONTAP=?, TBPriceOneTime=?, TBPricePeriod=?  WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setString(1, p.getCityName());
 				su.setString(2, p.getCityDescription());
 				su.setInt(3, p.getPublishedVersionId() == null ? -1 : p.getPublishedVersionId());
 				su.setBoolean(4, p.getManagerNeedsToPublish());
-				su.setInt(5, p.getId());
+				su.setDouble(5, p.getPriceOneTime());
+				su.setDouble(6, p.getPricePeriod());
+				su.setBoolean(7, p.isCeoNeedsToApprovePrices());
+				su.setDouble(8, p.getToBePriceOneTime());
+				su.setDouble(9, p.getToBePricePeriod());
+				su.setInt(10, p.getId());
 				su.executeUpdate();
 				return true;
 			} else {
 				String sql = "INSERT INTO " + Table.City.getValue()
-						+ " (ID,Name, Description, VersionID, MNtP) VALUES (?,?, ?, ?, ?)";
+						+ " (ID,Name, Description, VersionID, MNtP,PriceOneTime, PricePeriod, CEONTAP, TBPriceOneTime, TBPricePeriod) VALUES (?,?, ?, ?, ?,?,?,?,?,?)";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getId());
 				su.setString(2, p.getCityName());
 				su.setString(3, p.getCityDescription());
 				su.setInt(4, p.getPublishedVersionId() == null ? -1 : p.getPublishedVersionId());
 				su.setBoolean(5, p.getManagerNeedsToPublish());
+				su.setDouble(6, p.getPriceOneTime());
+				su.setDouble(7, p.getPricePeriod());
+				su.setBoolean(8, p.isCeoNeedsToApprovePrices());
+				su.setDouble(9, p.getToBePriceOneTime());
+				su.setDouble(10, p.getToBePricePeriod());
 				su.executeUpdate();
 				return false;
 			}
@@ -1160,24 +1170,20 @@ public class Database {
 			}
 			if (existCityDataVersion(p.getId())) {
 				String sql = "UPDATE " + Table.CityDataVersion.getValue()
-						+ " SET CityID=?, VersionName=?, PriceOneTime=?, PricePeriod=? WHERE ID=?";
+						+ " SET CityID=?, VersionName=?, WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityId());
 				su.setString(2, p.getVersionName());
-				su.setDouble(3, p.getPriceOneTime());
-				su.setDouble(4, p.getPricePeriod());
 				su.setInt(5, p.getId());
 				su.executeUpdate();
 				return true;
 			} else {
 				String sql = "INSERT INTO " + Table.CityDataVersion.getValue()
-						+ " (ID,CityID, VersionName, PriceOneTime, PricePeriod) VALUES (?, ?, ?, ?, ?)";
+						+ " (ID,CityID, VersionName) VALUES (?, ?, ?)";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getId());
 				su.setInt(2, p.getCityId());
 				su.setString(3, p.getVersionName());
-				su.setDouble(4, p.getPriceOneTime());
-				su.setDouble(5, p.getPricePeriod());
 				su.executeUpdate();
 				return false;
 			}
@@ -2295,7 +2301,8 @@ public class Database {
 			if (res == null)
 				return null;
 			return City._createCity(res.getInt("ID"), res.getString("Name"), res.getString("Description"),
-					res.getInt("VersionID") == -1 ? null : res.getInt("VersionID"), res.getBoolean("MNtP"));
+					res.getInt("VersionID") == -1 ? null : res.getInt("VersionID"), res.getBoolean("MNtP"),res.getDouble("PriceOneTime"),
+							res.getDouble("PricePeriod"), res.getBoolean("CEONTAP"), res.getDouble("TBPriceOneTime"), res.getDouble("TBPricePeriod"));
 		} catch (Exception e) {
 			// closeConnection();
 			e.printStackTrace();
@@ -2453,8 +2460,7 @@ public class Database {
 	public static CityDataVersion _getCityDataVersionById(int id) {
 		try {
 			ResultSet res = get(Table.CityDataVersion.getValue(), id);
-			return CityDataVersion._createCityDataVersion(res.getInt("ID"), res.getInt("CityID"),
-					res.getString("VersionName"), res.getDouble("PriceOneTime"), res.getDouble("PricePeriod"));
+			return CityDataVersion._createCityDataVersion(res.getInt("ID"), res.getInt("CityID"),res.getString("VersionName"));
 		} catch (Exception e) {
 			// closeConnection();
 			e.printStackTrace();

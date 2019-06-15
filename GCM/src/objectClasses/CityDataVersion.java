@@ -18,8 +18,6 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 	private int id;
 	private int cityId;
 	private String versionName;
-	private double priceOneTime;
-	private double pricePeriod;
 
 	private int temp_numPlaces;
 	// private ArrayList<PlaceOfInterestSight> temp_placeSights;
@@ -40,13 +38,11 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 	 * @param priceOneTime the price for one time buy
 	 * @param pricePeriod  the price for period buy
 	 */
-	private CityDataVersion(int id, int cityId, String versionName, double priceOneTime, double pricePeriod)
+	private CityDataVersion(int id, int cityId, String versionName)
 	{
 		this.id = id;
 		this.cityId = cityId;
 		this.versionName = versionName;
-		this.priceOneTime = priceOneTime;
-		this.pricePeriod = pricePeriod;
 		reloadTempsFromDatabase();
 	}
 
@@ -61,10 +57,9 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 	 * @param pricePeriod  the price for period buy
 	 * @return new city data version object
 	 */
-	public static CityDataVersion _createCityDataVersion(int id, int cityId, String versionName, double priceOneTime,
-			double pricePeriod)
+	public static CityDataVersion _createCityDataVersion(int id, int cityId, String versionName)
 	{ // friend Database
-		return new CityDataVersion(id, cityId, versionName, priceOneTime, pricePeriod);
+		return new CityDataVersion(id, cityId, versionName);
 	}
 
 	/**
@@ -75,12 +70,10 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 	 * @param priceOneTime the price for one time buy
 	 * @param pricePeriod  the price for period buy
 	 */
-	public CityDataVersion(City c, String versionName, double priceOneTime, double pricePeriod)
+	public CityDataVersion(City c, String versionName)
 	{
 		this.id = Database.generateIdCityDataVersion();
 		this.versionName = versionName;
-		this.priceOneTime = priceOneTime;
-		this.pricePeriod = pricePeriod;
 		this.cityId = c.getId();
 		// this.temp_placeSights = new ArrayList<>();
 		// this.temp_removePlaceSights = new ArrayList<>();
@@ -103,8 +96,6 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 	{
 		this.id = Database.generateIdCityDataVersion();
 		this.versionName = versionName;
-		this.priceOneTime = other.priceOneTime;
-		this.pricePeriod = other.pricePeriod;
 		this.cityId = other.cityId;
 		/*
 		 * this.temp_placeSights = new ArrayList<>(); for(PlaceOfInterestSight
@@ -396,35 +387,6 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 		return versionName;
 	}
 
-	/**
-	 * Returns the price of one time buy
-	 * 
-	 * @return the price of one time buy
-	 */
-	public double getPriceOneTime()
-	{
-		return priceOneTime;
-	}
-
-	/**
-	 * Returns the price of period buy
-	 * 
-	 * @return the price of period buy
-	 */
-	public double getPricePeriod()
-	{
-		return pricePeriod;
-	}
-
-	/**
-	 * Returns the price of period buy after discount
-	 * 
-	 * @return the price of period buy after discount
-	 */
-	public double getPricePeriodWithDiscount()
-	{
-		return pricePeriod * 0.9;
-	}
 
 	/**
 	 * Sets the version name
@@ -435,26 +397,7 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 	{
 		this.versionName = versionName;
 	}
-
-	/**
-	 * Sets the price of one time buy
-	 * 
-	 * @param priceOneTime the price of one time buy
-	 */
-	public void setPriceOneTime(double priceOneTime)
-	{
-		this.priceOneTime = priceOneTime;
-	}
-
-	/**
-	 * Sets the price of period buy
-	 * 
-	 * @param pricePeriod the price of period buy
-	 */
-	public void setPricePeriod(double pricePeriod)
-	{
-		this.pricePeriod = pricePeriod;
-	}
+	
 
 	/*
 	 * public ArrayList<PlaceOfInterestSight> getCopyPlaceSights() { return new
