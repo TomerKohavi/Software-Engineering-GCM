@@ -18,6 +18,10 @@ import javafx.scene.text.Text;
 import objectClasses.Customer;
 import objectClasses.OneTimePurchase;
 
+/**
+ * @author tomer
+ * Display all the customers with published version 
+ */
 public class InformCustomersPublishController {
 
     @FXML // fx:id="mainPane"
@@ -32,6 +36,9 @@ public class InformCustomersPublishController {
     @FXML // fx:id="CustomersTable"
     private TableView<Customer> CustomersTable; // Value injected by FXMLLoader
     
+    /**
+     * initialize variables
+     */
     @SuppressWarnings("unchecked")
 	void initialize ()
     {
@@ -53,6 +60,11 @@ public class InformCustomersPublishController {
 		CustomersTable.getColumns().addAll(username, email);
     }
 
+	/**
+	 * go to the previous page
+	 * 
+	 * @param event user click go previous page
+	 */
     @FXML
     void goBack(ActionEvent event) {
 
