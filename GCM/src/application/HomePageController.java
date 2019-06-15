@@ -530,8 +530,9 @@ public class HomePageController
 	
 	/**
 	 * initialize variables
+	 * @throws IOException 
 	 */
-	public void initialize()
+	public void initialize() throws IOException
 	{
 //		LoadingAnimation la = new LoadingAnimation();
 //		Thread t = new Thread(la);
@@ -544,6 +545,18 @@ public class HomePageController
 		{
 			LoginButton.setText("Log Off");
 			UserInfoButton.setVisible(true);
+			if (Connector.user instanceof Customer)
+			{
+				ArrayList<Subscription> subscriptList = ((Customer) Connector.user).getCopyActiveSubscription();
+				for (Subscription sub : subscriptList)
+				{
+					if (sub.isGoingToEnd(new Date(new java.util.Date().getTime())))
+					{
+						Connector.subNameToAlert = sub.getCityName();
+						openNewPage("AlertSubIsOverScene.fxml");
+					}
+				}
+			}
 		}
 		else
 			LoginButton.setText("Login");
@@ -1064,7 +1077,7 @@ public class HomePageController
 				openNewPage("BuyScene.fxml");
 			else if (BuyButton.getText().equals("Download"))
 			{
-				if (Connector.downloadCity())
+				if (Connector.downloadCity()) // TODO Download the pictures
 				{
 					Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.SubDownload);
 					openNewPage("DownloadCompleteScene.fxml");
