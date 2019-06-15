@@ -79,7 +79,7 @@ public class HomePageController
 	private String cityName, cityInfo, poiName, poiInfo;
 
 	static private boolean show_map = false;
-	
+
 	static private boolean isLastCityPublish = true;
 
 	@FXML // fx:id="mainPane"
@@ -180,9 +180,9 @@ public class HomePageController
 
 	@FXML // fx:id="UserInfoButton"
 	private JFXButton UserInfoButton; // Value injected by FXMLLoader
-	
-    @FXML // fx:id="AlertButton"
-    private JFXButton AlertButton; // Value injected by FXMLLoader
+
+	@FXML // fx:id="AlertButton"
+	private JFXButton AlertButton; // Value injected by FXMLLoader
 
 	@FXML // fx:id="MapImage"
 	private ImageView MapImage; // Value injected by FXMLLoader
@@ -209,8 +209,7 @@ public class HomePageController
 	private ImageView LoadingGif; // Value injected by FXMLLoader
 
 	/**
-	 * @author tomer
-	 * Treat loading animation
+	 * @author tomer Treat loading animation
 	 */
 	class LoadingAnimation extends Task<Integer>
 	{
@@ -244,6 +243,7 @@ public class HomePageController
 
 		/**
 		 * cancel operation
+		 * 
 		 * @param mayInterruptIfRunning problem with the cancel
 		 * @return if the cancel success
 		 */
@@ -258,6 +258,7 @@ public class HomePageController
 
 	/**
 	 * Loading page
+	 * 
 	 * @throws FileNotFoundException the file wasn't found
 	 */
 	void startLoad() throws FileNotFoundException
@@ -279,16 +280,24 @@ public class HomePageController
 	}
 
 	/**
-	 *  Open a window that informs the user that the connection to the server has been lost, and an option to reconnect
-	 * @throws IOException 
+	 * Open a window that informs the user that the connection to the server has
+	 * been lost, and an option to reconnect
 	 */
-	void openLostConnectionWindow() throws IOException // TODO Sigal call this function when connection is lost
+	public void openLostConnectionWindow() // TODO Sigal call this function when connection is lost
 	{
-		openNewPage("LostConnectionScene.fxml");
+		try
+		{
+			openNewPage("LostConnectionScene.fxml");
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
-	
+
 	/**
 	 * Opens new page.
+	 * 
 	 * @param FXMLpage new fxml page
 	 * @throws IOException cannot open the file
 	 */
@@ -307,6 +316,7 @@ public class HomePageController
 
 	/**
 	 * Loads page.
+	 * 
 	 * @param FXMLpage the page we want to load
 	 * @throws IOException cannot loat the page
 	 */
@@ -318,6 +328,7 @@ public class HomePageController
 
 	/**
 	 * Sets main side button.
+	 * 
 	 * @param button button to set
 	 */
 	void setMainSideButton(JFXButton button)
@@ -330,6 +341,7 @@ public class HomePageController
 
 	/**
 	 * Clears the data collected.
+	 * 
 	 * @param clearList list of object to clear
 	 */
 	void clearInfo(boolean clearList)
@@ -386,18 +398,23 @@ public class HomePageController
 
 	/**
 	 * Adds info to city. It add will add the maps, POIs and Routes.
+	 * 
 	 * @param city city to add info
 	 */
 	private void fillCityInfo(City city)
 	{
-		if ((Connector.selectedCity != null && Connector.selectedCity.getId() != city.getId()) || isLastCityPublish != Connector.unpublished)
+		if ((Connector.selectedCity != null && Connector.selectedCity.getId() != city.getId())
+				|| isLastCityPublish != Connector.unpublished)
 		{
 			Connector.searchMapResult = null;
 			Connector.searchPOIResult = null;
 			Connector.searchRouteResult = null;
-			try {
+			try
+			{
 				Connector.client.addStat(city.getId(), InformationSystem.Ops.Visit);
-			} catch (IOException e) {
+			}
+			catch (IOException e)
+			{
 				e.printStackTrace();
 			}
 		}
@@ -420,7 +437,7 @@ public class HomePageController
 		Text1.setText("Maps Found: " + Connector.cityData.getNumMapSights()); // #Maps for the city
 		Text2.setText("POI Found: " + Connector.cityData.getNumPlaceOfInterestSights()); // #POI for the city
 		Text3.setText("Routes Found: " + Connector.cityData.getNumRouteSights()); // #Routes for the city
-		
+
 		SideMap.setVisible(false);
 		SidePOI.setVisible(false);
 		SideRoutes.setVisible(false);
@@ -478,10 +495,11 @@ public class HomePageController
 		SidePOI.setDisable(false);
 		SideRoutes.setDisable(false);
 	}
-	
+
 	/**
 	 * Adds info to map. It will add the image.
-	 * @param map map to add  the info
+	 * 
+	 * @param map map to add the info
 	 */
 	private void fillMapInfo(Map map)
 	{
@@ -505,10 +523,11 @@ public class HomePageController
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Adds info to point of interest.
-	 * @param poi point of interest to add  the info
+	 * 
+	 * @param poi point of interest to add the info
 	 */
 	private void fillPOIInfo(PlaceOfInterest poi)
 	{
@@ -516,10 +535,11 @@ public class HomePageController
 		ResultInfo.setText(poi.getPlaceDescription()); // set info
 		Text1.setText((poi.isAccessibilityToDisabled() ? "" : "Not ") + "Accessible to Disabled"); // Accessible
 	}
-	
+
 	/**
 	 * Adds info to route.
-	 * @param route route to add  the info
+	 * 
+	 * @param route route to add the info
 	 */
 	@SuppressWarnings("unchecked")
 	private void fillRouteInfo(Route route)
@@ -546,15 +566,17 @@ public class HomePageController
 		StopsTable.getColumns().addAll(poiColumn, timeColumn);
 
 	}
-	
+
 	/**
 	 * initialize variables
 	 */
-	public void initialize() 
+	public void initialize()
 	{
 		Connector.sideButton = SideSearch;
 		Connector.sideButton.setOpacity(1);
 
+		Connector.client.caller = this;
+		
 		if (Connector.user != null)
 		{
 			LoginButton.setText("Log Off");
@@ -585,7 +607,7 @@ public class HomePageController
 		Connector.poiNameTextArea.setVisible(false);
 		Connector.poiNameTextArea.setTextAlignment(TextAlignment.CENTER);
 		mainPane.getChildren().add(Connector.poiNameTextArea); // TODO poi name
-		
+
 		if (Connector.user != null && Connector.user instanceof Customer)
 		{
 			LocalDate today = LocalDate.now();
@@ -639,7 +661,8 @@ public class HomePageController
 							{
 								try
 								{
-									statboi = Connector.client.getStatistics(null,FirstDate.getValue(),LastDate.getValue());
+									statboi = Connector.client.getStatistics(null, FirstDate.getValue(),
+											LastDate.getValue());
 								}
 								catch (IOException e)
 								{
@@ -651,7 +674,9 @@ public class HomePageController
 							{
 								try
 								{
-									statboi = Connector.client.getStatistics(Connector.allCities.get(selectedIndex - 1).b,FirstDate.getValue(),LastDate.getValue());
+									statboi = Connector.client.getStatistics(
+											Connector.allCities.get(selectedIndex - 1).b, FirstDate.getValue(),
+											LastDate.getValue());
 								}
 								catch (IOException e)
 								{
@@ -660,11 +685,11 @@ public class HomePageController
 								ReportCityName.setText(Connector.allCities.get(selectedIndex - 1).a);
 
 							}
-							ReportInfo.setText("Number of Maps: " + statboi.getNumMaps() + "\n" + "Number of One LocalTime Purchases: "
-									+ statboi.getNumOneTimePurchases() + "\n" + "Number of Subscriptions: "
-									+ statboi.getNumSubscriptions() + "\n" + "Number of Re-Subscriptions: "
-									+ statboi.getNumSubscriptionsRenewal() + "\n" + "Number of Views: "
-									+ statboi.getNumVisited() + "\n" + "Number of Downloads: "
+							ReportInfo.setText("Number of Maps: " + statboi.getNumMaps() + "\n"
+									+ "Number of One LocalTime Purchases: " + statboi.getNumOneTimePurchases() + "\n"
+									+ "Number of Subscriptions: " + statboi.getNumSubscriptions() + "\n"
+									+ "Number of Re-Subscriptions: " + statboi.getNumSubscriptionsRenewal() + "\n"
+									+ "Number of Views: " + statboi.getNumVisited() + "\n" + "Number of Downloads: "
 									+ statboi.getNumSubDownloads());
 							ReportCityName.setVisible(true);
 							ReportInfo.setVisible(true);
@@ -686,14 +711,15 @@ public class HomePageController
 			}
 		});
 	}
-	
+
 	/**
-	 * Pops up an alert for each ending subscription. 
+	 * Pops up an alert for each ending subscription.
+	 * 
 	 * @param event object to search
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	@FXML
-	void openAlertWindows (ActionEvent event) throws IOException
+	void openAlertWindows(ActionEvent event) throws IOException
 	{
 		LocalDate today = LocalDate.now();
 		ArrayList<Subscription> subscriptList = ((Customer) Connector.user).getCopyActiveSubscription();
@@ -709,9 +735,10 @@ public class HomePageController
 	}
 
 	/**
-	 * Handle search event. 
+	 * Handle search event.
+	 * 
 	 * @param event object to search
-	 * @throws IOException cannot find the object
+	 * @throws IOException          cannot find the object
 	 * @throws InterruptedException problem
 	 */
 	@FXML
@@ -779,10 +806,10 @@ public class HomePageController
 		}
 
 	}
-	
 
 	/**
 	 * Opens purchase history page.
+	 * 
 	 * @param event click on view purchase history
 	 * @throws IOException cannot see history
 	 */
@@ -791,10 +818,10 @@ public class HomePageController
 	{
 		openNewPage("PurchaseHistoryScene.fxml");
 	}
-	
 
 	/**
 	 * Displays the map.
+	 * 
 	 * @param event user click on show map image
 	 * @throws FileNotFoundException cannot find the image
 	 */
@@ -828,10 +855,10 @@ public class HomePageController
 			Connector.imageList.clear();
 		}
 	}
-	
 
 	/**
 	 * Shows the search page results.
+	 * 
 	 * @param event user click on show search event
 	 */
 	@FXML
@@ -846,10 +873,10 @@ public class HomePageController
 				fillCityInfo(Connector.selectedCity); // the index of the chosen city
 		}
 	}
-	
 
 	/**
 	 * Loads login page.
+	 * 
 	 * @param event login page
 	 * @throws IOException cannot login
 	 */
@@ -866,10 +893,10 @@ public class HomePageController
 		}
 
 	}
-	
 
 	/**
 	 * Opens edit user details scene.
+	 * 
 	 * @param event user want to edit his details
 	 * @throws IOException cannot edit user
 	 */
@@ -878,10 +905,10 @@ public class HomePageController
 	{
 		openNewPage("EditUserScene.fxml");
 	}
-	
 
 	/**
 	 * Displays a list of the maps.
+	 * 
 	 * @param event show map his clicked
 	 * @throws IOException cannot show map
 	 */
@@ -892,13 +919,14 @@ public class HomePageController
 		Connector.listType = "Map";
 		setMainSideButton(SideMap);
 		if (Connector.searchMapResult == null)
-			Connector.searchMapResult = (ArrayList<MapSight>) Connector.client.fetchSights(Connector.cityData.getId(), MapSight.class);
+			Connector.searchMapResult = (ArrayList<MapSight>) Connector.client.fetchSights(Connector.cityData.getId(),
+					MapSight.class);
 		MainList.getItems().addAll(Connector.getMapsNames(Connector.searchMapResult));
 	}
-	
 
 	/**
 	 * Displays a list of the POIs.
+	 * 
 	 * @param event show point of interest his clicked
 	 * @throws IOException cannot show point of interest
 	 */
@@ -909,13 +937,14 @@ public class HomePageController
 		Connector.listType = "POI";
 		setMainSideButton(SidePOI);
 		if (Connector.searchPOIResult == null)
-			Connector.searchPOIResult = (ArrayList<PlaceOfInterestSight>) Connector.client.fetchSights(Connector.cityData.getId(), PlaceOfInterestSight.class);
+			Connector.searchPOIResult = (ArrayList<PlaceOfInterestSight>) Connector.client
+					.fetchSights(Connector.cityData.getId(), PlaceOfInterestSight.class);
 		MainList.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
 	}
-	
 
 	/**
 	 * Displays a list of the Routes.
+	 * 
 	 * @param event show route his clicked
 	 * @throws IOException cannot show route
 	 */
@@ -926,13 +955,14 @@ public class HomePageController
 		Connector.listType = "Route";
 		setMainSideButton(SideRoutes);
 		if (Connector.searchRouteResult == null)
-			Connector.searchRouteResult = (ArrayList<RouteSight>) Connector.client.fetchSights(Connector.cityData.getId(), RouteSight.class);
+			Connector.searchRouteResult = (ArrayList<RouteSight>) Connector.client
+					.fetchSights(Connector.cityData.getId(), RouteSight.class);
 		MainList.getItems().addAll(Connector.getRoutesNames(Connector.searchRouteResult));
 	}
-	
 
 	/**
 	 * Displays the reports asked for.
+	 * 
 	 * @param event show report his clicked
 	 * @throws IOException cannot show report
 	 */
@@ -947,10 +977,10 @@ public class HomePageController
 		if (Connector.allCities == null)
 			Connector.allCities = Connector.client.allCitiesRequest();
 	}
-	
 
 	/**
 	 * Displays a list of the users.
+	 * 
 	 * @param event show users his clicked
 	 * @throws IOException cannot show users
 	 */
@@ -973,10 +1003,10 @@ public class HomePageController
 		for (Customer cust : Connector.customerList)
 			MainList.getItems().add(cust.getUserName());
 	}
-	
 
 	/**
 	 * Handles remove scenario.
+	 * 
 	 * @param event remove
 	 */
 	@FXML
@@ -986,7 +1016,8 @@ public class HomePageController
 		MainList.getItems().remove(index);
 		try
 		{
-			if (Connector.listType.equals("City")) {
+			if (Connector.listType.equals("City"))
+			{
 				Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.NumMaps, 0);
 				Connector.client.deleteObject(Connector.searchCityResult.remove(index)); // TODO CHECK deletion
 			}
@@ -1003,10 +1034,10 @@ public class HomePageController
 		}
 		clearInfo(false);
 	}
-	
 
 	/**
 	 * Handles create scenario.
+	 * 
 	 * @param event create is called
 	 * @throws IOException cannot create
 	 */
@@ -1016,7 +1047,8 @@ public class HomePageController
 		Connector.isEdit = false;
 		openNewPage(Connector.listType + "EditScene.fxml");
 		MainList.getItems().clear();
-		if (Connector.listType.equals("City")) {
+		if (Connector.listType.equals("City"))
+		{
 			MainList.getItems().addAll(Connector.getCitiesNames(Connector.searchCityResult));
 			Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.NumMaps, 0);
 		}
@@ -1027,10 +1059,10 @@ public class HomePageController
 		else if (Connector.listType.equals("Route"))
 			MainList.getItems().addAll(Connector.getRoutesNames(Connector.searchRouteResult));
 	}
-	
 
 	/**
 	 * Handles an edit scenario.
+	 * 
 	 * @param event edit is called
 	 * @throws IOException cannot edit
 	 */
@@ -1042,15 +1074,18 @@ public class HomePageController
 		MainList.getItems().clear();
 		if (Connector.listType.equals("City"))
 			MainList.getItems().addAll(Connector.getCitiesNames(Connector.searchCityResult));
-		else if (Connector.listType.equals("Map")) {
+		else if (Connector.listType.equals("Map"))
+		{
 			MainList.getItems().addAll(Connector.getMapsNames(Connector.searchMapResult));
 			fillMapInfo(Connector.selectedMap);
 		}
-		else if (Connector.listType.equals("POI")) {
+		else if (Connector.listType.equals("POI"))
+		{
 			MainList.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
 			fillPOIInfo(Connector.selectedPOI);
 		}
-		else if (Connector.listType.equals("Route")) {
+		else if (Connector.listType.equals("Route"))
+		{
 			MainList.getItems().addAll(Connector.getRoutesNames(Connector.searchRouteResult));
 			fillRouteInfo(Connector.selectedRoute);
 		}
@@ -1058,6 +1093,7 @@ public class HomePageController
 
 	/**
 	 * Opens resubscribe page.
+	 * 
 	 * @param event need to resubscribe
 	 * @throws IOException cannot resubscribe
 	 */
@@ -1067,11 +1103,11 @@ public class HomePageController
 		openNewPage("ReSubscribeScene.fxml");
 		fillCityInfo(Connector.selectedCity);
 	}
-	
 
 	/**
 	 * Publish an unpublished version.
-	 * @param event need to publish 
+	 * 
+	 * @param event need to publish
 	 * @throws IOException cannot publish
 	 */
 	@FXML
@@ -1085,7 +1121,8 @@ public class HomePageController
 			Connector.selectedCity.setManagerNeedsToPublish(false);
 			Connector.client.update(Connector.selectedCity);
 			Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.VersionPublish);
-			Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.NumMaps, Connector.selectedCity.getCopyPublishedVersion().getNumMapSights());
+			Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.NumMaps,
+					Connector.selectedCity.getCopyPublishedVersion().getNumMapSights());
 			openNewPage("InformCustomersPublishScene.fxml");
 		}
 		else
@@ -1094,10 +1131,10 @@ public class HomePageController
 			Connector.client.update(Connector.selectedCity);
 		}
 	}
-	
 
 	/**
 	 * Opens buy window.
+	 * 
 	 * @param event user want to buy
 	 * @throws IOException cannot open the buy window
 	 */

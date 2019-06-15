@@ -21,6 +21,7 @@ public class LostConnectionController {
     @FXML
     void reconnect(ActionEvent event) {
     	// TODO Sigal do reconnect
+    	System.out.println("HOLAAAAAAAA");
     	mainPane.getScene().getWindow().hide();
     }
 

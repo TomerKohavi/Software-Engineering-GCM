@@ -28,6 +28,7 @@ import objectClasses.Subscription;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
@@ -35,6 +36,7 @@ import java.util.concurrent.Semaphore;
 import com.sun.xml.internal.bind.v2.runtime.Name;
 
 import application.Connector;
+import application.HomePageController;
 
 /**
  * This class overrides some of the methods defined in the abstract superclass
@@ -89,6 +91,7 @@ public class ChatClient extends AbstractClient
 	FetchSights fs;
 
 	FetchCustomer fc;
+	public HomePageController caller;
 
 	/**
 	 * Constructs an instance of the chat client.
@@ -96,6 +99,7 @@ public class ChatClient extends AbstractClient
 	 * @param host     The server to connect to.
 	 * @param port     The port number to connect on.
 	 * @param clientUI The interface type variable.
+	 * @param caller GUI using the client
 	 * @throws IOException due to IO communication
 	 */
 
@@ -106,7 +110,6 @@ public class ChatClient extends AbstractClient
 		openConnection();
 		this.loginID = "USER";
 		sendToServer("#login USER");
-
 		this.semaphore = new Semaphore(0);
 	}
 
@@ -507,6 +510,8 @@ public class ChatClient extends AbstractClient
 			this.fs = (FetchSights) msg;
 		else if (msg instanceof FetchCustomer)
 			this.fc = ((FetchCustomer) msg);
+		else if (msg instanceof SQLException)
+			this.caller.openLostConnectionWindow();
 		if (msg instanceof Command)
 			this.semaphore.release();
 		else
