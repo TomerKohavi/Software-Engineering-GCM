@@ -239,7 +239,7 @@ public class MapEditController
 			}
 			else
 			{
-				String generatedPath = "Pics\\" + Connector.selectedCity.getCityName() + generateRandomString(15) + ".png";
+				String generatedPath = Connector.selectedCity.getCityName() + " " + generateRandomString(15) + ".png";
 			
 				MapSight mapS = Connector.client.createMap(Connector.selectedCity.getId(), Name.getText(),
 						InfoBox.getText(), generatedPath, Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId());
