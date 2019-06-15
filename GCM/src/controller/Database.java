@@ -1533,7 +1533,7 @@ public class Database {
 			int len = words.length;
 			String sql = "SELECT ID FROM " + Table.PlaceOfInterest.getValue() + " WHERE ";
 			if (placeName != null)
-				sql += "Name=? AND ";
+				sql += "(Name LIKE ?) AND ";
 			if (placeDescription != null)
 				for (int i = 0; i < len; i++)
 					sql += "(Description LIKE ?) AND ";
@@ -1543,7 +1543,7 @@ public class Database {
 
 			PreparedStatement gt = conn.prepareStatement(sql);
 			if (placeName != null)
-				gt.setString(counter++, placeName);
+				gt.setString(counter++, "%" + placeName + "%");
 
 			if (placeDescription != null)
 				for (int i = 0; i < len; i++)
