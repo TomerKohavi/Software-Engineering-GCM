@@ -346,13 +346,18 @@ public class HomePageController
 		PublishButton.setVisible(false);
 		if (Connector.unpublished)
 		{
-			RemoveButton.setVisible(true);
 			CreateButton.setVisible(true);
 			if (Connector.listType.equals("Map") || Connector.listType.equals("POI")
 					|| Connector.listType.equals("Route"))
+			{
 				EditButton.setVisible(true);
+				RemoveButton.setVisible(true);
+			}
 			else
+			{
 				EditButton.setVisible(false);
+				RemoveButton.setVisible(false);
+			}
 		}
 		else
 		{
@@ -630,7 +635,7 @@ public class HomePageController
 								ReportCityName.setText(Connector.allCities.get(selectedIndex - 1).a);
 
 							}
-							ReportInfo.setText("Number of Maps: " + 100 + "\n" + "Number of One Time Purchases: "
+							ReportInfo.setText("Number of Maps: " + statboi.getNumMaps() + "\n" + "Number of One Time Purchases: "
 									+ statboi.getNumOneTimePurchases() + "\n" + "Number of Subscriptions: "
 									+ statboi.getNumSubscriptions() + "\n" + "Number of Re-Subscriptions: "
 									+ statboi.getNumSubscriptionsRenewal() + "\n" + "Number of Views: "
@@ -924,7 +929,6 @@ public class HomePageController
 			if (Connector.listType.equals("City")) {
 				Connector.client.addStat(Connector.selectedCity.getId(), 0);
 				Connector.client.deleteObject(Connector.searchCityResult.remove(index)); // TODO CHECK deletion
-				// TODO Kohavi+Ronen pretty sure deletion of a City is only for CEO or at least manager
 			}
 			else if (Connector.listType.equals("Map"))
 				Connector.client.deleteObject(Connector.searchMapResult.remove(index));
@@ -1059,9 +1063,11 @@ public class HomePageController
 				openNewPage("BuyScene.fxml");
 			else if (BuyButton.getText().equals("Download"))
 			{
-				Connector.downloadCity();
-				Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.SubDownload);
-				openNewPage("DownloadCompleteScene.fxml");
+				if (Connector.downloadCity())
+				{
+					Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.SubDownload);
+					openNewPage("DownloadCompleteScene.fxml");
+				}
 			}
 			else if (BuyButton.getText().equals("Change Price"))
 				openNewPage("ChangePriceScene.fxml");

@@ -83,7 +83,7 @@ public class PurchaseHistoryController {
 		TableColumn<Subscription, Double> dateColumn = new TableColumn<>("Date");
 		dateColumn.setMinWidth(80);
 		dateColumn.setMaxWidth(80);
-		dateColumn.setCellValueFactory(new PropertyValueFactory<>("expirationDate"));
+		dateColumn.setCellValueFactory(new PropertyValueFactory<>("purchaseDate"));
 		
 		TableColumn<Subscription, Integer> monthColumn = new TableColumn<>("Months");
 		monthColumn.setMinWidth(60);
@@ -104,7 +104,7 @@ public class PurchaseHistoryController {
 		TableColumn<Subscription, Double> pastDateColumn = new TableColumn<>("Date");
 		pastDateColumn.setMinWidth(80);
 		pastDateColumn.setMaxWidth(80);
-		pastDateColumn.setCellValueFactory(new PropertyValueFactory<>("expirationDate"));
+		pastDateColumn.setCellValueFactory(new PropertyValueFactory<>("purchaseDate"));
 		
 		TableColumn<Subscription, Integer> pastMonthColumn = new TableColumn<>("Months");
 		pastMonthColumn.setMinWidth(60);

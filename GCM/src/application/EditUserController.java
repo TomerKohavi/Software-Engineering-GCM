@@ -210,6 +210,7 @@ public class EditUserController
 	@FXML
 	void viewPurchaseHistory(ActionEvent event) throws IOException
 	{
+		Connector.user = Connector.client.fetchUser(Connector.user.getId());
 		Connector.selectedCustomer = (Customer) Connector.user;
 		openNewPage("PurchaseHistoryScene.fxml");
 	}
