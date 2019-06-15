@@ -190,8 +190,9 @@ public class EchoServer extends AbstractServer
 	/**
 	 * @param s the search request
 	 * @return the search result
+	 * @throws SQLException if the access to database failed
 	 */
-	private Search handleSearch(Search s)
+	private Search handleSearch(Search s) throws SQLException
 	{
 		System.out.println("search: " + s.cityName + "|" + s.cityInfo + "|" + s.poiName + "|" + s.poiInfo);
 		s.searchResult = SearchCatalog.SearchCity(s.cityName, s.cityInfo, s.poiName, s.poiInfo);
@@ -213,8 +214,9 @@ public class EchoServer extends AbstractServer
 
 	/**
 	 * @param r the resubscribe inputs
+	 * @throws SQLException if the access to database failed
 	 */
-	private void handleResubscribe(Resub r)
+	private void handleResubscribe(Resub r) throws SQLException
 	{
 		Subscription._Resubscribe(r.subAlmostEnd, r.newFullPrice, r.newPayedPrice);
 	}
@@ -246,8 +248,9 @@ public class EchoServer extends AbstractServer
 
 	/**
 	 * @param update update request handle
+	 * @throws SQLException if the access to database failed
 	 */
-	private void handleUpdate(Update update)
+	private void handleUpdate(Update update) throws SQLException
 	{
 		System.out.println("update " + update.toUpdate.getClass().toString());
 		update.toUpdate.saveToDatabase();
@@ -256,8 +259,9 @@ public class EchoServer extends AbstractServer
 	/**
 	 * @param cmap map creation that come from the client
 	 * @return create map object the sent to the client
+	 * @throws SQLException if the access to database failed
 	 */
-	private CreateMap handleMapCreation(CreateMap cmap)
+	private CreateMap handleMapCreation(CreateMap cmap) throws SQLException
 	{
 		Map map = new Map(cmap.cityId, cmap.name, cmap.info, cmap.imgURL);
 		map.saveToDatabase();
@@ -272,8 +276,9 @@ public class EchoServer extends AbstractServer
 	/**
 	 * @param cpoi point of interest creation that come from the client
 	 * @return create point of interest object the sent to the client
+	 * @throws SQLException if the access to database failed
 	 */
-	private CreatePOI handlePOICreation(CreatePOI cpoi)
+	private CreatePOI handlePOICreation(CreatePOI cpoi) throws SQLException
 	{
 		PlaceOfInterest poi = new PlaceOfInterest(cpoi.cityId, cpoi.name, cpoi.type, cpoi.placeDescription,
 				cpoi.accessibilityToDisabled);
@@ -290,8 +295,9 @@ public class EchoServer extends AbstractServer
 	/**
 	 * @param croute route creation that come from the client
 	 * @return create route object the sent to the client
+	 * @throws SQLException if the access to database failed
 	 */
-	private CreateRoute handleRouteCreation(CreateRoute croute)
+	private CreateRoute handleRouteCreation(CreateRoute croute) throws SQLException
 	{
 		Route route = new Route(croute.cityId, croute.name, croute.info, croute.isFav);
 		route.saveToDatabase();
@@ -327,8 +333,9 @@ public class EchoServer extends AbstractServer
 	 * handle delete request from the client
 	 * 
 	 * @param del the delete request from the client
+	 * @throws SQLException if the access to database failed
 	 */
-	private void handleDelete(Delete del)
+	private void handleDelete(Delete del) throws SQLException
 	{
 		System.out.println("delete " + del.toDelete.getClass().toString() + " " + del.toDelete.getId());
 		del.toDelete.deleteFromDatabase();
@@ -338,8 +345,9 @@ public class EchoServer extends AbstractServer
 	 * handle add statistics request from the client
 	 * 
 	 * @param stat the statistics request from the client
+	 * @throws SQLException if the access to database failed
 	 */
-	private void handleAddStat(AddStat stat)
+	private void handleAddStat(AddStat stat) throws SQLException
 	{
 		System.out.println("add stat " + stat.op);
 		switch (stat.op)
@@ -374,8 +382,9 @@ public class EchoServer extends AbstractServer
 	 * 
 	 * @param fs the fetch sights request from the client
 	 * @return the fetch sights result that return to the client
+	 * @throws SQLException if the access to database failed
 	 */
-	private FetchSights handleFetchSights(FetchSights fs)
+	private FetchSights handleFetchSights(FetchSights fs) throws SQLException
 	{
 		System.out.println("fetch " + fs.sightType.toString());
 		if (fs.sightType.isAssignableFrom(MapSight.class))
@@ -443,8 +452,9 @@ public class EchoServer extends AbstractServer
 	 * 
 	 * @param clocs the city request
 	 * @return the result of the city request to the client
+	 * @throws SQLException if the access to database failed
 	 */
-	private CreateCity handleCityCreation(CreateCity ccity)
+	private CreateCity handleCityCreation(CreateCity ccity) throws SQLException
 	{
 		ccity.city = new City(ccity.name, ccity.info, ccity.priceOneTime, ccity.pricePeriod);
 		CityDataVersion cdv = new CityDataVersion(ccity.city, ccity.name = "1.0");
@@ -566,8 +576,9 @@ public class EchoServer extends AbstractServer
 	 * 
 	 * @param statboi the statistics request from the client
 	 * @return statistics result to the client
+	 * @throws SQLException if the access to database failed
 	 */
-	public Statboi handleStatistics(Statboi statboi)
+	public Statboi handleStatistics(Statboi statboi) throws SQLException
 	{
 		statboi.statboi = InformationSystem.getRangeSumStatistics(statboi.cityId, statboi.from, statboi.end);
 		return statboi;
