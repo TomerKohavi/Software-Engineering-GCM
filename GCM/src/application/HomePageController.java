@@ -540,9 +540,8 @@ public class HomePageController
 	
 	/**
 	 * initialize variables
-	 * @throws IOException 
 	 */
-	public void initialize() throws IOException
+	public void initialize() 
 	{
 		Connector.sideButton = SideSearch;
 		Connector.sideButton.setOpacity(1);

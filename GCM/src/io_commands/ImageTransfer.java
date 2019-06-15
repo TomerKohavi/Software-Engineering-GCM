@@ -54,7 +54,7 @@ public class ImageTransfer extends Command
 
 	/**
 	 * save the image into the server
-	 * @throws IOException 
+	 * @throws IOException if write doesn't work
 	 */
 	
 	public void saveImage() throws IOException

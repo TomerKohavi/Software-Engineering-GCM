@@ -10,6 +10,7 @@ import otherClasses.ClassMustProperties;
 
 /**
  * Class of Route object
+ * 
  * @author Ron Cohen
  *
  */
@@ -21,7 +22,7 @@ public class Route implements ClassMustProperties, Serializable
 	private String name;
 	private String info;
 	private boolean isFavorite;
-	
+
 	ArrayList<RouteStop> temp_routeStops;
 
 	ArrayList<RouteStop> temp_removeRouteStops;
@@ -29,19 +30,19 @@ public class Route implements ClassMustProperties, Serializable
 	/**
 	 * This is a private constructor of route object
 	 * 
-	 * @param id the route id
+	 * @param id     the route id
 	 * @param cityId the city id that contains the route
-	 * @param name the route name
-	 * @param info the route info
+	 * @param name   the route name
+	 * @param info   the route info
 	 * @throws SQLException if the access to database failed
 	 */
-	private Route(int id, int cityId,String name, String info,boolean isFavorite) throws SQLException
+	private Route(int id, int cityId, String name, String info, boolean isFavorite) throws SQLException
 	{
 		this.id = id;
 		this.cityId = cityId;
-		this.name=name;
+		this.name = name;
 		this.info = info;
-		this.isFavorite=isFavorite;
+		this.isFavorite = isFavorite;
 		reloadTempsFromDatabase();
 	}
 
@@ -49,53 +50,58 @@ public class Route implements ClassMustProperties, Serializable
 	 * This function create route object according to all the inputs (supposed to be
 	 * used only in Database)
 	 * 
-	 * @param id the route id
+	 * @param id     the route id
 	 * @param cityId the city id that contains the route
-	 * @param name the route name
-	 * @param info the route info
+	 * @param name   the route name
+	 * @param info   the route info
+	 * @param isFavorite is the route favorite
 	 * @return new route object
 	 * @throws SQLException if the access to database failed
 	 */
-	public static Route _createRoute(int id, int cityId,String name, String info,boolean isFavorite) throws SQLException
+	public static Route _createRoute(int id, int cityId, String name, String info, boolean isFavorite)
+			throws SQLException
 	{ // friend to
 		// Database
-		return new Route(id, cityId,name, info,isFavorite);
+		return new Route(id, cityId, name, info, isFavorite);
 	}
 
 	/**
 	 * This is the normal public constructor for City object
 	 * 
-	 * @param cityId the city id that contains the route
-	 * @param name the route name
-	 * @param info the route info
+	 * @param cityId     the city id that contains the route
+	 * @param name       the route name
+	 * @param info       the route info
+	 * @param isFavorite is the route favorite
 	 * @throws SQLException if the access to database failed
 	 */
-	public Route(int cityId,String name, String info,boolean isFavorite) throws SQLException
+	public Route(int cityId, String name, String info, boolean isFavorite) throws SQLException
 	{
 		this.id = Database.generateIdRoute();
 		this.cityId = cityId;
-		this.name=name;
+		this.name = name;
 		this.info = info;
-		this.isFavorite=isFavorite;
+		this.isFavorite = isFavorite;
 		this.temp_routeStops = new ArrayList<>();
 		this.temp_removeRouteStops = new ArrayList<>();
 	}
-	
+
 	/**
 	 * Copy constructor that generate new id
 	 * 
 	 * @param other route object to copy
 	 * @throws SQLException if the access to database failed
 	 */
-	public Route(Route other) throws SQLException {
+	public Route(Route other) throws SQLException
+	{
 		this.id = Database.generateIdRoute();
 		this.cityId = other.cityId;
 		this.info = other.info;
-		this.name=other.name;
-		this.isFavorite=other.isFavorite;
+		this.name = other.name;
+		this.isFavorite = other.isFavorite;
 		this.temp_routeStops = new ArrayList<>();
-		for(RouteStop rs:other.getCopyRouteStops()) {
-			RouteStop newRs=new RouteStop(this, rs.getCopyPlace(), rs.getRecommendedTime());
+		for (RouteStop rs : other.getCopyRouteStops())
+		{
+			RouteStop newRs = new RouteStop(this, rs.getCopyPlace(), rs.getRecommendedTime());
 			this.addRouteStop(newRs);
 		}
 		this.temp_removeRouteStops = new ArrayList<>();
@@ -165,6 +171,7 @@ public class Route implements ClassMustProperties, Serializable
 
 	/**
 	 * Add new route stop to the route
+	 * 
 	 * @param rs route stop object to add
 	 * @return if the new route stop was added successfully
 	 */
@@ -179,6 +186,7 @@ public class Route implements ClassMustProperties, Serializable
 
 	/**
 	 * Set all the route stops to given route stop list
+	 * 
 	 * @param stopList list of route stops
 	 */
 	public void setRouteStops(ArrayList<RouteStop> stopList)
@@ -189,7 +197,7 @@ public class Route implements ClassMustProperties, Serializable
 	/**
 	 * Add new route stop to the route in spesific place
 	 * 
-	 * @param rs route stop object to add
+	 * @param rs    route stop object to add
 	 * @param index where in the route t add the new route stop
 	 * @return if the new route stop was added successfully
 	 */
@@ -208,7 +216,7 @@ public class Route implements ClassMustProperties, Serializable
 	 * Returns route stop object that contain the place with the given id
 	 * 
 	 * @param placeId the id of the place we are looking for
-	 * @return route stop object 
+	 * @return route stop object
 	 */
 	public RouteStop getRouteStopByPlaceId(int placeId)
 	{
@@ -222,6 +230,7 @@ public class Route implements ClassMustProperties, Serializable
 
 	/**
 	 * Return route stop object of the route stop in given index in the route
+	 * 
 	 * @param num the place of the route stop we are searching
 	 * @return route stop object in the specific place in the route
 	 */
@@ -234,6 +243,7 @@ public class Route implements ClassMustProperties, Serializable
 
 	/**
 	 * Return route stop object with the given id
+	 * 
 	 * @param rsId route stop id to search
 	 * @return route stop object with the given id
 	 */
@@ -249,6 +259,7 @@ public class Route implements ClassMustProperties, Serializable
 
 	/**
 	 * Remove route stop in given index in the route and return this route stop
+	 * 
 	 * @param index index of route stop to remove
 	 * @return route stop object that was removed
 	 */
@@ -265,6 +276,7 @@ public class Route implements ClassMustProperties, Serializable
 
 	/**
 	 * Return list of copied route stops
+	 * 
 	 * @return list of copied route stops
 	 */
 	public ArrayList<RouteStop> getCopyRouteStops()
@@ -332,22 +344,24 @@ public class Route implements ClassMustProperties, Serializable
 	{
 		return temp_routeStops.size();
 	}
-	
+
 	/**
 	 * Return the route name
 	 * 
 	 * @return the route name
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return this.name;
 	}
-	
+
 	/**
 	 * Sets the route name
 	 * 
 	 * @param name the new route name
 	 */
-	public void setName(String name) {
+	public void setName(String name)
+	{
 		this.name = name;
 	}
 
@@ -360,13 +374,14 @@ public class Route implements ClassMustProperties, Serializable
 	{
 		return cityId;
 	}
-	
+
 	/**
 	 * Returns if the route sight is favorite or not
 	 * 
 	 * @return if the route sight is favorite or not
 	 */
-	public boolean getIsFavorite() {
+	public boolean getIsFavorite()
+	{
 		return isFavorite;
 	}
 
@@ -375,7 +390,8 @@ public class Route implements ClassMustProperties, Serializable
 	 * 
 	 * @param favorite the new favorite of the route sight
 	 */
-	public void setFavorite(boolean favorite) {
+	public void setFavorite(boolean favorite)
+	{
 		isFavorite = favorite;
 	}
 

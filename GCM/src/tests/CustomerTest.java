@@ -31,7 +31,7 @@ public class CustomerTest
 	/**
 	 * Check if the customer subscription is fine
 	 * 
-	 * @throws SQLException
+	 * @throws SQLException connection error
 	 */
 	@Test
 	public void testSubscription() throws SQLException
@@ -75,7 +75,7 @@ public class CustomerTest
 	/**
 	 * Check if the customer one time purchase is fine
 	 * 
-	 * @throws SQLException
+	 * @throws SQLException connection error
 	 */
 	@Test
 	public void testOneTimePurchase() throws SQLException
@@ -113,7 +113,7 @@ public class CustomerTest
 	/**
 	 * Close database connection
 	 * 
-	 * @throws SQLException
+	 * @throws SQLException connection error
 	 */
 	@AfterClass
 	public static void closeDatabaseConnection() throws SQLException

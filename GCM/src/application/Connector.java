@@ -34,7 +34,8 @@ import controller.Downloader;
 /**
  * @author tomer connect the UI to the client
  */
-public class Connector {
+public class Connector
+{
 
 	public static User user;
 
@@ -48,8 +49,7 @@ public class Connector {
 	public static final String LOCAL_HOST = "localhost";
 	public static final double DEFULT_ONE_TIME_PRICE = 10;
 	public static final double DEFULT_SUB_MONTH_PRICE = 40;
-	
-	
+
 	public static boolean isEdit = true;
 
 	public static String listType = "City";
@@ -61,7 +61,7 @@ public class Connector {
 	public static boolean unpublished = false;
 
 	public static String errorMsg;
-	
+
 	public static String subNameToAlert;
 
 	public static City selectedCity;
@@ -91,9 +91,11 @@ public class Connector {
 	 * @param cityList list of city to we want to get
 	 * @return list of names of the cities.
 	 */
-	public static ArrayList<String> getCitiesNames(ArrayList<City> cityList) {
+	public static ArrayList<String> getCitiesNames(ArrayList<City> cityList)
+	{
 		ArrayList<String> nameList = new ArrayList<String>();
-		for (City city : cityList) {
+		for (City city : cityList)
+		{
 			if (Connector.user != null && Connector.user instanceof Employee
 					&& ((Employee) Connector.user).getRole() == Employee.Role.CEO && city.getManagerNeedsToPublish())
 				nameList.add("★" + city.getCityName());
@@ -109,7 +111,8 @@ public class Connector {
 	 * @param mapList list of map to we want to get
 	 * @return list of names of the maps.
 	 */
-	public static ArrayList<String> getMapsNames(ArrayList<MapSight> mapList) {
+	public static ArrayList<String> getMapsNames(ArrayList<MapSight> mapList)
+	{
 		ArrayList<String> nameList = new ArrayList<String>();
 		for (MapSight map : mapList)
 			nameList.add(map.getCopyMap().getName());
@@ -122,7 +125,8 @@ public class Connector {
 	 * @param poiList list of point of interest to we want to get
 	 * @return list of names of the points of interest.
 	 */
-	public static ArrayList<String> getPOIsNames(ArrayList<PlaceOfInterestSight> poiList) {
+	public static ArrayList<String> getPOIsNames(ArrayList<PlaceOfInterestSight> poiList)
+	{
 		ArrayList<String> nameList = new ArrayList<String>();
 		for (PlaceOfInterestSight poi : poiList)
 			nameList.add(poi.getCopyPlace().getName());
@@ -135,9 +139,11 @@ public class Connector {
 	 * @param routeList list of route to we want to get
 	 * @return list of names of the routes.
 	 */
-	public static ArrayList<String> getRoutesNames(ArrayList<RouteSight> routeList) {
+	public static ArrayList<String> getRoutesNames(ArrayList<RouteSight> routeList)
+	{
 		ArrayList<String> nameList = new ArrayList<String>();
-		for (RouteSight route : routeList) {
+		for (RouteSight route : routeList)
+		{
 			if (route.getCopyRoute().getIsFavorite())
 				nameList.add("★" + "Route " + route.getCopyRoute().getId());
 			else
@@ -148,10 +154,13 @@ public class Connector {
 
 	/**
 	 * Downloads the city details to the user's computer.
-	 * @throws IOException 
+	 * 
+	 * @return success or failure
+	 * @throws IOException from client
 	 */
 	@SuppressWarnings({ "unchecked", "unused" })
-	public static boolean downloadCity() throws IOException {
+	public static boolean downloadCity() throws IOException
+	{
 		DirectoryChooser chooser = new DirectoryChooser();
 		chooser.setTitle("Choose Download Location");
 		File defaultDirectory = new File("c:/");
@@ -165,7 +174,8 @@ public class Connector {
 					selectedDirectory.getPath() + "\\" + Connector.selectedCity.getCityName() + " "
 							+ Connector.selectedCity.getCopyPublishedVersion().getVersionName() + ".txt");
 			if (searchMapResult == null)
-				Connector.searchMapResult = (ArrayList<MapSight>) Connector.client.fetchSights(Connector.cityData.getId(), MapSight.class);
+				Connector.searchMapResult = (ArrayList<MapSight>) Connector.client
+						.fetchSights(Connector.cityData.getId(), MapSight.class);
 			for (MapSight mapS : searchMapResult)
 			{
 				Map map = mapS.getCopyMap();
@@ -175,7 +185,7 @@ public class Connector {
 			return true;
 		}
 		return false;
-		
+
 	}
 
 	/**
@@ -183,7 +193,8 @@ public class Connector {
 	 * 
 	 * @return list of customers
 	 */
-	public static ArrayList<Customer> getCustomersSubscibeToCity() {
+	public static ArrayList<Customer> getCustomersSubscibeToCity()
+	{
 		if (Connector.customerList == null)
 		{
 			try
@@ -196,7 +207,8 @@ public class Connector {
 			}
 		}
 		ArrayList<Customer> ans = new ArrayList<Customer>(customerList);
-		for (Customer c : customerList) {
+		for (Customer c : customerList)
+		{
 			if (c.getActiveSubscriptionsByCity(selectedCity.getId()).size() > 0)
 				ans.add(c);
 		}

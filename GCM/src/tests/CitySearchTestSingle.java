@@ -17,8 +17,7 @@ import objectClasses.PlaceOfInterestSight;
 
 /**
  * @author ron
- * @author tal
- * JUnit for test single city search 
+ * @author tal JUnit for test single city search
  */
 public class CitySearchTestSingle
 {
@@ -36,14 +35,16 @@ public class CitySearchTestSingle
 
 	/**
 	 * Add point of interest to the city
-	 * @param c the city we test
-	 * @param name the name of the city
-	 * @param info the city info
+	 * 
+	 * @param c       the city we test
+	 * @param name    the name of the city
+	 * @param info    the city info
 	 * @param publish if the city is published
 	 * @return the place of interest that add to the city
 	 * @throws SQLException if the access to database failed
 	 */
-	private static PlaceOfInterest createAndAddPOI(City c, String name, String info, boolean publish) throws SQLException
+	private static PlaceOfInterest createAndAddPOI(City c, String name, String info, boolean publish)
+			throws SQLException
 	{
 		Random rand = new Random();
 		int randomNum = rand.nextInt(100);
@@ -77,6 +78,7 @@ public class CitySearchTestSingle
 
 	/**
 	 * init the data base
+	 * 
 	 * @throws SQLException if the access to database failed
 	 */
 	@BeforeClass
@@ -87,24 +89,25 @@ public class CitySearchTestSingle
 		// create cities
 		Random rand = new Random();
 		int randomNum = rand.nextInt(9999);
-		c1 = new City("Haifa" + randomNum, "very boring city",100, 200);
+		c1 = new City("Haifa" + randomNum, "very boring city", 100, 200);
 		p1 = createAndAddPOI(c1, "Tomer", "just a simple description", true);
 		p2 = createAndAddPOI(c1, "Boby", "house blue in the sea", false);
 		c1.saveToDatabase();
-		c2 = new City("TelAviv" + randomNum, "exciting city in the middle of israel",100, 200);
+		c2 = new City("TelAviv" + randomNum, "exciting city in the middle of israel", 100, 200);
 		p3 = createAndAddPOI(c2, "Tal", "error 404 description not found", false);
 		p4 = createAndAddPOI(c2, "Tomer", "tree growing by the river", false);
 		c2.saveToDatabase();
-		c3 = new City("New York" + randomNum, "very boring city",100, 200);
+		c3 = new City("New York" + randomNum, "very boring city", 100, 200);
 		p5 = createAndAddPOI(c3, "Sigal", "just a simple description", false);
 		p6 = createAndAddPOI(c3, "Ron", "random sentance", true);
 		c3.saveToDatabase();
-		c4 = new City("New York" + randomNum, "not that bad",100, 200);
+		c4 = new City("New York" + randomNum, "not that bad", 100, 200);
 		c4.saveToDatabase();
 	}
 
 	/**
 	 * Test if the search by city is working good
+	 * 
 	 * @throws SQLException if the access to database failed
 	 */
 	@Test
@@ -133,6 +136,7 @@ public class CitySearchTestSingle
 
 	/**
 	 * Test if the search by point of interest is working good
+	 * 
 	 * @throws SQLException if the access to database failed
 	 */
 	@Test
@@ -162,7 +166,8 @@ public class CitySearchTestSingle
 	}
 
 	/**
-	 * Test if the search by point of interest & city is working good
+	 * Test if the search by point of interest and city is working good
+	 * 
 	 * @throws SQLException if the access to database failed
 	 */
 	@Test
@@ -189,6 +194,7 @@ public class CitySearchTestSingle
 
 	/**
 	 * Close the connection to the database
+	 * 
 	 * @throws SQLException if the access to database failed
 	 */
 	@AfterClass

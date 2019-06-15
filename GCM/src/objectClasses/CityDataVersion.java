@@ -10,12 +10,13 @@ import otherClasses.ClassMustProperties;
 
 /**
  * Class of a version of city and all its content
+ * 
  * @author Ron Cohen
  */
 @SuppressWarnings("serial")
 public class CityDataVersion implements ClassMustProperties, Serializable
 {
-	
+
 	private int id;
 	private int cityId;
 	private String versionName;
@@ -52,11 +53,9 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 	 * This function create City object according to all the inputs (supposed to be
 	 * used only in Database)
 	 * 
-	 * @param id           the city data version id
-	 * @param cityId       the city id that connect to the city data version
-	 * @param versionName  the version name of the city data version
-	 * @param priceOneTime the price for one time buy
-	 * @param pricePeriod  the price for period buy
+	 * @param id          the city data version id
+	 * @param cityId      the city id that connect to the city data version
+	 * @param versionName the version name of the city data version
 	 * @return new city data version object
 	 * @throws SQLException if the access to database failed
 	 */
@@ -68,10 +67,8 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 	/**
 	 * This is the normal public constructor for city data version object
 	 * 
-	 * @param c            the city object of the city data version
-	 * @param versionName  the version name of the city data version
-	 * @param priceOneTime the price for one time buy
-	 * @param pricePeriod  the price for period buy
+	 * @param c           the city object of the city data version
+	 * @param versionName the version name of the city data version
 	 * @throws SQLException if the access to database failed
 	 */
 	public CityDataVersion(City c, String versionName) throws SQLException
@@ -326,8 +323,9 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 	 * @return list of route sight object we want to get
 	 * @throws SQLException if the access to database failed
 	 */
-	public static ArrayList<RouteSight> _generateRouteSights(int cdvId) throws SQLException {
-		ArrayList<Integer> ids = Database.searchRouteSight(cdvId, null,null);
+	public static ArrayList<RouteSight> _generateRouteSights(int cdvId) throws SQLException
+	{
+		ArrayList<Integer> ids = Database.searchRouteSight(cdvId, null, null);
 		ArrayList<RouteSight> arrList = new ArrayList<RouteSight>();
 		for (int id : ids)
 		{
@@ -401,7 +399,6 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 		return versionName;
 	}
 
-
 	/**
 	 * Sets the version name
 	 * 
@@ -411,7 +408,6 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 	{
 		this.versionName = versionName;
 	}
-	
 
 	/*
 	 * public ArrayList<PlaceOfInterestSight> getCopyPlaceSights() { return new

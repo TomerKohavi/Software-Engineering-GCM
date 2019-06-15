@@ -43,7 +43,6 @@ public class RouteSight implements ClassMustProperties, Serializable {
 	 * @param id route sight id
 	 * @param cityDataVersionId the city data version id
 	 * @param routeId the route id
-	 * @param isFavorite if the route sight is favorite or not
 	 * @return new route sight object
 	 * @throws SQLException if the access to database failed
 	 */
@@ -56,7 +55,6 @@ public class RouteSight implements ClassMustProperties, Serializable {
 	 * 
 	 * @param cdvId the city data version id
 	 * @param r the route object
-	 * @param isFavorite if the route sight is favorite or not
 	 * @throws SQLException if the access to database failed
 	 */
 	public RouteSight(int cdvId, Route r) throws SQLException {

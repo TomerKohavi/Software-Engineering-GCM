@@ -18,7 +18,7 @@ public class City implements ClassMustProperties, Serializable
 	private String cityDescription;
 	private Integer publishedVersionId;
 	private boolean managerNeedsToPublish;
-	
+
 	private double priceOneTime;
 	private double pricePeriod;
 	private boolean ceoNeedsToApprovePrices;
@@ -38,19 +38,20 @@ public class City implements ClassMustProperties, Serializable
 	 * @param publishedVersionId the id of the published version of this cirt
 	 * @throws SQLException if the access to database failed
 	 */
-	private City(int id, String cityName, String cityDescription, Integer publishedVersionId,boolean managerNeedsToPublish,
-			double priceOneTime,double pricePeriod, boolean ceoNeedsToApprovePrices, double toBePriceOneTime, double toBePricePeriod) throws SQLException
+	private City(int id, String cityName, String cityDescription, Integer publishedVersionId,
+			boolean managerNeedsToPublish, double priceOneTime, double pricePeriod, boolean ceoNeedsToApprovePrices,
+			double toBePriceOneTime, double toBePricePeriod) throws SQLException
 	{
 		this.id = id;
 		this.cityName = cityName;
 		this.cityDescription = cityDescription;
 		this.publishedVersionId = publishedVersionId;
-		this.managerNeedsToPublish=managerNeedsToPublish;
-		this.priceOneTime=priceOneTime;
-		this.pricePeriod=pricePeriod;
-		this.ceoNeedsToApprovePrices=ceoNeedsToApprovePrices;
-		this.toBePriceOneTime=toBePriceOneTime;
-		this.toBePricePeriod=toBePricePeriod;
+		this.managerNeedsToPublish = managerNeedsToPublish;
+		this.priceOneTime = priceOneTime;
+		this.pricePeriod = pricePeriod;
+		this.ceoNeedsToApprovePrices = ceoNeedsToApprovePrices;
+		this.toBePriceOneTime = toBePriceOneTime;
+		this.toBePricePeriod = toBePricePeriod;
 		reloadTempsFromDatabase();
 	}
 
@@ -58,17 +59,25 @@ public class City implements ClassMustProperties, Serializable
 	 * This function create City object according to all the inputs (supposed to be
 	 * used only in Database)
 	 * 
-	 * @param id                 the city id
-	 * @param cityName           the city name
-	 * @param cityDescription    the city description
-	 * @param publishedVersionId the id of the published version of this city
+	 * @param id                    the city id
+	 * @param cityName              the city name
+	 * @param cityDescription       the city description
+	 * @param publishedVersionId    the id of the published version of this city
 	 * @param managerNeedsToPublish approval of managers
+	 * @param priceOneTime price 1 time purchase
+	 * @param pricePeriod price for period
+	 * @param ceoNeedsToApprovePrices need approval
+	 * @param toBePriceOneTime to be price
+	 * @param toBePricePeriod to be price
 	 * @return the new city object
 	 * @throws SQLException if the access to database failed
 	 */
-	public static City _createCity(int id, String cityName, String cityDescription, Integer publishedVersionId,boolean managerNeedsToPublish,double priceOneTime,double pricePeriod, boolean ceoNeedsToApprovePrices, double toBePriceOneTime, double toBePricePeriod) throws SQLException
+	public static City _createCity(int id, String cityName, String cityDescription, Integer publishedVersionId,
+			boolean managerNeedsToPublish, double priceOneTime, double pricePeriod, boolean ceoNeedsToApprovePrices,
+			double toBePriceOneTime, double toBePricePeriod) throws SQLException
 	{
-		return new City(id, cityName, cityDescription, publishedVersionId,managerNeedsToPublish, priceOneTime, pricePeriod,  ceoNeedsToApprovePrices,  toBePriceOneTime,  toBePricePeriod);
+		return new City(id, cityName, cityDescription, publishedVersionId, managerNeedsToPublish, priceOneTime,
+				pricePeriod, ceoNeedsToApprovePrices, toBePriceOneTime, toBePricePeriod);
 	}
 
 	/**
@@ -76,19 +85,21 @@ public class City implements ClassMustProperties, Serializable
 	 * 
 	 * @param cityName        the city name
 	 * @param cityDescription the city description
+	 * @param priceOneTime    price of one time purchase
+	 * @param pricePeriod     of subscription
 	 * @throws SQLException if the access to database failed
 	 */
-	public City(String cityName, String cityDescription,double priceOneTime, double pricePeriod) throws SQLException
+	public City(String cityName, String cityDescription, double priceOneTime, double pricePeriod) throws SQLException
 	{
 		this.id = Database.generateIdCity();
 		this.cityName = cityName;
 		this.cityDescription = cityDescription;
-		this.managerNeedsToPublish=false;
-		this.priceOneTime=priceOneTime;
-		this.pricePeriod=pricePeriod;
-		this.ceoNeedsToApprovePrices=false;
-		this.toBePriceOneTime=priceOneTime;
-		this.toBePricePeriod=pricePeriod;
+		this.managerNeedsToPublish = false;
+		this.priceOneTime = priceOneTime;
+		this.pricePeriod = pricePeriod;
+		this.ceoNeedsToApprovePrices = false;
+		this.toBePriceOneTime = priceOneTime;
+		this.toBePricePeriod = pricePeriod;
 		this.publishedVersionId = null;
 		this.temp_unpublishedVersions = new ArrayList<>();
 		this.temp_removeVersions = new ArrayList<>();
@@ -97,6 +108,7 @@ public class City implements ClassMustProperties, Serializable
 
 	/**
 	 * Saves the City object to the database, and it's data versions
+	 * 
 	 * @throws SQLException if the access to database failed
 	 */
 	public void saveToDatabase() throws SQLException
@@ -118,6 +130,7 @@ public class City implements ClassMustProperties, Serializable
 
 	/**
 	 * Deletes this city from the database, and it's data versions
+	 * 
 	 * @throws SQLException if the access to database failed
 	 */
 	public void deleteFromDatabase() throws SQLException
@@ -142,6 +155,7 @@ public class City implements ClassMustProperties, Serializable
 
 	/**
 	 * Reload the temps variables from the database
+	 * 
 	 * @throws SQLException if the access to database failed
 	 */
 	public void reloadTempsFromDatabase() throws SQLException
@@ -225,7 +239,7 @@ public class City implements ClassMustProperties, Serializable
 	{
 		if (cdv.getCityId() != this.getId())
 			return false;
-		if(cdv.getNumMapSights()==0)
+		if (cdv.getNumMapSights() == 0)
 		{
 			addUnpublishedCityDataVersion(cdv);
 			return false;
@@ -258,7 +272,7 @@ public class City implements ClassMustProperties, Serializable
 		}
 		if (cdv == null)
 			return false;
-		if(cdv.getNumMapSights()==0)
+		if (cdv.getNumMapSights() == 0)
 			return false;
 		setPublishedToUnpublished();
 		this.publishedVersionId = cdv.getId();
@@ -310,14 +324,14 @@ public class City implements ClassMustProperties, Serializable
 	{
 		return getPublishedVersion() != null;
 	}
-	
+
 	/**
 	 * Approve the to be prices
 	 */
-	public void approveToBePrices() 
+	public void approveToBePrices()
 	{
-		this.priceOneTime=this.toBePriceOneTime;
-		this.pricePeriod=this.toBePricePeriod;
+		this.priceOneTime = this.toBePriceOneTime;
+		this.pricePeriod = this.toBePricePeriod;
 	}
 
 	/**
@@ -417,23 +431,30 @@ public class City implements ClassMustProperties, Serializable
 	{
 		return new ArrayList<>(temp_unpublishedVersions);
 	}
-	
+
 	/**
 	 * Set if the a worker requested the manager to publish the unpublished version
-	 * @param managerNeedsToPublish if the a worker requested the manager to publish the unpublished version
+	 * 
+	 * @param managerNeedsToPublish if the a worker requested the manager to publish
+	 *                              the unpublished version
 	 */
-	public void setManagerNeedsToPublish(boolean managerNeedsToPublish) {
-		this.managerNeedsToPublish=managerNeedsToPublish;
+	public void setManagerNeedsToPublish(boolean managerNeedsToPublish)
+	{
+		this.managerNeedsToPublish = managerNeedsToPublish;
 	}
-	
+
 	/**
-	 * Return boolean if the a worker requested the manager to publish the unpublished version
-	 * @return boolean if the a worker requested the manager to publish the unpublished version
+	 * Return boolean if the a worker requested the manager to publish the
+	 * unpublished version
+	 * 
+	 * @return boolean if the a worker requested the manager to publish the
+	 *         unpublished version
 	 */
-	public boolean getManagerNeedsToPublish() {
+	public boolean getManagerNeedsToPublish()
+	{
 		return this.managerNeedsToPublish;
 	}
-	
+
 	/**
 	 * Returns the price of one time buy
 	 * 
@@ -498,49 +519,62 @@ public class City implements ClassMustProperties, Serializable
 
 	/**
 	 * Return if CEO needs to approve the new prices
+	 * 
 	 * @return if CEO needs to approve the new prices
 	 */
-	public boolean isCeoNeedsToApprovePrices() {
+	public boolean isCeoNeedsToApprovePrices()
+	{
 		return ceoNeedsToApprovePrices;
 	}
 
 	/**
 	 * Set if CEO needs to approve the new prices
+	 * 
 	 * @param ceoNeedsToApprovePrices if CEO needs to approve the new prices
 	 */
-	public void setCeoNeedsToApprovePrices(boolean ceoNeedsToApprovePrices) {
+	public void setCeoNeedsToApprovePrices(boolean ceoNeedsToApprovePrices)
+	{
 		this.ceoNeedsToApprovePrices = ceoNeedsToApprovePrices;
 	}
 
 	/**
 	 * Return the one time purchase price that is not approved
+	 * 
 	 * @return the one time purchase price that is not approved
 	 */
-	public double getToBePriceOneTime() {
+	public double getToBePriceOneTime()
+	{
 		return toBePriceOneTime;
 	}
 
 	/**
 	 * Set the one time purchase price that is not approved
+	 * 
 	 * @param toBePriceOneTime the one time purchase price that is not approved
 	 */
-	public void setToBePriceOneTime(double toBePriceOneTime) {
+	public void setToBePriceOneTime(double toBePriceOneTime)
+	{
 		this.toBePriceOneTime = toBePriceOneTime;
 	}
 
 	/**
 	 * Return the subscription one month purchase price that is not approved
+	 * 
 	 * @return the subscription one month purchase price that is not approved
 	 */
-	public double getToBePricePeriod() {
+	public double getToBePricePeriod()
+	{
 		return toBePricePeriod;
 	}
 
 	/**
 	 * Set the subscription one month purchase price that is not approved
-	 * @param toBePricePeriod the subscription one month purchase price that is not approved
+	 * 
+	 * @param toBePricePeriod the subscription one month purchase price that is not
+	 *                        approved
 	 */
-	public void setToBePricePeriod(double toBePricePeriod) {
+	public void setToBePricePeriod(double toBePricePeriod)
+	{
 		this.toBePricePeriod = toBePricePeriod;
 	}
 }

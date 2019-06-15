@@ -159,6 +159,8 @@ public class RegCheck {
 	 * @param eMail e mail
 	 * @param phone phone number 
 	 * @param cardNum credit card number
+	 * @param year the year
+	 * @param month the month
 	 * @param cvv the cvv value.
 	 * @return returns error type. Please use .getValue() in order to get the error massage.
 	 */

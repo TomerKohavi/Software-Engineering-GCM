@@ -9,11 +9,13 @@ import otherClasses.ClassMustProperties;
 
 /**
  * class of map object
+ * 
  * @author Ron Cohen
  *
  */
 @SuppressWarnings("serial")
-public class Map implements ClassMustProperties, Serializable {
+public class Map implements ClassMustProperties, Serializable
+{
 	private int id;
 	private int cityId;
 	private String name;
@@ -26,14 +28,15 @@ public class Map implements ClassMustProperties, Serializable {
 	/**
 	 * This is a private constructor of map object
 	 * 
-	 * @param id the map id
+	 * @param id     the map id
 	 * @param cityId the id of the city that contains the map
-	 * @param name the name of the map
-	 * @param info the info of the map
+	 * @param name   the name of the map
+	 * @param info   the info of the map
 	 * @param imgURL the path of the image that in the map
 	 * @throws SQLException if the access to database failed
 	 */
-	private Map(int id, int cityId, String name, String info, String imgURL) throws SQLException {
+	private Map(int id, int cityId, String name, String info, String imgURL) throws SQLException
+	{
 		this.id = id;
 		this.cityId = cityId;
 		this.name = name;
@@ -46,15 +49,16 @@ public class Map implements ClassMustProperties, Serializable {
 	 * This function create map object according to all the inputs (supposed to be
 	 * used only in Database)
 	 * 
-	 * @param id the map id
+	 * @param id     the map id
 	 * @param cityId the id of the city that contains the map
-	 * @param name the name of the map
-	 * @param info the info of the map
+	 * @param name   the name of the map
+	 * @param info   the info of the map
 	 * @param imgURL the path of the image that in the map
 	 * @return the new map object
 	 * @throws SQLException if the access to database failed
 	 */
-	public static Map _createMap(int id, int cityId, String name, String info, String imgURL) throws SQLException { // friend to Database
+	public static Map _createMap(int id, int cityId, String name, String info, String imgURL) throws SQLException
+	{ // friend to Database
 		return new Map(id, cityId, name, info, imgURL);
 	}
 
@@ -62,12 +66,13 @@ public class Map implements ClassMustProperties, Serializable {
 	 * This is the normal public constructor for City object
 	 * 
 	 * @param cityId the id of the city that contains the map
-	 * @param name the name of the map
-	 * @param info the info of the map
+	 * @param name   the name of the map
+	 * @param info   the info of the map
 	 * @param imgURL the path of the image that in the map
 	 * @throws SQLException if the access to database failed
 	 */
-	public Map(int cityId, String name, String info, String imgURL) throws SQLException {
+	public Map(int cityId, String name, String info, String imgURL) throws SQLException
+	{
 		this.id = Database.generateIdMap();
 		this.cityId = cityId;
 		this.name = name;
@@ -76,22 +81,24 @@ public class Map implements ClassMustProperties, Serializable {
 		this.temp_locations = new ArrayList<>();
 		this.temp_removeLocations = new ArrayList<>();
 	}
-	
+
 	/**
 	 * Copy constructor of class map with new id
 	 * 
 	 * @param other map object to copy
 	 * @throws SQLException if the access to database failed
 	 */
-	public Map(Map other) throws SQLException {
+	public Map(Map other) throws SQLException
+	{
 		this.id = Database.generateIdMap();
 		this.cityId = other.cityId;
 		this.name = other.name;
 		this.info = other.info;
 		this.imgURL = other.imgURL;
 		this.temp_locations = new ArrayList<>();
-		for(Location l:other.getCopyLocations()) {
-			Location newL=new Location(this, l.getCopyPlaceOfInterest(), l.getCoordinates());
+		for (Location l : other.getCopyLocations())
+		{
+			Location newL = new Location(this, l.getCopyPlaceOfInterest(), l.getCoordinates());
 			temp_locations.add(newL);
 		}
 		this.temp_removeLocations = new ArrayList<>();
@@ -99,13 +106,16 @@ public class Map implements ClassMustProperties, Serializable {
 
 	/**
 	 * Returns a list of locations in the map
+	 * 
 	 * @return list of locations in the map
 	 * @throws SQLException if the access to database failed
 	 */
-	private ArrayList<Location> generateLocations() throws SQLException {
+	private ArrayList<Location> generateLocations() throws SQLException
+	{
 		ArrayList<Integer> ids = Database.searchLocation(this.id, null);
 		ArrayList<Location> arrList = new ArrayList<Location>();
-		for (int id : ids) {
+		for (int id : ids)
+		{
 			Location o = Database._getLocationById(id);
 			if (o == null)
 				continue;
@@ -117,10 +127,12 @@ public class Map implements ClassMustProperties, Serializable {
 		return arrList;
 	}
 
-	public void saveToDatabase() throws SQLException {
+	public void saveToDatabase() throws SQLException
+	{
 		Database.saveMap(this);
 		// delete removes
-		for (Location l : temp_removeLocations) {
+		for (Location l : temp_removeLocations)
+		{
 			if (!temp_locations.contains(l))
 				l.deleteFromDatabase();
 		}
@@ -130,7 +142,8 @@ public class Map implements ClassMustProperties, Serializable {
 			l.saveToDatabase();
 	}
 
-	public void deleteFromDatabase() throws SQLException {
+	public void deleteFromDatabase() throws SQLException
+	{
 		Database.deleteMap(this.id);
 		// delete removes
 		for (Location l : temp_removeLocations)
@@ -140,14 +153,16 @@ public class Map implements ClassMustProperties, Serializable {
 			l.deleteFromDatabase();
 		// delete all mapSights
 		ArrayList<Integer> ids = Database.searchMapSight(null, this.id);
-		for (int id : ids) {
+		for (int id : ids)
+		{
 			Map m = Database.getMapById(id);
 			if (m != null)
 				m.deleteFromDatabase();
 		}
 	}
 
-	public void reloadTempsFromDatabase() throws SQLException {
+	public void reloadTempsFromDatabase() throws SQLException
+	{
 		this.temp_locations = generateLocations();
 		this.temp_removeLocations = new ArrayList<>();
 	}
@@ -157,17 +172,21 @@ public class Map implements ClassMustProperties, Serializable {
 	 * 
 	 * @return the number of locations in the map
 	 */
-	public int getNumLocations() {
+	public int getNumLocations()
+	{
 		return temp_locations.size();
 	}
 
 	/**
 	 * Return location object of the point of interest with given id
+	 * 
 	 * @param placeOfInterestId the id of the place of interest we want to look at
-	 * @return the location that of the place of interest 
+	 * @return the location that of the place of interest
 	 */
-	public Location getLocationByPlaceOfInterestId(int placeOfInterestId) {
-		for (Location l : temp_locations) {
+	public Location getLocationByPlaceOfInterestId(int placeOfInterestId)
+	{
+		for (Location l : temp_locations)
+		{
 			if (l.getPlaceOfInterestId() == placeOfInterestId)
 				return l;
 		}
@@ -178,10 +197,12 @@ public class Map implements ClassMustProperties, Serializable {
 	 * Return location object by given id
 	 * 
 	 * @param locId the id of the location we search
-	 * @return location object 
+	 * @return location object
 	 */
-	public Location getLocationById(int locId) {
-		for (Location l : temp_locations) {
+	public Location getLocationById(int locId)
+	{
+		for (Location l : temp_locations)
+		{
 			if (l.getId() == locId)
 				return l;
 		}
@@ -194,7 +215,8 @@ public class Map implements ClassMustProperties, Serializable {
 	 * @param l location object to add
 	 * @return true if the location is added successfully
 	 */
-	public boolean addLocation(Location l) {
+	public boolean addLocation(Location l)
+	{
 		if (l.getCopyPlaceOfInterest().getCityId() != this.cityId || l.getMapId() != this.id)
 			return false;
 		temp_locations.add(l);
@@ -207,9 +229,12 @@ public class Map implements ClassMustProperties, Serializable {
 	 * @param locId id of location to remove
 	 * @return the location object that removed
 	 */
-	public Location removeLocationById(int locId) {
-		for (Location l : new ArrayList<>(temp_locations)) {
-			if (l.getId() == locId) {
+	public Location removeLocationById(int locId)
+	{
+		for (Location l : new ArrayList<>(temp_locations))
+		{
+			if (l.getId() == locId)
+			{
 				temp_locations.remove(l);
 				temp_removeLocations.add(l);
 				return l;
@@ -223,7 +248,8 @@ public class Map implements ClassMustProperties, Serializable {
 	 * 
 	 * @return the map id
 	 */
-	public int getId() {
+	public int getId()
+	{
 		return id;
 	}
 
@@ -232,7 +258,8 @@ public class Map implements ClassMustProperties, Serializable {
 	 * 
 	 * @return the name of the map
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
 
@@ -241,7 +268,8 @@ public class Map implements ClassMustProperties, Serializable {
 	 * 
 	 * @return the info of the map
 	 */
-	public String getInfo() {
+	public String getInfo()
+	{
 		return info;
 	}
 
@@ -250,7 +278,8 @@ public class Map implements ClassMustProperties, Serializable {
 	 * 
 	 * @param name the new name of the map
 	 */
-	public void setName(String name) {
+	public void setName(String name)
+	{
 		this.name = name;
 	}
 
@@ -259,7 +288,8 @@ public class Map implements ClassMustProperties, Serializable {
 	 * 
 	 * @param info the new map info
 	 */
-	public void setInfo(String info) {
+	public void setInfo(String info)
+	{
 		this.info = info;
 	}
 
@@ -268,7 +298,8 @@ public class Map implements ClassMustProperties, Serializable {
 	 * 
 	 * @return image path of the map
 	 */
-	public String getImgURL() {
+	public String getImgURL()
+	{
 		return imgURL;
 	}
 
@@ -277,7 +308,8 @@ public class Map implements ClassMustProperties, Serializable {
 	 * 
 	 * @param imgURL the new image path of the map
 	 */
-	public void setImgURL(String imgURL) {
+	public void setImgURL(String imgURL)
+	{
 		this.imgURL = imgURL;
 	}
 
@@ -286,7 +318,8 @@ public class Map implements ClassMustProperties, Serializable {
 	 * 
 	 * @return the city id
 	 */
-	public int getCityId() {
+	public int getCityId()
+	{
 		return cityId;
 	}
 
@@ -295,13 +328,15 @@ public class Map implements ClassMustProperties, Serializable {
 	 * 
 	 * @return list of copied locations that in the map
 	 */
-	public ArrayList<Location> getCopyLocations() {
+	public ArrayList<Location> getCopyLocations()
+	{
 		return new ArrayList<>(temp_locations);
 	}
-	
-	
+
 	/**
-	 * empties the locations list (so no overwrites will be done)
+	 * sets the locations list
+	 * 
+	 * @param locList locations list
 	 */
 	public void _setLocationsList(ArrayList<Location> locList)
 	{
@@ -309,7 +344,8 @@ public class Map implements ClassMustProperties, Serializable {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(Object o)
+	{
 		return o instanceof Map && ((Map) o).getId() == this.getId();
 	}
 }

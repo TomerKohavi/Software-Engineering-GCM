@@ -188,6 +188,7 @@ public class ConnectionToClient extends Thread
    * Based on a hash map.
    *
    * @param infoType   identifies the type of information
+   * @return info
    */
   public Object getInfo(String infoType)
   {

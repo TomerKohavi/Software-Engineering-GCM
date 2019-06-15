@@ -156,7 +156,7 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 
 	/**
 	 * Return if the subscription is going to expired by given date
-	 * @param LocalDate the LocalDate we check the time from him 
+	 * @param date the LocalDate we check the time from him 
 	 * @return true if the subscription is going to expired
 	 */
 	public boolean isGoingToEnd(LocalDate date)
