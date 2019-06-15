@@ -161,6 +161,7 @@ public class InitDatebase {
 		RouteSight rs1 = new RouteSight(cdv.getId(), r1);
 		rs1.saveToDatabase();
 
+		cdv.reloadTempsFromDatabase();
 		c1.addPublishedCityDataVersion(cdv);
 		c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv, "3.1"));
 		c1.saveToDatabase();
@@ -250,6 +251,7 @@ public class InitDatebase {
 		RouteSight rs1 = new RouteSight(cdv.getId(), r1);
 		rs1.saveToDatabase();
 
+		cdv.reloadTempsFromDatabase();
 		c1.addPublishedCityDataVersion(cdv);
 		c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv, "6.888"));
 		c1.saveToDatabase();
@@ -398,6 +400,7 @@ public class InitDatebase {
 		RouteSight rs2 = new RouteSight(cdv2.getId(), r3);
 		rs2.saveToDatabase();
 
+		cdv2.reloadTempsFromDatabase();
 		city.addPublishedCityDataVersion(cdv2);
 		city.addUnpublishedCityDataVersion(cdv);
 		city.saveToDatabase();
@@ -567,6 +570,7 @@ public class InitDatebase {
 		RouteSight rs2 = new RouteSight(cdv2.getId(), r3);
 		rs2.saveToDatabase();
 
+		cdv.reloadTempsFromDatabase();
 		city.addPublishedCityDataVersion(cdv);
 		city.addUnpublishedCityDataVersion(cdv2);
 		city.saveToDatabase();

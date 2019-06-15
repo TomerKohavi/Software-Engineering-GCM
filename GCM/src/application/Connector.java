@@ -46,7 +46,10 @@ public class Connector {
 
 	public static final int PORT = 5556;
 	public static final String LOCAL_HOST = "localhost";
-
+	public static final double DEFULT_ONE_TIME_PRICE = 10;
+	public static final double DEFULT_SUB_MONTH_PRICE = 40;
+	
+	
 	public static boolean isEdit = true;
 
 	public static String listType = "City";
