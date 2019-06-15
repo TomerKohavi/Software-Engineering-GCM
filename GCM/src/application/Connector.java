@@ -1,12 +1,17 @@
 package application;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 import com.jfoenix.controls.JFXButton;
 
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -20,6 +25,7 @@ import objectClasses.PlaceOfInterest;
 import objectClasses.PlaceOfInterestSight;
 import objectClasses.Route;
 import objectClasses.RouteSight;
+import objectClasses.Subscription;
 import objectClasses.User;
 import otherClasses.Pair;
 import client.ChatClient;
@@ -52,6 +58,8 @@ public class Connector {
 	public static boolean unpublished = false;
 
 	public static String errorMsg;
+	
+	public static String subNameToAlert;
 
 	public static City selectedCity;
 	public static Map selectedMap;
@@ -148,11 +156,17 @@ public class Connector {
 		File selectedDirectory = chooser.showDialog(null);
 		if (selectedDirectory != null)
 		{
-		Downloader.downloadPOIs(
-				(ArrayList<PlaceOfInterestSight>) Connector.client.fetchSights(
-						Connector.selectedCity.getCopyPublishedVersion().getId(), PlaceOfInterestSight.class),
-				selectedDirectory.getPath() + "\\" + Connector.selectedCity.getCityName() + " "
-						+ Connector.selectedCity.getCopyPublishedVersion().getVersionName() + ".txt");
+			Downloader.downloadPOIs(
+					(ArrayList<PlaceOfInterestSight>) Connector.client.fetchSights(
+							Connector.selectedCity.getCopyPublishedVersion().getId(), PlaceOfInterestSight.class),
+					selectedDirectory.getPath() + "\\" + Connector.selectedCity.getCityName() + " "
+							+ Connector.selectedCity.getCopyPublishedVersion().getVersionName() + ".txt");
+			for (MapSight mapS : searchMapResult)
+			{
+				Map map = mapS.getCopyMap();
+				BufferedImage bufIm = Connector.client.fetchImage("Pics\\" + map.getImgURL());
+				ImageIO.write(bufIm, "png", new File(selectedDirectory.getPath() + "\\" + map.getName()));
+			}
 			return true;
 		}
 		return false;
