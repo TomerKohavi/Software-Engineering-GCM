@@ -77,7 +77,7 @@ public class InitDatebase {
 	 */
 	private static void haifa() {
 		City c1 = new City("Haifa", "The third largest city in Israel. As of 2016, the city is a major seaport "
-				+ "located on Israel's Mediterranean coastline in the Bay of Haifa covering 63.7 square kilometres.", 20, 100.9);
+				+ "located on Israel's Mediterranean coastline in the Bay of Haifa covering 63.7 square kilometres.", 20, 103);
 		PlaceOfInterest p0 = new PlaceOfInterest(c1.getId(), "University of Haifa", PlaceOfInterest.PlaceType.PUBLIC,
 				"A public research university on the top of Mount Carmel in Haifa, Israel. "
 						+ "The university was founded in 1963 by the mayor of its host city, Abba Hushi,"
