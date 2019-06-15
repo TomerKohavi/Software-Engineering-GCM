@@ -156,7 +156,7 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 	 */
 	public boolean isGoingToEnd(LocalDate date)
 	{
-		int diffDays=(int)ChronoUnit.DAYS.between(expirationDate, date);
+		int diffDays=(int)ChronoUnit.DAYS.between(date,expirationDate);
 		return 0<=diffDays && diffDays<= closeNumDays;
 	}
 
