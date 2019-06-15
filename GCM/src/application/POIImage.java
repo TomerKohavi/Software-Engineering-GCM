@@ -59,8 +59,6 @@ public class POIImage {
     	    		if (Connector.poiNameTextArea.getText().equals(""))
     	    		{
     	    				Connector.poiNameTextArea.setText(poiName);
-    	    				System.out.println(image.getLayoutX() + "" + image.getLayoutY());
-    	    				System.out.println(image.getX() + "" + image.getY());
     	    				Connector.poiNameTextArea.setX(image.getX() - 15);
     	    				Connector.poiNameTextArea.setY(image.getY());
     	    				Connector.poiNameTextArea.setVisible(true);
@@ -70,6 +68,7 @@ public class POIImage {
     	    			Connector.poiNameTextArea.setText("");
     	    			Connector.poiNameTextArea.setVisible(false);
     	    		}
+    	    		return;
     	    	}
     	    	if (!Connector.unpublished || isNew || !Connector.isEdit)
     	    		return;
