@@ -153,6 +153,7 @@ public class MapEditController
 					Connector.imageList.remove(Connector.imageList.size() - 1);
 				}
 				firstPOIAdded = false;
+				AddPOILocButton.setDisable(false);
 				POIImage poiImage = null;
 				try
 				{
@@ -291,7 +292,7 @@ public class MapEditController
 	{
 		Connector.choosenPOIInLoc = null;
 		openNewPage("ChoosePOIScene.fxml");
-		if (Connector.choosenPOIInLoc != null)// didn't cancel
+		if (Connector.choosenPOIInLoc != null) // didn't cancel
 		{
 			POIImage poi = Connector.imageList.get(Connector.imageList.size() - 1);
 			poi.setName(Connector.choosenPOIInLoc.getName());
