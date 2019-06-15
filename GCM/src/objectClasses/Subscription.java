@@ -123,7 +123,7 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 	 * @param payedPrice the price after discount (if there is any)
 	 * @return
 	 */
-	public static boolean _Resubscribe(Subscription sub,int fullPrice,int payedPrice) {
+	public static boolean _Resubscribe(Subscription sub, double fullPrice, double payedPrice) {
 		if(sub==null)
 			return false;
 		Date today = new Date(Calendar.getInstance().getTime().getTime());
