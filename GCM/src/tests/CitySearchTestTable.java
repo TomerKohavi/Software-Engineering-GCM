@@ -21,6 +21,11 @@ import objectClasses.CityDataVersion;
 import objectClasses.PlaceOfInterest;
 import objectClasses.PlaceOfInterestSight;
  
+/**
+ * @author ron
+ * @author tal
+ * JUnit for search city
+ */
 @RunWith(Parameterized.class)
 public class CitySearchTestTable {
 	
@@ -80,6 +85,14 @@ public class CitySearchTestTable {
 			public static PlaceOfInterest p9;
 			public static PlaceOfInterest p10;
           
+			/**
+			 * Add point of interest to city
+			 * @param c the city to add
+			 * @param name the point of interest name
+			 * @param info the point of interest info
+			 * @param publish the point of interest publish
+			 * @return point of interest that created and added
+			 */
 			private static PlaceOfInterest createAndAddPOI(City c,String name,String info,boolean publish)
             {
 		    	Random rand = new Random();
@@ -112,6 +125,9 @@ public class CitySearchTestTable {
         		return p;
             }
           
+            /**
+             * Init database connection
+             */
             @BeforeClass
             public static void initDatabaseConnection() {
             	//open connection
@@ -137,6 +153,9 @@ public class CitySearchTestTable {
         		c4.saveToDatabase();
             }
             
+            /**
+             * Test the search
+             */
             @Test
         	public void testSearchByParms() {
         		//search according to City name
@@ -148,6 +167,9 @@ public class CitySearchTestTable {
         	}
             
            
+            /**
+             * Close database connection
+             */
             @AfterClass 
             public static void closeDatabaseConnection() {
             	//delete cities
