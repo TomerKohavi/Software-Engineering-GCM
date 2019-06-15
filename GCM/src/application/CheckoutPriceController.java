@@ -49,8 +49,8 @@ public class CheckoutPriceController {
      * initialize the variables
      */
     public void initialize() {
-    	oneTimePrice = Connector.cityData.getPriceOneTime(); // TODO get the ToBe prices
-    	monthPrice = Connector.cityData.getPricePeriod();
+    	oneTimePrice = Connector.selectedCity.getToBePriceOneTime();
+    	monthPrice = Connector.selectedCity.getToBePricePeriod();
     	OneTimeField.setText(String.format("%.02f", oneTimePrice));
     	MonthField.setText(String.format("%.02f", monthPrice));
     }
@@ -62,15 +62,10 @@ public class CheckoutPriceController {
      */
     @FXML
     void applyChanges(ActionEvent event) throws IOException {
-    	if (isNumeric(OneTimeField.getText()) && isNumeric(MonthField.getText()) && Integer.parseInt(OneTimeField.getText()) > 0 && Integer.parseInt(MonthField.getText()) > 0) {  // TODO Change Price to city (Ron)
-	    	mainPane.getScene().getWindow().hide();
-    		Connector.cityData.setPriceOneTime(Integer.parseInt(OneTimeField.getText()));
-    		Connector.cityData.setPricePeriod(Integer.parseInt(MonthField.getText()));
-    		Connector.client.update(Connector.selectedCity);
-    	} else {
-    		NotValid.setVisible(true);
-    	}
-    	
+		Connector.selectedCity.setPriceOneTime(oneTimePrice);
+		Connector.selectedCity.setPricePeriod(monthPrice);
+		Connector.client.update(Connector.selectedCity);
+		mainPane.getScene().getWindow().hide();
     }
 
     /**

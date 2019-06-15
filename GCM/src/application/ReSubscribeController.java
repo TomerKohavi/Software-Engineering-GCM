@@ -44,7 +44,7 @@ public class ReSubscribeController {
     public void initialize() {
     	MonthBox.getItems().addAll(1,2,3,4,5,6);
     	MonthBox.setValue(1);
-    	monthPrice = Connector.cityData.getPricePeriodWithDiscount();
+    	monthPrice = Connector.selectedCity.getPricePeriodWithDiscount();
     	SubscriptionPrice.setText(String.format("%.02f", monthPrice) + "$");
     }
     

@@ -1,6 +1,5 @@
 package application;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.Calendar;
@@ -9,7 +8,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
 
-import controller.Downloader;
 import controller.InformationSystem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,7 +18,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import objectClasses.OneTimePurchase;
 import objectClasses.Subscription;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -80,8 +77,8 @@ public class BuyController {
     public void initialize() {
     	MonthBox.getItems().addAll(1,2,3,4,5,6);
     	MonthBox.setValue(1);
-    	oneTimePrice = Connector.cityData.getPriceOneTime();
-    	monthPrice = Connector.cityData.getPricePeriod();
+    	oneTimePrice = Connector.selectedCity.getPriceOneTime();
+    	monthPrice = Connector.selectedCity.getPricePeriod();
     	OneTimePrice.setText(String.format("%.02f", oneTimePrice) + "$");
     	SubscriptionPrice.setText(String.format("%.02f", monthPrice) + "$");
     }
@@ -91,7 +88,8 @@ public class BuyController {
      * @param event user click on buy
      * @throws IOException 
      */
-    @FXML
+    @SuppressWarnings("deprecation")
+	@FXML
     void buy(ActionEvent event) throws IOException {
     	if (RadioOneTime.isSelected())
     	{
