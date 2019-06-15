@@ -14,6 +14,10 @@ import otherClasses.ClassMustProperties;
 @SuppressWarnings("serial")
 public class CityDataVersion implements ClassMustProperties, Serializable
 {
+	public static final double DEFULT_ONE_TIME_PRICE = 10;
+	public static final double DEFULT_SUB_MONTH_PRICE = 40;
+	
+	
 	private int id;
 	private int cityId;
 	private String versionName;

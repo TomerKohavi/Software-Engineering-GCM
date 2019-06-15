@@ -417,11 +417,11 @@ public class EchoServer extends AbstractServer
 	 * @return the result of the city request to the client
 	 */
 	private CreateCity handleCityCreation(CreateCity ccity)
-	{ // TODO Ronen make sure its the right way to create cities etc.
+	{
 		ccity.city = new City(ccity.name, ccity.info);
-		ccity.city.saveToDatabase();
 		ccity.cdv = new CityDataVersion(ccity.city, ccity.name = " 1.0", ccity.priceOneTime, ccity.pricePeriod);
-		ccity.cdv.saveToDatabase();
+		ccity.city.addUnpublishedCityDataVersion(ccity.cdv);
+		ccity.city.saveToDatabase();
 		return ccity;
 	}
 	
