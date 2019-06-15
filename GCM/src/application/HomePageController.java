@@ -552,7 +552,22 @@ public class HomePageController
 	 */
 	public void initialize() 
 	{
-		Connector.mainPaneForClient = mainPane;
+		Task<Void> task = new Task<Void>() {
+		    @Override
+		    public Void call() throws Exception {
+		    	Connector.semaphoreForLostConnection.acquire();
+		        return null;
+		    }
+		};
+		task.setOnSucceeded(e -> {
+		    try {
+				openNewPage("LostConnectionScene.fxml");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		new Thread(task).start();
 		
 		Connector.sideButton = SideSearch;
 		Connector.sideButton.setOpacity(1);

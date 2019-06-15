@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 import javax.imageio.ImageIO;
 
@@ -42,7 +43,7 @@ public class Connector
 
 	public static Stage mainStage;
 	
-	public static AnchorPane mainPaneForClient;
+	public static Semaphore semaphoreForLostConnection = new Semaphore(0);
 
 	public static JFXButton sideButton;
 
