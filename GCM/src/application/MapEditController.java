@@ -39,7 +39,7 @@ import objectClasses.MapSight;
  */
 public class MapEditController
 {
-
+	// TODO if i add a loc and then remove it i need to remove it twice
 	private boolean firstPOIAdded = true;
 
 	private Image realPOI = null;
