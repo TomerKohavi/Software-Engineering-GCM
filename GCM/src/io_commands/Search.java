@@ -25,6 +25,9 @@ public class Search extends Command
 		this.poiInfo = checkEmpty(poiInfo);
 	}
 
+	/**
+	 * delete the request
+	 */
 	public void delete()
 	{
 		cityName = cityInfo = poiName = poiInfo = null;

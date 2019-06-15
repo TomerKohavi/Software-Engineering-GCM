@@ -30,6 +30,9 @@ public class CreatePOI extends Command
 		this.cdvId = cdvId;
 	}
 
+	/**
+	 * delete the request
+	 */
 	public void delete()
 	{
 		this.cityId = null;
