@@ -1,6 +1,6 @@
 package io_commands;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import objectClasses.Statistic;
 
@@ -17,7 +17,7 @@ public class Statboi extends Command
 	 * @param from from when that statistics is start to be taken
 	 * @param end until when that statistics is taken
 	 */
-	public Statboi(Integer cityId,Date from,Date end)
+	public Statboi(Integer cityId,LocalDate from,LocalDate end)
 	{
 		this.cityId = cityId;
 		this.from = from;
@@ -35,5 +35,5 @@ public class Statboi extends Command
 	
 	public Statistic statboi;
 	public Integer cityId;
-	public Date from, end;
+	public LocalDate from, end;
 }

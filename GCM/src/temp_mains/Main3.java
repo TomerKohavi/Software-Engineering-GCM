@@ -1,6 +1,6 @@
 package temp_mains;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -13,7 +13,7 @@ public class Main3 {
 		Database.createConnection();
 		try 
 		{
-			Date today = new Date(Calendar.getInstance().getTime().getTime());
+			LocalDate today = LocalDate.now();
 			long start = System.currentTimeMillis();
 			
 			

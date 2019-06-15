@@ -1,7 +1,7 @@
 package objectClasses;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDate;
 
 import controller.Database;
 import otherClasses.ClassMustProperties;
@@ -28,7 +28,7 @@ public class OneTimePurchase extends CityPurchase implements ClassMustProperties
 	 * @param pricePayed how much is actually payed 
 	 * @param wasDownload if the one time purchase was download or not
 	 */
-	private OneTimePurchase(int id, int cityId, int userId, Date purchaseDate, double fullPrice, double pricePayed,
+	private OneTimePurchase(int id, int cityId, int userId, LocalDate purchaseDate, double fullPrice, double pricePayed,
 			boolean wasDownload)
 	{
 		super(id, cityId, userId, purchaseDate, fullPrice, pricePayed);
@@ -47,7 +47,7 @@ public class OneTimePurchase extends CityPurchase implements ClassMustProperties
 	 * @param wasDownload if the one time purchase was download or not
 	 * @param cityName the name of the city
 	 */
-	private OneTimePurchase(int id, int cityId, int userId, Date purchaseDate, double fullPrice, double pricePayed,
+	private OneTimePurchase(int id, int cityId, int userId, LocalDate purchaseDate, double fullPrice, double pricePayed,
 			boolean wasDownload, String cityName)
 	{
 		super(id, cityId, userId, purchaseDate, fullPrice, pricePayed, cityName);
@@ -67,7 +67,7 @@ public class OneTimePurchase extends CityPurchase implements ClassMustProperties
 	 * @param wasDownload if the one time purchase was download or not
 	 * @return new one time purchase object
 	 */
-	public static OneTimePurchase _createOneTimePurchase(int id, int cityId, int userId, Date purchaseDate,
+	public static OneTimePurchase _createOneTimePurchase(int id, int cityId, int userId, LocalDate purchaseDate,
 			double fullPrice, double pricePayed, boolean wasDownload)
 	{ // friend to Database
 		return new OneTimePurchase(id, cityId, userId, purchaseDate, fullPrice, pricePayed, wasDownload);
@@ -87,7 +87,7 @@ public class OneTimePurchase extends CityPurchase implements ClassMustProperties
 	 * @param cityName the name of the city
 	 * @return new one time purchase object
 	 */
-	public static OneTimePurchase _createLocalOneTimePurchase(int id, int cityId, int userId, Date purchaseDate,
+	public static OneTimePurchase _createLocalOneTimePurchase(int id, int cityId, int userId, LocalDate purchaseDate,
 			double fullPrice, double pricePayed, boolean wasDownload, String cityName)
 	{ // friend to Database
 		return new OneTimePurchase(id, cityId, userId, purchaseDate, fullPrice, pricePayed, wasDownload, cityName);
@@ -103,7 +103,7 @@ public class OneTimePurchase extends CityPurchase implements ClassMustProperties
 	 * @param fullPrice full price of the map
 	 * @param pricePayed priced payed
 	 */
-	public OneTimePurchase(Customer u, int cityId, Date purchaseDate, double fullPrice, double pricePayed)
+	public OneTimePurchase(Customer u, int cityId, LocalDate purchaseDate, double fullPrice, double pricePayed)
 	{
 		super(u.getId(), cityId, purchaseDate, fullPrice, pricePayed);
 		this.wasDownload = false;

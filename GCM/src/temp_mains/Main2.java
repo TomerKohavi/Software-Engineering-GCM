@@ -1,7 +1,6 @@
 package temp_mains;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -14,8 +13,9 @@ public class Main2 {
 		Database.createConnection();
 		try 
 		{
-			Date today = new Date(Calendar.getInstance().getTime().getTime());
-			Date yesturday= new Date(today.getYear(),today.getMonth(),today.getDay()+1);
+			LocalDate today = LocalDate.now();
+			LocalDate yesturday= today.plusDays(1);
+			System.out.println(today.getMonth());
 			Statistic s=InformationSystem.getRangeSumStatistics(4, today, today);
 			System.out.println(s.getNumOneTimePurchases());
 			/*Customer cust = new Customer("t", "t", "t@gmail.com", "t", "t t", "0523002100", "0095681338665894", "07/24",

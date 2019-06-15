@@ -3,7 +3,7 @@ package application;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 import com.jfoenix.controls.JFXButton;
@@ -43,7 +43,7 @@ public class RouteEditController
 	private ArrayList<RouteStop> stopList;
 
 	private TableColumn<RouteStop, String> poiColumn;
-	private TableColumn<RouteStop, Time> timeColumn;
+	private TableColumn<RouteStop, LocalTime> timeColumn;
 
 	@FXML // fx:id="mainPane"
 	private AnchorPane mainPane; // Value injected by FXMLLoader
@@ -78,7 +78,7 @@ public class RouteEditController
 	@FXML // fx:id="ApplyChanges"
 	private JFXButton ApplyChanges; // Value injected by FXMLLoader
 
-	@FXML // fx:id="Time"
+	@FXML // fx:id="LocalTime"
 	private JFXTextField StopTime; // Value injected by FXMLLoader
 
 	@FXML // fx:id="TimeError"
@@ -123,7 +123,7 @@ public class RouteEditController
 		poiColumn.setCellValueFactory(new PropertyValueFactory<>("placeName"));
 		poiColumn.setSortable(false);
 
-		timeColumn = new TableColumn<RouteStop, Time>("Time");
+		timeColumn = new TableColumn<RouteStop, LocalTime>("LocalTime");
 		timeColumn.setMinWidth(83);
 		timeColumn.setCellValueFactory(new PropertyValueFactory<>("recommendedTime"));
 		timeColumn.setSortable(false);
@@ -197,8 +197,7 @@ public class RouteEditController
 				{
 					PlaceOfInterest poi = Connector.searchPOIResult.get(selectedIdx).getCopyPlace();
 					@SuppressWarnings("deprecation")
-					RouteStop newRouteStop = RouteStop._createRouteStop(-1, -1, poi.getId(), poi.getName(), 0,
-							new Time((time / 60), time % 60, 0));
+					RouteStop newRouteStop = RouteStop._createRouteStop(-1, -1, poi.getId(), poi.getName(), 0,LocalTime.of((time / 60), time % 60, 0));
 					stopList.add(newRouteStop);
 					updateTable();
 					StopTime.setText("");

@@ -1,7 +1,7 @@
 package controller;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 import objectClasses.City;
@@ -142,20 +142,20 @@ public class InitDatebase {
 		ms1.saveToDatabase();
 
 		Route r = new Route(c1.getId(), "Education route", "A route that passes through the best academic institutions in Haifa.",true);
-		RouteStop rstop1 = new RouteStop(r, p0, new Time(1, 25, 0));
+		RouteStop rstop1 = new RouteStop(r, p0, LocalTime.of(1, 25, 0));
 		r.addRouteStop(rstop1);
-		RouteStop rstop2 = new RouteStop(r, p1, new Time(0, 50, 0));
+		RouteStop rstop2 = new RouteStop(r, p1, LocalTime.of(0, 50, 0));
 		r.addRouteStop(rstop2);
 		r.saveToDatabase();
 		RouteSight rs = new RouteSight(cdv.getId(), r);
 		rs.saveToDatabase();
 
 		Route r1 = new Route(c1.getId(), "Nice family trip","A route that designed for a vatction day for all ages.",false);
-		RouteStop rstop3 = new RouteStop(r1, p2, new Time(4, 0, 0));
+		RouteStop rstop3 = new RouteStop(r1, p2, LocalTime.of(4, 0, 0));
 		r1.addRouteStop(rstop3);
-		RouteStop rstop4 = new RouteStop(r1, p3, new Time(0, 20, 0));
+		RouteStop rstop4 = new RouteStop(r1, p3, LocalTime.of(0, 20, 0));
 		r1.addRouteStop(rstop4);
-		RouteStop rstop5 = new RouteStop(r1, p4, new Time(3, 30, 0));
+		RouteStop rstop5 = new RouteStop(r1, p4, LocalTime.of(3, 30, 0));
 		r1.addRouteStop(rstop5);
 		r1.saveToDatabase();
 		RouteSight rs1 = new RouteSight(cdv.getId(), r1);
@@ -233,20 +233,20 @@ public class InitDatebase {
 		MapSight ms1 = new MapSight(cdv.getId(), m1);
 		ms1.saveToDatabase();
 		Route r = new Route(c1.getId(), "Shopping and resturant tour","A tour that pass throught the best shopping attractions in town.",false);
-		RouteStop rstop1 = new RouteStop(r, p0, new Time(4, 30, 0));
+		RouteStop rstop1 = new RouteStop(r, p0, LocalTime.of(4, 30, 0));
 		r.addRouteStop(rstop1);
-		RouteStop rstop2 = new RouteStop(r, p1, new Time(2, 0, 0));
+		RouteStop rstop2 = new RouteStop(r, p1, LocalTime.of(2, 0, 0));
 		r.addRouteStop(rstop2);
 		r.saveToDatabase();
 		RouteSight rs = new RouteSight(cdv.getId(), r);
 		rs.saveToDatabase();
 
 		Route r1 = new Route(c1.getId(), "Random route","A route with a wide variety of attractions types.",true);
-		RouteStop rstop3 = new RouteStop(r1, p2, new Time(0, 40, 0));
+		RouteStop rstop3 = new RouteStop(r1, p2, LocalTime.of(0, 40, 0));
 		r1.addRouteStop(rstop3);
-		RouteStop rstop4 = new RouteStop(r1, p3, new Time(2, 20, 0));
+		RouteStop rstop4 = new RouteStop(r1, p3, LocalTime.of(2, 20, 0));
 		r1.addRouteStop(rstop4);
-		RouteStop rstop5 = new RouteStop(r1, p4, new Time(4, 20, 0));
+		RouteStop rstop5 = new RouteStop(r1, p4, LocalTime.of(4, 20, 0));
 		r1.addRouteStop(rstop5);
 		r1.saveToDatabase();
 		RouteSight rs1 = new RouteSight(cdv.getId(), r1);
@@ -318,9 +318,9 @@ public class InitDatebase {
 		ms0.saveToDatabase();
 
 		Route r1 = new Route(city.getId(), "Historical attractions","A route that pass throught the best historical attractions in town.",true);
-		RouteStop rstop1 = new RouteStop(r1, p0, new Time(0, 40, 0));
+		RouteStop rstop1 = new RouteStop(r1, p0, LocalTime.of(0, 40, 0));
 		r1.addRouteStop(rstop1);
-		RouteStop rstop2 = new RouteStop(r1, p2, new Time(1, 30, 0));
+		RouteStop rstop2 = new RouteStop(r1, p2, LocalTime.of(1, 30, 0));
 		r1.addRouteStop(rstop2);
 		r1.saveToDatabase();
 
@@ -385,16 +385,16 @@ public class InitDatebase {
 			}
 		}
 		if (r2 != null) {
-			RouteStop rstop3 = new RouteStop(r2, p3, new Time(2, 0, 0));
+			RouteStop rstop3 = new RouteStop(r2, p3, LocalTime.of(2, 0, 0));
 			r2.addRouteStop(rstop3);
 			r2.saveToDatabase();
 		} else
 			System.out.println("Something weird is happening :( check rome() in InitDatabase");
 
 		Route r3 = new Route(city.getId(), "Museums are amazing!!","Best museums in the city can be found here.",false);
-		RouteStop rstop25 = new RouteStop(r3, p5, new Time(2, 27, 0));
+		RouteStop rstop25 = new RouteStop(r3, p5, LocalTime.of(2, 27, 0));
 		r3.addRouteStop(rstop25);
-		RouteStop rstop24 = new RouteStop(r3, p6, new Time(0, 53, 0));
+		RouteStop rstop24 = new RouteStop(r3, p6, LocalTime.of(0, 53, 0));
 		r3.addRouteStop(rstop24);
 		r3.saveToDatabase();
 
@@ -485,9 +485,9 @@ public class InitDatebase {
 		ms0.saveToDatabase();
 
 		Route r1 = new Route(city.getId(), "Historical trip","A trip that emphasis the historical attraction in the city.",true);
-		RouteStop rstop1 = new RouteStop(r1, p0, new Time(0, 40, 0));
+		RouteStop rstop1 = new RouteStop(r1, p0, LocalTime.of(0, 40, 0));
 		r1.addRouteStop(rstop1);
-		RouteStop rstop2 = new RouteStop(r1, p1, new Time(1, 30, 0));
+		RouteStop rstop2 = new RouteStop(r1, p1, LocalTime.of(1, 30, 0));
 		r1.addRouteStop(rstop2);
 		r1.saveToDatabase();
 
@@ -553,18 +553,18 @@ public class InitDatebase {
 		}
 		if (r2 != null) {
 			r2.setInfo("Historical trip - Upgraded");
-			RouteStop rstop3 = new RouteStop(r2, p2, new Time(2, 0, 0));
+			RouteStop rstop3 = new RouteStop(r2, p2, LocalTime.of(2, 0, 0));
 			r2.addRouteStop(rstop3);
 			r2.saveToDatabase();
 		} else
 			System.out.println("Something weird is happening :( check rome() in InitDatabase");
 
 		Route r3 = new Route(city.getId(), "Fun trip not boring :-)","Trip that is best suited for ages 10-20.",false);
-		RouteStop rstop23 = new RouteStop(r3, p3, new Time(0, 40, 0));
+		RouteStop rstop23 = new RouteStop(r3, p3, LocalTime.of(0, 40, 0));
 		r3.addRouteStop(rstop23);
-		RouteStop rstop25 = new RouteStop(r3, p5, new Time(2, 27, 0));
+		RouteStop rstop25 = new RouteStop(r3, p5, LocalTime.of(2, 27, 0));
 		r3.addRouteStop(rstop25);
-		RouteStop rstop24 = new RouteStop(r3, p4, new Time(0, 53, 0));
+		RouteStop rstop24 = new RouteStop(r3, p4, LocalTime.of(0, 53, 0));
 		r3.addRouteStop(rstop24);
 		r3.saveToDatabase();
 
@@ -586,28 +586,28 @@ public class InitDatebase {
 		e.saveToDatabase();
 		Customer cust = new Customer("yosi11", "LDCyosiiii!", "yosi@gmail.com", "yosi", "ben asser", "0523322123",
 				"5495681338665894", "07/24", "896");
-		Subscription sub0 = new Subscription(cust, 1, new Date(119, 2, 8), 201.8, 199.9, new Date(119, 4, 8));
+		Subscription sub0 = new Subscription(cust, 1, LocalDate.of(119, 2, 8), 201.8, 199.9, LocalDate.of(119, 4, 8));
 		cust.addSubscription(sub0);
-		InformationSystem.addSubscription(1, new Date(119, 2, 8));
-		InformationSystem.addSubDownload(1,new Date(119, 2, 21));
-		InformationSystem.addSubDownload(1,new Date(119, 3, 15));
-		InformationSystem.addSubDownload(1,new Date(119, 4, 6));
+		InformationSystem.addSubscription(1, LocalDate.of(119, 2, 8));
+		InformationSystem.addSubDownload(1,LocalDate.of(119, 2, 21));
+		InformationSystem.addSubDownload(1,LocalDate.of(119, 3, 15));
+		InformationSystem.addSubDownload(1,LocalDate.of(119, 4, 6));
 		
 		for(int i=0;i<11;i++)
-			InformationSystem.addVisit(1, new Date(119, 2, 8+i*4));
+			InformationSystem.addVisit(1, LocalDate.of(119, 2, 8+i*4));
 		
-		Subscription sub1 = new Subscription(cust, 2, new Date(119, 5, 7), 171.8, 112.9, new Date(119, 11, 7));
+		Subscription sub1 = new Subscription(cust, 2, LocalDate.of(119, 5, 7), 171.8, 112.9, LocalDate.of(119, 11, 7));
 		cust.addSubscription(sub1);
-		InformationSystem.addSubscription(2, new Date(119, 5, 7));
-		InformationSystem.addSubDownload(2,new Date(119, 5, 20));
+		InformationSystem.addSubscription(2, LocalDate.of(119, 5, 7));
+		InformationSystem.addSubDownload(2,LocalDate.of(119, 5, 20));
 
 		for(int i=0;i<11;i++)
-			InformationSystem.addVisit(2, new Date(119, 5, 7+i*3));
+			InformationSystem.addVisit(2, LocalDate.of(119, 5, 7+i*3));
 		
-		OneTimePurchase otp = new OneTimePurchase(cust, 1, new Date(119, 5, 17), 20, 19);
+		OneTimePurchase otp = new OneTimePurchase(cust, 1, LocalDate.of(119, 5, 17), 20, 19);
 		otp.updateToWasDownload();
-		InformationSystem.addVisit(1, new Date(119, 5, 17));
-		InformationSystem.addOneTimePurchase(1, new Date(119, 5, 17));
+		InformationSystem.addVisit(1, LocalDate.of(119, 5, 17));
+		InformationSystem.addOneTimePurchase(1, LocalDate.of(119, 5, 17));
 		cust.addOneTimePurchase(otp);
 		cust.saveToDatabase();
 	}
@@ -621,30 +621,30 @@ public class InitDatebase {
 		e.saveToDatabase();
 		Customer cust = new Customer("dan", "masterDan%", "dannyf.post@gmail.com", "dan", "feldman", "0523325686",
 				"5495655558665894", "01/23", "354");
-		Subscription sub0 = new Subscription(cust, 1, new Date(119, 6, 7), 211.8, 189.9, new Date(119, 10, 7));
+		Subscription sub0 = new Subscription(cust, 1, LocalDate.of(119, 6, 7), 211.8, 189.9, LocalDate.of(119, 10, 7));
 		cust.addSubscription(sub0);
-		InformationSystem.addSubscription(1, new Date(119, 6, 7));
-		InformationSystem.addSubDownload(1,new Date(119, 6, 9));
+		InformationSystem.addSubscription(1, LocalDate.of(119, 6, 7));
+		InformationSystem.addSubDownload(1,LocalDate.of(119, 6, 9));
 		
 		for(int i=0;i<2;i++)
-			InformationSystem.addVisit(1, new Date(119, 6, 7+i*3));
+			InformationSystem.addVisit(1, LocalDate.of(119, 6, 7+i*3));
 		
-		Subscription sub1 = new Subscription(cust, 4, new Date(119, 2, 3), 131.8, 111.9, new Date(119, 3, 3));
+		Subscription sub1 = new Subscription(cust, 4, LocalDate.of(119, 2, 3), 131.8, 111.9, LocalDate.of(119, 3, 3));
 		cust.addSubscription(sub1);
-		InformationSystem.addSubscription(4, new Date(119, 2, 3));
+		InformationSystem.addSubscription(4, LocalDate.of(119, 2, 3));
 		
-		Subscription sub2 = new Subscription(cust, 4, new Date(119, 3, 3), 131.8, 100.7, new Date(119, 4, 3));
+		Subscription sub2 = new Subscription(cust, 4, LocalDate.of(119, 3, 3), 131.8, 100.7, LocalDate.of(119, 4, 3));
 		cust.addSubscription(sub2);
-		InformationSystem.addSubscriptionRenewal(4,new Date(119, 3, 3));
-		InformationSystem.addSubDownload(4,new Date(119, 4, 1));
+		InformationSystem.addSubscriptionRenewal(4,LocalDate.of(119, 3, 3));
+		InformationSystem.addSubDownload(4,LocalDate.of(119, 4, 1));
 		
 		for(int i=0;i<11;i++)
-			InformationSystem.addVisit(4, new Date(119, 2, 3+i*5));
+			InformationSystem.addVisit(4, LocalDate.of(119, 2, 3+i*5));
 
-		OneTimePurchase otp = new OneTimePurchase(cust, 2, new Date(119, 6, 10), 19, 18);
+		OneTimePurchase otp = new OneTimePurchase(cust, 2, LocalDate.of(119, 6, 10), 19, 18);
 		otp.updateToWasDownload();
-		InformationSystem.addVisit(2, new Date(119, 6, 10));
-		InformationSystem.addOneTimePurchase(2, new Date(119, 6, 10));
+		InformationSystem.addVisit(2, LocalDate.of(119, 6, 10));
+		InformationSystem.addOneTimePurchase(2, LocalDate.of(119, 6, 10));
 		cust.addOneTimePurchase(otp);
 		cust.saveToDatabase();
 	}
@@ -658,18 +658,18 @@ public class InitDatebase {
 		e.saveToDatabase();
 		Customer cust = new Customer("gadi", "gadiHAVIV!@", "gadi@gmail.com", "gadi", "landau", "0524867726",
 				"5495123458665894", "01/25", "891");
-		Subscription sub = new Subscription(cust, 1, new Date(118, 6, 8), 53.2, 50.9, new Date(118, 8, 8));
+		Subscription sub = new Subscription(cust, 1, LocalDate.of(118, 6, 8), 53.2, 50.9, LocalDate.of(118, 8, 8));
 		cust.addSubscription(sub);
-		InformationSystem.addSubscription(1, new Date(119, 6, 8));
-		InformationSystem.addSubDownload(1,new Date(119, 6, 11));
+		InformationSystem.addSubscription(1, LocalDate.of(119, 6, 8));
+		InformationSystem.addSubDownload(1,LocalDate.of(119, 6, 11));
 
 		for(int i=0;i<3;i++)
-			InformationSystem.addVisit(1, new Date(119, 6, 8+i*2));
+			InformationSystem.addVisit(1, LocalDate.of(119, 6, 8+i*2));
 		
-		OneTimePurchase otp = new OneTimePurchase(cust, 2, new Date(119, 4, 6), 9, 8);
+		OneTimePurchase otp = new OneTimePurchase(cust, 2, LocalDate.of(119, 4, 6), 9, 8);
 		otp.updateToWasDownload();
-		InformationSystem.addVisit(2, new Date(119, 4, 6));
-		InformationSystem.addOneTimePurchase(2, new Date(119, 4, 6));
+		InformationSystem.addVisit(2, LocalDate.of(119, 4, 6));
+		InformationSystem.addOneTimePurchase(2, LocalDate.of(119, 4, 6));
 		cust.addOneTimePurchase(otp);
 		cust.saveToDatabase();
 	}
@@ -683,19 +683,19 @@ public class InitDatebase {
 		e.saveToDatabase();
 		Customer cust = new Customer("tomer", "IAmTomer*", "1234tomer@gmail.com", "tomer", "kohavi", "0524867726",
 				"5495123458612894", "02/25", "821");
-		Subscription sub = new Subscription(cust, 3, new Date(119, 6, 6), 63.2, 50.9, new Date(119, 8, 8));
+		Subscription sub = new Subscription(cust, 3, LocalDate.of(119, 6, 6), 63.2, 50.9, LocalDate.of(119, 8, 8));
 		cust.addSubscription(sub);
-		InformationSystem.addSubscription(3, new Date(119, 6, 6));
-		InformationSystem.addSubDownload(3,new Date(119, 6, 10));
-		InformationSystem.addSubDownload(3,new Date(119, 6, 13));
+		InformationSystem.addSubscription(3, LocalDate.of(119, 6, 6));
+		InformationSystem.addSubDownload(3,LocalDate.of(119, 6, 10));
+		InformationSystem.addSubDownload(3,LocalDate.of(119, 6, 13));
 		
 		for(int i=0;i<2;i++)
-			InformationSystem.addVisit(3, new Date(119, 6, 6+i*2));
+			InformationSystem.addVisit(3, LocalDate.of(119, 6, 6+i*2));
 
-		OneTimePurchase otp = new OneTimePurchase(cust, 1, new Date(119, 6, 6), 19, 8);
+		OneTimePurchase otp = new OneTimePurchase(cust, 1, LocalDate.of(119, 6, 6), 19, 8);
 		otp.updateToWasDownload();
-		InformationSystem.addVisit(1, new Date(119, 6, 6));
-		InformationSystem.addOneTimePurchase(1, new Date(119, 6, 6));
+		InformationSystem.addVisit(1, LocalDate.of(119, 6, 6));
+		InformationSystem.addOneTimePurchase(1, LocalDate.of(119, 6, 6));
 		cust.addOneTimePurchase(otp);
 		cust.saveToDatabase();
 	}
@@ -708,34 +708,34 @@ public class InitDatebase {
 		e.saveToDatabase();
 		Customer cust = new Customer("q", "q", "q@gmail.com", "q", "q q", "0523022100", "5495681338665894", "07/24",
 				"000");
-		Subscription sub0 = new Subscription(cust, 3, new Date(119, 1, 25), 201.8, 199.9, new Date(119, 3, 25));
+		Subscription sub0 = new Subscription(cust, 3, LocalDate.of(119, 1, 25), 201.8, 199.9, LocalDate.of(119, 3, 25));
 		cust.addSubscription(sub0);
-		InformationSystem.addSubscription(3, new Date(119, 1, 25));
-		InformationSystem.addSubDownload(3,new Date(119, 1, 29));
-		InformationSystem.addSubDownload(3,new Date(119, 2, 17));
-		InformationSystem.addSubDownload(3,new Date(119, 2, 21));
-		Subscription sub2 = new Subscription(cust, 3, new Date(119, 3, 25), 201.8, 179.9, new Date(119, 5, 25));
+		InformationSystem.addSubscription(3, LocalDate.of(119, 1, 25));
+		InformationSystem.addSubDownload(3,LocalDate.of(119, 1, 29));
+		InformationSystem.addSubDownload(3,LocalDate.of(119, 2, 17));
+		InformationSystem.addSubDownload(3,LocalDate.of(119, 2, 21));
+		Subscription sub2 = new Subscription(cust, 3, LocalDate.of(119, 3, 25), 201.8, 179.9, LocalDate.of(119, 5, 25));
 		cust.addSubscription(sub2);
-		InformationSystem.addSubscriptionRenewal(3,new Date(119, 3, 25));
-		InformationSystem.addSubDownload(3,new Date(119, 4, 11));
-		InformationSystem.addSubDownload(3,new Date(119, 5, 20));
+		InformationSystem.addSubscriptionRenewal(3,LocalDate.of(119, 3, 25));
+		InformationSystem.addSubDownload(3,LocalDate.of(119, 4, 11));
+		InformationSystem.addSubDownload(3,LocalDate.of(119, 5, 20));
 		
 		for(int i=0;i<27;i++)
-			InformationSystem.addVisit(3, new Date(119, 1, 25+i*4));
+			InformationSystem.addVisit(3, LocalDate.of(119, 1, 25+i*4));
 		
-		Subscription sub1 = new Subscription(cust, 1, new Date(119, 1, 28), 171.8, 112.9, new Date(119, 5, 15));
+		Subscription sub1 = new Subscription(cust, 1, LocalDate.of(119, 1, 28), 171.8, 112.9, LocalDate.of(119, 5, 15));
 		cust.addSubscription(sub1);
-		InformationSystem.addSubscription(1, new Date(119, 1, 28));
-		InformationSystem.addSubDownload(1,new Date(119, 2, 20));
-		InformationSystem.addSubDownload(1,new Date(119, 4, 17));
+		InformationSystem.addSubscription(1, LocalDate.of(119, 1, 28));
+		InformationSystem.addSubDownload(1,LocalDate.of(119, 2, 20));
+		InformationSystem.addSubDownload(1,LocalDate.of(119, 4, 17));
 		
 		for(int i=0;i<20;i++)
-			InformationSystem.addVisit(1, new Date(119, 1, 28+i*4));
+			InformationSystem.addVisit(1, LocalDate.of(119, 1, 28+i*4));
 
-		OneTimePurchase otp = new OneTimePurchase(cust, 4, new Date(119, 4, 20), 15, 9);
+		OneTimePurchase otp = new OneTimePurchase(cust, 4, LocalDate.of(119, 4, 20), 15, 9);
 		otp.updateToWasDownload();
-		InformationSystem.addVisit(4, new Date(119, 4, 20));
-		InformationSystem.addOneTimePurchase(4, new Date(119, 4, 20));
+		InformationSystem.addVisit(4, LocalDate.of(119, 4, 20));
+		InformationSystem.addOneTimePurchase(4, LocalDate.of(119, 4, 20));
 		cust.addOneTimePurchase(otp);
 		cust.saveToDatabase();
 	}
@@ -759,28 +759,28 @@ public class InitDatebase {
 	 */
 	private static void initStatistics() {		
 		//city 1
-		InformationSystem.setNumMaps(1, 0 ,new Date(119, 1, 10));
-		InformationSystem.newVersionWasPublished(1, new Date(119, 1, 25));
-		InformationSystem.setNumMaps(1, 1,new Date(119, 1, 25));
-		InformationSystem.newVersionWasPublished(1, new Date(119, 4, 30));
-		InformationSystem.setNumMaps(1, getNumMapsOfCitiy(1),new Date(119, 4, 30));
+		InformationSystem.setNumMaps(1, 0 ,LocalDate.of(119, 1, 10));
+		InformationSystem.newVersionWasPublished(1, LocalDate.of(119, 1, 25));
+		InformationSystem.setNumMaps(1, 1,LocalDate.of(119, 1, 25));
+		InformationSystem.newVersionWasPublished(1, LocalDate.of(119, 4, 30));
+		InformationSystem.setNumMaps(1, getNumMapsOfCitiy(1),LocalDate.of(119, 4, 30));
 		
 		//city 2
-		InformationSystem.setNumMaps(2, 0 ,new Date(119, 4, 1));
-		InformationSystem.newVersionWasPublished(2, new Date(119, 4, 5));
-		InformationSystem.setNumMaps(2, 1,new Date(119, 4, 5));
-		InformationSystem.newVersionWasPublished(2, new Date(119, 5, 30));
-		InformationSystem.setNumMaps(2, getNumMapsOfCitiy(2),new Date(119, 4, 30));
+		InformationSystem.setNumMaps(2, 0 ,LocalDate.of(119, 4, 1));
+		InformationSystem.newVersionWasPublished(2, LocalDate.of(119, 4, 5));
+		InformationSystem.setNumMaps(2, 1,LocalDate.of(119, 4, 5));
+		InformationSystem.newVersionWasPublished(2, LocalDate.of(119, 5, 30));
+		InformationSystem.setNumMaps(2, getNumMapsOfCitiy(2),LocalDate.of(119, 4, 30));
 		
 		//city 3
-		InformationSystem.setNumMaps(3, 0 ,new Date(119, 1, 10));
-		InformationSystem.newVersionWasPublished(3, new Date(119, 1, 20));
-		InformationSystem.setNumMaps(3, getNumMapsOfCitiy(3),new Date(119, 4 , 30));
+		InformationSystem.setNumMaps(3, 0 ,LocalDate.of(119, 1, 10));
+		InformationSystem.newVersionWasPublished(3, LocalDate.of(119, 1, 20));
+		InformationSystem.setNumMaps(3, getNumMapsOfCitiy(3),LocalDate.of(119, 4 , 30));
 		
 		//city 4
-		InformationSystem.setNumMaps(4, 0 ,new Date(119, 1, 1));
-		InformationSystem.newVersionWasPublished(4, new Date(119, 1, 27));
-		InformationSystem.setNumMaps(4, getNumMapsOfCitiy(4),new Date(119, 1, 27));
+		InformationSystem.setNumMaps(4, 0 ,LocalDate.of(119, 1, 1));
+		InformationSystem.newVersionWasPublished(4, LocalDate.of(119, 1, 27));
+		InformationSystem.setNumMaps(4, getNumMapsOfCitiy(4),LocalDate.of(119, 1, 27));
 	}
 
 }

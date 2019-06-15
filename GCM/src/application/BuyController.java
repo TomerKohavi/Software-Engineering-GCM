@@ -1,7 +1,7 @@
 package application;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Calendar;
 
 import com.jfoenix.controls.JFXButton;
@@ -94,7 +94,7 @@ public class BuyController {
     	if (RadioOneTime.isSelected())
     	{
     		double price = oneTimePrice;
-    		Connector.client.sendToServer(OneTimePurchase._createLocalOneTimePurchase(-1, Connector.selectedCity.getId(), Connector.user.getId(), new Date(Calendar.getInstance().getTime().getTime()), price, price, true, Connector.selectedCity.getCityName()));
+    		Connector.client.sendToServer(OneTimePurchase._createLocalOneTimePurchase(-1, Connector.selectedCity.getId(), Connector.user.getId(), LocalDate.now(), price, price, true, Connector.selectedCity.getCityName()));
     		Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.OneTimePurcahse);
     		Connector.downloadCity();
     		openNewPage("DownloadCompleteScene.fxml");
@@ -102,9 +102,9 @@ public class BuyController {
     	else
     	{
 			double price = monthPrice * MonthBox.getValue();
-    		Date start = new Date(Calendar.getInstance().getTime().getTime());
-    		Date end = new Date(Calendar.getInstance().getTime().getTime());
-    		end.setMonth(end.getMonth() + MonthBox.getValue());
+    		LocalDate start = LocalDate.now();
+    		LocalDate end = LocalDate.now();
+    		end.setMonth(end.getMonthValue() + MonthBox.getValue());
     		Connector.client.sendToServer(Subscription._createLocalSubscription(-1, Connector.selectedCity.getId(), Connector.user.getId(), start, price, price, end, Connector.selectedCity.getCityName()));
     		Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.Subscription);
     	}

@@ -1,6 +1,6 @@
 package objectClasses;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import controller.Database;
 import otherClasses.ClassMustProperties;
@@ -15,7 +15,7 @@ import otherClasses.ClassMustProperties;
 public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 	private int id;
 	private int cityId;
-	private Date date;
+	private LocalDate date;
 	private int numOneTimePurchases;
 	private int numSubscriptions;
 	private int numSubscriptionsRenewal;
@@ -38,7 +38,7 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 	 * @param newVersionPublished the newest version of published
 	 * @param numMaps the number of maps
 	 */
-	private Statistic(int id, int cityId, Date date, int numOneTimePurchases, int numSubscriptions,
+	private Statistic(int id, int cityId, LocalDate date, int numOneTimePurchases, int numSubscriptions,
 			int numSubscriptionsRenewal, int numVisited, int numSubDownloads, boolean newVersionPublished,
 			int numMaps) {
 		this.id = id;
@@ -69,7 +69,7 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 	 * @param numMaps the number of maps
 	 * @return the new statistic object
 	 */
-	public static Statistic _createStatistic(int id, int cityId, Date date, int numOneTimePurchases,
+	public static Statistic _createStatistic(int id, int cityId, LocalDate date, int numOneTimePurchases,
 			int numSubscriptions, int numSubscriptionsRenewal, int numVisited, int numSubDownloads,
 			boolean newVersionPublished, int numMaps) { // friend to Database
 		return new Statistic(id, cityId, date, numOneTimePurchases, numSubscriptions, numSubscriptionsRenewal,
@@ -82,7 +82,7 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 	 * @param cityId the city id 
 	 * @param date the date of the statistic
 	 */
-	public Statistic(int cityId, Date date) {
+	public Statistic(int cityId, LocalDate date) {
 		this.id = Database.generateIdStatistic();
 		this.cityId = cityId;
 		this.date = date;
@@ -254,7 +254,7 @@ public class Statistic implements Comparable<Statistic>, ClassMustProperties {
 	 * 
 	 * @return the statistic date
 	 */
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 

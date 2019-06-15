@@ -7,8 +7,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Time;
-import java.sql.Date;
+import java.time.LocalTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -449,7 +449,7 @@ public class HomePageController
 						SideMap.setVisible(true);
 						SidePOI.setVisible(true);
 						SideRoutes.setVisible(true);
-						if (sub.isGoingToEnd(new Date(new java.util.Date().getTime())))
+						if (sub.isGoingToEnd(LocalDate.now()))
 							ReSubscribeButton.setVisible(true);
 						break;
 					}
@@ -522,7 +522,7 @@ public class HomePageController
 		poiColumn.setMinWidth(365);
 		poiColumn.setCellValueFactory(new PropertyValueFactory<>("placeName"));
 
-		TableColumn<RouteStop, Time> timeColumn = new TableColumn<>("Time");
+		TableColumn<RouteStop, LocalTime> timeColumn = new TableColumn<>("LocalTime");
 		timeColumn.setMinWidth(83);
 		timeColumn.setCellValueFactory(new PropertyValueFactory<>("recommendedTime"));
 
@@ -575,7 +575,7 @@ public class HomePageController
 		
 		if (Connector.user != null && Connector.user instanceof Customer)
 		{
-			Date today = new Date(new java.util.Date().getTime());
+			LocalDate today = LocalDate.now();
 			ArrayList<Subscription> subscriptList = ((Customer) Connector.user).getCopyActiveSubscription();
 			for (Subscription sub : subscriptList)
 			{
@@ -626,9 +626,7 @@ public class HomePageController
 							{
 								try
 								{
-									statboi = Connector.client.getStatistics(null,
-											new java.sql.Date(Date.valueOf(FirstDate.getValue()).getTime()),
-											new java.sql.Date(Date.valueOf(LastDate.getValue()).getTime()));
+									statboi = Connector.client.getStatistics(null,FirstDate.getValue(),LastDate.getValue());
 								}
 								catch (IOException e)
 								{
@@ -640,10 +638,7 @@ public class HomePageController
 							{
 								try
 								{
-									statboi = Connector.client.getStatistics(
-											Connector.allCities.get(selectedIndex - 1).b,
-											new java.sql.Date(Date.valueOf(FirstDate.getValue()).getTime()),
-											new java.sql.Date(Date.valueOf(LastDate.getValue()).getTime()));
+									statboi = Connector.client.getStatistics(Connector.allCities.get(selectedIndex - 1).b,FirstDate.getValue(),LastDate.getValue());
 								}
 								catch (IOException e)
 								{
@@ -652,7 +647,7 @@ public class HomePageController
 								ReportCityName.setText(Connector.allCities.get(selectedIndex - 1).a);
 
 							}
-							ReportInfo.setText("Number of Maps: " + statboi.getNumMaps() + "\n" + "Number of One Time Purchases: "
+							ReportInfo.setText("Number of Maps: " + statboi.getNumMaps() + "\n" + "Number of One LocalTime Purchases: "
 									+ statboi.getNumOneTimePurchases() + "\n" + "Number of Subscriptions: "
 									+ statboi.getNumSubscriptions() + "\n" + "Number of Re-Subscriptions: "
 									+ statboi.getNumSubscriptionsRenewal() + "\n" + "Number of Views: "
@@ -687,7 +682,7 @@ public class HomePageController
 	@FXML
 	void openAlertWindows (ActionEvent event) throws IOException
 	{
-		Date today = new Date(new java.util.Date().getTime());
+		LocalDate today = LocalDate.now();
 		ArrayList<Subscription> subscriptList = ((Customer) Connector.user).getCopyActiveSubscription();
 		for (Subscription sub : subscriptList)
 		{

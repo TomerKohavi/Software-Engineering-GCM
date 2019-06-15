@@ -2,7 +2,7 @@ package objectClasses;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Calendar;
 
 import controller.Database;
@@ -96,7 +96,7 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 	}
 
 	public void reloadTempsFromDatabase() {
-		Date today = new Date(Calendar.getInstance().getTime().getTime());
+		LocalDate today = LocalDate.now();
 		this.temp_activeSubscription = generateActiveSubscriptions(today);
 		this.temp_unactiveSubscription = generateUnactiveSubscriptions(today);
 		this.temp_oneTimePurchase = generateOneTimePurchases();
@@ -109,7 +109,7 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 	 * @param dateToCheck from which date to generate the active subscriptions
 	 * @return list of active subscriptions 
 	 */
-	private ArrayList<Subscription> generateActiveSubscriptions(Date dateToCheck) {
+	private ArrayList<Subscription> generateActiveSubscriptions(LocalDate dateToCheck) {
 		ArrayList<Integer> ids = Database.searchSubscription(super.getId(), null, dateToCheck, true);
 		return generateListSubscriptions(ids);
 	}
@@ -119,7 +119,7 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 	 * @param dateToCheck from which date to generate the unactive subscriptions
 	 * @return list of unactive subscriptions 
 	 */
-	private ArrayList<Subscription> generateUnactiveSubscriptions(Date dateToCheck) {
+	private ArrayList<Subscription> generateUnactiveSubscriptions(LocalDate dateToCheck) {
 		ArrayList<Integer> ids = Database.searchSubscription(super.getId(), null, dateToCheck, false);
 		return generateListSubscriptions(ids);
 	}
@@ -210,7 +210,7 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 	public boolean addSubscription(Subscription sub) {
 		if (sub.getUserId() != this.getId())
 			return false;
-		Date today = new Date(Calendar.getInstance().getTime().getTime());
+		LocalDate today =LocalDate.now();
 		if (sub.getPurchaseDate().compareTo(today) >= 0)
 			temp_activeSubscription.add(sub);
 		else
@@ -235,7 +235,7 @@ public class Customer extends User implements ClassMustProperties, Serializable 
 	 */
 	public ArrayList<Subscription> getGoingToEnd() {
 		ArrayList<Subscription> result = new ArrayList<>();
-		Date today = new Date(Calendar.getInstance().getTime().getTime());
+		LocalDate today = LocalDate.now();
 		for (Subscription s : temp_activeSubscription)
 			if (s.isGoingToEnd(today))
 				result.add(s);

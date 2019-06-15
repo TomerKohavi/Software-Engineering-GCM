@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 import objectClasses.Statistic;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Calendar;
 import otherClasses.Pair;
 
@@ -38,10 +38,10 @@ public final class InformationSystem
 	 * Returns statistic with the city id and the date,
 	 * if none was found return null.
 	 * @param cityId the city id
-	 * @param d the date of the statistic
+	 * @param d the LocalDate of the statistic
 	 * @return the statistic that was found
 	 */
-	public static Statistic getStatistic(int cityId, Date d)
+	public static Statistic getStatistic(int cityId, LocalDate d)
 	{
 		ArrayList<Integer> ids = Database.searchStatistic((Integer) cityId, d, null, null, null,null);
 		if (ids.size() != 1)
@@ -52,13 +52,13 @@ public final class InformationSystem
 
 	/**
 	 * Calc and return a "sum" of all the statistic in the 
-	 * date range and have the city id.
+	 * LocalDate range and have the city id.
 	 * @param cityId the city id, can be null to request all cities id
-	 * @param from date range from
-	 * @param end date range to
+	 * @param from LocalDate range from
+	 * @param end LocalDate range to
 	 * @return the statistic "sum" of all the statistics in range
 	 */
-	public static Statistic getRangeSumStatistics(Integer cityId, Date from, Date end)
+	public static Statistic getRangeSumStatistics(Integer cityId, LocalDate from, LocalDate end)
 	{
 		ArrayList<Integer> ids = Database.searchStatistic((Integer) cityId, null, from, end, null,null);
 		Statistic sum = Statistic.createBlankStatistic();
@@ -88,16 +88,16 @@ public final class InformationSystem
 	}
 
 	/**
-	 * Calc and return a detailed list of the changes to num maps in the date range
+	 * Calc and return a detailed list of the changes to num maps in the LocalDate range
 	 * @param cityId the city id, can be null to request all cities id
-	 * @param from date range from
-	 * @param end date range to
-	 * @return list of the num maps and the date range it was relevant
+	 * @param from LocalDate range from
+	 * @param end LocalDate range to
+	 * @return list of the num maps and the LocalDate range it was relevant
 	 */
-	public static ArrayList<Pair<Pair<Date, Date>, Integer>> getRangeNumMaps(Integer cityId, Date from, Date end)
+	public static ArrayList<Pair<Pair<LocalDate, LocalDate>, Integer>> getRangeNumMaps(Integer cityId, LocalDate from, LocalDate end)
 	{
 		ArrayList<Integer> ids = Database.searchStatistic((Integer) cityId, null, null, end, null,true);
-		ArrayList<Pair<Pair<Date, Date>, Integer>> ans = new ArrayList<Pair<Pair<Date, Date>, Integer>>();
+		ArrayList<Pair<Pair<LocalDate, LocalDate>, Integer>> ans = new ArrayList<Pair<Pair<LocalDate, LocalDate>, Integer>>();
 		ArrayList<Statistic> statistics = new ArrayList<Statistic>();
 		for (int id : ids)
 		{
@@ -110,16 +110,16 @@ public final class InformationSystem
 		int lastNumMaps = -1;
 		for (int i = 0; i < statistics.size(); i++)
 		{
-			Date fromRange = statistics.get(i).getDate();
-			if(fromRange.before(from))
+			LocalDate fromRange = statistics.get(i).getDate();
+			if(fromRange.isBefore(from))
 				fromRange =from;
-			Date toRange;
+			LocalDate toRange;
 			if (i < statistics.size() - 1)
 				toRange = statistics.get(i + 1).getDate();
 			else
-				toRange = new Date(Calendar.getInstance().getTime().getTime());
-			if(toRange.before(from)) continue; // if we are not in the range dont add the pair
-			Pair<Date, Date> datesRange = new Pair<Date, Date>(fromRange, toRange);
+				toRange = LocalDate.now();
+			if(toRange.isBefore(from)) continue; // if we are not in the range dont add the pair
+			Pair<LocalDate, LocalDate> datesRange = new Pair<LocalDate, LocalDate>(fromRange, toRange);
 			map.put(statistics.get(i).getCityId(), statistics.get(i).getNumMaps());
 			int numMaps = sumMapList(map);
 			if (lastNumMaps == numMaps)
@@ -127,7 +127,7 @@ public final class InformationSystem
 				ans.get(ans.size() - 1).a.b = toRange;
 			}
 			else
-				ans.add(new Pair<Pair<Date, Date>, Integer>(datesRange, numMaps));
+				ans.add(new Pair<Pair<LocalDate, LocalDate>, Integer>(datesRange, numMaps));
 			lastNumMaps = numMaps;
 		}
 		return ans;
@@ -154,7 +154,7 @@ public final class InformationSystem
 	 */
 	public static void addOneTimePurchase(int cityId)
 	{
-		addOneTimePurchase(cityId, new Date(Calendar.getInstance().getTime().getTime()));
+		addOneTimePurchase(cityId, LocalDate.now());
 	}
 
 	/**
@@ -162,7 +162,7 @@ public final class InformationSystem
 	 * @param cityId the city id 
 	 * @param d the date
 	 */
-	public static void addOneTimePurchase(int cityId, Date d)
+	public static void addOneTimePurchase(int cityId, LocalDate d)
 	{
 		Statistic s = getStatistic(cityId, d);
 		if (s == null)
@@ -178,7 +178,7 @@ public final class InformationSystem
 	 */
 	public static void setNumMaps(int cityId, int numMaps)
 	{
-		setNumMaps(cityId, numMaps, new Date(Calendar.getInstance().getTime().getTime()));
+		setNumMaps(cityId, numMaps, LocalDate.now());
 	}
 
 	/**
@@ -187,7 +187,7 @@ public final class InformationSystem
 	 * @param d the date
 	 * @param numMaps the number of maps
 	 */
-	public static void setNumMaps(int cityId, int numMaps, Date d)
+	public static void setNumMaps(int cityId, int numMaps, LocalDate d)
 	{
 		Statistic s = getStatistic(cityId, d);
 		if (s == null)
@@ -202,7 +202,7 @@ public final class InformationSystem
 	 */
 	public static void addVisit(int cityId)
 	{
-		addVisit(cityId, new Date(Calendar.getInstance().getTime().getTime()));
+		addVisit(cityId, LocalDate.now());
 	}
 
 	/**
@@ -210,7 +210,7 @@ public final class InformationSystem
 	 * @param cityId the city id 
 	 * @param d the date
 	 */
-	public static void addVisit(int cityId, Date d)
+	public static void addVisit(int cityId, LocalDate d)
 	{
 		Statistic s = getStatistic(cityId, d);
 		if (s == null)
@@ -225,7 +225,7 @@ public final class InformationSystem
 	 */
 	public static void addSubscription(int cityId)
 	{
-		addSubscription(cityId, new Date(Calendar.getInstance().getTime().getTime()));
+		addSubscription(cityId, LocalDate.now());
 	}
 
 	/**
@@ -233,7 +233,7 @@ public final class InformationSystem
 	 * @param cityId the city id 
 	 * @param d the date
 	 */
-	public static void addSubscription(int cityId, Date d)
+	public static void addSubscription(int cityId, LocalDate d)
 	{
 		Statistic s = getStatistic(cityId, d);
 		if (s == null)
@@ -248,7 +248,7 @@ public final class InformationSystem
 	 */
 	public static void addSubscriptionRenewal(int cityId)
 	{
-		addSubscriptionRenewal(cityId, new Date(Calendar.getInstance().getTime().getTime()));
+		addSubscriptionRenewal(cityId, LocalDate.now());
 	}
 
 	/**
@@ -256,7 +256,7 @@ public final class InformationSystem
 	 * @param cityId the city id 
 	 * @param d the date
 	 */
-	public static void addSubscriptionRenewal(int cityId, Date d)
+	public static void addSubscriptionRenewal(int cityId, LocalDate d)
 	{
 		Statistic s = getStatistic(cityId, d);
 		if (s == null)
@@ -271,7 +271,7 @@ public final class InformationSystem
 	 */
 	public static void addSubDownload(int cityId)
 	{
-		addSubDownload(cityId, new Date(Calendar.getInstance().getTime().getTime()));
+		addSubDownload(cityId, LocalDate.now());
 	}
 
 	/**
@@ -279,7 +279,7 @@ public final class InformationSystem
 	 * @param cityId the city id 
 	 * @param d the date
 	 */
-	public static void addSubDownload(int cityId, Date d)
+	public static void addSubDownload(int cityId, LocalDate d)
 	{
 		Statistic s = getStatistic(cityId, d);
 		if (s == null)
@@ -294,15 +294,15 @@ public final class InformationSystem
 	 */
 	public static void newVersionWasPublished(int cityId)
 	{
-		newVersionWasPublished(cityId, new Date(Calendar.getInstance().getTime().getTime()));
+		newVersionWasPublished(cityId, LocalDate.now());
 	}
 
 	/**
 	 * Updates the statistic of the city id that a new version of this city was published in the date
 	 * @param cityId the city id
-	 * @param d the date that was published
+	 * @param d the LocalDate that was published
 	 */
-	public static void newVersionWasPublished(int cityId, Date d)
+	public static void newVersionWasPublished(int cityId, LocalDate d)
 	{
 		Statistic s = getStatistic(cityId, d);
 		if (s == null)
@@ -312,20 +312,20 @@ public final class InformationSystem
 	}
 
 	/**
-	 * Returns list of the statistics id that with today date and describe cities that has new published version
+	 * Returns list of the statistics id that with today LocalDate and describe cities that has new published version
 	 * @return list of the statistics ids
 	 */
 	public static ArrayList<Integer> getCitiesWithNewPublishedVersion()
 	{
-		return getCitiesWithNewPublishedVersion(new Date(Calendar.getInstance().getTime().getTime()));
+		return getCitiesWithNewPublishedVersion(LocalDate.now());
 	}
 
 	/**
-	 * Returns list of the statistics id that with the date and describe cities that has new published version
-	 * @param d the date of the statistics
+	 * Returns list of the statistics id that with the LocalDate and describe cities that has new published version
+	 * @param d the LocalDate of the statistics
 	 * @return list of the statistics ids
 	 */
-	public static ArrayList<Integer> getCitiesWithNewPublishedVersion(Date d)
+	public static ArrayList<Integer> getCitiesWithNewPublishedVersion(LocalDate d)
 	{
 		return Database.searchStatistic(null, d, null, null, true,null);
 	}

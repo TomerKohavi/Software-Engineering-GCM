@@ -2,7 +2,7 @@ package tests;
 
 import static org.junit.Assert.*;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Random;
 
@@ -24,7 +24,7 @@ public class CustomerTest {
             @Test
         	public void testSubscription() {
         		Random rand = new Random();
-        		Date today = new Date(Calendar.getInstance().getTime().getTime());
+        		LocalDate today = LocalDate.now();
         		int randomNum=rand.nextInt(9999);
         		//create citys
         		City c=new City("Haifa"+randomNum, "boring city",100, 200);
@@ -37,14 +37,14 @@ public class CustomerTest {
         		//check not exist subscription
         		assertFalse(cust.canViewCityWithSubscription(c.getId()));
         		//check good subscription
-        		Subscription sub=new Subscription(cust, c.getId(), today, 2000, 1999.99, new Date(2028,5,12));
+        		Subscription sub=new Subscription(cust, c.getId(), today, 2000, 1999.99, LocalDate.of(2028,5,12));
         		cust.addSubscription(sub);
         		cust.saveToDatabase();
         		cust=Database.getCustomerById(cust.getId());
         		assertTrue(cust.canViewCityWithSubscription(c.getId()));
         		//check bad subscription
-        		Subscription sub2=new Subscription(cust, c2.getId(), new Date(100,5,12), 2000, 1999.99, new Date(100,20,12));
-        		Subscription sub3=new Subscription(cust, c2.getId(), new Date(122,5,12), 2000, 1999.99, new Date(122,20,12));
+        		Subscription sub2=new Subscription(cust, c2.getId(), LocalDate.of(100,5,12), 2000, 1999.99, LocalDate.of(100,20,12));
+        		Subscription sub3=new Subscription(cust, c2.getId(), LocalDate.of(122,5,12), 2000, 1999.99, LocalDate.of(122,20,12));
         		cust.addSubscription(sub2);
         		cust.addSubscription(sub3);
         		cust.saveToDatabase();
@@ -59,7 +59,7 @@ public class CustomerTest {
         	@Test
         	public void testOneTimePurchase() {
         		Random rand = new Random();
-        		Date today = new Date(Calendar.getInstance().getTime().getTime());
+        		LocalDate today = LocalDate.now();
         		Database.createConnection();
         		//create citys
         		City c=new City("Haifa", "boring city",100, 200);

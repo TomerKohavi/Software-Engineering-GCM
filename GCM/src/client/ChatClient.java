@@ -28,7 +28,7 @@ import objectClasses.Subscription;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
@@ -369,7 +369,7 @@ public class ChatClient extends AbstractClient
 	 * @return statistics object with the relevant data
 	 * @throws IOException due to IO communication 
 	 */
-	public Statistic getStatistics(Integer cityId, Date from, Date end) throws IOException
+	public Statistic getStatistics(Integer cityId, LocalDate from, LocalDate end) throws IOException
 	{
 		sendToServer(new Statboi(cityId, from, end));
 		this.semAcquire();

@@ -1,21 +1,23 @@
 package objectClasses;
 
 import java.io.Serializable;
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Calendar;
 
 import application.ReSubscribeController;
 import controller.Database;
 import otherClasses.ClassMustProperties;
 
-import java.sql.Date;
+import java.time.temporal.ChronoUnit;
+
+import java.time.LocalDate;
 
 @SuppressWarnings("serial")
 public class Subscription extends CityPurchase implements ClassMustProperties, Serializable
 {
 
-	public static final Time closeTime = new Time(3 * 24, 0, 0);
-	private Date expirationDate;
+	public static final int closeNumDays = 3;
+	private LocalDate expirationDate;
 
 	public int numMonths = -1; // temp_variable
 
@@ -30,8 +32,8 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 	 * @param pricePayed how much is actually for the subscription
 	 * @param expirationDate when does the subscription is expired
 	 */
-	private Subscription(int id, int cityId, int userId, Date purchaseDate, double fullPrice, double pricePayed,
-			Date expirationDate)
+	private Subscription(int id, int cityId, int userId, LocalDate purchaseDate, double fullPrice, double pricePayed,
+			LocalDate expirationDate)
 	{
 		super(id, cityId, userId, purchaseDate, fullPrice, pricePayed);
 		this.expirationDate = expirationDate;
@@ -50,8 +52,8 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 	 * @param expirationDate when does the subscription is expired
 	 * @param cityName the city name
 	 */
-	private Subscription(int id, int cityId, int userId, Date purchaseDate, double fullPrice, double pricePayed,
-			Date expirationDate, String cityName)
+	private Subscription(int id, int cityId, int userId, LocalDate purchaseDate, double fullPrice, double pricePayed,
+			LocalDate expirationDate, String cityName)
 	{
 		super(id, cityId, userId, purchaseDate, fullPrice, pricePayed, cityName);
 		this.expirationDate = expirationDate;
@@ -72,8 +74,8 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 	 * @param expirationDate when does the subscription is expired
 	 * @return new subscription object
 	 */
-	public static Subscription _createSubscription(int id, int cityId, int userId, Date purchaseDate, double fullPrice,
-			double pricePayed, Date expirationDate)
+	public static Subscription _createSubscription(int id, int cityId, int userId, LocalDate purchaseDate, double fullPrice,
+			double pricePayed, LocalDate expirationDate)
 	{ // friend to Database
 		return new Subscription(id, cityId, userId, purchaseDate, fullPrice, pricePayed, expirationDate);
 	}
@@ -92,8 +94,8 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 	 * @param cityName the city name
 	 * @return new subscription object
 	 */
-	public static Subscription _createLocalSubscription(int id, int cityId, int userId, Date purchaseDate, double fullPrice,
-			double pricePayed, Date expirationDate, String cityName)
+	public static Subscription _createLocalSubscription(int id, int cityId, int userId, LocalDate purchaseDate, double fullPrice,
+			double pricePayed, LocalDate expirationDate, String cityName)
 	{ // friend to Database
 		return new Subscription(id, cityId, userId, purchaseDate, fullPrice, pricePayed, expirationDate, cityName);
 	}
@@ -108,8 +110,8 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 	 * @param pricePayed how much is actually for the subscription
 	 * @param expirationDate when does the subscription is expired
 	 */
-	public Subscription(Customer u, int cityId, Date purchaseDate, double fullPrice, double pricePayed,
-			Date expirationDate)
+	public Subscription(Customer u, int cityId, LocalDate purchaseDate, double fullPrice, double pricePayed,
+			LocalDate expirationDate)
 	{
 		super(u.getId(), cityId, purchaseDate, fullPrice, pricePayed);
 		this.expirationDate = expirationDate;
@@ -126,12 +128,12 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 	public static boolean _Resubscribe(Subscription sub, double fullPrice, double payedPrice) {
 		if(sub==null)
 			return false;
-		Date today = new Date(Calendar.getInstance().getTime().getTime());
-		Date exDate=new Date(today.getYear(),today.getMonth()+sub.getNumMonths(),today.getDay());
+		LocalDate today = LocalDate.now();
+		LocalDate exDate=today.plusMonths(sub.getNumMonths());
 		Subscription newSub= new Subscription(Database.generateIdCityPurchase(),sub.getUserId(), sub.getCityId(), today,fullPrice, payedPrice,exDate);
 		newSub.saveToDatabase();
-		Date yesturday=new Date(today.getYear(),today.getMonth(),today.getDay()-1);
-		Date purDate=new Date(yesturday.getYear(),yesturday.getMonth()-sub.getNumMonths(),yesturday.getDay());
+		LocalDate yesturday=today.minusDays(1);
+		LocalDate purDate=yesturday.minusMonths(sub.getNumMonths());
 		sub.setExpirationDate(yesturday);
 		sub.setPurchaseDate(purDate);
 		sub.saveToDatabase();
@@ -150,12 +152,12 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 
 	/**
 	 * Return if the subscription is going to expired by given date
-	 * @param date the date we check the time from him 
+	 * @param LocalDate the LocalDate we check the time from him 
 	 * @return true if the subscription is going to expired
 	 */
-	public boolean isGoingToEnd(Date date)
+	public boolean isGoingToEnd(LocalDate date)
 	{
-		return expirationDate.getTime() - date.getTime() < closeTime.getTime();
+		return ChronoUnit.DAYS.between(expirationDate, date)< closeNumDays;
 	}
 
 	/**
@@ -163,7 +165,7 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 	 * 
 	 * @return the subscription expiration date
 	 */
-	public Date getExpirationDate()
+	public LocalDate getExpirationDate()
 	{
 		return expirationDate;
 	}
@@ -173,7 +175,7 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 	 * 
 	 * @param expirationDate the new subscription expiration date
 	 */
-	public void setExpirationDate(Date expirationDate)
+	public void setExpirationDate(LocalDate expirationDate)
 	{
 		this.expirationDate = expirationDate;
 		this.numMonths = calcNumMonths();
@@ -185,8 +187,8 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 	 */
 	private int calcNumMonths()
 	{
-		int months = (this.expirationDate.getYear() - super.getPurchaseDate().getYear()) * 12
-				+ this.expirationDate.getMonth() - super.getPurchaseDate().getMonth();
+		int months = (this.expirationDate.getYear()- super.getPurchaseDate().getYear()) * 12
+				+ this.expirationDate.getMonthValue() - super.getPurchaseDate().getMonthValue();
 		return months;
 	}
 
@@ -208,15 +210,15 @@ public class Subscription extends CityPurchase implements ClassMustProperties, S
 	public void setNumMonths(int _months)
 	{
 		this.numMonths = _months;
-		Date pd = super.getPurchaseDate();
+		LocalDate pd = super.getPurchaseDate();
 		int newYear = pd.getYear() + _months / 12;
-		int newMonth = pd.getMonth() + _months % 12;
+		int newMonth = pd.getMonthValue() + _months % 12;
 		if (newMonth > 12)
 		{
 			newYear++;
 			newMonth = newMonth % 12;
 		}
-		this.expirationDate = new Date(newYear, newMonth, pd.getDay());
+		this.expirationDate = LocalDate.of(newYear, newMonth, pd.getDayOfMonth());
 	}
 
 	@Override

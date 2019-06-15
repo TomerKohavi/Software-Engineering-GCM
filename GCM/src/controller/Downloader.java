@@ -2,7 +2,7 @@ package controller;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -75,7 +75,7 @@ public final class Downloader
 	 */
 	public static boolean downloadReportsUpdateVersions(String path)
 	{
-		Date today = new Date(Calendar.getInstance().getTime().getTime());
+		LocalDate today = LocalDate.now();
 		ArrayList<Integer> citiesIds = InformationSystem.getCitiesWithNewPublishedVersion();
 		if (citiesIds == null)
 			return false;

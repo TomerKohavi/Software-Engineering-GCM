@@ -1,11 +1,11 @@
 package controller;
 
 import java.sql.Connection;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -133,7 +133,7 @@ public class Database {
 	 */
 	public static ArrayList<Customer> getCustomersSubscribesToCity(int cityId)
 	{
-		Date today = new Date(Calendar.getInstance().getTime().getTime());
+		LocalDate today = LocalDate.now();
 		
 		//find relevant subs
 		ArrayList<Integer> subsIds = Database.searchSubscription(null, cityId, today, true);
@@ -1008,7 +1008,7 @@ public class Database {
 				su.setInt(1, p.getRouteId());
 				su.setInt(2, p.getPlaceId());
 				su.setInt(3, p.getNumStop());
-				su.setTime(4, p.getRecommendedTime());
+				su.setTime(4, java.sql.Time.valueOf(p.getRecommendedTime()));
 				su.setInt(5, p.getId());
 				su.executeUpdate();
 				return true;
@@ -1020,7 +1020,7 @@ public class Database {
 				su.setInt(2, p.getRouteId());
 				su.setInt(3, p.getPlaceId());
 				su.setInt(4, p.getNumStop());
-				su.setTime(5, p.getRecommendedTime());
+				su.setTime(5, java.sql.Time.valueOf(p.getRecommendedTime()));
 				su.executeUpdate();
 				return false;
 			}
@@ -1215,10 +1215,10 @@ public class Database {
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityId());
 				su.setInt(2, p.getUserId());
-				su.setDate(3, (Date) p.getPurchaseDate()); // fix here - RON
+				su.setDate(3,java.sql.Date.valueOf( p.getPurchaseDate())); // fix here - RON
 				su.setDouble(4, p.getFullPrice());
 				su.setDouble(5, p.getPricePayed());
-				su.setDate(6, (Date) p.getExpirationDate()); // fix here - RON
+				su.setDate(6,java.sql.Date.valueOf( p.getExpirationDate())); // fix here - RON
 				su.setInt(7, p.getId());
 				su.executeUpdate();
 				return true;
@@ -1229,10 +1229,10 @@ public class Database {
 				su.setInt(1, p.getId());
 				su.setInt(2, p.getCityId());
 				su.setInt(3, p.getUserId());
-				su.setDate(4, (Date) p.getPurchaseDate()); // fix here - RON
+				su.setDate(4, java.sql.Date.valueOf( p.getPurchaseDate())); // fix here - RON
 				su.setDouble(5, p.getFullPrice());
 				su.setDouble(6, p.getPricePayed());
-				su.setDate(7, (Date) p.getExpirationDate()); // fix here - RON
+				su.setDate(7, java.sql.Date.valueOf( p.getExpirationDate())); // fix here - RON
 				su.executeUpdate();
 				return false;
 			}
@@ -1264,7 +1264,7 @@ public class Database {
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityId());
 				su.setInt(2, p.getUserId());
-				su.setDate(3, (Date) p.getPurchaseDate()); // fix here - RON
+				su.setDate(3,java.sql.Date.valueOf(p.getPurchaseDate())); // fix here - RON
 				su.setDouble(4, p.getFullPrice());
 				su.setDouble(5, p.getPricePayed());
 				su.setBoolean(6, p.getWasDownload());
@@ -1278,7 +1278,7 @@ public class Database {
 				su.setInt(1, p.getId());
 				su.setInt(2, p.getCityId());
 				su.setInt(3, p.getUserId());
-				su.setDate(4, (Date) p.getPurchaseDate()); // fix here - RON
+				su.setDate(4, java.sql.Date.valueOf(p.getPurchaseDate())); // fix here - RON
 				su.setDouble(5, p.getFullPrice());
 				su.setDouble(6, p.getPricePayed());
 				su.setBoolean(7, p.getWasDownload());
@@ -1311,7 +1311,7 @@ public class Database {
 						+ " SET CityID=?, Date=?, NOTP=?, NS=?, NSR=?, NV=?, NSD=?, NVP=?, NumMaps=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityId());
-				su.setDate(2, (Date) p.getDate());
+				su.setDate(2, java.sql.Date.valueOf(p.getDate()));
 				su.setInt(3, p.getNumOneTimePurchases());
 				su.setInt(4, p.getNumSubscriptions());
 				su.setInt(5, p.getNumSubscriptionsRenewal());
@@ -1328,7 +1328,7 @@ public class Database {
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getId());
 				su.setInt(2, p.getCityId());
-				su.setDate(3, (Date) p.getDate());
+				su.setDate(3, java.sql.Date.valueOf(p.getDate()));
 				su.setInt(4, p.getNumOneTimePurchases()); // fix here - RON
 				su.setInt(5, p.getNumSubscriptions());
 				su.setInt(6, p.getNumSubscriptionsRenewal());
@@ -2011,7 +2011,7 @@ public class Database {
 	 * @param active if we want to search active or not
 	 * @return the result list.
 	 */
-	public static ArrayList<Integer> searchSubscription(Integer userId, Integer cityId, Date date, Boolean active) {
+	public static ArrayList<Integer> searchSubscription(Integer userId, Integer cityId, LocalDate date, Boolean active) {
 		try {
 
 			if (conn == null) {
@@ -2045,7 +2045,7 @@ public class Database {
 				gt.setInt(counter++, cityId);
 
 			if (date != null)
-				gt.setDate(counter++, date);
+				gt.setDate(counter++, java.sql.Date.valueOf(date));
 
 			return queryToList(gt);
 
@@ -2065,7 +2065,7 @@ public class Database {
 	 * @param wasDownload  if we want to search download or not
 	 * @return the result list.
 	 */
-	public static ArrayList<Integer> searchOneTimePurchase(Integer userId, Integer cityId, Date purchaseDate,
+	public static ArrayList<Integer> searchOneTimePurchase(Integer userId, Integer cityId, LocalDate purchaseDate,
 			Boolean wasDownload) {
 		try {
 
@@ -2093,7 +2093,7 @@ public class Database {
 				gt.setInt(counter++, cityId);
 
 			if (purchaseDate != null)
-				gt.setDate(counter++, purchaseDate);
+				gt.setDate(counter++, java.sql.Date.valueOf(purchaseDate));
 
 			if (wasDownload != null)
 				gt.setBoolean(counter++, wasDownload);
@@ -2119,7 +2119,7 @@ public class Database {
 	 * @return the result list.
 	 * 
 	 */
-	public static ArrayList<Integer> searchStatistic(Integer cityId, Date date, Date dateFrom, Date dateEnd,
+	public static ArrayList<Integer> searchStatistic(Integer cityId, LocalDate date, LocalDate dateFrom, LocalDate dateEnd,
 			Boolean newVersionPublished, Boolean validNumMaps) {
 		try {
 
@@ -2160,13 +2160,13 @@ public class Database {
 				gt.setInt(counter++, cityId);
 
 			if (dateFrom != null)
-				gt.setDate(counter++, dateFrom);
+				gt.setDate(counter++, java.sql.Date.valueOf(dateFrom));
 
 			if (dateEnd != null)
-				gt.setDate(counter++, dateEnd);
+				gt.setDate(counter++, java.sql.Date.valueOf(dateEnd));
 
 			if (date != null)
-				gt.setDate(counter++, date);
+				gt.setDate(counter++, java.sql.Date.valueOf(date));
 
 			if (newVersionPublished != null)
 				gt.setBoolean(counter++, newVersionPublished);
@@ -2385,7 +2385,7 @@ public class Database {
 			if (res == null)
 				return null;
 			return RouteStop._createRouteStop(res.getInt("ID"), res.getInt("RouteID"), res.getInt("PlaceID"),
-					res.getInt("NumStops"), res.getTime("Time"));
+					res.getInt("NumStops"), res.getTime("Time").toLocalTime());
 		} catch (Exception e) {
 			// closeConnection();
 			e.printStackTrace();
@@ -2479,8 +2479,8 @@ public class Database {
 			ResultSet res = get(Table.Subscription.getValue(), id);
 //			if (res == null) System.out.println("why god why");
 			return Subscription._createSubscription(res.getInt("ID"), res.getInt("CityID"), res.getInt("UserID"),
-					res.getDate("PurchaseDate"), res.getDouble("FullPrice"), res.getDouble("PricePayed"),
-					res.getDate("ExpDate"));
+					res.getDate("PurchaseDate").toLocalDate(), res.getDouble("FullPrice"), res.getDouble("PricePayed"),
+					res.getDate("ExpDate").toLocalDate());
 		} catch (Exception e) {
 			// closeConnection();
 			e.printStackTrace();
@@ -2498,7 +2498,7 @@ public class Database {
 		try {
 			ResultSet res = get(Table.OneTimePurchase.getValue(), id);
 			return OneTimePurchase._createOneTimePurchase(res.getInt("ID"), res.getInt("CityID"), res.getInt("UserID"),
-					res.getDate("PurchaseDate"), res.getDouble("FullPrice"), res.getDouble("PricePayed"),
+					res.getDate("PurchaseDate").toLocalDate(), res.getDouble("FullPrice"), res.getDouble("PricePayed"),
 					res.getBoolean("WasDownloaded"));
 		} catch (Exception e) {
 			// closeConnection();
@@ -2516,7 +2516,7 @@ public class Database {
 	public static Statistic _getStatisticById(int id) {
 		try {
 			ResultSet res = get(Table.Statistic.getValue(), id);
-			return Statistic._createStatistic(res.getInt("ID"), res.getInt("CityID"), res.getDate("Date"),
+			return Statistic._createStatistic(res.getInt("ID"), res.getInt("CityID"), res.getDate("Date").toLocalDate(),
 					res.getInt("NOTP"), res.getInt("NS"), res.getInt("NSR"), res.getInt("NV"), res.getInt("NSD"),
 					res.getBoolean("NVP"), res.getInt("NumMaps"));
 		} catch (Exception e) {

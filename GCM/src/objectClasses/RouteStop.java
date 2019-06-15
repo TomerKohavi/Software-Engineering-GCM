@@ -1,7 +1,7 @@
 package objectClasses;
 
 import java.io.Serializable;
-import java.sql.Time;
+import java.time.LocalTime;
 
 import controller.Database;
 import otherClasses.ClassMustProperties;
@@ -18,7 +18,7 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 	private int routeId;
 	private int placeId;
 	private int numStop;
-	public Time recommendedTime;
+	public LocalTime recommendedTime;
 	private String placeName;
 	
 	private PlaceOfInterest temp_place;
@@ -32,7 +32,7 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 	 * @param numStop the number of the stop in the route
 	 * @param recommendedTime how much time is recommended for this stop
 	 */
-	private RouteStop(int id, int routeId, int placeId, int numStop, Time recommendedTime)
+	private RouteStop(int id, int routeId, int placeId, int numStop, LocalTime recommendedTime)
 	{
 		this.id = id;
 		this.routeId = routeId;
@@ -53,7 +53,7 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 	 * @param recommendedTime how much time is recommended for this stop
 	 * @return the new route stop object
 	 */
-	public static RouteStop _createRouteStop(int id, int routeId, int placeId, int numStop, Time recommendedTime)
+	public static RouteStop _createRouteStop(int id, int routeId, int placeId, int numStop, LocalTime recommendedTime)
 	{ // friend to Database
 		return new RouteStop(id, routeId, placeId, numStop, recommendedTime);
 	}
@@ -68,7 +68,7 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 	 * @param numStop the number of the stop in the route
 	 * @param recommendedTime how much time is recommended for this stop
 	 */
-	private RouteStop(int id, int routeId, int placeId, String POIName, int numStop, Time recommendedTime)
+	private RouteStop(int id, int routeId, int placeId, String POIName, int numStop, LocalTime recommendedTime)
 	{
 		this.id = id;
 		this.routeId = routeId;
@@ -90,7 +90,7 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 	 * @param recommendedTime how much time is recommended for this stop
 	 * @return the new route stop object
 	 */
-	public static RouteStop _createRouteStop(int id, int routeId, int placeId, String POIName, int numStop, Time recommendedTime)
+	public static RouteStop _createRouteStop(int id, int routeId, int placeId, String POIName, int numStop, LocalTime recommendedTime)
 	{ // friend to Database
 		return new RouteStop(id, routeId, placeId, POIName, numStop, recommendedTime);
 	}
@@ -103,7 +103,7 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 	 * @param p the place of interest that in the route stop
 	 * @param recommendedTime the recommended time for the route stop
 	 */
-	public RouteStop(Route r, PlaceOfInterest p, Time recommendedTime)
+	public RouteStop(Route r, PlaceOfInterest p, LocalTime recommendedTime)
 	{
 		this.id = Database.generateIdRouteStop();
 		this.routeId = r.getId();
@@ -244,7 +244,7 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 	 * 
 	 * @return the recommended time
 	 */
-	public Time getRecommendedTime()
+	public LocalTime getRecommendedTime()
 	{
 		return recommendedTime;
 	}
@@ -254,7 +254,7 @@ public class RouteStop implements Comparable<RouteStop>, ClassMustProperties, Se
 	 * 
 	 * @param recommendedTime the new recommended time
 	 */
-	public void setRecommendedTime(Time recommendedTime)
+	public void setRecommendedTime(LocalTime recommendedTime)
 	{
 		this.recommendedTime = recommendedTime;
 	}
