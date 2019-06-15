@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.sound.midi.MidiDevice.Info;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXDatePicker;
@@ -974,7 +976,7 @@ public class HomePageController
 		try
 		{
 			if (Connector.listType.equals("City")) {
-				Connector.client.addStat(Connector.selectedCity.getId(), 0);
+				Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.NumMaps, 0);
 				Connector.client.deleteObject(Connector.searchCityResult.remove(index)); // TODO CHECK deletion
 			}
 			else if (Connector.listType.equals("Map"))
@@ -1005,7 +1007,7 @@ public class HomePageController
 		MainList.getItems().clear();
 		if (Connector.listType.equals("City")) {
 			MainList.getItems().addAll(Connector.getCitiesNames(Connector.searchCityResult));
-			Connector.client.addStat(Connector.selectedCity.getId(), 0);
+			Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.NumMaps, 0);
 		}
 		else if (Connector.listType.equals("Map"))
 			MainList.getItems().addAll(Connector.getMapsNames(Connector.searchMapResult));
@@ -1071,7 +1073,7 @@ public class HomePageController
 			Connector.selectedCity.setManagerNeedsToPublish(false);
 			Connector.client.update(Connector.selectedCity);
 			Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.VersionPublish);
-			Connector.client.addStat(Connector.selectedCity.getId(), Connector.selectedCity.getCopyPublishedVersion().getNumMapSights());
+			Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.NumMaps, Connector.selectedCity.getCopyPublishedVersion().getNumMapSights());
 			openNewPage("InformCustomersPublishScene.fxml");
 		}
 		else

@@ -51,7 +51,7 @@ public class ChangePriceController {
      * @return true if the string in the good format
      */
     public static boolean isNumeric(String str) {
-    	  return str.matches("?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
+    	  return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
     }
     
     /**
@@ -71,9 +71,9 @@ public class ChangePriceController {
      */
     @FXML
     void applyChanges(ActionEvent event) throws IOException {
-    	if (isNumeric(OneTimeField.getText()) && isNumeric(MonthField.getText()) && Integer.parseInt(OneTimeField.getText()) > 0 && Integer.parseInt(MonthField.getText()) > 0) {
-    		Connector.selectedCity.setToBePriceOneTime(Integer.parseInt(OneTimeField.getText()));
-    		Connector.selectedCity.setToBePricePeriod(Integer.parseInt(MonthField.getText()));
+    	if (isNumeric(OneTimeField.getText()) && isNumeric(MonthField.getText()) && Double.parseDouble(OneTimeField.getText()) > 0 && Double.parseDouble(MonthField.getText()) > 0) {
+    		Connector.selectedCity.setToBePriceOneTime(Double.parseDouble(OneTimeField.getText()));
+    		Connector.selectedCity.setToBePricePeriod(Double.parseDouble(MonthField.getText()));
     		Connector.selectedCity.setCeoNeedsToApprovePrices(true);
     		Connector.client.update(Connector.selectedCity);
     		mainPane.getScene().getWindow().hide();
