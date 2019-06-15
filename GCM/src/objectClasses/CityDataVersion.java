@@ -142,7 +142,7 @@ public class CityDataVersion implements ClassMustProperties, Serializable
 		{
 			Route newR = new Route(rs.getCopyRoute());
 			newR.saveToDatabase();
-			RouteSight newRs = new RouteSight(this.id, rs.getCopyRoute(), rs.getIsFavorite());
+			RouteSight newRs = new RouteSight(this.id, rs.getCopyRoute());
 			newRs.saveToDatabase();
 		}
 		this.temp_numPlaces = other.temp_numPlaces;

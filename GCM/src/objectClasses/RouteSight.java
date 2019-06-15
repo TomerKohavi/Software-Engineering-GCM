@@ -16,7 +16,6 @@ public class RouteSight implements ClassMustProperties, Serializable {
 	private int id;
 	private int cityDataVersionId;
 	private int routeId;
-	private boolean isFavorite;
 
 	private Route temp_route;
 
@@ -28,11 +27,10 @@ public class RouteSight implements ClassMustProperties, Serializable {
 	 * @param routeId the route id
 	 * @param isFavorite if the route sight is favorite or not
 	 */
-	private RouteSight(int id, int cityDataVersionId, int routeId,boolean isFavorite) {
+	private RouteSight(int id, int cityDataVersionId, int routeId) {
 		this.id = id;
 		this.cityDataVersionId = cityDataVersionId;
 		this.routeId = routeId;
-		this.isFavorite=isFavorite;
 		reloadTempsFromDatabase();
 	}
 
@@ -46,8 +44,8 @@ public class RouteSight implements ClassMustProperties, Serializable {
 	 * @param isFavorite if the route sight is favorite or not
 	 * @return new route sight object
 	 */
-	public static RouteSight _createRouteSight(int id, int cityDataVersionId, int routeId,boolean isFavorite) { // friend to Database
-		return new RouteSight(id, cityDataVersionId, routeId,isFavorite);
+	public static RouteSight _createRouteSight(int id, int cityDataVersionId, int routeId) { // friend to Database
+		return new RouteSight(id, cityDataVersionId, routeId);
 	}
 
 	/**
@@ -57,11 +55,10 @@ public class RouteSight implements ClassMustProperties, Serializable {
 	 * @param r the route object
 	 * @param isFavorite if the route sight is favorite or not
 	 */
-	public RouteSight(int cdvId, Route r,boolean isFavorite) {
+	public RouteSight(int cdvId, Route r) {
 		this.id = Database.generateIdRouteSight();
 		this.cityDataVersionId = cdvId;
 		this.routeId = r.getId();
-		this.isFavorite = isFavorite;
 		this.temp_route = r;
 	}
 
@@ -111,24 +108,6 @@ public class RouteSight implements ClassMustProperties, Serializable {
 	 */
 	public Route getCopyRoute() {
 		return temp_route;
-	}
-
-	/**
-	 * Returns if the route sight is favorite or not
-	 * 
-	 * @return if the route sight is favorite or not
-	 */
-	public boolean getIsFavorite() {
-		return isFavorite;
-	}
-
-	/**
-	 * Sets the route sight favorite
-	 * 
-	 * @param favorite the new favorite of the route sight
-	 */
-	public void setFavorite(boolean favorite) {
-		isFavorite = favorite;
 	}
 
 	@Override
