@@ -594,7 +594,7 @@ public class InitDatebase {
 		InformationSystem.addSubDownload(1,LocalDate.of(119, 4, 6));
 		
 		for(int i=0;i<11;i++)
-			InformationSystem.addVisit(1, LocalDate.of(119, 2, 8+i*4));
+			InformationSystem.addVisit(1, LocalDate.of(119, 2, 8).plusDays(i*4));
 		
 		Subscription sub1 = new Subscription(cust, 2, LocalDate.of(119, 5, 7), 171.8, 112.9, LocalDate.of(119, 11, 7));
 		cust.addSubscription(sub1);
@@ -602,7 +602,7 @@ public class InitDatebase {
 		InformationSystem.addSubDownload(2,LocalDate.of(119, 5, 20));
 
 		for(int i=0;i<11;i++)
-			InformationSystem.addVisit(2, LocalDate.of(119, 5, 7+i*3));
+			InformationSystem.addVisit(2, LocalDate.of(119, 5, 7).plusDays(i*3));
 		
 		OneTimePurchase otp = new OneTimePurchase(cust, 1, LocalDate.of(119, 5, 17), 20, 19);
 		otp.updateToWasDownload();
@@ -627,7 +627,7 @@ public class InitDatebase {
 		InformationSystem.addSubDownload(1,LocalDate.of(119, 6, 9));
 		
 		for(int i=0;i<2;i++)
-			InformationSystem.addVisit(1, LocalDate.of(119, 6, 7+i*3));
+			InformationSystem.addVisit(1, LocalDate.of(119, 6, 7).plusDays(i*3));
 		
 		Subscription sub1 = new Subscription(cust, 4, LocalDate.of(119, 2, 3), 131.8, 111.9, LocalDate.of(119, 3, 3));
 		cust.addSubscription(sub1);
@@ -639,7 +639,7 @@ public class InitDatebase {
 		InformationSystem.addSubDownload(4,LocalDate.of(119, 4, 1));
 		
 		for(int i=0;i<11;i++)
-			InformationSystem.addVisit(4, LocalDate.of(119, 2, 3+i*5));
+			InformationSystem.addVisit(4, LocalDate.of(119, 2, 3).plusDays(i*5));
 
 		OneTimePurchase otp = new OneTimePurchase(cust, 2, LocalDate.of(119, 6, 10), 19, 18);
 		otp.updateToWasDownload();
@@ -664,7 +664,7 @@ public class InitDatebase {
 		InformationSystem.addSubDownload(1,LocalDate.of(119, 6, 11));
 
 		for(int i=0;i<3;i++)
-			InformationSystem.addVisit(1, LocalDate.of(119, 6, 8+i*2));
+			InformationSystem.addVisit(1, LocalDate.of(119, 6, 8).plusDays(i*2));
 		
 		OneTimePurchase otp = new OneTimePurchase(cust, 2, LocalDate.of(119, 4, 6), 9, 8);
 		otp.updateToWasDownload();
@@ -690,7 +690,7 @@ public class InitDatebase {
 		InformationSystem.addSubDownload(3,LocalDate.of(119, 6, 13));
 		
 		for(int i=0;i<2;i++)
-			InformationSystem.addVisit(3, LocalDate.of(119, 6, 6+i*2));
+			InformationSystem.addVisit(3, LocalDate.of(119, 6, 6).plusDays(i*2));
 
 		OneTimePurchase otp = new OneTimePurchase(cust, 1, LocalDate.of(119, 6, 6), 19, 8);
 		otp.updateToWasDownload();
@@ -721,7 +721,7 @@ public class InitDatebase {
 		InformationSystem.addSubDownload(3,LocalDate.of(119, 5, 20));
 		
 		for(int i=0;i<27;i++)
-			InformationSystem.addVisit(3, LocalDate.of(119, 1, 25+i*4));
+			InformationSystem.addVisit(3, LocalDate.of(119, 1, 25).plusDays(i*4));
 		
 		Subscription sub1 = new Subscription(cust, 1, LocalDate.of(119, 1, 28), 171.8, 112.9, LocalDate.of(119, 5, 15));
 		cust.addSubscription(sub1);
@@ -730,7 +730,7 @@ public class InitDatebase {
 		InformationSystem.addSubDownload(1,LocalDate.of(119, 4, 17));
 		
 		for(int i=0;i<20;i++)
-			InformationSystem.addVisit(1, LocalDate.of(119, 1, 28+i*4));
+			InformationSystem.addVisit(1, LocalDate.of(119, 1, 28).plusDays(i*4));
 
 		OneTimePurchase otp = new OneTimePurchase(cust, 4, LocalDate.of(119, 4, 20), 15, 9);
 		otp.updateToWasDownload();

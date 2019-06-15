@@ -1215,10 +1215,10 @@ public class Database {
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityId());
 				su.setInt(2, p.getUserId());
-				su.setDate(3,java.sql.Date.valueOf( p.getPurchaseDate())); // fix here - RON
+				su.setDate(3,java.sql.Date.valueOf( p.getPurchaseDate().plusDays(1))); // fix here - RON
 				su.setDouble(4, p.getFullPrice());
 				su.setDouble(5, p.getPricePayed());
-				su.setDate(6,java.sql.Date.valueOf( p.getExpirationDate())); // fix here - RON
+				su.setDate(6,java.sql.Date.valueOf( p.getExpirationDate().plusDays(1))); // fix here - RON
 				su.setInt(7, p.getId());
 				su.executeUpdate();
 				return true;
@@ -1229,10 +1229,10 @@ public class Database {
 				su.setInt(1, p.getId());
 				su.setInt(2, p.getCityId());
 				su.setInt(3, p.getUserId());
-				su.setDate(4, java.sql.Date.valueOf( p.getPurchaseDate())); // fix here - RON
+				su.setDate(4, java.sql.Date.valueOf( p.getPurchaseDate().plusDays(1))); // fix here - RON
 				su.setDouble(5, p.getFullPrice());
 				su.setDouble(6, p.getPricePayed());
-				su.setDate(7, java.sql.Date.valueOf( p.getExpirationDate())); // fix here - RON
+				su.setDate(7, java.sql.Date.valueOf( p.getExpirationDate().plusDays(1))); // fix here - RON
 				su.executeUpdate();
 				return false;
 			}
@@ -1264,7 +1264,7 @@ public class Database {
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityId());
 				su.setInt(2, p.getUserId());
-				su.setDate(3,java.sql.Date.valueOf(p.getPurchaseDate())); // fix here - RON
+				su.setDate(3,java.sql.Date.valueOf(p.getPurchaseDate().plusDays(1))); // fix here - RON
 				su.setDouble(4, p.getFullPrice());
 				su.setDouble(5, p.getPricePayed());
 				su.setBoolean(6, p.getWasDownload());
@@ -1278,7 +1278,7 @@ public class Database {
 				su.setInt(1, p.getId());
 				su.setInt(2, p.getCityId());
 				su.setInt(3, p.getUserId());
-				su.setDate(4, java.sql.Date.valueOf(p.getPurchaseDate())); // fix here - RON
+				su.setDate(4, java.sql.Date.valueOf(p.getPurchaseDate().plusDays(1))); // fix here - RON
 				su.setDouble(5, p.getFullPrice());
 				su.setDouble(6, p.getPricePayed());
 				su.setBoolean(7, p.getWasDownload());
@@ -1311,7 +1311,7 @@ public class Database {
 						+ " SET CityID=?, Date=?, NOTP=?, NS=?, NSR=?, NV=?, NSD=?, NVP=?, NumMaps=? WHERE ID=?";
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getCityId());
-				su.setDate(2, java.sql.Date.valueOf(p.getDate()));
+				su.setDate(2, java.sql.Date.valueOf(p.getDate().plusDays(1)));
 				su.setInt(3, p.getNumOneTimePurchases());
 				su.setInt(4, p.getNumSubscriptions());
 				su.setInt(5, p.getNumSubscriptionsRenewal());
@@ -1328,8 +1328,8 @@ public class Database {
 				PreparedStatement su = conn.prepareStatement(sql);
 				su.setInt(1, p.getId());
 				su.setInt(2, p.getCityId());
-				su.setDate(3, java.sql.Date.valueOf(p.getDate()));
-				su.setInt(4, p.getNumOneTimePurchases()); // fix here - RON
+				su.setDate(3, java.sql.Date.valueOf(p.getDate().plusDays(1)));
+				su.setInt(4, p.getNumOneTimePurchases());
 				su.setInt(5, p.getNumSubscriptions());
 				su.setInt(6, p.getNumSubscriptionsRenewal());
 				su.setInt(7, p.getNumVisited());
@@ -2045,7 +2045,7 @@ public class Database {
 				gt.setInt(counter++, cityId);
 
 			if (date != null)
-				gt.setDate(counter++, java.sql.Date.valueOf(date));
+				gt.setDate(counter++, java.sql.Date.valueOf(date.plusDays(1)));
 
 			return queryToList(gt);
 
@@ -2093,7 +2093,7 @@ public class Database {
 				gt.setInt(counter++, cityId);
 
 			if (purchaseDate != null)
-				gt.setDate(counter++, java.sql.Date.valueOf(purchaseDate));
+				gt.setDate(counter++, java.sql.Date.valueOf(purchaseDate.plusDays(1)));
 
 			if (wasDownload != null)
 				gt.setBoolean(counter++, wasDownload);
@@ -2160,13 +2160,13 @@ public class Database {
 				gt.setInt(counter++, cityId);
 
 			if (dateFrom != null)
-				gt.setDate(counter++, java.sql.Date.valueOf(dateFrom));
+				gt.setDate(counter++, java.sql.Date.valueOf(dateFrom.plusDays(1)));
 
 			if (dateEnd != null)
-				gt.setDate(counter++, java.sql.Date.valueOf(dateEnd));
+				gt.setDate(counter++, java.sql.Date.valueOf(dateEnd.plusDays(1)));
 
 			if (date != null)
-				gt.setDate(counter++, java.sql.Date.valueOf(date));
+				gt.setDate(counter++, java.sql.Date.valueOf(date.plusDays(1)));
 
 			if (newVersionPublished != null)
 				gt.setBoolean(counter++, newVersionPublished);

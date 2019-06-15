@@ -44,7 +44,7 @@ public final class InformationSystem
 	public static Statistic getStatistic(int cityId, LocalDate d)
 	{
 		ArrayList<Integer> ids = Database.searchStatistic((Integer) cityId, d, null, null, null,null);
-		if (ids.size() != 1)
+		if (ids.size() == 0)
 			return null;
 		Statistic s = Database._getStatisticById(ids.get(0));
 		return s;
@@ -154,7 +154,8 @@ public final class InformationSystem
 	 */
 	public static void addOneTimePurchase(int cityId)
 	{
-		addOneTimePurchase(cityId, LocalDate.now());
+		LocalDate today=LocalDate.now();
+		addOneTimePurchase(cityId, today);
 	}
 
 	/**
@@ -166,7 +167,9 @@ public final class InformationSystem
 	{
 		Statistic s = getStatistic(cityId, d);
 		if (s == null)
+			{
 			s = new Statistic(cityId, d);
+			}
 		s.addOneTimePurchase();
 		s.saveToDatabase();
 	}

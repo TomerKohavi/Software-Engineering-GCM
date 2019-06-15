@@ -14,11 +14,7 @@ public class Main2 {
 		Database.createConnection();
 		try 
 		{
-			LocalDate today = LocalDate.now();
-			LocalDate yesturday= today.minusDays(1);
-			System.out.println(today);
-			System.out.println(ChronoUnit.DAYS.between(yesturday, today));
-			System.out.println(ChronoUnit.DAYS.between(today, yesturday));
+			
 			//System.out.println(s.getNumOneTimePurchases());
 			/*Customer cust = new Customer("t", "t", "t@gmail.com", "t", "t t", "0523002100", "0095681338665894", "07/24",
 					"000");
