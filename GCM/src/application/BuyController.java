@@ -80,8 +80,8 @@ public class BuyController {
     public void initialize() {
     	MonthBox.getItems().addAll(1,2,3,4,5,6);
     	MonthBox.setValue(1);
-    	oneTimePrice = 5;
-    	monthPrice = 10;
+    	oneTimePrice = Connector.cityData.getPriceOneTime();
+    	monthPrice = Connector.cityData.getPricePeriod();
     	OneTimePrice.setText(String.format("%.02f", oneTimePrice) + "$");
     	SubscriptionPrice.setText(String.format("%.02f", monthPrice) + "$");
     }

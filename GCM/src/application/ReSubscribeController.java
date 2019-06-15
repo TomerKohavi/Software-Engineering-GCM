@@ -44,7 +44,7 @@ public class ReSubscribeController {
     public void initialize() {
     	MonthBox.getItems().addAll(1,2,3,4,5,6);
     	MonthBox.setValue(1);
-    	monthPrice = 9;
+    	monthPrice = Connector.cityData.getPricePeriodWithDiscount();
     	SubscriptionPrice.setText(String.format("%.02f", monthPrice) + "$");
     }
     
@@ -55,8 +55,10 @@ public class ReSubscribeController {
      */
     @FXML
     void ReSubscribe(ActionEvent event) throws IOException {
-    	double price = monthPrice * MonthBox.getValue(); // send price to server
+    	double price = monthPrice * MonthBox.getValue();
+    	// TODO Sigal add resubscription
     	Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.Subscription);
+    	Connector.user = Connector.client.fetchUser(Connector.user.getId());
     	mainPane.getScene().getWindow().hide();
     }
 
