@@ -97,6 +97,8 @@ public class RouteEditController
 	{
 		ReadOnlyIntegerProperty selectedIndex = StopsBox.getSelectionModel().selectedIndexProperty();
 
+		delStopList = new  ArrayList<RouteStop>();
+		
 		UpButton.disableProperty().bind(selectedIndex.lessThanOrEqualTo(0));
 
 		DownButton.disableProperty().bind(Bindings.createBooleanBinding(() -> {

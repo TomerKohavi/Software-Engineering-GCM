@@ -112,6 +112,7 @@ public class POIEditController
 				{
 					Connector.errorMsg = "Please fill the type field.";
 					openNewPage("ErrorScene.fxml");
+					return;
 				}
 				else
 				{
