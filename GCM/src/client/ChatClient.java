@@ -229,8 +229,6 @@ public class ChatClient extends AbstractClient
 	{
 		sendToServer(new Search(cityName, cityInfo, poiName, poiInfo));
 		this.semAcquire();
-		if (this.search == null)
-			return null;
 		ArrayList<City> cityList = this.search.searchResult;
 		this.search = null;
 		return cityList;

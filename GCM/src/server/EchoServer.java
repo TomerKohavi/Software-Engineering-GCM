@@ -88,8 +88,8 @@ public class EchoServer extends AbstractServer
 	 *
 	 * @param port     The port number to connect on.
 	 * @param serverUI The interface type variable.
-	 * @throws IOException can be thrown due to session opening
-	 * @throws SQLException if the access to database failed
+	 * @throws IOException            can be thrown due to session opening
+	 * @throws SQLException           if the access to database failed
 	 * @throws ClassNotFoundException cannot find the class
 	 */
 	public EchoServer(int port, ChatIF serverUI) throws IOException, ClassNotFoundException, SQLException
@@ -463,6 +463,9 @@ public class EchoServer extends AbstractServer
 		return ccity;
 	}
 
+	private static final int maxReconnects = 1;
+	private static int reconnectsLeft = maxReconnects;
+
 	/**
 	 * This method handles any messages received from the client.
 	 *
@@ -532,6 +535,7 @@ public class EchoServer extends AbstractServer
 				handleResubscribe((Resub) msg);
 			else
 				System.out.println(msg.getClass().toString() + '\n' + msg.toString());
+			reconnectsLeft = maxReconnects;
 		}
 		catch (IOException e)
 		{
@@ -539,14 +543,31 @@ public class EchoServer extends AbstractServer
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
-			try
+			if (reconnectsLeft == 0)
+				try
+				{
+					client.sendToClient(new ForceQuit());
+					this.quit();
+				}
+				catch (IOException e2)
+				{
+					System.out.println("FORCE QUIT");
+					this.quit();
+				}
+			else
 			{
-				client.sendToClient(e);
-			}
-			catch (IOException e1)
-			{
-				e1.printStackTrace();
+				e.printStackTrace();
+				try
+				{
+					reconnectsLeft--;
+					Database.createConnection();
+					handleMessageFromClient(msg, client);
+				}
+				catch (SQLException e1)
+				{
+					handleMessageFromClient(msg, client);
+					e1.printStackTrace();
+				}
 			}
 		}
 
@@ -673,7 +694,9 @@ public class EchoServer extends AbstractServer
 		}
 		catch (IOException e)
 		{
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			e.printStackTrace();
 		}
 		System.exit(0);
