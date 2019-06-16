@@ -21,9 +21,10 @@ public class Main extends Application
 
 	public void start(Stage primaryStage) throws IOException
 	{
-		// TODO PLEASE divide to packages, will be much easier plus George will like it more.
+		// TODO PLEASE divide to packages, will be much easier plus George will like it
+		// more.
 		// TODO Gui for reconnection
-		Connector.client = new ChatClient(Connector.LOCAL_HOST, Connector.PORT, new Console());
+		Connector.client = new ChatClient(Connector.SERVER_HOST, Connector.PORT, new Console());
 		Connector.mainStage = primaryStage;
 		FXMLLoader loader = new FXMLLoader(((Object) ((Object) this)).getClass().getResource("HomePageScene.fxml"));
 		AnchorPane pane = (AnchorPane) loader.load();
@@ -38,15 +39,22 @@ public class Main extends Application
 	public static void main(String[] args)
 	{
 		Main.launch((String[]) args);
+		try
+		{
+			Connector.SERVER_HOST = args[0];
+		}
+		catch (IndexOutOfBoundsException e)
+		{
+			Connector.SERVER_HOST = "localhost";
+		}
 	}
-
 
 	@FXML
 	public void exitApplication(ActionEvent event)
 	{
 		Platform.exit();
 	}
-	
+
 	@Override
 	public void stop() throws IOException
 	{

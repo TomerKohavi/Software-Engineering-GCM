@@ -193,7 +193,7 @@ public class ChatClient extends AbstractClient
 	 */
 	public BufferedImage fetchImage(String pathname) throws IOException
 	{
-		sendToServer(new ImageTransfer(pathname, null, true));
+		sendToServer(new ImageTransfer(pathname, null, true, null));
 		this.semAcquire();
 		BufferedImage im = this.imTr.getImage();
 		this.imTr = null;
@@ -207,9 +207,9 @@ public class ChatClient extends AbstractClient
 	 * @param writepath path to write image
 	 * @throws IOException due to IO communication
 	 */
-	public void sendImage(String readpath, String writepath) throws IOException
+	public void sendImage(String readpath, String writepath, String oldpath) throws IOException
 	{
-		ImageTransfer imTr = new ImageTransfer(readpath, writepath, false);
+		ImageTransfer imTr = new ImageTransfer(readpath, writepath, false, oldpath);
 		imTr.readImageFromFile();
 		sendToServer(imTr);
 	}

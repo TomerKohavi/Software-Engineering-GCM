@@ -136,7 +136,7 @@ public class MapEditController
 			map = Connector.selectedMap;
 			Name.setText(map.getName());
 			InfoBox.setText(map.getInfo());
-			BufferedImage bufIm = Connector.client.fetchImage("Pics\\" + map.getImgURL());
+			BufferedImage bufIm = Connector.client.fetchImage(Connector.mapsDir + map.getImgURL());
 			Image image = SwingFXUtils.toFXImage(bufIm, null);
 			MapImage.setImage(image);
 		}
@@ -248,8 +248,8 @@ public class MapEditController
 				if (changedImage)
 				{
 					String generatedPath = Connector.selectedCity.getCityName() + " " + generateRandomString(15) + ".png";
+					Connector.client.sendImage(readpath, Connector.mapsDir + generatedPath, Connector.mapsDir + map.getImgURL());
 					map.setImgURL(generatedPath);
-					Connector.client.sendImage(readpath, "Pics\\" + generatedPath);
 				}
 			}
 			else
@@ -274,7 +274,7 @@ public class MapEditController
 				map = mapS.getCopyMap();
 
 				map.setImgURL(generatedPath);
-				Connector.client.sendImage(readpath, "Pics\\" + generatedPath);
+				Connector.client.sendImage(readpath, Connector.mapsDir + generatedPath, null);
 
 			}
 			for (Location loc : toDelete)
