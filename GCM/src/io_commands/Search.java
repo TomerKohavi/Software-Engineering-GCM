@@ -16,6 +16,7 @@ public class Search extends Command
 	 * @param cityInfo the info of the city we search
 	 * @param poiName the name of the point of interest
 	 * @param poiInfo the info of the point of interest
+	 * @param useUnpublished if we use unpublished or not
 	 */
 	public Search(String cityName, String cityInfo, String poiName, String poiInfo,boolean useUnpublished)
 	{

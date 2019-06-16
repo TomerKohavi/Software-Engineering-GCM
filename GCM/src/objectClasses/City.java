@@ -239,7 +239,7 @@ public class City implements ClassMustProperties, Serializable
 	 * 
 	 * @param cdv the new published city data version
 	 * @return boolean if the insertion succeeded
-	 * @throws SQLException 
+	 * @throws SQLException problem with SQL
 	 */
 	public boolean _addPublishedCityDataVersion(CityDataVersion cdv) throws SQLException
 	{
@@ -266,7 +266,7 @@ public class City implements ClassMustProperties, Serializable
 	 * 
 	 * @param cdvId the city data version id
 	 * @return boolean if change succeeded
-	 * @throws SQLException 
+	 * @throws SQLException problem with SQL
 	 */
 	public boolean _setUnpublishedToPublishedByVersionId(int cdvId) throws SQLException
 	{

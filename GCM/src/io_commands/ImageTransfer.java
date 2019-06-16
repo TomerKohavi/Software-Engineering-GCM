@@ -21,6 +21,7 @@ public class ImageTransfer extends Command
 	 * @param writepath the path that the image will be saved to on the receiver
 	 *                  side
 	 * @param requested load/save
+	 * @param toDelete image to delete
 	 */
 	public ImageTransfer(String readpath, String writepath, boolean requested, String toDelete)
 	{
@@ -33,7 +34,7 @@ public class ImageTransfer extends Command
 
 	/**
 	 * load the image from the server
-	 * @throws IOException 
+	 * @throws IOException problem with IO
 	 */
 	public void readImageFromFile() throws IOException
 	{

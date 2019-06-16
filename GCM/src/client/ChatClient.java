@@ -96,7 +96,6 @@ public class ChatClient extends AbstractClient
 	 * @param host     The server to connect to.
 	 * @param port     The port number to connect on.
 	 * @param clientUI The interface type variable.
-	 * @param caller   GUI using the client
 	 * @throws IOException due to IO communication
 	 */
 
@@ -205,6 +204,7 @@ public class ChatClient extends AbstractClient
 	 * 
 	 * @param readpath  the path of the image
 	 * @param writepath path to write image
+	 * @param oldpath the old path of the image
 	 * @throws IOException due to IO communication
 	 */
 	public void sendImage(String readpath, String writepath, String oldpath) throws IOException
@@ -219,6 +219,7 @@ public class ChatClient extends AbstractClient
 	 * @param cityInfo the info of city we want to search
 	 * @param poiName  the name of point of interest we want to search
 	 * @param poiInfo  the info of point of interest we want to search
+	 * @param useUnpublished search unpublished city 
 	 * @return array list with the city we searched from the server
 	 * @throws IOException due to IO communication
 	 */
