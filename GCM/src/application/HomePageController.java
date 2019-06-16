@@ -13,14 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import javax.sound.midi.MidiDevice.Info;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 
-import controller.Downloader;
 import controller.InformationSystem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -44,12 +41,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import jdk.nashorn.internal.objects.annotations.Setter;
 import objectClasses.City;
-import objectClasses.CityDataVersion;
 import objectClasses.Customer;
 import objectClasses.Employee;
 import objectClasses.Map;

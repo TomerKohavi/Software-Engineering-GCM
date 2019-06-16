@@ -2,6 +2,7 @@ package application;
 
 import com.jfoenix.controls.JFXButton;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
@@ -15,14 +16,12 @@ public class LostConnectionController {
     private JFXButton ReconnectButton; // Value injected by FXMLLoader
 
     /**
-	 * Reconnects to the server
+	 * Closes the program
 	 * @param event reconnect
 	 */
     @FXML
-    void reconnect(ActionEvent event) {
-    	// TODO Sigal do reconnect
-    	System.out.println("HOLAAAAAAAA");
-    	mainPane.getScene().getWindow().hide();
+    void closeProgram(ActionEvent event) {
+    	Platform.exit();
     }
 
 }
