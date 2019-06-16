@@ -952,7 +952,7 @@ public class Database
 		}
 		if (existEmployee(p.getId()))
 		{
-			String sql = "UPDATE " + Table.Employee.getValue() + " Username=?,"
+			String sql = "UPDATE " + Table.Employee.getValue() + "SET Username=?,"
 					+ " Password=MD5(?), Email=?, FirstName=?, LastName=?, PhoneNumber=?, Role=? WHERE ID=?";
 			PreparedStatement su = conn.prepareStatement(sql);
 			su.setString(1, p.getUserName());
