@@ -151,7 +151,7 @@ public abstract class AbstractClient implements Runnable
 	{
 		// Prevent the thread from looping any more
 		readyToStop = true;
-
+		System.out.println("Closing connections");
 		try
 		{
 			closeAll();

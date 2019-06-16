@@ -95,15 +95,25 @@ public class Connector
 
 	public void initialize()
 	{
+		System.out.println("CON INIT");
 		Task<Void> task = new Task<Void>() {
 		    @Override
 		    public Void call() throws Exception {
 		    	semaphoreForLostConnection.acquire();
+		    	System.out.println("SEM REL");
 		        return null;
 		    }
 		};
 		task.setOnSucceeded(e -> {
-		    openConnectionLostPage();
+		    try
+			{
+				openConnectionLostPage();
+			}
+			catch (IOException e1)
+			{
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		});
 		new Thread(task).start();
 	}
@@ -246,8 +256,9 @@ public class Connector
 	 * @param FXMLpage new fxml page
 	 * @throws IOException cannot open the file
 	 */
-	void openConnectionLostPage()
+	void openConnectionLostPage() throws IOException
 	{
+		System.out.println("HOLAAAAAAAAAAAaaa");
 		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("LostConnectionScene.fxml"));
         Stage stage = new Stage();
         stage.setTitle("Connection Error");

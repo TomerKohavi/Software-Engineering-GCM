@@ -91,6 +91,8 @@ public class ChatClient extends AbstractClient
 	FetchSights fs;
 
 	FetchCustomer fc;
+	
+	Boolean forceQuit;
 
 	/**
 	 * Constructs an instance of the chat client.
@@ -110,6 +112,7 @@ public class ChatClient extends AbstractClient
 		this.loginID = "USER";
 		sendToServer("#login USER");
 		this.semaphore = new Semaphore(0);
+		this.forceQuit = false;
 	}
 
 	/**
@@ -229,6 +232,8 @@ public class ChatClient extends AbstractClient
 	{
 		sendToServer(new Search(cityName, cityInfo, poiName, poiInfo));
 		this.semAcquire();
+		if (forceQuit)
+			return null;
 		ArrayList<City> cityList = this.search.searchResult;
 		this.search = null;
 		return cityList;
@@ -509,10 +514,20 @@ public class ChatClient extends AbstractClient
 			this.fs = (FetchSights) msg;
 		else if (msg instanceof FetchCustomer)
 			this.fc = ((FetchCustomer) msg);
-		else if (msg instanceof SQLException)
+		else if (msg instanceof ForceQuit)
 		{
-			this.semaphore.release();			
+			System.out.println("*******FORCEQUITTING************");
+			try
+			{
+				this.closeConnection();
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+			this.forceQuit = true;
 			Connector.semaphoreForLostConnection.release();
+			this.semaphore.release();
 		}
 		if (msg instanceof Command)
 			this.semaphore.release();

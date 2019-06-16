@@ -463,7 +463,7 @@ public class EchoServer extends AbstractServer
 		return ccity;
 	}
 
-	private static final int maxReconnects = 1;
+	private static final int maxReconnects = 0;
 	private static int reconnectsLeft = maxReconnects;
 
 	/**
@@ -543,6 +543,7 @@ public class EchoServer extends AbstractServer
 		}
 		catch (SQLException e)
 		{
+			System.out.println("RECONNECT");
 			if (reconnectsLeft == 0)
 				try
 				{
@@ -618,6 +619,15 @@ public class EchoServer extends AbstractServer
 			this.serverUI.display(loggedList);
 		else if (message.equalsIgnoreCase("#quit"))
 			quit();
+		else if (message.equalsIgnoreCase("#disdata"))
+			try
+			{
+				Database.closeConnection();
+			}
+			catch (SQLException e)
+			{
+				e.printStackTrace();
+			}
 	}
 
 	/**
