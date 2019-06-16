@@ -152,11 +152,6 @@ public class CitySearchTestSingle
 		assertTrue(searchResult2.contains(c1));
 		assertFalse(searchResult2.contains(c2));
 		assertTrue(searchResult2.contains(c3));
-		// search according to Place description but only published
-		ArrayList<City> searchResult5 = SearchCatalog.SearchCity(null, null, null, "just a simple description", false);
-		assertTrue(searchResult5.contains(c1));
-		assertFalse(searchResult5.contains(c2));
-		assertFalse(searchResult5.contains(c3));
 		// search according to name and description of Place
 		ArrayList<City> searchResult3 = SearchCatalog.SearchCity(null, null, "Tomer", "just a simple description",
 				true);
@@ -180,10 +175,10 @@ public class CitySearchTestSingle
 		assertFalse(searchResult1.contains(c3));
 		// search according to Place description
 		ArrayList<City> searchResult2 = SearchCatalog.SearchCity(null, "very boring city", null,
-				"just a simple description", false);
+				"just a simple description", true);
 		assertTrue(searchResult2.contains(c1));
 		assertFalse(searchResult2.contains(c2));
-		assertFalse(searchResult2.contains(c3));
+		assertTrue(searchResult2.contains(c3));
 		// search according to name and description of Place
 		ArrayList<City> searchResult3 = SearchCatalog.SearchCity(null, "exciting city in the middle of israel", "Tomer",
 				"just a simple description", true);
