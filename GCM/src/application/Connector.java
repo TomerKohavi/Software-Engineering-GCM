@@ -11,11 +11,16 @@ import javax.imageio.ImageIO;
 
 import com.jfoenix.controls.JFXButton;
 
+import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import objectClasses.City;
 import objectClasses.CityDataVersion;
@@ -42,6 +47,8 @@ public class Connector
 	public static User user;
 
 	public static Stage mainStage;
+	
+	public static AnchorPane mainPaneForConnectionLost;
 	
 	public static Semaphore semaphoreForLostConnection = new Semaphore(0);
 
@@ -86,6 +93,26 @@ public class Connector
 
 	public static boolean loading = false;
 
+	public void initialize()
+	{
+		Task<Void> task = new Task<Void>() {
+		    @Override
+		    public Void call() throws Exception {
+		    	semaphoreForLostConnection.acquire();
+		        return null;
+		    }
+		};
+		task.setOnSucceeded(e -> {
+		    try {
+				openNewPage("LostConnectionScene.fxml");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		new Thread(task).start();
+	}
+	
 	public static Text poiNameTextArea = new Text("");
 
 	/**
@@ -217,5 +244,23 @@ public class Connector
 				ans.add(c);
 		}
 		return ans;
+	}
+	
+	/**
+	 * Opens new page.
+	 * @param FXMLpage new fxml page
+	 * @throws IOException cannot open the file
+	 */
+	void openNewPage(String FXMLpage) throws IOException
+	{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLpage));
+		Stage stage = new Stage();
+		stage.initModality(Modality.WINDOW_MODAL);
+		stage.initOwner(mainPaneForConnectionLost.getScene().getWindow());
+		stage.setScene(new Scene((Parent) loader.load()));
+		stage.setResizable(false);
+
+		// showAndWait will block execution until the window closes...
+		stage.showAndWait();
 	}
 }
