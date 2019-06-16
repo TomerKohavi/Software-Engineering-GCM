@@ -566,8 +566,6 @@ public class HomePageController
 	 */
 	public void initialize()
 	{
-		Connector.mainPaneForConnectionLost = mainPane;
-		
 		Connector.sideButton = SideSearch;
 		Connector.sideButton.setOpacity(1);
 
