@@ -8,6 +8,9 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+import application.Connector;
+import client.ChatClient;
+
 /**
  * The <code> AbstractClient </code> contains all the methods necessary to set
  * up the client side of a client-server architecture. When a client is thus
@@ -264,6 +267,8 @@ public abstract class AbstractClient implements Runnable
 
 				connectionException(exception);
 			}
+			ChatClient.semaphore.release();
+			Connector.semaphoreForLostConnection.release();
 		}
 		finally
 		{
@@ -274,7 +279,7 @@ public abstract class AbstractClient implements Runnable
 // METHODS DESIGNED TO BE OVERRIDDEN BY CONCRETE SUBCLASSES ---------
 
 	/**
-	 * Hook method called after the connection has been closed. The default
+	 * Hook method c`lled after the connection has been closed. The default
 	 * implementation does nothing. The method may be overriden by subclasses to
 	 * perform special processing such as cleaning up and terminating, or attempting
 	 * to reconnect.

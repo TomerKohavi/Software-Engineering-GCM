@@ -56,7 +56,7 @@ public class Connector
 
 	public static ChatClient client;
 
-	public static final int PORT = 5556;
+	public static final int PORT = 5678;
 	public static String SERVER_HOST;
 	public static final double DEFULT_ONE_TIME_PRICE = 10;
 	public static final double DEFULT_SUB_MONTH_PRICE = 40;

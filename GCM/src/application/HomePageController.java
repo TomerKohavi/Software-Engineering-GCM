@@ -422,6 +422,7 @@ public class HomePageController
 		// get QUERIE
 		if (Connector.unpublished)
 		{
+			System.out.println(city.getCopyUnpublishedVersions().size());
 			Connector.cityData = city.getCopyUnpublishedVersions().get(0);
 			System.out.println("search unpublished");
 		}

@@ -17,7 +17,7 @@
             <Font size="18.0" />
          </font>
       </JFXButton>
-      <Text layoutX="58.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Connection to the server has been lost." wrappingWidth="679.3544921875">
+      <Text layoutX="58.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Connection to the server/database has been lost; Could not be repaired. Please try again later" wrappingWidth="679.3544921875">
          <font>
             <Font size="18.0" />
          </font>

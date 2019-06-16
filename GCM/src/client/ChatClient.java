@@ -80,7 +80,7 @@ public class ChatClient extends AbstractClient
 
 	CreateCity ccity;
 
-	Semaphore semaphore;
+	public static Semaphore semaphore;
 
 	Statboi statboi;
 
@@ -104,18 +104,18 @@ public class ChatClient extends AbstractClient
 		super(host, port); // Call the superclass constructor
 		this.clientUI = clientUI;
 		openConnection();
-		this.semaphore = new Semaphore(0);
+		semaphore = new Semaphore(0);
 		this.forceQuit = false;
 	}
 
 	/**
 	 * Acquire semaphore
 	 */
-	public void semAcquire()
+	public static void semAcquire()
 	{
 		try
 		{
-			this.semaphore.acquire();
+			semaphore.acquire();
 		}
 		catch (InterruptedException e)
 		{
@@ -241,15 +241,7 @@ public class ChatClient extends AbstractClient
 	public ArrayList<Customer> customersRquest() throws IOException
 	{
 		sendToServer(new CustomersRequest());
-		try
-		{
-			this.semaphore.acquire();
-		}
-		catch (InterruptedException e)
-		{
-			System.err.println("semaphore");
-			e.printStackTrace();
-		}
+		semAcquire();
 		return this.custReq.custList;
 	}
 
