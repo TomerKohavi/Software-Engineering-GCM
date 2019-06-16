@@ -332,7 +332,7 @@ public class InitDatebase {
 		rs1.saveToDatabase();
 
 		// cdv2
-		CityDataVersion cdv2 = new CityDataVersion(cdv, "5.2");
+		CityDataVersion cdv2 = new CityDataVersion(cdv, "4.3");
 		PlaceOfInterestSight ps2 = new PlaceOfInterestSight(cdv2.getId(), p2);
 		ps0.saveToDatabase();
 		PlaceOfInterestSight ps3 = new PlaceOfInterestSight(cdv2.getId(), p3);
