@@ -99,12 +99,13 @@ public class Route implements ClassMustProperties, Serializable
 		this.name = other.name;
 		this.isFavorite = other.isFavorite;
 		this.temp_routeStops = new ArrayList<>();
+		this.temp_removeRouteStops = new ArrayList<>();
+		
 		for (RouteStop rs : other.getCopyRouteStops())
 		{
 			RouteStop newRs = new RouteStop(this, rs.getCopyPlace(), rs.getRecommendedTime());
 			this.addRouteStop(newRs);
 		}
-		this.temp_removeRouteStops = new ArrayList<>();
 	}
 
 	/**
