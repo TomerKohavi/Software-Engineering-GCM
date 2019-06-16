@@ -1112,7 +1112,7 @@ public class HomePageController
 		if (PublishButton.getText().equals("Publish Version"))
 		{
 			System.out.println("Published");
-			Connector.selectedCity.addPublishedCityDataVersion(Connector.cityData);
+			Connector.selectedCity._addPublishedCityDataVersion(Connector.cityData);
 			Connector.selectedCity.setManagerNeedsToPublish(false);
 			Connector.client.update(Connector.selectedCity);
 			Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.VersionPublish);

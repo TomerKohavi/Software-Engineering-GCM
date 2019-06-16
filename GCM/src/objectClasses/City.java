@@ -224,6 +224,11 @@ public class City implements ClassMustProperties, Serializable
 	{
 		if (cdv.getCityId() != this.getId())
 			return false;
+		
+		//remove all other unpublished versions
+		this.temp_removeVersions.addAll(this.temp_unpublishedVersions);
+		this.temp_unpublishedVersions=new ArrayList<CityDataVersion>();
+		
 		temp_unpublishedVersions.add(cdv);
 		return true;
 	}
@@ -234,20 +239,21 @@ public class City implements ClassMustProperties, Serializable
 	 * 
 	 * @param cdv the new published city data version
 	 * @return boolean if the insertion succeeded
+	 * @throws SQLException 
 	 */
-	public boolean addPublishedCityDataVersion(CityDataVersion cdv)
+	public boolean _addPublishedCityDataVersion(CityDataVersion cdv) throws SQLException
 	{
 		if (cdv.getCityId() != this.getId())
 			return false;
-		if (cdv.getNumMapSights() == 0)
-		{
-			addUnpublishedCityDataVersion(cdv);
-			return false;
-		}
 		if (this.publishedVersionId != null && this.temp_publishedVersion != null)
 			temp_unpublishedVersions.add(temp_publishedVersion);
 		publishedVersionId = cdv.getId();
 		temp_publishedVersion = cdv;
+		
+		
+		String newVName=(Double.parseDouble(cdv.getVersionName())+1)+"";
+		this.addUnpublishedCityDataVersion(new CityDataVersion(cdv, newVName));
+		
 		return true;
 	}
 
@@ -257,8 +263,9 @@ public class City implements ClassMustProperties, Serializable
 	 * 
 	 * @param cdvId the city data version id
 	 * @return boolean if change succeeded
+	 * @throws SQLException 
 	 */
-	public boolean setUnpublishedToPublishedByVersionId(int cdvId)
+	public boolean _setUnpublishedToPublishedByVersionId(int cdvId) throws SQLException
 	{
 		CityDataVersion cdv = null;
 		for (CityDataVersion temp : new ArrayList<>(temp_unpublishedVersions))
@@ -277,6 +284,10 @@ public class City implements ClassMustProperties, Serializable
 		setPublishedToUnpublished();
 		this.publishedVersionId = cdv.getId();
 		this.temp_publishedVersion = cdv;
+		
+		String newVName=(Double.parseDouble(cdv.getVersionName())+1)+"";
+		this.addUnpublishedCityDataVersion(new CityDataVersion(cdv, newVName));
+		
 		return true;
 	}
 
