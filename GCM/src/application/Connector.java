@@ -95,7 +95,6 @@ public class Connector
 
 	public Connector()
 	{
-		System.out.println("CON INIT");
 		Task<Void> task = new Task<Void>() {
 		    @Override
 		    public Void call() throws Exception {
@@ -278,7 +277,8 @@ public class Connector
 		Parent root = loader.load();
         Stage stage = new Stage();
         stage.setTitle("Connection Error");
-        stage.setScene(new Scene(root, 450, 450));
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
         stage.show();
 
 		// showAndWait will block execution until the window closes...
