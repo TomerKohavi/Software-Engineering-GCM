@@ -279,8 +279,6 @@ public class City implements ClassMustProperties, Serializable
 		}
 		if (cdv == null)
 			return false;
-		if (cdv.getNumMapSights() == 0)
-			return false;
 		setPublishedToUnpublished();
 		this.publishedVersionId = cdv.getId();
 		this.temp_publishedVersion = cdv;
