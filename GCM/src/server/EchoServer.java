@@ -96,7 +96,7 @@ public class EchoServer extends AbstractServer
 	{
 		super(port);
 		this.serverUI = serverUI;
-		Database.createConnection();
+//		Database.createConnection();
 		this.loggedList = new ArrayList<Integer>();
 	}
 

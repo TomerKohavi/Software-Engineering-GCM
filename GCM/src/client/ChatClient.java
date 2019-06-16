@@ -229,6 +229,8 @@ public class ChatClient extends AbstractClient
 	{
 		sendToServer(new Search(cityName, cityInfo, poiName, poiInfo));
 		this.semAcquire();
+		if (this.search == null)
+			return null;
 		ArrayList<City> cityList = this.search.searchResult;
 		this.search = null;
 		return cityList;
@@ -510,7 +512,10 @@ public class ChatClient extends AbstractClient
 		else if (msg instanceof FetchCustomer)
 			this.fc = ((FetchCustomer) msg);
 		else if (msg instanceof SQLException)
-			System.out.println("OH HELL NAW");
+		{
+			this.semaphore.release();			
+			Connector.semaphoreForLostConnection.release();
+		}
 		if (msg instanceof Command)
 			this.semaphore.release();
 		else

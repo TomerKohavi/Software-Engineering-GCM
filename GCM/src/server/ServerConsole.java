@@ -22,12 +22,6 @@ import common.*;
  */
 public class ServerConsole implements ChatIF
 {
-	// Class variables *************************************************
-
-	/**
-	 * The default port to connect on.
-	 */
-	final public static int DEFAULT_PORT = 5555;
 
 	// Instance variables **********************************************
 
