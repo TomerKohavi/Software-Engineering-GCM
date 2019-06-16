@@ -126,6 +126,12 @@ public class EmployeeRegisterController
 		last = LastName.getText();
 		emailAdd = Email.getText();
 		phoneNumber = Phone.getText();
+		if (RoleBox.getValue() == null)
+		{
+			Connector.errorMsg = "Fill your role please.";
+			openNewPage("ErrorScene.fxml");
+			return;
+		}
 		Role role = RoleBox.getValue().equals("Regular") ? Role.REGULAR
 				: (RoleBox.getValue().equals("Manager") ? Role.MANAGER : Role.CEO);
 		String errorMsg = RegCheck.isValidUser(usr, pass, first, last, emailAdd, phoneNumber).getValue();
