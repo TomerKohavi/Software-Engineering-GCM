@@ -81,7 +81,7 @@ public class CityEditController
 			{
 				City newCity = Connector.client.createCity(Name.getText(), InfoBox.getText(), priceOneTime,
 						pricePeriod);
-				Connector.searchCityResult.add(newCity);
+//				Connector.searchCityResult.add(newCity);
 			}
 			catch (IOException e)
 			{

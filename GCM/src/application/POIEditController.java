@@ -8,9 +8,14 @@ import com.jfoenix.controls.JFXTextField;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import objectClasses.MapSight;
 import objectClasses.PlaceOfInterest;
 import objectClasses.PlaceOfInterest.PlaceType;
@@ -47,6 +52,25 @@ public class POIEditController
 	private CheckBox Accessibility; // Value injected by FXMLLoader
 
 	/**
+	 * Opens new page.
+	 * 
+	 * @param FXMLpage new fxml page
+	 * @throws IOException cannot open the file
+	 */
+	void openNewPage(String FXMLpage) throws IOException
+	{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLpage));
+		Stage stage = new Stage();
+		stage.initModality(Modality.WINDOW_MODAL);
+		stage.initOwner(mainPane.getScene().getWindow());
+		stage.setScene(new Scene((Parent) loader.load()));
+		stage.setResizable(false);
+
+		// showAndWait will block execution until the window closes...
+		stage.showAndWait();
+	}
+	
+	/**
 	 * initialize variables
 	 */
 	@FXML
@@ -60,7 +84,7 @@ public class POIEditController
 			poi = Connector.selectedPOI;
 			Name.setText(poi.getName());
 			InfoBox.setText(poi.getPlaceDescription());
-//    		TypeCombo.setValue();
+    		TypeCombo.setValue(TypeCombo.getItems().get(poi.getType().getValue()));
 			Accessibility.setSelected(poi.isAccessibilityToDisabled());
 		}
 	}
@@ -78,16 +102,24 @@ public class POIEditController
 			{
 				poi.setName(Name.getText());
 				poi.setPlaceDescription(InfoBox.getText());
-//   	 	poi.setType(type);
+   	 			poi.setType(PlaceType.values()[TypeCombo.getSelectionModel().getSelectedIndex()]);
 				poi.setAccessibilityToDisabled(Accessibility.isSelected());
 				Connector.client.update(poi);
 			}
 			else
 			{
-				PlaceOfInterestSight poiS = Connector.client.createPOI(Connector.selectedCity.getId(), Name.getText(),
-						PlaceType.values()[TypeCombo.getSelectionModel().getSelectedIndex()], InfoBox.getText(), Accessibility.isSelected(),
-						Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId());
-				Connector.searchPOIResult.add(poiS);
+				if (TypeCombo.getValue() == null)
+				{
+					Connector.errorMsg = "Please fill the type field.";
+					openNewPage("ErrorScene.fxml");
+				}
+				else
+				{
+					PlaceOfInterestSight poiS = Connector.client.createPOI(Connector.selectedCity.getId(), Name.getText(),
+							PlaceType.values()[TypeCombo.getSelectionModel().getSelectedIndex()], InfoBox.getText(), Accessibility.isSelected(),
+							Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId());
+					Connector.searchPOIResult.add(poiS);
+				}
 			}
 		}
 		catch (IOException e)
