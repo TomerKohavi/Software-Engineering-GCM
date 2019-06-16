@@ -243,16 +243,19 @@ public class City implements ClassMustProperties, Serializable
 	 */
 	public boolean _addPublishedCityDataVersion(CityDataVersion cdv) throws SQLException
 	{
-		if (cdv.getCityId() != this.getId())
+		if (cdv.getCityId() != this.getId() || cdv==null)
 			return false;
 		if (this.publishedVersionId != null && this.temp_publishedVersion != null)
 			temp_unpublishedVersions.add(temp_publishedVersion);
-		publishedVersionId = cdv.getId();
-		temp_publishedVersion = cdv;
 		
+		//create new published version
+		String newName=(Double.parseDouble(cdv.getVersionName())+1)+"";
+		CityDataVersion newCDV=new CityDataVersion(cdv, cdv.getVersionName());
+		cdv.setVersionName(newName);
 		
-		String newVName=(Double.parseDouble(cdv.getVersionName())+1)+"";
-		this.addUnpublishedCityDataVersion(new CityDataVersion(cdv, newVName));
+		publishedVersionId = newCDV.getId();
+		temp_publishedVersion = newCDV;
+		this.addUnpublishedCityDataVersion(cdv);
 		
 		return true;
 	}
@@ -279,12 +282,13 @@ public class City implements ClassMustProperties, Serializable
 		}
 		if (cdv == null)
 			return false;
-		setPublishedToUnpublished();
-		this.publishedVersionId = cdv.getId();
-		this.temp_publishedVersion = cdv;
+		String newName=(Double.parseDouble(cdv.getVersionName())+1)+"";
+		CityDataVersion newCDV=new CityDataVersion(cdv, cdv.getVersionName());
+		cdv.setVersionName(newName);
 		
-		String newVName=(Double.parseDouble(cdv.getVersionName())+1)+"";
-		this.addUnpublishedCityDataVersion(new CityDataVersion(cdv, newVName));
+		publishedVersionId = newCDV.getId();
+		temp_publishedVersion = newCDV;
+		this.addUnpublishedCityDataVersion(cdv);
 		
 		return true;
 	}
