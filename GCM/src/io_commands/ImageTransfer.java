@@ -7,30 +7,35 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
- * @author Sigal transfer images from client to server and return the result to
- *         the client
+ * transfer images from client to server and return the result to the client
+ * 
+ * @author Sigal
  */
 public class ImageTransfer extends Command
 {
 
 	/**
 	 * Constructor
+	 * 
 	 * @param readpath  the path of the image we want to transfer
-	 * @param writepath the path that the image will be saved to on the receiver side
+	 * @param writepath the path that the image will be saved to on the receiver
+	 *                  side
 	 * @param requested load/save
 	 */
-	public ImageTransfer(String readpath, String writepath, boolean requested)
+	public ImageTransfer(String readpath, String writepath, boolean requested, String toDelete)
 	{
 		this.readpath = readpath;
 		this.writepath = writepath;
 		this.requested = requested;
+		this.toDelete = toDelete;
 		this.SrIm = new SerializableImage();
 	}
 
 	/**
 	 * load the image from the server
+	 * @throws IOException 
 	 */
-	public void readImageFromFile()
+	public void readImageFromFile() throws IOException
 	{
 		try
 		{
@@ -39,12 +44,13 @@ public class ImageTransfer extends Command
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			SrIm.image = ImageIO.read(new File("Pics\\No_Image"));
 		}
 	}
 
 	/**
 	 * returns the actual image.
+	 * 
 	 * @return the image from the server
 	 */
 	public BufferedImage getImage()
@@ -54,14 +60,18 @@ public class ImageTransfer extends Command
 
 	/**
 	 * save the image into the server
+	 * 
 	 * @throws IOException if write doesn't work
 	 */
-	
+
 	public void saveImage() throws IOException
 	{
-		ImageIO.write(SrIm.image, "png", new File(this.writepath));
+		if (writepath != null)
+			ImageIO.write(SrIm.image, "png", new File(this.writepath));
+		if (toDelete != null)
+			(new File(this.toDelete)).delete();
 	}
-	
+
 	/**
 	 * delete the request
 	 */
@@ -70,7 +80,6 @@ public class ImageTransfer extends Command
 	}
 
 	private SerializableImage SrIm;
-	public String readpath;
-	public String writepath;
+	public String readpath, writepath, toDelete;
 	public boolean requested;
 }

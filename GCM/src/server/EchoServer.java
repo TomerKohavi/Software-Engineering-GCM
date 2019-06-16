@@ -72,7 +72,6 @@ public class EchoServer extends AbstractServer
 	/**
 	 * The default port to listen on.
 	 */
-	final public static int DEFAULT_PORT = 5555;
 
 	/**
 	 * The interface type variable. It allows the implementation of the display
@@ -462,7 +461,7 @@ public class EchoServer extends AbstractServer
 		return ccity;
 	}
 
-	private static final int maxReconnects = 2; // CAN BE CHANGED
+	private static final int maxReconnects = 2;
 	private static int reconnectsLeft = maxReconnects;
 
 	/**
@@ -492,7 +491,7 @@ public class EchoServer extends AbstractServer
 				}
 				else
 				{
-					System.out.println("image save " + imTr.writepath);
+					System.out.println("image save " + imTr.writepath + "; delete image " + imTr.toDelete);
 					imTr.saveImage();
 				}
 			}

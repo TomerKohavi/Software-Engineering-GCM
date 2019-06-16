@@ -57,7 +57,7 @@ public class Connector
 	public static ChatClient client;
 
 	public static final int PORT = 5556;
-	public static final String LOCAL_HOST = "localhost";
+	public static String SERVER_HOST;
 	public static final double DEFULT_ONE_TIME_PRICE = 10;
 	public static final double DEFULT_SUB_MONTH_PRICE = 40;
 
@@ -90,7 +90,8 @@ public class Connector
 	public static ArrayList<Customer> customerList;
 
 	public static CityDataVersion cityData = null;
-
+ 
+	public static String mapsDir = "Pics\\";
 	public static boolean loading = false;
 
 	public Connector()

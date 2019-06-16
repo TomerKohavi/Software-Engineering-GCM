@@ -503,7 +503,7 @@ public class HomePageController
 		{
 			ResultName.setText(map.getName());// set name and type
 			ResultInfo.setText(map.getInfo());// set info
-			BufferedImage bufIm = Connector.client.fetchImage("Pics\\" + map.getImgURL());
+			BufferedImage bufIm = Connector.client.fetchImage(Connector.mapsDir + map.getImgURL());
 			Image image = SwingFXUtils.toFXImage(bufIm, null);
 			MapImage.setImage(image);
 			ShowMapButton.setVisible(true);
