@@ -1118,7 +1118,7 @@ public class HomePageController
 			else
 			{
 				System.out.println("Published");
-				Connector.selectedCity._addPublishedCityDataVersion(Connector.cityData);
+				Connector.client.publishVersion(Connector.selectedCity, Connector.cityData);
 				Connector.selectedCity.setManagerNeedsToPublish(false);
 				Connector.client.update(Connector.selectedCity);
 				Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.VersionPublish);

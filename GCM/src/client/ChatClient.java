@@ -475,6 +475,13 @@ public class ChatClient extends AbstractClient
 		return ccity.city;
 	}
 
+	
+	public void publishVersion(City city, CityDataVersion cdv) throws IOException
+	{
+		sendToServer(new PublishVersion(city, cdv));
+	}
+	
+	
 	// Instance methods ***********************************************
 	/**
 	 * This method handles all data that comes in from the server.

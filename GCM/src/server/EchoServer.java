@@ -462,7 +462,7 @@ public class EchoServer extends AbstractServer
 		return ccity;
 	}
 
-	private static final int maxReconnects = 2;
+	private static final int maxReconnects = 2; // CAN BE CHANGED
 	private static int reconnectsLeft = maxReconnects;
 
 	/**
@@ -532,6 +532,8 @@ public class EchoServer extends AbstractServer
 				client.sendToClient(handleCityCreation((CreateCity) msg));
 			else if (msg instanceof Resub)
 				handleResubscribe((Resub) msg);
+			else if (msg instanceof PublishVersion)
+				((PublishVersion) msg).publish();
 			else
 				System.out.println(msg.getClass().toString() + '\n' + msg.toString());
 			reconnectsLeft = maxReconnects;
