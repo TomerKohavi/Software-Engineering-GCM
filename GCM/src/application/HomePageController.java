@@ -744,10 +744,9 @@ public class HomePageController
 		cityInfo = CityInfoBox.getText();
 		poiName = POINameBox.getText();
 		poiInfo = POIInfoBox.getText();
-		boolean useUnpublishedInSearch=UnpublishSearch.isSelected();
 //		startLoad();
 //		Connector.loading = true;
-		Connector.searchCityResult = Connector.client.search(cityName, cityInfo, poiName, poiInfo,useUnpublishedInSearch);
+		Connector.searchCityResult = Connector.client.search(cityName, cityInfo, poiName, poiInfo ,UnpublishSearch.isSelected());
 //		endLoad();
 //		Connector.loading = false;
 		if (Connector.searchCityResult != null && !Connector.searchCityResult.isEmpty())
@@ -1111,19 +1110,35 @@ public class HomePageController
 		// publish the unpublished version
 		if (PublishButton.getText().equals("Publish Version"))
 		{
-			System.out.println("Published");
-			Connector.selectedCity._addPublishedCityDataVersion(Connector.cityData);
-			Connector.selectedCity.setManagerNeedsToPublish(false);
-			Connector.client.update(Connector.selectedCity);
-			Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.VersionPublish);
-			Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.NumMaps,
-					Connector.selectedCity.getCopyPublishedVersion().getNumMapSights());
-			openNewPage("InformCustomersPublishScene.fxml");
+			if (Connector.cityData.getNumMapSights() <= 0)
+			{
+				Connector.errorMsg = "In order to Publish a city version, they must have at least one map.";
+				openNewPage("ErrorScene.fxml");
+			}
+			else
+			{
+				System.out.println("Published");
+				Connector.selectedCity._addPublishedCityDataVersion(Connector.cityData);
+				Connector.selectedCity.setManagerNeedsToPublish(false);
+				Connector.client.update(Connector.selectedCity);
+				Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.VersionPublish);
+				Connector.client.addStat(Connector.selectedCity.getId(), InformationSystem.Ops.NumMaps,
+						Connector.selectedCity.getCopyPublishedVersion().getNumMapSights());
+				openNewPage("InformCustomersPublishScene.fxml");
+			}
 		}
 		else
 		{
-			Connector.selectedCity.setManagerNeedsToPublish(true);
-			Connector.client.update(Connector.selectedCity);
+			if (Connector.cityData.getNumMapSights() <= 0)
+			{
+				Connector.errorMsg = "In order to Commit a city version, they must have at least one map.";
+				openNewPage("ErrorScene.fxml");
+			}
+			else
+			{
+				Connector.selectedCity.setManagerNeedsToPublish(true);
+				Connector.client.update(Connector.selectedCity);
+			}
 		}
 	}
 
