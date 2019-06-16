@@ -53,10 +53,6 @@ public class ChatClient extends AbstractClient
 	 * method in the client.
 	 */
 	ChatIF clientUI;
-	/**
-	 * The Login ID of the user.
-	 */
-	String loginID;
 
 	User user;
 
@@ -109,8 +105,6 @@ public class ChatClient extends AbstractClient
 		super(host, port); // Call the superclass constructor
 		this.clientUI = clientUI;
 		openConnection();
-		this.loginID = "USER";
-		sendToServer("#login USER");
 		this.semaphore = new Semaphore(0);
 		this.forceQuit = false;
 	}
