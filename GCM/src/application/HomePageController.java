@@ -75,6 +75,8 @@ public class HomePageController
 	static private boolean show_map = false;
 
 	static private boolean isLastCityPublish = true;
+	
+	static private Connector con = new Connector();
 
 	@FXML // fx:id="mainPane"
 	private AnchorPane mainPane; // Value injected by FXMLLoader

@@ -93,7 +93,7 @@ public class Connector
 
 	public static boolean loading = false;
 
-	public void initialize()
+	public Connector()
 	{
 		System.out.println("CON INIT");
 		Task<Void> task = new Task<Void>() {
@@ -117,6 +117,21 @@ public class Connector
 		});
 		new Thread(task).start();
 	}
+	
+//	public void initialize()
+//	{
+//		Task<Void> task = new Task<Void>() {
+//		    @Override
+//		    public Void call() throws Exception {
+//		    	semaphoreForLostConnection.acquire();
+//		        return null;
+//		    }
+//		};
+//		task.setOnSucceeded(e -> {
+//		    openConnectionLostPage();
+//		});
+//		new Thread(task).start();
+//	}
 	
 	public static Text poiNameTextArea = new Text("");
 
