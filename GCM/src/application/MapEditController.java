@@ -328,7 +328,7 @@ public class MapEditController
 			poi.isNew = false;
 			poi.setLoc(Location._createLocalLocation(Connector.choosenPOIInLoc, cord));
 			firstPOIAdded = true;
-			Connector.imageList.add(poi);
+			AddPOILocButton.setDisable(true);
 		}
 	}
 
