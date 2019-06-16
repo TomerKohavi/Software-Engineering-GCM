@@ -15,6 +15,9 @@ public class Main2
 		try
 		{
 			Database.createConnection();
+			
+			ArrayList<City> cities=SearchCatalog.SearchCity("New York", null, null, null, true);
+			System.out.println(cities.size());
 			// System.out.println(s.getNumOneTimePurchases());
 			/*
 			 * Customer cust = new Customer("t", "t", "t@gmail.com", "t", "t t",

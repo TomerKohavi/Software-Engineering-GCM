@@ -194,8 +194,7 @@ public class EchoServer extends AbstractServer
 	 */
 	private Search handleSearch(Search s) throws SQLException
 	{
-		System.out.println("search: " + s.cityName + "|" + s.cityInfo + "|" + s.poiName + "|" + s.poiInfo);
-		s.searchResult = SearchCatalog.SearchCity(s.cityName, s.cityInfo, s.poiName, s.poiInfo);
+		s.searchResult = SearchCatalog.SearchCity(s.cityName, s.cityInfo, s.poiName, s.poiInfo,s.useUnpublished);
 		return s;
 	}
 

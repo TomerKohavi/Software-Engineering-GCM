@@ -744,9 +744,10 @@ public class HomePageController
 		cityInfo = CityInfoBox.getText();
 		poiName = POINameBox.getText();
 		poiInfo = POIInfoBox.getText();
+		boolean useUnpublishedInSearch=UnpublishSearch.isSelected();
 //		startLoad();
 //		Connector.loading = true;
-		Connector.searchCityResult = Connector.client.search(cityName, cityInfo, poiName, poiInfo);
+		Connector.searchCityResult = Connector.client.search(cityName, cityInfo, poiName, poiInfo,useUnpublishedInSearch);
 //		endLoad();
 //		Connector.loading = false;
 		if (Connector.searchCityResult != null && !Connector.searchCityResult.isEmpty())

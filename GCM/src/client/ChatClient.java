@@ -228,9 +228,9 @@ public class ChatClient extends AbstractClient
 	 * @return array list with the city we searched from the server
 	 * @throws IOException due to IO communication
 	 */
-	public ArrayList<City> search(String cityName, String cityInfo, String poiName, String poiInfo) throws IOException
+	public ArrayList<City> search(String cityName, String cityInfo, String poiName, String poiInfo,boolean useUnpublished) throws IOException
 	{
-		sendToServer(new Search(cityName, cityInfo, poiName, poiInfo));
+		sendToServer(new Search(cityName, cityInfo, poiName, poiInfo,useUnpublished));
 		this.semAcquire();
 		if (forceQuit)
 			return null;

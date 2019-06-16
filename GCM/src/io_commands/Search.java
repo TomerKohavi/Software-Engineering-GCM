@@ -17,12 +17,13 @@ public class Search extends Command
 	 * @param poiName the name of the point of interest
 	 * @param poiInfo the info of the point of interest
 	 */
-	public Search(String cityName, String cityInfo, String poiName, String poiInfo)
+	public Search(String cityName, String cityInfo, String poiName, String poiInfo,boolean useUnpublished)
 	{
 		this.cityName = checkEmpty(cityName);
 		this.cityInfo = checkEmpty(cityInfo);
 		this.poiName = checkEmpty(poiName);
 		this.poiInfo = checkEmpty(poiInfo);
+		this.useUnpublished=useUnpublished;
 	}
 
 	/**
@@ -44,5 +45,6 @@ public class Search extends Command
 	}
 
 	public String cityName, cityInfo, poiName, poiInfo;
+	public boolean useUnpublished;
 	public ArrayList<City> searchResult;
 }

@@ -52,6 +52,7 @@ public final class SearchCatalog {
 	public static ArrayList<City> SearchCity(String cityName, String cityDescription, String placeName,
 			String placeDescription,boolean useUnpublished) throws SQLException // they can be null
 	{
+		System.out.println("Search City:" +cityName+"|"+cityDescription+"|"+placeName+"|"+placeDescription+"|"+useUnpublished);
 		if (cityName == null && cityDescription == null && placeName == null && placeDescription == null)
 			return null;
 
