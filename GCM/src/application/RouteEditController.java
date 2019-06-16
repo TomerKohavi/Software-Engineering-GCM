@@ -32,8 +32,7 @@ import objectClasses.RouteSight;
 import objectClasses.RouteStop;
 
 /**
- * @author tomer
- * edit route controller
+ * @author tomer edit route controller
  */
 public class RouteEditController
 {
@@ -41,6 +40,7 @@ public class RouteEditController
 	private Route route;
 
 	private ArrayList<RouteStop> stopList;
+	private ArrayList<RouteStop> delStopList;
 
 	private TableColumn<RouteStop, String> poiColumn;
 	private TableColumn<RouteStop, LocalTime> timeColumn;
@@ -53,9 +53,9 @@ public class RouteEditController
 
 	@FXML // fx:id="InfoBox"
 	private TextArea InfoBox; // Value injected by FXMLLoader
-	
+
 	@FXML // fx:id="FavoriteBox"
-    private JFXCheckBox FavoriteBox; // Value injected by FXMLLoader
+	private JFXCheckBox FavoriteBox; // Value injected by FXMLLoader
 
 	@FXML // fx:id="UpButton"
 	private JFXButton UpButton; // Value injected by FXMLLoader
@@ -86,6 +86,7 @@ public class RouteEditController
 
 	/**
 	 * initialize variables
+	 * 
 	 * @throws IOException in/out exception
 	 */
 	@SuppressWarnings("unchecked")
@@ -134,13 +135,15 @@ public class RouteEditController
 		StopsBox.getColumns().addAll(poiColumn, timeColumn);
 
 		if (Connector.searchPOIResult == null)
-			Connector.searchPOIResult = (ArrayList<PlaceOfInterestSight>) Connector.client.fetchSights(Connector.cityData.getId(), PlaceOfInterestSight.class);
+			Connector.searchPOIResult = (ArrayList<PlaceOfInterestSight>) Connector.client
+					.fetchSights(Connector.cityData.getId(), PlaceOfInterestSight.class);
 		POIBox.getItems().addAll(Connector.getPOIsNames(Connector.searchPOIResult));
 
 	}
 
 	/**
 	 * Change route order.
+	 * 
 	 * @param event user click to up route
 	 */
 	@FXML
@@ -154,6 +157,7 @@ public class RouteEditController
 
 	/**
 	 * Change route order.
+	 * 
 	 * @param event user click to down route
 	 */
 	@FXML
@@ -181,6 +185,7 @@ public class RouteEditController
 
 	/**
 	 * Adds a POI to the route.
+	 * 
 	 * @param event add the place of interest to the route
 	 */
 	@FXML
@@ -197,7 +202,8 @@ public class RouteEditController
 				{
 					PlaceOfInterest poi = Connector.searchPOIResult.get(selectedIdx).getCopyPlace();
 					@SuppressWarnings("deprecation")
-					RouteStop newRouteStop = RouteStop._createRouteStop(-1, -1, poi.getId(), poi.getName(), 0,LocalTime.of((time / 60), time % 60, 0));
+					RouteStop newRouteStop = RouteStop._createRouteStop(-1, -1, poi.getId(), poi.getName(), 0,
+							LocalTime.of((time / 60), time % 60, 0));
 					stopList.add(newRouteStop);
 					updateTable();
 					StopTime.setText("");
@@ -213,6 +219,7 @@ public class RouteEditController
 
 	/**
 	 * Removes a POI from a route.
+	 * 
 	 * @param event remove the point of interest from the route
 	 */
 	@FXML
@@ -221,20 +228,14 @@ public class RouteEditController
 		int selectedIdx = StopsBox.getSelectionModel().getSelectedIndex();
 		if (selectedIdx >= 0)
 		{
-			try
-			{
-				Connector.client.deleteObject(stopList.remove(selectedIdx));
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
+			delStopList.add(stopList.remove(selectedIdx));
 			updateTable();
 		}
 	}
 
 	/**
 	 * Applies all the changes defined.
+	 * 
 	 * @param event appaly changes
 	 */
 	@FXML
@@ -255,8 +256,9 @@ public class RouteEditController
 			}
 			else
 			{
-				RouteSight routeS = Connector.client.createRoute(Connector.selectedCity.getId(), Name.getText(), InfoBox.getText(),
-						Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId(), FavoriteBox.isSelected());
+				RouteSight routeS = Connector.client.createRoute(Connector.selectedCity.getId(), Name.getText(),
+						InfoBox.getText(), Connector.selectedCity.getCopyUnpublishedVersions().get(0).getId(),
+						FavoriteBox.isSelected());
 				Connector.selectedRoute = route = routeS.getCopyRoute();
 				Connector.searchRouteResult.add(routeS);
 			}
@@ -267,6 +269,11 @@ public class RouteEditController
 			ArrayList<Integer> stopIdList = Connector.client.createRouteStops(stopList);
 			for (int i = 0; i < stopIdList.size(); i++)
 				stopList.get(i)._setId(stopIdList.get(i));
+			for (RouteStop stop : delStopList)
+			{
+				if (stop.getId() != -1)
+					Connector.client.deleteObject(stop);
+			}
 			Connector.selectedRoute.setRouteStops(stopList);
 			mainPane.getScene().getWindow().hide();
 		}
@@ -276,10 +283,11 @@ public class RouteEditController
 		}
 	}
 
-    /**
-     * go to the previous page
-     * @param event user click go previous page
-     */
+	/**
+	 * go to the previous page
+	 * 
+	 * @param event user click go previous page
+	 */
 	@FXML
 	void goBack(ActionEvent event)
 	{
