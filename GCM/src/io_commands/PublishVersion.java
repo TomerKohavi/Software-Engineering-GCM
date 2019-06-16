@@ -26,6 +26,7 @@ public class PublishVersion extends Command
 	public void publish() throws SQLException
 	{
 		city._addPublishedCityDataVersion(cdv);
+		city.saveToDatabase();
 	}
 
 	private City city;

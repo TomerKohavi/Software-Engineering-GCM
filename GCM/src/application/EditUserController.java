@@ -90,7 +90,8 @@ public class EditUserController
 		ExperationYear.getItems().addAll(yearList);
 
 		Username.setText(Connector.user.getUserName());
-		Password.setText(Connector.user.getPassword());
+//		Password.setText(Connector.user.getPassword());
+		Password.setText("");
 		FirstName.setText(Connector.user.getFirstName());
 		LastName.setText(Connector.user.getLastName());
 		Email.setText(Connector.user.getEmail());
