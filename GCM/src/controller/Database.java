@@ -823,7 +823,7 @@ public class Database
 	 * @return if the customer is secured or not
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean saveSecuredCustomer(Customer p) throws SQLException
+	public static boolean saveCustomer(Customer p) throws SQLException
 	{
 		if (conn == null)
 		{
@@ -834,7 +834,7 @@ public class Database
 		if (existCustomer(p.getId()))
 		{
 			String sql = "UPDATE " + Table.Customer.getValue()
-					+ " SET Username=?, Password=?, Email=?, FirstName=?, LastName=?,"
+					+ " SET Username=?, Password=MD5(?), Email=?, FirstName=?, LastName=?,"
 					+ " PhoneNumber=?, CardNum=?, CVC=?, Exp=? WHERE ID=?";
 			PreparedStatement su = conn.prepareStatement(sql);
 			su.setString(1, p.getUserName());
@@ -880,7 +880,7 @@ public class Database
 	 * @return list of ids of secured users
 	 * @throws SQLException if the access to database failed
 	 */
-	private static ArrayList<Integer> searchUserSecured(String userName, String password, String table)
+	private static ArrayList<Integer> searchUser(String userName, String password, String table)
 			throws SQLException
 	{
 		if (conn == null)
@@ -917,19 +917,83 @@ public class Database
 	 * @return list of ids of the secured customers
 	 * @throws SQLException if the access to database failed
 	 */
-	public static ArrayList<Integer> searchSecuredCustomer(String userName, String password) throws SQLException
+	public static ArrayList<Integer> searchCustomer(String userName, String password) throws SQLException
 	{
-		return searchUserSecured(userName, password, Table.Customer.getValue());
+		return searchUser(userName, password, Table.Customer.getValue());
 	}
 
 	/**
+	 * Search secured employee
+	 * 
+	 * @param userName the user name
+	 * @param password the password
+	 * @return list of ids of the secured employees
+	 * @throws SQLException if the access to database failed
+	 */
+	public static ArrayList<Integer> searchEmployee(String userName, String password) throws SQLException
+	{
+		return searchUser(userName, password, Table.Employee.getValue());
+	}
+	
+	/**
 	 * saves a new instance to the database.
+	 * 
+	 * @param p the employee we want save
+	 * @return true if an updated was made. false for new element.
+	 * @throws SQLException if the access to database failed
+	 */
+	public static boolean saveEmployee(Employee p) throws SQLException
+	{
+		if (conn == null)
+		{
+
+			System.err.println("No connection found");
+			throw new DatabaseException();
+		}
+		if (existEmployee(p.getId()))
+		{
+			String sql = "UPDATE " + Table.Employee.getValue() + " Username=?,"
+					+ " Password=MD5(?), Email=?, FirstName=?, LastName=?, PhoneNumber=?, Role=? WHERE ID=?";
+			PreparedStatement su = conn.prepareStatement(sql);
+			su.setString(1, p.getUserName());
+			su.setString(2, p.getPassword());
+			su.setString(3, p.getEmail());
+			su.setString(4, p.getFirstName());
+			su.setString(5, p.getLastName());
+			su.setString(6, p.getPhoneNumber());
+			su.setInt(7, p.getRole().getValue());
+			su.setInt(8, p.getId());
+			su.executeUpdate();
+			return true;
+		}
+		else ////
+		{
+			String sql = "INSERT INTO " + Table.Employee.getValue()
+					+ " (ID,Username, Password, Email, FirstName, LastName, PhoneNumber, Role)"
+					+ " VALUES (?, ?, MD5(?), ?, ?, ?, ?, ?)";
+			PreparedStatement su = conn.prepareStatement(sql);
+			su.setInt(1, p.getId());
+			su.setString(2, p.getUserName());
+			su.setString(3, p.getPassword());
+			su.setString(4, p.getEmail());
+			su.setString(5, p.getFirstName());
+			su.setString(6, p.getLastName());
+			su.setString(7, p.getPhoneNumber());
+			su.setInt(8, p.getRole().getValue());
+			su.executeUpdate();
+			return false;
+		}
+	}
+
+	
+	/**
+	 * saves a new non secured instance to the database.
 	 * 
 	 * @param p the customer we want to save
 	 * @return true if an updated was made. false for new element.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static boolean saveCustomer(Customer p) throws SQLException
+	public static boolean saveNonSecuredCustomer(Customer p) throws SQLException
 	{
 		if (conn == null)
 		{
@@ -956,7 +1020,7 @@ public class Database
 			su.executeUpdate();
 			return true;
 		}
-		else ////
+		else
 		{
 			String sql = "INSERT INTO " + Table.Customer.getValue() + " "
 					+ "(ID,Username, Password, Email, FirstName, LastName, PhoneNumber, CardNum, CVC, Exp) VALUES "
@@ -977,55 +1041,7 @@ public class Database
 		}
 	}
 
-	/**
-	 * saves a new instance to the database.
-	 * 
-	 * @param p the employee we want save
-	 * @return true if an updated was made. false for new element.
-	 * @throws SQLException if the access to database failed
-	 */
-	public static boolean saveEmployee(Employee p) throws SQLException
-	{
-		if (conn == null)
-		{
-
-			System.err.println("No connection found");
-			throw new DatabaseException();
-		}
-		if (existEmployee(p.getId()))
-		{
-			String sql = "UPDATE " + Table.Employee.getValue() + " Username=?,"
-					+ " Password=?, Email=?, FirstName=?, LastName=?, PhoneNumber=?, Role=? WHERE ID=?";
-			PreparedStatement su = conn.prepareStatement(sql);
-			su.setString(1, p.getUserName());
-			su.setString(2, p.getPassword());
-			su.setString(3, p.getEmail());
-			su.setString(4, p.getFirstName());
-			su.setString(5, p.getLastName());
-			su.setString(6, p.getPhoneNumber());
-			su.setInt(7, p.getRole().getValue());
-			su.executeUpdate();
-			return true;
-		}
-		else
-		{
-			String sql = "INSERT INTO " + Table.Employee.getValue()
-					+ " (ID,Username, Password, Email, FirstName, LastName, PhoneNumber, Role)"
-					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-			PreparedStatement su = conn.prepareStatement(sql);
-			su.setInt(1, p.getId());
-			su.setString(2, p.getUserName());
-			su.setString(3, p.getPassword());
-			su.setString(4, p.getEmail());
-			su.setString(5, p.getFirstName());
-			su.setString(6, p.getLastName());
-			su.setString(7, p.getPhoneNumber());
-			su.setInt(8, p.getRole().getValue());
-			su.executeUpdate();
-			return false;
-		}
-	}
-
+	
 	/**
 	 * saves a new instance to the database.
 	 * 
@@ -1783,7 +1799,7 @@ public class Database
 	 * @return the result list.
 	 * @throws SQLException if the access to database failed
 	 */
-	private static ArrayList<Integer> searchUser(String userName, String password, String table) throws SQLException
+	private static ArrayList<Integer> searchNonSecuredUser(String userName, String password, String table) throws SQLException
 	{
 
 		if (conn == null)
@@ -1822,9 +1838,9 @@ public class Database
 	 * @return the result list.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static ArrayList<Integer> searchCustomer(String userName, String password) throws SQLException
+	public static ArrayList<Integer> searchNonSecuredCustomer(String userName, String password) throws SQLException
 	{
-		return searchUser(userName, password, Table.Customer.getValue());
+		return searchNonSecuredUser(userName, password, Table.Customer.getValue());
 	}
 
 	/**
@@ -1835,7 +1851,7 @@ public class Database
 	 * @return the result list.
 	 * @throws SQLException if the access to database failed
 	 */
-	public static ArrayList<Integer> searchEmployee(String userName, String password) throws SQLException
+	public static ArrayList<Integer> searchNonSecuredEmployee(String userName, String password) throws SQLException
 	{
 		return searchUser(userName, password, Table.Employee.getValue());
 	}
