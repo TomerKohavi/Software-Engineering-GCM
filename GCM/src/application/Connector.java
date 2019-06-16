@@ -103,12 +103,7 @@ public class Connector
 		    }
 		};
 		task.setOnSucceeded(e -> {
-		    try {
-				openNewPage("LostConnectionScene.fxml");
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+		    openConnectionLostPage();
 		});
 		new Thread(task).start();
 	}
@@ -251,14 +246,13 @@ public class Connector
 	 * @param FXMLpage new fxml page
 	 * @throws IOException cannot open the file
 	 */
-	void openNewPage(String FXMLpage) throws IOException
+	void openConnectionLostPage()
 	{
-		FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLpage));
-		Stage stage = new Stage();
-		stage.initModality(Modality.WINDOW_MODAL);
-		stage.initOwner(mainPaneForConnectionLost.getScene().getWindow());
-		stage.setScene(new Scene((Parent) loader.load()));
-		stage.setResizable(false);
+		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("LostConnectionScene.fxml"));
+        Stage stage = new Stage();
+        stage.setTitle("Connection Error");
+        stage.setScene(new Scene(root, 450, 450));
+        stage.show();
 
 		// showAndWait will block execution until the window closes...
 		stage.showAndWait();
