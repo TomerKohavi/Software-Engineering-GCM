@@ -196,9 +196,9 @@ public class Connector
 		for (RouteSight route : routeList)
 		{
 			if (route.getCopyRoute().getIsFavorite())
-				nameList.add("★" + "Route " + route.getCopyRoute().getId());
+				nameList.add("★" + route.getCopyRoute().getName());
 			else
-				nameList.add("Route " + route.getCopyRoute().getId());
+				nameList.add(route.getCopyRoute().getName());
 		}
 		return nameList;
 	}
@@ -257,7 +257,7 @@ public class Connector
 				e.printStackTrace();
 			}
 		}
-		ArrayList<Customer> ans = new ArrayList<Customer>(customerList);
+		ArrayList<Customer> ans = new ArrayList<Customer>();
 		for (Customer c : customerList)
 		{
 			if (c.getActiveSubscriptionsByCity(selectedCity.getId()).size() > 0)
