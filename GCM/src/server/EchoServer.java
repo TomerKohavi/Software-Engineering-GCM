@@ -96,7 +96,7 @@ public class EchoServer extends AbstractServer
 	{
 		super(port);
 		this.serverUI = serverUI;
-//		Database.createConnection();
+		Database.createConnection();
 		this.loggedList = new ArrayList<Integer>();
 	}
 
@@ -463,7 +463,7 @@ public class EchoServer extends AbstractServer
 		return ccity;
 	}
 
-	private static final int maxReconnects = 0;
+	private static final int maxReconnects = 2;
 	private static int reconnectsLeft = maxReconnects;
 
 	/**
@@ -545,16 +545,10 @@ public class EchoServer extends AbstractServer
 		{
 			System.out.println("RECONNECT");
 			if (reconnectsLeft == 0)
-				try
-				{
-					client.sendToClient(new ForceQuit());
-					this.quit();
-				}
-				catch (IOException e2)
-				{
-					System.out.println("FORCE QUIT");
-					this.quit();
-				}
+			{
+				sendToAllClients(new ForceQuit());
+				this.quit();
+			}
 			else
 			{
 				e.printStackTrace();

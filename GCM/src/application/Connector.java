@@ -274,7 +274,8 @@ public class Connector
 	void openConnectionLostPage() throws IOException
 	{
 		System.out.println("HOLAAAAAAAAAAAaaa");
-		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("LostConnectionScene.fxml"));
+		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("LostConnectionScene.fxml")); // TODO why are you gae
+		System.out.println("kkk");
         Stage stage = new Stage();
         stage.setTitle("Connection Error");
         stage.setScene(new Scene(root, 450, 450));

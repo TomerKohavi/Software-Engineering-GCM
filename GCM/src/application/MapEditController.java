@@ -291,8 +291,6 @@ public class MapEditController
 			map._setLocationsList(new ArrayList<Location>());
 			Connector.client.update(map);
 			map._setLocationsList(toCreate);
-
-			// TODO sigal create removal list for route edit
 		}
 		catch (IOException e)
 		{

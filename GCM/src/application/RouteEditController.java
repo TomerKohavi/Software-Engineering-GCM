@@ -84,6 +84,8 @@ public class RouteEditController
 	@FXML // fx:id="TimeError"
 	private Text TimeError; // Value injected by FXMLLoade
 
+	// TODO sigal sheck removal list for route edit
+
 	/**
 	 * initialize variables
 	 * 
