@@ -956,7 +956,7 @@ public class Database
 			su.executeUpdate();
 			return true;
 		}
-		else
+		else ////
 		{
 			String sql = "INSERT INTO " + Table.Customer.getValue() + " "
 					+ "(ID,Username, Password, Email, FirstName, LastName, PhoneNumber, CardNum, CVC, Exp) VALUES "
