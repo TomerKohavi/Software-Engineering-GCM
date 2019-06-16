@@ -136,6 +136,11 @@ public class RegCheck {
 		return pat.matcher(cvv).matches();
 	}
 	
+	/**
+	 * @param year The year of the expires date.
+	 * @param month THe moth of expires date.
+	 * @return whether the date is legal.
+	 */
 	public static boolean isValidExpires(Integer year,Integer month) 
 	{
 		if(year==null || month==null)
@@ -159,8 +164,8 @@ public class RegCheck {
 	 * @param eMail e mail
 	 * @param phone phone number 
 	 * @param cardNum credit card number
-	 * @param year the year
-	 * @param month the month
+	 * @param year the year of expires date
+	 * @param month the month of expires date
 	 * @param cvv the cvv value.
 	 * @return returns error type. Please use .getValue() in order to get the error massage.
 	 */
