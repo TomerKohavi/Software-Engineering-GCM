@@ -164,8 +164,8 @@ public class InitDatebase {
 		rs1.saveToDatabase();
 
 		cdv.reloadTempsFromDatabase();
-		c1.addPublishedCityDataVersion(cdv);
-		c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv, "3.1"));
+		c1._addPublishedCityDataVersion(cdv);
+		//c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv, "3.1"));
 		c1.saveToDatabase();
 	}
 	
@@ -256,8 +256,8 @@ public class InitDatebase {
 		rs1.saveToDatabase();
 
 		cdv.reloadTempsFromDatabase();
-		c1.addPublishedCityDataVersion(cdv);
-		c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv, "6.888"));
+		c1._addPublishedCityDataVersion(cdv);
+		//c1.addUnpublishedCityDataVersion(new CityDataVersion(cdv, "6.888"));
 		c1.saveToDatabase();
 
 	}
@@ -332,7 +332,7 @@ public class InitDatebase {
 		rs1.saveToDatabase();
 
 		// cdv2
-		CityDataVersion cdv2 = new CityDataVersion(cdv, "5.2");
+		CityDataVersion cdv2 = new CityDataVersion(cdv, "4.3");
 		PlaceOfInterestSight ps2 = new PlaceOfInterestSight(cdv2.getId(), p2);
 		ps0.saveToDatabase();
 		PlaceOfInterestSight ps3 = new PlaceOfInterestSight(cdv2.getId(), p3);
@@ -406,8 +406,8 @@ public class InitDatebase {
 		rs2.saveToDatabase();
 
 		cdv2.reloadTempsFromDatabase();
-		city.addPublishedCityDataVersion(cdv2);
-		city.addUnpublishedCityDataVersion(cdv);
+		city._addPublishedCityDataVersion(cdv);
+		city.addUnpublishedCityDataVersion(cdv2);
 		city.saveToDatabase();
 	}
 
@@ -500,7 +500,7 @@ public class InitDatebase {
 		rs1.saveToDatabase();
 
 		// cdv2
-		CityDataVersion cdv2 = new CityDataVersion(cdv, "8.1");
+		CityDataVersion cdv2 = new CityDataVersion(cdv, "7.2");
 		PlaceOfInterestSight ps2 = new PlaceOfInterestSight(cdv2.getId(), p2);
 		ps0.saveToDatabase();
 		PlaceOfInterestSight ps3 = new PlaceOfInterestSight(cdv2.getId(), p3);
@@ -577,7 +577,7 @@ public class InitDatebase {
 		rs2.saveToDatabase();
 
 		cdv.reloadTempsFromDatabase();
-		city.addPublishedCityDataVersion(cdv);
+		city._addPublishedCityDataVersion(cdv);
 		city.addUnpublishedCityDataVersion(cdv2);
 		city.saveToDatabase();
 	}

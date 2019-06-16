@@ -117,7 +117,7 @@ public class CitySearchTestTable {
         				if(cdv==null)
         				{
         					cdv=new CityDataVersion(c, randomNum+".2");
-        					c.addPublishedCityDataVersion(cdv);
+        					c._addPublishedCityDataVersion(cdv);
         				}
         			}
         		PlaceOfInterest p=new PlaceOfInterest(c.getId(), name, PlaceOfInterest.PlaceType.HISTORICAL, info, true);
