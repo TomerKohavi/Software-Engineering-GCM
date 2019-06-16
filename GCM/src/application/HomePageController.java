@@ -568,6 +568,8 @@ public class HomePageController
 	 */
 	public void initialize()
 	{
+		Connector.searchCityResult = null;
+		
 		Connector.sideButton = SideSearch;
 		Connector.sideButton.setOpacity(1);
 
